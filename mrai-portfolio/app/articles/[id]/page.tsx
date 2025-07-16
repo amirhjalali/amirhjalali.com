@@ -76,8 +76,9 @@ The revolution is just beginning, and those who embrace this human-AI partnershi
   // Add more articles as needed
 ]
 
-export default function ArticlePage({ params }: { params: { id: string } }) {
-  const article = articles.find(a => a.id === params.id)
+export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const article = articles.find(a => a.id === id)
   
   if (!article) {
     notFound()
