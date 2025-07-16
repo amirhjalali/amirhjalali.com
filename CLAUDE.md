@@ -78,3 +78,8 @@ The repository uses an auto-commit system. When making changes:
    git push origin main
    ```
 5. Do not leave changes uncommitted or unpushed
+
+### Commit Message Guidelines
+- Do NOT mention Claude AI, Claude Code, or any AI assistance in commit messages
+- Use standard, professional commit messages without AI attribution
+- Focus on describing the changes made, not the tool used to make them
