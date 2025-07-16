@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className="min-h-screen bg-dark-bg font-inter">
         <Navigation />
-        <div className="pt-16">
+        <div className="pt-20">
           {children}
         </div>
       </body>

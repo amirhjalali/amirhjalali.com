@@ -1,34 +1,120 @@
+'use client'
+
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export default function HomePage() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8">
-      <h1 className="text-5xl md:text-7xl font-space font-bold mb-8 text-center">
-        <span className="text-gradient glow">MR AI</span>
-      </h1>
+    <main className="min-h-screen relative overflow-hidden">
+      {/* Dynamic background effect */}
+      <div 
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 255, 136, 0.15), transparent 40%)`
+        }}
+      />
       
-      <h2 className="text-2xl md:text-3xl font-inter text-gray-300 mb-8 text-center">
-        AI-Powered Portfolio & Thoughts
-      </h2>
+      {/* Mesh gradient background */}
+      <div className="absolute inset-0 mesh-gradient opacity-50" />
       
-      <p className="text-lg text-gray-400 max-w-2xl text-center mb-12">
-        Welcome to my digital space where artificial intelligence meets creativity. 
-        Explore my projects, read AI-generated insights, and discover the future of technology.
-      </p>
-      
-      <div className="flex gap-4 flex-wrap justify-center">
-        <Link 
-          href="/projects"
-          className="px-6 py-3 bg-ai-green text-black font-semibold rounded-lg hover:bg-ai-green/80 transition-all inline-block"
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 60 0 L 0 0 0 60" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23grid)"/%3E%3C/svg%3E')] opacity-20" />
+
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6">
+        {/* Hero content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-5xl mx-auto"
         >
-          Explore Projects
-        </Link>
-        <Link 
-          href="/articles"
-          className="px-6 py-3 glass border border-white/20 rounded-lg hover:border-ai-green/50 transition-all inline-block"
+          {/* Animated name */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="mb-8"
+          >
+            <h1 className="text-7xl md:text-9xl font-space font-black tracking-tighter">
+              <span className="text-gradient glow">MR AI</span>
+            </h1>
+            <p className="text-lg md:text-xl text-gray-500 mt-2 font-light tracking-widest">
+              AMIR JALALI
+            </p>
+          </motion.div>
+
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-2xl md:text-4xl font-light text-gray-300 mb-6 leading-relaxed"
+          >
+            Building the future with
+            <span className="text-white font-medium"> Artificial Intelligence</span>
+          </motion.p>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed"
+          >
+            Researcher, developer, and creative technologist exploring the intersection 
+            of AI and human creativity through innovative projects and thought leadership.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
+            <Link 
+              href="/projects"
+              className="group relative px-8 py-4 overflow-hidden rounded-full bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold text-lg transition-all hover:scale-105"
+            >
+              <span className="relative z-10">Explore Projects</span>
+              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
+            </Link>
+            
+            <Link 
+              href="/articles"
+              className="group px-8 py-4 rounded-full border-2 border-white/20 text-white font-medium text-lg hover:border-ai-green/50 hover:text-ai-green transition-all hover:scale-105"
+            >
+              Read Articles
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
         >
-          Read Articles
-        </Link>
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2"
+          >
+            <div className="w-1 h-3 bg-white/50 rounded-full" />
+          </motion.div>
+        </motion.div>
       </div>
     </main>
   )
