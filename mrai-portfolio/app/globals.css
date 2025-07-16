@@ -14,7 +14,8 @@
   }
 
   ::selection {
-    @apply bg-ai-green/30 text-white;
+    background-color: rgba(0, 255, 136, 0.3);
+    color: white;
   }
 }
 

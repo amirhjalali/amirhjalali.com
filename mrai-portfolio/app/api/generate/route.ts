@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
 // Initialize OpenAI client
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-})
+}) : null
 
 interface GenerateRequest {
   audioFile?: File
@@ -16,6 +16,14 @@ interface GenerateRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if OpenAI is configured
+    if (!openai) {
+      return NextResponse.json(
+        { error: 'OpenAI API key not configured' },
+        { status: 500 }
+      )
+    }
+
     const formData = await request.formData()
     const type = formData.get('type') as string
     const style = formData.get('style') as string || 'professional'
@@ -98,7 +106,7 @@ export async function POST(request: NextRequest) {
         style: 'vivid',
       })
       
-      imageUrl = imageResponse.data[0].url
+      imageUrl = imageResponse.data?.[0]?.url || null
     } catch (imageError) {
       console.error('Image generation failed:', imageError)
       // Continue without image if generation fails

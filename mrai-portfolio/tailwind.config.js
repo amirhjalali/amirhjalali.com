@@ -14,10 +14,6 @@ module.exports = {
         'dark-bg': '#0A0A0A',
         'dark-surface': '#1A1A1A',
       },
-      backgroundColor: {
-        'dark-bg': '#0A0A0A',
-        'dark-surface': '#1A1A1A',
-      },
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
         'space': ['Space Grotesk', 'sans-serif'],
