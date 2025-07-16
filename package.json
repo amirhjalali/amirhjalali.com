@@ -1,10 +1,37 @@
 {
-  "name": "auto-commit-watcher",
-  "version": "1.0.0",
+  "name": "mrai-portfolio",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "auto-commit": "nodemon --watch . --ext html,css,js,md,txt --exec \"git add . && git commit -m 'Auto-commit: %date%' && git push origin main\" --delay 2"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-slot": "^1.2.3",
+    "autoprefixer": "^10.4.21",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.6",
+    "lucide-react": "^0.525.0",
+    "next": "^15.4.1",
+    "openai": "^5.9.2",
+    "postcss": "^8.5.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.1",
+    "taskmaster": "^0.0.3"
   },
   "devDependencies": {
-    "nodemon": "^3.0.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20.19.8",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "tailwindcss": "^4.1.11",
+    "tw-animate-css": "^1.3.5",
+    "typescript": "^5.8.3"
   }
-} 
+}
