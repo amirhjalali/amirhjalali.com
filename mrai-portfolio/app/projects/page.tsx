@@ -6,46 +6,69 @@ import Link from 'next/link'
 const projects = [
   {
     id: 1,
-    title: 'AI Content Generator',
-    description: 'Automated article generation system using GPT-4 and DALL-E for multimedia content creation with voice-to-text integration.',
-    longDescription: 'A comprehensive content creation pipeline that transforms voice memos into fully formatted articles with AI-generated images, SEO optimization, and automated publishing.',
-    tags: ['OpenAI', 'Next.js', 'TypeScript', 'Whisper API'],
+    title: 'GABOOJA!',
+    description: 'E-commerce / social media platform currently in stealth beta',
+    longDescription: 'E-commerce / social media platform currently in stealth beta. Seeking investors to join this exciting opportunity in the evolving digital commerce space.',
+    tags: ['E-commerce', 'Social Media', 'Startup', 'Investment'],
     status: 'In Development',
-    progress: 75,
-    link: '#',
+    progress: 70,
+    link: 'https://gabooja.com/',
+    contact: 'amir@gabooja.com',
     image: '/api/placeholder/400/300',
   },
   {
     id: 2,
-    title: 'Voice-to-Article Pipeline',
-    description: 'Convert voice recordings into fully formatted blog posts with AI-generated images and automated SEO optimization.',
-    longDescription: 'Revolutionary workflow that takes raw voice recordings and produces publication-ready articles with multimedia content, metadata, and distribution.',
-    tags: ['Whisper API', 'NLP', 'Automation', 'DALL-E'],
-    status: 'Planned',
-    progress: 25,
-    link: '#',
+    title: 'Avenu.AI',
+    description: 'AI recruitment and onboarding platform with smart tools to reduce time and resources per hire',
+    longDescription: 'AI recruitment and onboarding platform featuring smart AI recruitment tools designed to significantly reduce time and resources per hire by 230%.',
+    tags: ['AI', 'Recruitment', 'HR Tech', 'Automation'],
+    status: 'Live',
+    progress: 90,
+    link: 'https://avenu.ai/',
     image: '/api/placeholder/400/300',
   },
   {
     id: 3,
-    title: 'MR AI Portfolio',
-    description: 'This AI-powered portfolio website with animated components, modern design, and dynamic content generation.',
-    longDescription: 'A sophisticated portfolio platform built with Next.js, featuring real-time animations, AI-powered content, and seamless user experience.',
-    tags: ['Next.js', 'Framer Motion', 'Tailwind', 'TypeScript'],
+    title: 'PLAICED',
+    description: 'AI strategy implementation for advertising platform using LLMs and Generative AI',
+    longDescription: 'AI strategy implementation for advertising platform leveraging LLMs and Generative AI for tailored advertisements and improved ROI.',
+    tags: ['AI Strategy', 'LLMs', 'Advertising', 'ROI Optimization'],
     status: 'Live',
-    progress: 90,
-    link: '/',
+    progress: 85,
+    link: 'https://www.getplaiced.com/',
     image: '/api/placeholder/400/300',
   },
   {
     id: 4,
-    title: 'Neural Style Transfer',
-    description: 'Real-time artistic style transfer using neural networks for creative visual content generation.',
-    longDescription: 'Advanced computer vision project implementing style transfer algorithms for real-time artistic transformations of images and video.',
-    tags: ['TensorFlow', 'Computer Vision', 'Python', 'WebGL'],
-    status: 'Research',
-    progress: 40,
-    link: '#',
+    title: 'ARGUMEND',
+    description: 'Platform to improve online discourse quality using LLMs to add context and reduce false claims',
+    longDescription: 'Platform designed to improve the quality of online discourse by using LLMs to add context and reduce the propagation of false claims.',
+    tags: ['LLMs', 'Content Moderation', 'Fact Checking', 'Social Impact'],
+    status: 'Live',
+    progress: 80,
+    link: 'https://www.argumend.org/',
+    image: '/api/placeholder/400/300',
+  },
+  {
+    id: 5,
+    title: 'CAMP ALBORZ',
+    description: 'Group of friends, family, doers and dreamers worldwide',
+    longDescription: 'A global community bringing together friends, family, doers and dreamers from around the world to collaborate and innovate.',
+    tags: ['Community', 'Global Network', 'Collaboration', 'Innovation'],
+    status: 'Live',
+    progress: 95,
+    link: 'https://www.campalborz.org/',
+    image: '/api/placeholder/400/300',
+  },
+  {
+    id: 6,
+    title: 'MR AI Portfolio',
+    description: 'This AI-powered portfolio website with modern design and AI article generation',
+    longDescription: 'A sophisticated portfolio platform built with Next.js, featuring AI-powered content generation, modern animations, and seamless user experience.',
+    tags: ['Next.js', 'AI Integration', 'Portfolio', 'Modern Design'],
+    status: 'Live',
+    progress: 95,
+    link: '/',
     image: '/api/placeholder/400/300',
   },
 ]
@@ -79,10 +102,10 @@ export default function ProjectsPage() {
           className="text-center mb-20"
         >
           <h1 className="text-5xl md:text-7xl font-space font-black mb-6">
-            <span className="text-gradient">AI Projects</span>
+            <span className="text-gradient">Projects</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Exploring the intersection of artificial intelligence and creativity through innovative research and development
+            Some recent projects and ideas I am involved with
           </p>
         </motion.div>
 
@@ -142,15 +165,22 @@ export default function ProjectsPage() {
                 </div>
                 
                 {/* Action */}
-                <Link
-                  href={project.link}
-                  className="inline-flex items-center gap-2 text-ai-green hover:text-ai-green/80 font-medium transition-colors group-hover:gap-3"
-                >
-                  {project.status === 'Live' ? 'View Project' : 'Learn More'}
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
+                <div className="flex flex-col gap-3">
+                  <Link
+                    href={project.link}
+                    className="inline-flex items-center gap-2 text-ai-green hover:text-ai-green/80 font-medium transition-colors group-hover:gap-3"
+                  >
+                    {project.status === 'Live' ? 'View Project' : 'Learn More'}
+                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                  {project.contact && (
+                    <p className="text-sm text-gray-500">
+                      Investment opportunities: <a href={`mailto:${project.contact}`} className="text-ai-blue hover:text-ai-blue/80 transition-colors">{project.contact}</a>
+                    </p>
+                  )}
+                </div>
               </div>
               
               {/* Glow effect on hover */}

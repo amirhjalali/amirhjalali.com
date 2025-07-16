@@ -7,115 +7,87 @@ import Link from 'next/link'
 const tools = [
   {
     id: 1,
-    name: 'Voice-to-Article Generator',
-    description: 'Transform voice memos into polished articles with AI-generated images and SEO optimization.',
-    longDescription: 'Upload a voice recording and our AI will transcribe, structure, and enhance your thoughts into publication-ready articles complete with relevant imagery.',
-    category: 'Content Creation',
+    name: 'REPLIT AGENT',
+    description: 'Agent-based AI tool for rapid code development and deployment',
+    longDescription: 'Most effective workflow for Proof of Concept and MVP shipping with hosted development environment and easier prototyping. Highly recommended for "Vibe Coding" - a new paradigm of programming with AI assistance.',
+    category: 'Development',
     status: 'Live',
     features: [
-      'Whisper API transcription',
-      'GPT-4 content structuring',
-      'DALL-E image generation',
-      'SEO optimization',
-      'Multiple export formats'
+      'Rapid POC and MVP development',
+      'Hosted development environment',
+      'AI-assisted coding',
+      'Easy prototyping workflow',
+      'Deployment ready'
     ],
-    tech: ['OpenAI API', 'Next.js', 'TypeScript', 'Tailwind'],
+    tech: ['Replit', 'AI Agents', 'Cloud IDE', 'Deployment'],
     demoAvailable: true,
     comingSoon: false,
+    link: 'https://replit.com',
+    referral: true,
   },
   {
     id: 2,
-    name: 'Smart Text Summarizer',
-    description: 'Extract key insights from long documents using advanced NLP and present them in digestible formats.',
-    longDescription: 'Analyze lengthy documents, research papers, or articles to generate concise summaries with key takeaways and actionable insights.',
-    category: 'Text Analysis',
-    status: 'Beta',
+    name: 'CURSOR',
+    description: 'Popular AI coding assistant for experienced developers',
+    longDescription: 'AI coding assistant that works on existing codebase with VSS plugin compatibility. More suitable for experienced coders and applicable for various coding scenarios.',
+    category: 'Development',
+    status: 'Live',
     features: [
-      'Multi-document analysis',
-      'Key insight extraction',
-      'Customizable summary length',
-      'Citation preservation',
-      'Export to multiple formats'
+      'Works on existing codebase',
+      'VSS plugin compatibility',
+      'Suitable for experienced coders',
+      'Flexible coding scenarios',
+      'AI code completion'
     ],
-    tech: ['Transformers', 'Python', 'FastAPI', 'React'],
+    tech: ['VS Code', 'AI Assistant', 'Code Completion', 'Plugins'],
     demoAvailable: true,
     comingSoon: false,
+    link: 'https://cursor.sh',
   },
   {
     id: 3,
-    name: 'Code Documentation Assistant',
-    description: 'Automatically generate comprehensive documentation for codebases using AI analysis.',
-    longDescription: 'Scan your repository and generate detailed documentation including API references, code explanations, and usage examples.',
-    category: 'Developer Tools',
-    status: 'Development',
+    name: 'ChatGPT ($20)',
+    description: 'OpenAI\'s revolutionary Generative AI tool with multimodal advantages',
+    longDescription: 'OpenAI\'s revolutionary Generative AI tool offering state-of-the-art LLM models with multimodal advantages. Some restrictions on medical inquiries but excellent for general AI tasks.',
+    category: 'General AI',
+    status: 'Live',
     features: [
-      'Multi-language support',
-      'API documentation',
-      'Code explanation',
-      'Usage examples',
-      'Integration guides'
+      'State-of-the-art LLM models',
+      'Multimodal capabilities',
+      'Revolutionary AI assistance',
+      'Wide range of applications',
+      'Regular model updates'
     ],
-    tech: ['CodeT5', 'TypeScript', 'GitHub API', 'Markdown'],
-    demoAvailable: false,
-    comingSoon: true,
+    tech: ['GPT-4', 'Multimodal AI', 'OpenAI API', 'Web Interface'],
+    demoAvailable: true,
+    comingSoon: false,
+    link: 'https://chatgpt.com/',
+    pricing: '$20/month',
   },
   {
     id: 4,
-    name: 'Image Style Transfer Studio',
-    description: 'Real-time artistic style transfer powered by neural networks for creative image transformation.',
-    longDescription: 'Apply artistic styles to your images in real-time using state-of-the-art neural style transfer algorithms.',
-    category: 'Image Processing',
-    status: 'Research',
-    features: [
-      'Real-time processing',
-      'Custom style training',
-      'Batch processing',
-      'High-resolution output',
-      'Style mixing'
-    ],
-    tech: ['PyTorch', 'WebGL', 'Canvas API', 'TensorFlow.js'],
-    demoAvailable: false,
-    comingSoon: true,
-  },
-  {
-    id: 5,
-    name: 'Sentiment Analysis Dashboard',
-    description: 'Real-time sentiment analysis and emotional intelligence insights from text data.',
-    longDescription: 'Analyze sentiment, emotions, and intent from customer feedback, social media, or any text data with detailed analytics.',
-    category: 'Analytics',
+    name: 'CLAUDE ($20)',
+    description: 'Anthropic\'s AI assistant with advantages over ChatGPT for coding and medical analysis',
+    longDescription: 'Anthropic\'s AI assistant offering less restrictive medical analysis and better performance for coding tasks. Some limitations include weaker OCR for images/PDFs and no image generator.',
+    category: 'General AI',
     status: 'Live',
     features: [
-      'Real-time analysis',
-      'Emotion detection',
-      'Trend visualization',
-      'Export reports',
-      'API integration'
+      'Less restrictive medical analysis',
+      'Better for coding tasks',
+      'Strong reasoning capabilities',
+      'Detailed explanations',
+      'Safe AI alignment'
     ],
-    tech: ['BERT', 'D3.js', 'PostgreSQL', 'Express'],
+    tech: ['Claude AI', 'Anthropic', 'Constitutional AI', 'Web Interface'],
     demoAvailable: true,
     comingSoon: false,
-  },
-  {
-    id: 6,
-    name: 'AI Chat Interface Builder',
-    description: 'Create custom AI chatbots with advanced conversational capabilities and knowledge integration.',
-    longDescription: 'Build sophisticated chatbots that can understand context, access custom knowledge bases, and provide intelligent responses.',
-    category: 'Conversational AI',
-    status: 'Planning',
-    features: [
-      'Custom knowledge base',
-      'Context awareness',
-      'Multi-language support',
-      'Integration APIs',
-      'Analytics dashboard'
-    ],
-    tech: ['GPT-4', 'Vector DB', 'WebSocket', 'React'],
-    demoAvailable: false,
-    comingSoon: true,
+    link: 'https://claude.ai/',
+    pricing: '$20/month',
+    limitations: ['Weaker OCR for images/PDFs', 'No image generator'],
   },
 ]
 
-const categories = ['All', 'Content Creation', 'Text Analysis', 'Developer Tools', 'Image Processing', 'Analytics', 'Conversational AI']
+const categories = ['All', 'Development', 'General AI']
 
 const container = {
   hidden: { opacity: 0 },
@@ -157,7 +129,7 @@ export default function AIToolsPage() {
             <span className="text-gradient">AI Tools</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8">
-            A collection of AI-powered tools and applications built to enhance productivity and creativity
+            Some AI tools that I have been utilizing in the past few years
           </p>
           
           {/* Stats */}
@@ -264,13 +236,18 @@ export default function AIToolsPage() {
 
                 {/* Action */}
                 <div className="flex gap-2">
-                  {tool.demoAvailable ? (
-                    <button className="flex-1 px-4 py-2 bg-gradient-to-r from-ai-green to-ai-blue text-black font-medium rounded-lg hover:scale-105 transition-transform text-sm">
-                      Try Demo
-                    </button>
+                  {tool.link ? (
+                    <a 
+                      href={tool.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex-1 px-4 py-2 bg-gradient-to-r from-ai-green to-ai-blue text-black font-medium rounded-lg hover:scale-105 transition-transform text-sm text-center"
+                    >
+                      {tool.referral ? 'Try (Referral)' : 'Visit Tool'}
+                    </a>
                   ) : (
                     <button className="flex-1 px-4 py-2 glass border border-white/20 rounded-lg hover:border-ai-green/50 transition-all text-sm">
-                      {tool.comingSoon ? 'Coming Soon' : 'Learn More'}
+                      Learn More
                     </button>
                   )}
                 </div>
@@ -340,21 +317,25 @@ export default function AIToolsPage() {
               </div>
               
               <div className="flex gap-3">
-                {selectedTool.demoAvailable ? (
-                  <button className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform">
-                    Try Demo
-                  </button>
+                {selectedTool.link ? (
+                  <a
+                    href={selectedTool.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform"
+                  >
+                    {selectedTool.referral ? 'Try (Referral)' : 'Visit Tool'}
+                  </a>
                 ) : (
                   <button className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all">
-                    {selectedTool.comingSoon ? 'Coming Soon' : 'Request Access'}
+                    Learn More
                   </button>
                 )}
-                <Link
-                  href="/contact"
-                  className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all"
-                >
-                  Contact About Tool
-                </Link>
+                {selectedTool.pricing && (
+                  <span className="px-6 py-3 text-ai-green font-medium">
+                    {selectedTool.pricing}
+                  </span>
+                )}
               </div>
             </motion.div>
           </motion.div>
