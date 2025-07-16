@@ -70,10 +70,18 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
-            Researcher, developer, and creative technologist exploring the intersection 
-            of AI and human creativity through innovative projects and thought leadership.
+            Welcome to my corner of the internet.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto mb-12 leading-relaxed"
+          >
+            I'm currently involved in advising several companies on their Generative AI initiatives.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -92,10 +100,17 @@ export default function HomePage() {
             </Link>
             
             <Link 
-              href="/articles"
+              href="/thoughts"
               className="group px-8 py-4 rounded-full border-2 border-white/20 text-white font-medium text-lg hover:border-ai-green/50 hover:text-ai-green transition-all hover:scale-105"
             >
-              Read Articles
+              Read Thoughts
+            </Link>
+
+            <Link 
+              href="/generate"
+              className="group px-8 py-4 rounded-full border-2 border-ai-blue/30 text-ai-blue font-medium text-lg hover:border-ai-blue hover:bg-ai-blue/10 transition-all hover:scale-105"
+            >
+              AI Assistant
             </Link>
           </motion.div>
         </motion.div>
