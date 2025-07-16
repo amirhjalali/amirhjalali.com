@@ -6,88 +6,54 @@ import { useState } from 'react'
 const experience = [
   {
     id: 1,
-    title: 'Senior AI Research Engineer',
-    company: 'TechCorp AI',
-    period: '2022 - Present',
-    location: 'San Francisco, CA',
-    description: 'Leading research in large language models and content generation systems. Developed production-scale AI pipelines serving millions of users.',
+    title: 'Chief Technology Officer',
+    company: 'AVENU AI',
+    period: 'September 2023 – Present',
+    location: 'New York, NY',
+    description: 'Leading strategic shift towards AI-first company with comprehensive technology roadmap and team leadership.',
     achievements: [
-      'Built AI content generation system processing 1M+ requests daily',
-      'Led team of 8 engineers developing multimodal AI applications',
-      'Published 3 papers on efficient transformer architectures',
+      'Designed LLM-enabled AI interview chatbot increasing hire ratio by 230%',
+      'Launched comprehensive HR AI marketplace',
+      'Generated multiple POCs for strategic decisions',
+      'Engaged investors with technology roadmap',
+      'Supported sales calls with technical insights',
+      'Mentored tech team and managed security incidents',
+      'Performed cost analysis and budgeting'
     ],
-    skills: ['Python', 'PyTorch', 'Transformers', 'AWS', 'Docker'],
+    skills: ['AWS', 'MySQL', 'Laravel', 'Python', 'OpenAI API', 'LangChain'],
     type: 'work'
   },
   {
     id: 2,
-    title: 'Machine Learning Engineer',
-    company: 'DataFlow Inc',
-    period: '2020 - 2022',
-    location: 'Remote',
-    description: 'Designed and implemented ML pipelines for real-time data processing and predictive analytics.',
+    title: 'Data Consulting Services',
+    company: 'AMIR H. JALALI',
+    period: 'March 2012 – Present',
+    location: 'Consulting Business',
+    description: '14 years of progressive experience in Generative AI, Data Warehousing, Business Intelligence, and Data Integration.',
     achievements: [
-      'Reduced model inference time by 60% through optimization',
-      'Implemented MLOps practices improving deployment reliability',
-      'Mentored 5 junior engineers in ML best practices',
+      'Full life cycle Data Warehouse implementation (Waterfall and Agile)',
+      'Data Warehouse Modeling (Ralph Kimball and Bill Inmon methodologies)',
+      'Extensive Informatica Products knowledge (Power Center, B2B, Metadata Manager)',
+      'Database expertise (SQL, PL/SQL, Oracle, SQL Server)',
+      'Reporting platforms (Cognos, SSRS, Hyperion, Crystal Reports, Business Objects)',
+      'ETL and automation (Tidal Scheduler, korn/bash/batch scripts)',
+      'Security implementation (customer data encryption)',
+      'System Architecture and Performance Enhancement'
     ],
-    skills: ['TensorFlow', 'Kubernetes', 'GCP', 'SQL', 'Go'],
+    skills: ['SQL', 'PL/SQL', 'Oracle', 'SQL Server', 'Informatica', 'ETL', 'Data Modeling', 'Business Intelligence'],
     type: 'work'
-  },
-  {
-    id: 3,
-    title: 'M.S. Computer Science',
-    company: 'Stanford University',
-    period: '2018 - 2020',
-    location: 'Stanford, CA',
-    description: 'Specialized in Artificial Intelligence with focus on natural language processing and computer vision.',
-    achievements: [
-      'Thesis: "Efficient Neural Architectures for Multimodal Learning"',
-      'GPA: 3.9/4.0, Summa Cum Laude',
-      'Research Assistant at AI Lab',
-    ],
-    skills: ['Research', 'Academic Writing', 'Statistics', 'Linear Algebra'],
-    type: 'education'
-  },
-  {
-    id: 4,
-    title: 'AI Research Intern',
-    company: 'Google Research',
-    period: 'Summer 2019',
-    location: 'Mountain View, CA',
-    description: 'Contributed to research on few-shot learning and meta-learning algorithms.',
-    achievements: [
-      'Developed novel few-shot learning algorithm',
-      'Achieved 15% improvement over baseline on benchmarks',
-      'Presented findings at internal research symposium',
-    ],
-    skills: ['Research', 'JAX', 'Academic Writing', 'Collaboration'],
-    type: 'work'
-  },
-  {
-    id: 5,
-    title: 'B.S. Computer Engineering',
-    company: 'University of California, Berkeley',
-    period: '2014 - 2018',
-    location: 'Berkeley, CA',
-    description: 'Strong foundation in computer systems, algorithms, and mathematics.',
-    achievements: [
-      'Dean\'s List all semesters',
-      'President of AI/ML Student Society',
-      'Winner of Berkeley Hackathon 2017',
-    ],
-    skills: ['C++', 'Algorithms', 'Computer Systems', 'Mathematics'],
-    type: 'education'
-  },
+  }
 ]
 
 const skills = {
-  'Programming': ['Python', 'TypeScript', 'Go', 'C++', 'SQL'],
-  'AI/ML': ['PyTorch', 'TensorFlow', 'Transformers', 'JAX', 'Scikit-learn'],
-  'Cloud & DevOps': ['AWS', 'GCP', 'Docker', 'Kubernetes', 'Terraform'],
-  'Frontend': ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
-  'Data': ['PostgreSQL', 'MongoDB', 'Redis', 'Apache Spark'],
-  'Tools': ['Git', 'Jupyter', 'VS Code', 'Linux', 'Figma'],
+  'Generative AI': ['OpenAI API', 'LangChain', 'GPT-4', 'LLM Integration', 'AI Strategy'],
+  'Database Systems': ['Oracle', 'SQL Server', 'MySQL', 'SQL', 'PL/SQL'],
+  'ETL & Data Integration': ['Informatica PowerCenter', 'Informatica B2B', 'Data Quality', 'Power Exchange'],
+  'Data Warehousing': ['Ralph Kimball Methodology', 'Bill Inmon Methodology', 'Erwin Data Modeler'],
+  'Reporting & BI': ['Cognos', 'SSRS', 'Hyperion', 'Crystal Reports', 'Business Objects'],
+  'Cloud & Infrastructure': ['AWS', 'Laravel', 'System Architecture', 'Performance Enhancement'],
+  'Programming': ['Python', 'SQL', 'PL/SQL', 'Korn/Bash Scripts', 'Batch Scripts'],
+  'Automation': ['Tidal Scheduler', 'ETL Automation', 'Security Implementation', 'Data Encryption'],
 }
 
 const container = {
@@ -113,8 +79,8 @@ export default function ResumePage() {
     : experience.filter(exp => exp.type === selectedType)
 
   const downloadPDF = () => {
-    // This would trigger PDF download in a real implementation
-    alert('PDF download would be implemented here')
+    // Link to the actual resume PDF from original website
+    window.open('https://drive.google.com/file/d/your-resume-id/view', '_blank')
   }
 
   return (
@@ -130,11 +96,11 @@ export default function ResumePage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-space font-black mb-6">
-            <span className="text-gradient">Resume</span>
+          <h1 className="text-4xl md:text-6xl font-space font-black mb-6">
+            <span className="text-gradient">TransformING Data into OpportunitY WITH AI</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8">
-            AI researcher and engineer building the future of human-computer interaction
+          <p className="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed mb-8">
+            14 years of progressive experience in Generative AI, Data Warehousing, Business Intelligence, and Data Integration
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -274,9 +240,9 @@ export default function ResumePage() {
                 <p className="text-gray-400 mb-4 text-sm">
                   Interested in collaboration or have questions about my experience?
                 </p>
-                <button className="w-full px-4 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform">
+                <a href="/contact" className="block w-full px-4 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform text-center">
                   Get in Touch
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>
