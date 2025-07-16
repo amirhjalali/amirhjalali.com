@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getArticles, initializeDefaultArticles } from '@/lib/articles'
 
 const articles = [
   {
@@ -59,10 +60,19 @@ const item = {
 
 export default function ArticlesPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [allArticles, setAllArticles] = useState<any[]>([])
+  
+  useEffect(() => {
+    // Initialize default articles if needed
+    initializeDefaultArticles()
+    // Load all articles from storage
+    const storedArticles = getArticles()
+    setAllArticles(storedArticles)
+  }, [])
   
   const filteredArticles = selectedCategory === 'All' 
-    ? articles 
-    : articles.filter(article => article.tags.includes(selectedCategory))
+    ? allArticles 
+    : allArticles.filter(article => article.tags.some(tag => tag === selectedCategory))
 
   return (
     <div className="min-h-screen relative">

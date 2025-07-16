@@ -9,14 +9,17 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/projects', label: 'Projects' },
   { href: '/articles', label: 'Articles' },
-  { href: '/generate', label: 'Generate' },
-  { href: '/resume', label: 'Resume' },
+  { href: '/thoughts', label: 'Thoughts' },
   { href: '/ai-tools', label: 'AI Tools' },
+  { href: '/resume', label: 'Resume' },
+  { href: '/resources', label: 'Resources' },
+  { href: '/generate', label: 'Generate' },
 ]
 
 export default function Navigation() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +28,11 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    // Close mobile menu on route change
+    setMobileMenuOpen(false)
+  }, [pathname])
 
   return (
     <motion.nav
@@ -95,13 +103,60 @@ export default function Navigation() {
           
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all">
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+            >
+              {mobileMenuOpen ? (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
+
+        {/* Mobile menu */}
+        <motion.div
+          initial={false}
+          animate={{ 
+            height: mobileMenuOpen ? 'auto' : 0,
+            opacity: mobileMenuOpen ? 1 : 0 
+          }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden overflow-hidden"
+        >
+          <div className="px-4 pt-2 pb-6 space-y-1">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-all ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
+            <div className="pt-4">
+              <Link
+                href="/contact"
+                className="block w-full px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-medium rounded-full text-center hover:scale-105 transition-transform"
+              >
+                Get in Touch
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </motion.nav>
   )

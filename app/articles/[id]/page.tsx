@@ -2,84 +2,33 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { useParams, notFound } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { getArticleById } from '@/lib/articles'
 
-const articles = [
-  {
-    id: '1',
-    title: 'The Future of AI-Powered Content Creation',
-    excerpt: 'Exploring how artificial intelligence is revolutionizing the way we create, edit, and distribute content across digital platforms.',
-    content: `# The Future of AI-Powered Content Creation
+export default function ArticlePage() {
+  const params = useParams()
+  const id = params.id as string
+  const [article, setArticle] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
-In the rapidly evolving landscape of digital content creation, artificial intelligence has emerged as a transformative force that's reshaping how we conceive, produce, and distribute content across various platforms.
+  useEffect(() => {
+    const loadedArticle = getArticleById(id)
+    if (!loadedArticle) {
+      notFound()
+    }
+    setArticle(loadedArticle)
+    setLoading(false)
+  }, [id])
 
-## The Current State of AI in Content Creation
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-ai-green border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
 
-Today's AI systems have moved far beyond simple text generation. Modern platforms can:
-
-- **Generate compelling narratives** from simple prompts
-- **Create stunning visuals** that complement written content
-- **Optimize content** for specific audiences and platforms
-- **Translate and adapt** content across languages and cultures
-
-## Revolutionary Applications
-
-### Voice-to-Article Systems
-One of the most exciting developments is the ability to transform voice recordings into polished articles. This technology:
-
-- Transcribes spoken thoughts with high accuracy
-- Structures rambling ideas into coherent narratives
-- Generates relevant images and media
-- Optimizes for SEO and readability
-
-### Real-time Content Adaptation
-AI can now adapt content in real-time based on:
-- Reader engagement patterns
-- Current trending topics
-- Audience demographics
-- Platform-specific requirements
-
-## The Human-AI Collaboration Model
-
-Rather than replacing human creativity, AI amplifies it. The most successful content strategies combine:
-
-1. **Human insight and creativity** for direction and authenticity
-2. **AI processing power** for research and optimization
-3. **Automated systems** for distribution and analytics
-4. **Feedback loops** for continuous improvement
-
-## Challenges and Considerations
-
-While the potential is enormous, we must address:
-
-- **Quality control** and fact-checking
-- **Ethical implications** of automated content
-- **Authenticity** and human connection
-- **Economic impact** on content creators
-
-## Looking Forward
-
-The future of content creation lies not in choosing between human or AI, but in finding the perfect synthesis. As these tools become more sophisticated, we'll see:
-
-- More personalized content experiences
-- Faster iteration and testing cycles
-- Greater accessibility for non-technical creators
-- Enhanced creative possibilities
-
-The revolution is just beginning, and those who embrace this human-AI partnership will lead the next era of digital communication.`,
-    tags: ['AI', 'Content Creation', 'Technology'],
-    readTime: '5 min read',
-    publishedAt: '2024-01-15',
-    aiGenerated: true,
-    author: 'MR AI',
-  },
-  // Add more articles as needed
-]
-
-export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const article = articles.find(a => a.id === id)
-  
   if (!article) {
     notFound()
   }
@@ -140,7 +89,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mt-6">
-            {article.tags.map((tag) => (
+            {article.tags.map((tag: string) => (
               <span
                 key={tag}
                 className="px-3 py-1 bg-white/5 rounded-full text-sm text-gray-400"
@@ -150,6 +99,22 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
             ))}
           </div>
         </motion.header>
+
+        {/* Article Image */}
+        {article.imageUrl && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mb-12"
+          >
+            <img 
+              src={article.imageUrl} 
+              alt={article.title}
+              className="w-full rounded-2xl border border-white/10"
+            />
+          </motion.div>
+        )}
 
         {/* Article Content */}
         <motion.article
@@ -161,7 +126,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
           <div 
             className="article-content"
             dangerouslySetInnerHTML={{ 
-              __html: article.content.replace(/\n/g, '<br/>').replace(/## (.*)/g, '<h2>$1</h2>').replace(/### (.*)/g, '<h3>$1</h3>').replace(/# (.*)/g, '<h1>$1</h1>')
+              __html: article.content
+                .replace(/\n/g, '<br/>')
+                .replace(/## (.*)/g, '<h2>$1</h2>')
+                .replace(/### (.*)/g, '<h3>$1</h3>')
+                .replace(/# (.*)/g, '<h1>$1</h1>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
             }} 
           />
         </motion.article>
@@ -176,7 +147,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
           <div className="text-center">
             <h3 className="text-xl font-bold mb-4">Enjoyed this article?</h3>
             <p className="text-gray-400 mb-6">
-              Explore more AI-generated insights and stay updated with the latest in technology.
+              Explore more insights or create your own AI-powered articles.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -186,10 +157,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
                 Read More Articles
               </Link>
               <Link
-                href="/contact"
+                href="/generate"
                 className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all"
               >
-                Get in Touch
+                Generate New Article
               </Link>
             </div>
           </div>
@@ -234,6 +205,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
         .article-content strong {
           color: white;
           font-weight: 600;
+        }
+        .article-content em {
+          color: #00FF88;
         }
         .article-content code {
           background: rgba(255, 255, 255, 0.1);

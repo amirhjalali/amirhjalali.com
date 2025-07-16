@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import VoiceRecorder from '@/components/VoiceRecorder'
 import Link from 'next/link'
+import { saveArticle } from '@/lib/articles'
+import { useRouter } from 'next/navigation'
 
 interface GeneratedArticle {
   title: string
@@ -22,6 +24,7 @@ interface GeneratedArticle {
 }
 
 export default function GeneratePage() {
+  const router = useRouter()
   const [mode, setMode] = useState<'voice' | 'text'>('voice')
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedArticle, setGeneratedArticle] = useState<GeneratedArticle | null>(null)
@@ -31,6 +34,7 @@ export default function GeneratePage() {
     length: 'medium'
   })
   const [textPrompt, setTextPrompt] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
 
   const handleVoiceRecording = async (audioBlob: Blob) => {
     await generateArticle(audioBlob, 'voice')
@@ -88,6 +92,31 @@ export default function GeneratePage() {
       // Could add a toast notification here
     } catch (err) {
       console.error('Failed to copy:', err)
+    }
+  }
+
+  const saveGeneratedArticle = async () => {
+    if (!generatedArticle) return
+    
+    setIsSaving(true)
+    try {
+      const savedArticle = saveArticle({
+        title: generatedArticle.title,
+        content: generatedArticle.content,
+        excerpt: generatedArticle.excerpt,
+        tags: generatedArticle.tags,
+        imageUrl: generatedArticle.imageUrl,
+        author: 'AI Assistant',
+        aiGenerated: true,
+        metadata: generatedArticle.metadata
+      })
+      
+      // Redirect to the saved article
+      router.push(`/articles/${savedArticle.id}`)
+    } catch (err) {
+      setError('Failed to save article')
+    } finally {
+      setIsSaving(false)
     }
   }
 
@@ -311,10 +340,17 @@ export default function GeneratePage() {
               </div>
 
               {/* Actions */}
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-wrap">
+                <button
+                  onClick={saveGeneratedArticle}
+                  disabled={isSaving}
+                  className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform disabled:opacity-50"
+                >
+                  {isSaving ? 'Saving...' : 'Save & Publish'}
+                </button>
                 <button
                   onClick={() => copyToClipboard(generatedArticle.content)}
-                  className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform"
+                  className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all"
                 >
                   Copy Content
                 </button>
