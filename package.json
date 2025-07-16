@@ -1,0 +1,10 @@
+{
+  "name": "auto-commit-watcher",
+  "version": "1.0.0",
+  "scripts": {
+    "auto-commit": "nodemon --watch . --ext html,css,js,md,txt --exec \"git add . && git commit -m 'Auto-commit: %date%'\" --delay 2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+} 
