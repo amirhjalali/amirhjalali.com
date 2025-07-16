@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 10 10 10;
+    --foreground: 255 255 255;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-dark-bg text-white antialiased;
+  }
+
+  ::selection {
+    @apply bg-ai-green/30 text-white;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-ai-green to-ai-blue bg-clip-text text-transparent;
+  }
+
+  .glow {
+    @apply drop-shadow-[0_0_20px_rgba(0,255,136,0.5)];
+  }
+
+  .glass {
+    @apply backdrop-blur-md bg-dark-surface/50 border border-white/10;
+  }
+}
