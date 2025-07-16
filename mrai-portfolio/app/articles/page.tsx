@@ -197,12 +197,18 @@ export default function ArticlesPage() {
               Use AI to transform your voice memos, ideas, or thoughts into compelling articles with automated image generation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform">
-                Record Voice Memo
-              </button>
-              <button className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all">
-                Write Prompt
-              </button>
+              <Link
+                href="/generate"
+                className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center"
+              >
+                Generate New Article
+              </Link>
+              <Link
+                href="/generate"
+                className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all inline-block text-center"
+              >
+                Voice to Article
+              </Link>
             </div>
           </div>
         </motion.div>
