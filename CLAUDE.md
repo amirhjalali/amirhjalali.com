@@ -66,9 +66,15 @@ The repository uses an auto-commit system. When making changes:
 
 ## Important Rules
 
-### Always Commit Changes
-**ALWAYS commit any changes made to the repository with a descriptive message.** When completing any task:
+### Always Commit and Push Changes
+**ALWAYS commit any changes made to the repository with a descriptive message AND push to the remote repository.** When completing any task:
 1. Stage all modified files using `git add .`
 2. Commit with a concise but descriptive message summarizing the changes
-3. Example: `git commit -m "Update projects page with new portfolio item"`
-4. Do not leave changes uncommitted
+3. Push the changes to the remote repository
+4. Example:
+   ```bash
+   git add .
+   git commit -m "Update projects page with new portfolio item"
+   git push origin main
+   ```
+5. Do not leave changes uncommitted or unpushed
