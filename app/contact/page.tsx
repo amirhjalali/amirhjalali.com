@@ -2,7 +2,28 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import ContactForm from '@/components/ContactForm'
+import dynamic from 'next/dynamic'
+import { Skeleton } from '@/components/ui/skeleton'
+
+// Dynamic import ContactForm for better performance
+const ContactForm = dynamic(() => import('@/components/ContactForm'), {
+  loading: () => (
+    <div className="glass p-8 rounded-2xl border border-white/10">
+      <Skeleton className="h-8 w-48 mb-6" />
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <Skeleton className="h-12" />
+          <Skeleton className="h-12" />
+        </div>
+        <Skeleton className="h-12" />
+        <Skeleton className="h-12" />
+        <Skeleton className="h-32" />
+        <Skeleton className="h-12" />
+      </div>
+    </div>
+  ),
+  ssr: false
+})
 
 const contactMethods = [
   {

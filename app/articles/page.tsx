@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { getArticles, initializeDefaultArticles } from '@/lib/articles'
+import LazyImage from '@/components/LazyImage'
 
 // Articles are now loaded dynamically from the articles library
 
@@ -107,10 +108,13 @@ export default function ArticlesPage() {
                 {/* Article Image */}
                 {article.imageUrl && (
                   <div className="aspect-video overflow-hidden">
-                    <img 
+                    <LazyImage 
                       src={article.imageUrl} 
                       alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="group-hover:scale-105 transition-transform duration-300"
+                      wrapperClassName="w-full h-full"
+                      aspectRatio="video"
+                      placeholder="skeleton"
                     />
                   </div>
                 )}

@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { ExternalLink, Mail, TrendingUp, Clock, Zap } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import LazyImage from '@/components/LazyImage'
 
 interface Project {
   id: number
@@ -101,6 +102,19 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               {/* Floating orbs */}
               <div className="absolute top-4 right-4 w-20 h-20 bg-ai-green/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
               <div className="absolute bottom-4 left-4 w-16 h-16 bg-ai-blue/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
+
+              {/* Project Image */}
+              <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden">
+                <LazyImage
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                  wrapperClassName="w-full h-full"
+                  aspectRatio="wide"
+                  placeholder="blur"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+              </div>
 
               {/* Header with status and progress */}
               <div className="relative z-10 flex justify-between items-start mb-6">

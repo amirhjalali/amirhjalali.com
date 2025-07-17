@@ -3,11 +3,17 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
-import ProjectCard from '@/components/ProjectCard'
+import dynamic from 'next/dynamic'
 import ProjectSkeleton from '@/components/ProjectSkeleton'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Filter, Grid, List, Sparkles } from 'lucide-react'
+
+// Dynamic import for ProjectCard with loading state
+const ProjectCard = dynamic(() => import('@/components/ProjectCard'), {
+  loading: () => <ProjectSkeleton />,
+  ssr: true
+})
 
 const projects = [
   {
