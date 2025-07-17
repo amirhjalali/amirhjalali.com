@@ -84,8 +84,18 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           scale: 1.02,
           transition: { type: "spring", stiffness: 300, damping: 30 }
         }}
-        className="relative h-full cursor-pointer"
+        className="relative h-full cursor-pointer focus-visible"
         onClick={() => setIsFlipped(!isFlipped)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            setIsFlipped(!isFlipped)
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label={`${project.title} project card. Press Enter to ${isFlipped ? 'show front' : 'flip for details'}`}
+        aria-expanded={isFlipped}
       >
         <motion.div
           animate={{ rotateY: isFlipped ? 180 : 0 }}

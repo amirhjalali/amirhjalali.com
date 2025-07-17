@@ -105,6 +105,9 @@ export default function NavigationEnhanced() {
   return (
     <>
       <motion.nav
+        id="navigation"
+        role="navigation"
+        aria-label="Main navigation"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8 }}
@@ -209,6 +212,8 @@ export default function NavigationEnhanced() {
                   size="sm"
                   onClick={() => setCommandOpen(true)}
                   className="ml-2 text-gray-400 hover:text-white"
+                  aria-label="Open command palette (Command+K)"
+                  aria-keyshortcuts="Command+K"
                 >
                   <CommandIcon className="h-4 w-4 mr-2" />
                   <span className="text-xs">⌘K</span>
@@ -271,13 +276,21 @@ export default function NavigationEnhanced() {
                 size="icon"
                 onClick={() => setCommandOpen(true)}
                 className="text-gray-400 hover:text-white"
+                aria-label="Search (Command+K)"
+                aria-keyshortcuts="Command+K"
               >
                 <Search className="h-5 w-5" />
               </Button>
               
               <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="text-gray-400 hover:text-white"
+                    aria-label="Open navigation menu"
+                    aria-expanded={mobileOpen}
+                  >
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>

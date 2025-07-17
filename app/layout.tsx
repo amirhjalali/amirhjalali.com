@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import NavigationEnhanced from '@/components/NavigationEnhanced'
+import SkipNavigation from '@/components/SkipNavigation'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -57,10 +58,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-screen font-inter antialiased">
+        <SkipNavigation />
         <NavigationEnhanced />
-        <div className="pt-20">
+        <main id="main-content" className="pt-20" role="main">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   )
