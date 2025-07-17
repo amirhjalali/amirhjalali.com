@@ -5,61 +5,61 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 
-const CyclingTypewriter = () => {
-  const texts = ['AMIR JALALI', 'MR AI']
-  const [currentTextIndex, setCurrentTextIndex] = useState(0)
-  const [displayedText, setDisplayedText] = useState('')
+const MorphingText = () => {
+  const variants = ['MR AI', 'AI MR', 'MR.AI', 'AI.MR']
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
-
-  const currentText = texts[currentTextIndex]
 
   useEffect(() => {
-    const typeSpeed = isDeleting ? 50 : 100
-    const pauseTime = 2000
-
-    if (isPaused) {
-      const timeout = setTimeout(() => {
-        setIsPaused(false)
-        setIsDeleting(true)
-      }, pauseTime)
-      return () => clearTimeout(timeout)
-    }
-
-    if (!isDeleting && currentIndex < currentText.length) {
-      // Typing forward
-      const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + currentText[currentIndex])
-        setCurrentIndex(prev => prev + 1)
-      }, typeSpeed)
-      return () => clearTimeout(timeout)
-    } else if (!isDeleting && currentIndex === currentText.length) {
-      // Finished typing, pause before deleting
-      setIsPaused(true)
-    } else if (isDeleting && displayedText.length > 0) {
-      // Deleting
-      const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev.slice(0, -1))
-      }, typeSpeed)
-      return () => clearTimeout(timeout)
-    } else if (isDeleting && displayedText.length === 0) {
-      // Finished deleting, move to next text
-      setIsDeleting(false)
-      setCurrentIndex(0)
-      setCurrentTextIndex(prev => (prev + 1) % texts.length)
-    }
-  }, [currentIndex, currentText, isDeleting, isPaused, displayedText])
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % variants.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
-    <span className="relative">
-      {displayedText}
-      <motion.span
-        animate={{ opacity: [0, 1] }}
-        transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
-        className="inline-block w-[3px] h-[1.2em] bg-ai-green ml-1"
-      />
-    </span>
+    <motion.span
+      key={currentIndex}
+      initial={{ 
+        scale: 0.8, 
+        opacity: 0,
+        rotateX: -90,
+        filter: 'blur(4px)'
+      }}
+      animate={{ 
+        scale: 1, 
+        opacity: 1,
+        rotateX: 0,
+        filter: 'blur(0px)'
+      }}
+      exit={{ 
+        scale: 1.2, 
+        opacity: 0,
+        rotateX: 90,
+        filter: 'blur(4px)'
+      }}
+      transition={{ 
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }}
+      className="inline-block"
+      style={{ transformStyle: 'preserve-3d' }}
+    >
+      {variants[currentIndex].split('').map((char, index) => (
+        <motion.span
+          key={`${currentIndex}-${index}`}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ 
+            delay: index * 0.1,
+            duration: 0.6,
+            ease: 'easeOut'
+          }}
+          className="inline-block"
+        >
+          {char}
+        </motion.span>
+      ))}
+    </motion.span>
   )
 }
 
@@ -181,18 +181,18 @@ export default function HeroEnhanced() {
                 transform: "translateZ(50px)",
               }}
             >
-              <span className="text-gradient glow relative">
-                <CyclingTypewriter />
+              <span className="text-gradient glow relative text-white">
+                <MorphingText />
                 <Sparkles className="absolute -top-8 -right-8 w-8 h-8 text-ai-green animate-pulse" />
               </span>
             </motion.h1>
             <motion.p 
-              className="text-lg md:text-xl text-gray-500 mt-2 font-light tracking-widest uppercase"
+              className="text-lg md:text-xl text-gray-400 mt-2 font-light tracking-widest uppercase"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              Amir Jalali
+              AI Consultant & Engineer
             </motion.p>
           </motion.div>
 
@@ -201,7 +201,7 @@ export default function HeroEnhanced() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-2xl md:text-4xl font-light text-gray-300 mb-6 leading-relaxed"
+            className="text-2xl md:text-4xl font-light text-foreground mb-6 leading-relaxed"
           >
             Building the future with
             <span className="text-white font-medium"> Artificial Intelligence</span>
@@ -214,10 +214,10 @@ export default function HeroEnhanced() {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="space-y-4 mb-12"
           >
-            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Welcome to my corner of the internet.
             </p>
-            <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               I'm currently involved in advising several companies on their Generative AI initiatives.
             </p>
           </motion.div>
@@ -248,7 +248,7 @@ export default function HeroEnhanced() {
             
             <Link 
               href="/thoughts"
-              className="group px-8 py-4 rounded-full border-2 border-white/20 text-white font-medium text-lg hover:border-ai-green/50 hover:text-ai-green transition-all hover:scale-105 hover:shadow-lg hover:shadow-ai-green/20"
+              className="group px-8 py-4 rounded-full border-2 border-border text-foreground font-medium text-lg hover:border-ai-green/50 hover:text-ai-green transition-all hover:scale-105 hover:shadow-lg hover:shadow-ai-green/20"
             >
               Read Thoughts
             </Link>
@@ -272,7 +272,7 @@ export default function HeroEnhanced() {
               href="https://github.com/amirhjalali"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors hover:scale-110"
+              className="text-muted-foreground hover:text-foreground transition-colors hover:scale-110"
             >
               <Github className="w-6 h-6" />
             </a>
@@ -280,13 +280,13 @@ export default function HeroEnhanced() {
               href="https://linkedin.com/in/amirhjalali"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors hover:scale-110"
+              className="text-muted-foreground hover:text-foreground transition-colors hover:scale-110"
             >
               <Linkedin className="w-6 h-6" />
             </a>
             <a
               href="/contact"
-              className="text-gray-400 hover:text-white transition-colors hover:scale-110"
+              className="text-muted-foreground hover:text-foreground transition-colors hover:scale-110"
             >
               <Mail className="w-6 h-6" />
             </a>
@@ -303,11 +303,11 @@ export default function HeroEnhanced() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2 hover:border-ai-green/50 transition-colors cursor-pointer"
+            className="w-6 h-10 rounded-full border-2 border-border flex justify-center pt-2 hover:border-ai-green/50 transition-colors cursor-pointer"
             onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
           >
             <motion.div 
-              className="w-1 h-3 bg-white/50 rounded-full"
+              className="w-1 h-3 bg-muted-foreground rounded-full"
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             />
