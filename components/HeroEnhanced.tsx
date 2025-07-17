@@ -35,8 +35,11 @@ const MorphingText = () => {
       className="inline-block relative"
       style={{ 
         height: '1.2em',
-        width: '3em',
-        transformStyle: 'preserve-3d'
+        width: '4.5em',
+        transformStyle: 'preserve-3d',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}
     >
       {allLetters.map((letter) => {
@@ -46,16 +49,19 @@ const MorphingText = () => {
         return (
           <motion.span
             key={letter}
-            className="inline-block text-ai-green absolute"
+            className="absolute text-ai-green"
             style={{ 
               color: '#00FF88 !important',
               textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)',
               fontSize: '1em',
-              fontWeight: 'inherit'
+              fontWeight: 'inherit',
+              left: '50%',
+              top: '50%',
+              transformOrigin: 'center center'
             }}
             animate={{
-              x: isVisible ? `${targetPos * 0.6}em` : '0em',
-              y: isVisible ? 0 : -20,
+              x: isVisible ? `${(targetPos - 2) * 0.7}em` : '0em',
+              y: isVisible ? '-50%' : '-70%',
               opacity: isVisible ? 1 : 0,
               scale: isVisible ? 1 : 0.8,
               rotateY: isVisible ? 0 : 90
