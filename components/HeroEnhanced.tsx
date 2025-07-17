@@ -6,36 +6,34 @@ import { useEffect, useState } from 'react'
 import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 
 const MorphingText = () => {
-  const variants = ['AMIR', 'AI MR', 'MR AI', 'AI.MR']
+  const variants = ['AMIR', 'MR AI']
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % variants.length)
-    }, 3000)
+    }, 4500) // Slower timing - 4.5 seconds
     return () => clearInterval(interval)
   }, [])
 
   // Define positions for each letter in each variant
   const letterPositions = {
     'AMIR': { A: 0, M: 1, I: 2, R: 3 },
-    'AI MR': { A: 0, I: 1, ' ': 2, M: 3, R: 4 },
-    'MR AI': { M: 0, R: 1, ' ': 2, A: 3, I: 4 },
-    'AI.MR': { A: 0, I: 1, '.': 2, M: 3, R: 4 }
+    'MR AI': { M: 0, R: 1, ' ': 2, A: 3, I: 4 }
   }
 
   const currentVariant = variants[currentIndex]
   const currentPositions = letterPositions[currentVariant as keyof typeof letterPositions]
   
-  // All unique letters that appear across variants
-  const allLetters = ['A', 'M', 'I', 'R', '.', ' ']
+  // Only letters that appear in these two variants
+  const allLetters = ['A', 'M', 'I', 'R', ' ']
 
   return (
     <motion.span
       className="inline-block relative"
       style={{ 
         height: '1.2em',
-        width: '4.5em',
+        width: '5em',
         transformStyle: 'preserve-3d',
         display: 'inline-flex',
         alignItems: 'center',
@@ -60,16 +58,16 @@ const MorphingText = () => {
               transformOrigin: 'center center'
             }}
             animate={{
-              x: isVisible ? `${(targetPos - 2) * 0.7}em` : '0em',
+              x: isVisible ? `${(targetPos - 2) * 0.8}em` : '0em',
               y: isVisible ? '-50%' : '-70%',
               opacity: isVisible ? 1 : 0,
               scale: isVisible ? 1 : 0.8,
               rotateY: isVisible ? 0 : 90
             }}
             transition={{
-              duration: 0.8,
+              duration: 1.2,
               ease: [0.25, 0.46, 0.45, 0.94],
-              delay: isVisible ? targetPos * 0.05 : 0
+              delay: isVisible ? targetPos * 0.08 : 0
             }}
           >
             {letter === ' ' ? '\u00A0' : letter}
