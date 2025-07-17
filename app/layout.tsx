@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Navigation from '@/components/Navigation'
+import NavigationEnhanced from '@/components/NavigationEnhanced'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -57,7 +57,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-screen bg-dark-bg font-inter">
-        <Navigation />
+        <NavigationEnhanced />
         <div className="pt-20">
           {children}
         </div>
