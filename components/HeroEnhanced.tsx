@@ -54,9 +54,13 @@ const MorphingText = () => {
             duration: 0.6,
             ease: 'easeOut'
           }}
-          className="inline-block"
+          className="inline-block text-ai-green"
+          style={{ 
+            color: '#00FF88 !important',
+            textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)'
+          }}
         >
-          {char}
+          {char === ' ' ? '\u00A0' : char}
         </motion.span>
       ))}
     </motion.span>
@@ -181,10 +185,8 @@ export default function HeroEnhanced() {
                 transform: "translateZ(50px)",
               }}
             >
-              <span className="relative inline-block">
-                <span className="text-gradient font-black">
-                  <MorphingText />
-                </span>
+              <span className="relative inline-block" style={{ color: '#00FF88' }}>
+                <MorphingText />
                 <Sparkles className="absolute -top-8 -right-8 w-8 h-8 text-ai-green animate-pulse" />
               </span>
             </motion.h1>
