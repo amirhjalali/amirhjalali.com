@@ -181,8 +181,10 @@ export default function HeroEnhanced() {
                 transform: "translateZ(50px)",
               }}
             >
-              <span className="text-gradient glow relative text-white">
-                <MorphingText />
+              <span className="relative inline-block">
+                <span className="text-gradient font-black">
+                  <MorphingText />
+                </span>
                 <Sparkles className="absolute -top-8 -right-8 w-8 h-8 text-ai-green animate-pulse" />
               </span>
             </motion.h1>

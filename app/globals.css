@@ -71,8 +71,21 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-ai-green via-ai-blue to-ai-green bg-[length:200%_auto] bg-clip-text text-transparent;
+    background: linear-gradient(to right, #00FF88, #00D9FF, #00FF88);
+    background-size: 200% auto;
+    color: #00FF88 !important;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     animation: gradient-shift 3s linear infinite;
+  }
+  
+  /* Fallback for browsers that don't support background-clip */
+  @supports not (background-clip: text) and not (-webkit-background-clip: text) {
+    .text-gradient {
+      background: none;
+      color: #00FF88 !important;
+    }
   }
 
   @keyframes gradient-shift {
