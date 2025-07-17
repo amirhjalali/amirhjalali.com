@@ -50,7 +50,7 @@ const RippleButton = React.forwardRef<HTMLButtonElement, RippleButtonProps>(
           }
           buttonRef.current = node
         }}
-        className={cn(buttonVariants({ variant, size, className }), "relative overflow-hidden")}
+        className={cn(buttonVariants({ variant, size }), "relative overflow-hidden", className)}
         onMouseDown={addRipple}
         {...props}
       >
