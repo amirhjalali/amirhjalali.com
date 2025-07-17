@@ -2,10 +2,11 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { ButtonProps, buttonVariants } from "./button"
+import { buttonVariants } from "./button"
 import { motion, AnimatePresence } from "framer-motion"
+import { type VariantProps } from "class-variance-authority"
 
-interface RippleButtonProps extends ButtonProps {
+interface RippleButtonProps extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants> {
   rippleColor?: string
   children: React.ReactNode
 }
