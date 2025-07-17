@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 
 const MorphingText = () => {
-  const variants = ['MR AI', 'AI MR', 'MR.AI', 'AI.MR']
+  const variants = ['AMIR', 'AI MR', 'MR AI', 'AI.MR']
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
@@ -16,53 +16,60 @@ const MorphingText = () => {
     return () => clearInterval(interval)
   }, [])
 
+  // Define positions for each letter in each variant
+  const letterPositions = {
+    'AMIR': { A: 0, M: 1, I: 2, R: 3 },
+    'AI MR': { A: 0, I: 1, ' ': 2, M: 3, R: 4 },
+    'MR AI': { M: 0, R: 1, ' ': 2, A: 3, I: 4 },
+    'AI.MR': { A: 0, I: 1, '.': 2, M: 3, R: 4 }
+  }
+
+  const currentVariant = variants[currentIndex]
+  const currentPositions = letterPositions[currentVariant as keyof typeof letterPositions]
+  
+  // All unique letters that appear across variants
+  const allLetters = ['A', 'M', 'I', 'R', '.', ' ']
+
   return (
     <motion.span
-      key={currentIndex}
-      initial={{ 
-        scale: 0.8, 
-        opacity: 0,
-        rotateX: -90,
-        filter: 'blur(4px)'
+      className="inline-block relative"
+      style={{ 
+        height: '1.2em',
+        width: '3em',
+        transformStyle: 'preserve-3d'
       }}
-      animate={{ 
-        scale: 1, 
-        opacity: 1,
-        rotateX: 0,
-        filter: 'blur(0px)'
-      }}
-      exit={{ 
-        scale: 1.2, 
-        opacity: 0,
-        rotateX: 90,
-        filter: 'blur(4px)'
-      }}
-      transition={{ 
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }}
-      className="inline-block"
-      style={{ transformStyle: 'preserve-3d' }}
     >
-      {variants[currentIndex].split('').map((char, index) => (
-        <motion.span
-          key={`${currentIndex}-${index}`}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ 
-            delay: index * 0.1,
-            duration: 0.6,
-            ease: 'easeOut'
-          }}
-          className="inline-block text-ai-green"
-          style={{ 
-            color: '#00FF88 !important',
-            textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)'
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
+      {allLetters.map((letter) => {
+        const targetPos = currentPositions[letter as keyof typeof currentPositions]
+        const isVisible = targetPos !== undefined
+        
+        return (
+          <motion.span
+            key={letter}
+            className="inline-block text-ai-green absolute"
+            style={{ 
+              color: '#00FF88 !important',
+              textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)',
+              fontSize: '1em',
+              fontWeight: 'inherit'
+            }}
+            animate={{
+              x: isVisible ? `${targetPos * 0.6}em` : '0em',
+              y: isVisible ? 0 : -20,
+              opacity: isVisible ? 1 : 0,
+              scale: isVisible ? 1 : 0.8,
+              rotateY: isVisible ? 0 : 90
+            }}
+            transition={{
+              duration: 0.8,
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: isVisible ? targetPos * 0.05 : 0
+            }}
+          >
+            {letter === ' ' ? '\u00A0' : letter}
+          </motion.span>
+        )
+      })}
     </motion.span>
   )
 }
