@@ -20,7 +20,7 @@ const projects = [
     progress: 70,
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
-    image: '/api/placeholder/400/300',
+    image: '/images/projects/0074289c3bf8420b9eb32a884275f158.jpg',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const projects = [
     status: 'Live' as const,
     progress: 90,
     link: 'https://avenu.ai/',
-    image: '/api/placeholder/400/300',
+    image: '/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg',
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ const projects = [
     status: 'Live' as const,
     progress: 85,
     link: 'https://www.getplaiced.com/',
-    image: '/api/placeholder/400/300',
+    image: '/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg',
   },
   {
     id: 4,
@@ -53,7 +53,7 @@ const projects = [
     status: 'Live' as const,
     progress: 80,
     link: 'https://www.argumend.org/',
-    image: '/api/placeholder/400/300',
+    image: '/images/ai-tools/42bb6faf6ae907625e09db4798f39158.jpg',
   },
   {
     id: 5,
@@ -64,7 +64,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: 'https://www.campalborz.org/',
-    image: '/api/placeholder/400/300',
+    image: '/images/home/7e53325289b9a03a24845876cff10e2c.jpg',
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: '/',
-    image: '/api/placeholder/400/300',
+    image: '/images/ai-tools/6df8a39d8c6862f85a9bcd4f82bffd2a.jpg',
   },
 ]
 

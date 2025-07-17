@@ -5,41 +5,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { getArticles, initializeDefaultArticles } from '@/lib/articles'
 
-const articles = [
-  {
-    id: 1,
-    title: 'The Future of AI-Powered Content Creation',
-    excerpt: 'Exploring how artificial intelligence is revolutionizing the way we create, edit, and distribute content across digital platforms.',
-    content: 'In the rapidly evolving landscape of digital content creation, artificial intelligence has emerged as a transformative force...',
-    tags: ['AI', 'Content Creation', 'Technology'],
-    readTime: '5 min read',
-    publishedAt: '2024-01-15',
-    aiGenerated: true,
-    author: 'MR AI',
-  },
-  {
-    id: 2,
-    title: 'Building Responsive AI Systems',
-    excerpt: 'How to design AI systems that adapt to user needs and provide meaningful interactions in real-world applications.',
-    content: 'Creating AI systems that truly serve users requires more than just advanced algorithms...',
-    tags: ['Machine Learning', 'UX', 'System Design'],
-    readTime: '8 min read',
-    publishedAt: '2024-01-10',
-    aiGenerated: true,
-    author: 'MR AI',
-  },
-  {
-    id: 3,
-    title: 'The Ethics of Automated Content',
-    excerpt: 'Examining the responsibility and considerations when deploying AI for content generation at scale.',
-    content: 'As AI-generated content becomes more prevalent, we must carefully consider the ethical implications...',
-    tags: ['Ethics', 'AI', 'Philosophy'],
-    readTime: '12 min read',
-    publishedAt: '2024-01-05',
-    aiGenerated: true,
-    author: 'MR AI',
-  },
-]
+// Articles are now loaded dynamically from the articles library
 
 const categories = ['All', 'AI', 'Technology', 'Ethics', 'Machine Learning']
 
@@ -137,22 +103,34 @@ export default function ArticlesPage() {
               whileHover={{ y: -5 }}
               className="group relative"
             >
-              <div className="glass p-6 rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col">
-                {/* Header */}
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-center gap-2">
-                    {article.aiGenerated && (
-                      <div className="w-3 h-3 bg-ai-green rounded-full" />
-                    )}
-                    <span className="text-xs text-gray-400">{article.author}</span>
+              <div className="glass rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col overflow-hidden">
+                {/* Article Image */}
+                {article.imageUrl && (
+                  <div className="aspect-video overflow-hidden">
+                    <img 
+                      src={article.imageUrl} 
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                  <span className="text-xs text-gray-500">{article.readTime}</span>
-                </div>
+                )}
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Header */}
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-2">
+                      {article.aiGenerated && (
+                        <div className="w-3 h-3 bg-ai-green rounded-full" />
+                      )}
+                      <span className="text-xs text-gray-400">{article.author}</span>
+                    </div>
+                    <span className="text-xs text-gray-500">{article.readTime}</span>
+                  </div>
 
-                {/* Title */}
-                <h2 className="text-xl font-bold mb-3 group-hover:text-gradient transition-all line-clamp-2">
-                  {article.title}
-                </h2>
+                  {/* Title */}
+                  <h2 className="text-xl font-bold mb-3 group-hover:text-gradient transition-all line-clamp-2">
+                    {article.title}
+                  </h2>
 
                 {/* Excerpt */}
                 <p className="text-gray-400 mb-4 flex-grow leading-relaxed">
@@ -171,20 +149,21 @@ export default function ArticlesPage() {
                   ))}
                 </div>
 
-                {/* Meta and CTA */}
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500">
-                    {new Date(article.publishedAt).toLocaleDateString()}
-                  </span>
-                  <Link
-                    href={`/articles/${article.id}`}
-                    className="text-ai-green hover:text-ai-green/80 font-medium text-sm transition-colors group-hover:gap-2 inline-flex items-center gap-1"
-                  >
-                    Read More
-                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
+                  {/* Meta and CTA */}
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">
+                      {new Date(article.publishedAt).toLocaleDateString()}
+                    </span>
+                    <Link
+                      href={`/articles/${article.id}`}
+                      className="text-ai-green hover:text-ai-green/80 font-medium text-sm transition-colors group-hover:gap-2 inline-flex items-center gap-1"
+                    >
+                      Read More
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
               </div>
               
