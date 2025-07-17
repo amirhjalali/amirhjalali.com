@@ -5,30 +5,60 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 
-const TypewriterText = ({ text }: { text: string }) => {
+const CyclingTypewriter = () => {
+  const texts = ['AMIR JALALI', 'MR AI']
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [displayedText, setDisplayedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
+
+  const currentText = texts[currentTextIndex]
 
   useEffect(() => {
-    if (currentIndex < text.length) {
+    const typeSpeed = isDeleting ? 50 : 100
+    const pauseTime = 2000
+
+    if (isPaused) {
       const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + text[currentIndex])
-        setCurrentIndex(prev => prev + 1)
-      }, 100)
+        setIsPaused(false)
+        setIsDeleting(true)
+      }, pauseTime)
       return () => clearTimeout(timeout)
     }
-  }, [currentIndex, text])
+
+    if (!isDeleting && currentIndex < currentText.length) {
+      // Typing forward
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + currentText[currentIndex])
+        setCurrentIndex(prev => prev + 1)
+      }, typeSpeed)
+      return () => clearTimeout(timeout)
+    } else if (!isDeleting && currentIndex === currentText.length) {
+      // Finished typing, pause before deleting
+      setIsPaused(true)
+    } else if (isDeleting && displayedText.length > 0) {
+      // Deleting
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev.slice(0, -1))
+      }, typeSpeed)
+      return () => clearTimeout(timeout)
+    } else if (isDeleting && displayedText.length === 0) {
+      // Finished deleting, move to next text
+      setIsDeleting(false)
+      setCurrentIndex(0)
+      setCurrentTextIndex(prev => (prev + 1) % texts.length)
+    }
+  }, [currentIndex, currentText, isDeleting, isPaused, displayedText])
 
   return (
-    <span>
+    <span className="relative">
       {displayedText}
-      {currentIndex < text.length && (
-        <motion.span
-          animate={{ opacity: [0, 1] }}
-          transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
-          className="inline-block w-[3px] h-[1.2em] bg-ai-green ml-1"
-        />
-      )}
+      <motion.span
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
+        className="inline-block w-[3px] h-[1.2em] bg-ai-green ml-1"
+      />
     </span>
   )
 }
@@ -152,7 +182,7 @@ export default function HeroEnhanced() {
               }}
             >
               <span className="text-gradient glow relative">
-                MR AI
+                <CyclingTypewriter />
                 <Sparkles className="absolute -top-8 -right-8 w-8 h-8 text-ai-green animate-pulse" />
               </span>
             </motion.h1>
@@ -167,14 +197,15 @@ export default function HeroEnhanced() {
           </motion.div>
 
           {/* Animated tagline */}
-          <motion.div
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-2xl md:text-4xl font-light text-gray-300 mb-6 leading-relaxed h-[50px]"
+            className="text-2xl md:text-4xl font-light text-gray-300 mb-6 leading-relaxed"
           >
-            <TypewriterText text="Building the future with Artificial Intelligence" />
-          </motion.div>
+            Building the future with
+            <span className="text-white font-medium"> Artificial Intelligence</span>
+          </motion.p>
 
           {/* Enhanced description */}
           <motion.div
