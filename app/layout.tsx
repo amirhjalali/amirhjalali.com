@@ -56,7 +56,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="min-h-screen bg-dark-bg font-inter">
+      <body className="min-h-screen font-inter antialiased">
         <NavigationEnhanced />
         <div className="pt-20">
           {children}

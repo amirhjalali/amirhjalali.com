@@ -281,7 +281,7 @@ export default function NavigationEnhanced() {
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[300px] sm:w-[400px] glass border-l border-white/10">
+                <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l border-border bg-background">
                   <SheetHeader>
                     <SheetTitle className="text-2xl font-space">
                       <span className="text-gradient">MR AI</span>
