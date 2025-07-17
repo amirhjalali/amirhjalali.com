@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
+import { RippleButton } from '@/components/ui/ripple-button'
+import { MagneticWrapper } from '@/components/ui/magnetic-wrapper'
 
 const MorphingText = () => {
   const variants = ['AMIR', 'MR AI']
@@ -244,36 +246,43 @@ export default function HeroEnhanced() {
             transition={{ delay: 1, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
           >
-            <Link 
-              href="/projects"
-              className="group relative px-8 py-4 overflow-hidden rounded-full font-semibold text-lg transition-all hover:scale-105"
-            >
-              <span className="relative z-10 flex items-center gap-2 text-black">
-                Explore Projects
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-ai-green to-ai-blue" />
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-ai-blue to-ai-green"
-                initial={{ x: "100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </Link>
+            <MagneticWrapper magneticStrength={0.3}>
+              <Link href="/projects">
+                <RippleButton
+                  className="relative px-8 py-4 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold text-lg hover:from-ai-blue hover:to-ai-green transition-all duration-300"
+                  rippleColor="rgba(255, 255, 255, 0.5)"
+                >
+                  <span className="flex items-center gap-2">
+                    Explore Projects
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </RippleButton>
+              </Link>
+            </MagneticWrapper>
             
-            <Link 
-              href="/thoughts"
-              className="group px-8 py-4 rounded-full border-2 border-border text-foreground font-medium text-lg hover:border-ai-green/50 hover:text-ai-green transition-all hover:scale-105 hover:shadow-lg hover:shadow-ai-green/20"
-            >
-              Read Thoughts
-            </Link>
+            <MagneticWrapper magneticStrength={0.2}>
+              <Link href="/thoughts">
+                <RippleButton
+                  variant="outline"
+                  className="px-8 py-4 border-2 border-border text-foreground font-medium text-lg hover:border-ai-green/50 hover:text-ai-green hover:shadow-lg hover:shadow-ai-green/20"
+                  rippleColor="rgba(0, 255, 136, 0.3)"
+                >
+                  Read Thoughts
+                </RippleButton>
+              </Link>
+            </MagneticWrapper>
 
-            <Link 
-              href="/generate"
-              className="group px-8 py-4 rounded-full border-2 border-ai-blue/30 text-ai-blue font-medium text-lg hover:border-ai-blue hover:bg-ai-blue/10 transition-all hover:scale-105 hover:shadow-lg hover:shadow-ai-blue/20"
-            >
-              AI Assistant
-            </Link>
+            <MagneticWrapper magneticStrength={0.2}>
+              <Link href="/generate">
+                <RippleButton
+                  variant="outline"
+                  className="px-8 py-4 border-2 border-ai-blue/30 text-ai-blue font-medium text-lg hover:border-ai-blue hover:bg-ai-blue/10 hover:shadow-lg hover:shadow-ai-blue/20"
+                  rippleColor="rgba(0, 217, 255, 0.3)"
+                >
+                  AI Assistant
+                </RippleButton>
+              </Link>
+            </MagneticWrapper>
           </motion.div>
 
           {/* Social links */}
@@ -283,28 +292,34 @@ export default function HeroEnhanced() {
             transition={{ delay: 1.2, duration: 0.8 }}
             className="flex justify-center gap-6"
           >
-            <a
-              href="https://github.com/amirhjalali"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors hover:scale-110"
-            >
-              <Github className="w-6 h-6" />
-            </a>
-            <a
-              href="https://linkedin.com/in/amirhjalali"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors hover:scale-110"
-            >
-              <Linkedin className="w-6 h-6" />
-            </a>
-            <a
-              href="/contact"
-              className="text-muted-foreground hover:text-foreground transition-colors hover:scale-110"
-            >
-              <Mail className="w-6 h-6" />
-            </a>
+            <MagneticWrapper magneticStrength={0.5}>
+              <a
+                href="https://github.com/amirhjalali"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors block p-2"
+              >
+                <Github className="w-6 h-6" />
+              </a>
+            </MagneticWrapper>
+            <MagneticWrapper magneticStrength={0.5}>
+              <a
+                href="https://linkedin.com/in/amirhjalali"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors block p-2"
+              >
+                <Linkedin className="w-6 h-6" />
+              </a>
+            </MagneticWrapper>
+            <MagneticWrapper magneticStrength={0.5}>
+              <a
+                href="/contact"
+                className="text-muted-foreground hover:text-foreground transition-colors block p-2"
+              >
+                <Mail className="w-6 h-6" />
+              </a>
+            </MagneticWrapper>
           </motion.div>
         </motion.div>
 
