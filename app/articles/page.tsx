@@ -72,7 +72,7 @@ export default function ArticlesPage() {
   
   const filteredArticles = selectedCategory === 'All' 
     ? allArticles 
-    : allArticles.filter(article => article.tags.some(tag => tag === selectedCategory))
+    : allArticles.filter(article => article.tags.some((tag: string) => tag === selectedCategory))
 
   return (
     <div className="min-h-screen relative">
@@ -161,7 +161,7 @@ export default function ArticlesPage() {
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {article.tags.map((tag) => (
+                  {article.tags.map((tag: string) => (
                     <span
                       key={tag}
                       className="text-xs px-2 py-1 bg-white/5 rounded-md text-gray-400"
