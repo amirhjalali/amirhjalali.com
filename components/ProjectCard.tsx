@@ -105,7 +105,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         >
           {/* Front Face */}
           <div className="absolute w-full h-full backface-hidden">
-            <div className="relative h-full glass border border-border hover:border-ai-green/30 rounded-2xl p-6 transition-all duration-300 overflow-hidden">
+            <div className="relative h-full glass border border-border hover:border-ai-green/30 rounded-2xl p-6 transition-all duration-300 overflow-hidden flex flex-col">
               {/* Animated background gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-ai-green/5 via-transparent to-ai-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
@@ -114,7 +114,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               <div className="absolute bottom-4 left-4 w-16 h-16 bg-ai-blue/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
 
               {/* Project Image */}
-              <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden">
+              <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden rounded-t-2xl">
                 <LazyImage
                   src={project.image}
                   alt={project.title}
@@ -163,7 +163,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </p>
               
               {/* Tags with hover effects */}
-              <div className="flex flex-wrap gap-2 mb-6 relative z-10">
+              <div className="flex flex-wrap gap-2 mb-6 relative z-10 flex-grow">
                 {project.tags.slice(0, 3).map((tag, tagIndex) => (
                   <motion.span
                     key={tag}
@@ -184,7 +184,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </div>
               
               {/* Action buttons */}
-              <div className="flex flex-col gap-3 relative z-10">
+              <div className="flex flex-col gap-3 relative z-10 mt-auto">
                 <Button 
                   asChild
                   className="group/btn bg-gradient-to-r from-ai-green to-ai-blue text-black hover:from-ai-blue hover:to-ai-green font-medium"
