@@ -19,19 +19,33 @@ const MorphingText = () => {
 
   return (
     <motion.div
-      key={text}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.6 }}
       className="inline-flex"
       style={{
         letterSpacing: '0.1em',
-        color: '#00FF88',
-        textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)'
+        minWidth: '5em', // Fixed width to prevent layout shift
+        justifyContent: 'center'
       }}
     >
-      {text}
+      {text.split('').map((char, index) => (
+        <motion.span
+          key={`${text}-${index}`}
+          initial={{ opacity: 0, y: 20, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -20, scale: 0.8 }}
+          transition={{ 
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+          style={{
+            color: '#00FF88',
+            textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)',
+            display: 'inline-block'
+          }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
     </motion.div>
   )
 }
