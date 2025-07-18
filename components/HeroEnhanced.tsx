@@ -8,85 +8,31 @@ import { RippleButton } from '@/components/ui/ripple-button'
 import { MagneticWrapper } from '@/components/ui/magnetic-wrapper'
 
 const MorphingText = () => {
-  const variants = ['AMIR', 'MR AI']
-  const [currentIndex, setCurrentIndex] = useState(0)
-
+  const [text, setText] = useState('AMIR')
+  
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % variants.length)
-    }, 4500) // Slower timing - 4.5 seconds
+      setText(prev => prev === 'AMIR' ? 'MR AI' : 'AMIR')
+    }, 4500)
     return () => clearInterval(interval)
   }, [])
 
-  // Define exact positions for each letter with consistent spacing
-  const letterSpacing = 0.7 // Spacing between letters
-  const wordSpacing = 0.6 // Additional spacing for space character
-  
-  const letterPositions = {
-    'AMIR': { 
-      A: 0,
-      M: 1,
-      I: 2,
-      R: 3
-    },
-    'MR AI': { 
-      M: 0,
-      R: 1,
-      ' ': 2,
-      A: 2.5,
-      I: 3.5
-    }
-  }
-
-  const currentVariant = variants[currentIndex]
-  const currentPositions = letterPositions[currentVariant as keyof typeof letterPositions]
-  
-  // Only letters that appear in these two variants
-  const allLetters = ['A', 'M', 'I', 'R', ' ']
-
   return (
-    <motion.span
-      className="inline-block relative"
-      style={{ 
-        height: '1.2em',
-        width: '4.5em',
-        transformStyle: 'preserve-3d'
+    <motion.div
+      key={text}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.6 }}
+      className="inline-flex"
+      style={{
+        letterSpacing: '0.1em',
+        color: '#00FF88',
+        textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)'
       }}
     >
-      {allLetters.map((letter) => {
-        const targetPos = currentPositions[letter as keyof typeof currentPositions]
-        const isVisible = targetPos !== undefined
-        
-        return (
-          <motion.span
-            key={letter}
-            className="absolute text-ai-green"
-            style={{ 
-              color: '#00FF88 !important',
-              textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)',
-              fontSize: '1em',
-              fontWeight: 'inherit',
-              left: '0',
-              top: '50%',
-              transform: 'translateY(-50%)'
-            }}
-            animate={{
-              left: isVisible ? `${targetPos * letterSpacing}em` : '50%',
-              opacity: isVisible ? 1 : 0,
-              scale: isVisible ? 1 : 0.8,
-              rotateY: isVisible ? 0 : 90
-            }}
-            transition={{
-              duration: 1.2,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              delay: isVisible ? targetPos * 0.05 : 0
-            }}
-          >
-            {letter === ' ' ? '\u00A0' : letter}
-          </motion.span>
-        )
-      })}
-    </motion.span>
+      {text}
+    </motion.div>
   )
 }
 
