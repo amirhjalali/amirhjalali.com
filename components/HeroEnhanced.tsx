@@ -19,23 +19,22 @@ const MorphingText = () => {
   }, [])
 
   // Define exact positions for each letter with consistent spacing
-  // Using 0.6em for letter spacing within words, 1.2em for space between words
-  const letterSpacing = 0.6 // Spacing between letters
-  const wordSpacing = 1.2 // Spacing for space character
+  const letterSpacing = 0.7 // Spacing between letters
+  const wordSpacing = 0.6 // Additional spacing for space character
   
   const letterPositions = {
     'AMIR': { 
       A: 0,
-      M: letterSpacing,
-      I: letterSpacing * 2,
-      R: letterSpacing * 3
+      M: 1,
+      I: 2,
+      R: 3
     },
     'MR AI': { 
       M: 0,
-      R: letterSpacing,
-      ' ': letterSpacing * 2,
-      A: letterSpacing * 2 + wordSpacing,
-      I: letterSpacing * 3 + wordSpacing
+      R: 1,
+      ' ': 2,
+      A: 2.5,
+      I: 3.5
     }
   }
 
@@ -45,22 +44,13 @@ const MorphingText = () => {
   // Only letters that appear in these two variants
   const allLetters = ['A', 'M', 'I', 'R', ' ']
 
-  // Calculate the total width needed
-  const maxWidth = Math.max(
-    letterSpacing * 3, // AMIR width
-    letterSpacing * 3 + wordSpacing // MR AI width
-  )
-
   return (
     <motion.span
       className="inline-block relative"
       style={{ 
         height: '1.2em',
-        width: `${maxWidth + 1}em`,
-        transformStyle: 'preserve-3d',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center'
+        width: '4.5em',
+        transformStyle: 'preserve-3d'
       }}
     >
       {allLetters.map((letter) => {
@@ -76,13 +66,12 @@ const MorphingText = () => {
               textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)',
               fontSize: '1em',
               fontWeight: 'inherit',
-              left: '50%',
+              left: '0',
               top: '50%',
-              transformOrigin: 'center center'
+              transform: 'translateY(-50%)'
             }}
             animate={{
-              x: isVisible ? `${targetPos - (maxWidth / 2)}em` : '0em',
-              y: isVisible ? '-50%' : '-70%',
+              left: isVisible ? `${targetPos * letterSpacing}em` : '50%',
               opacity: isVisible ? 1 : 0,
               scale: isVisible ? 1 : 0.8,
               rotateY: isVisible ? 0 : 90
@@ -90,7 +79,7 @@ const MorphingText = () => {
             transition={{
               duration: 1.2,
               ease: [0.25, 0.46, 0.45, 0.94],
-              delay: isVisible ? Math.abs(targetPos) * 0.03 : 0
+              delay: isVisible ? targetPos * 0.05 : 0
             }}
           >
             {letter === ' ' ? '\u00A0' : letter}
