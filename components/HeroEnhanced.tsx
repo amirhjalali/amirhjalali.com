@@ -35,7 +35,7 @@ const MorphingText = () => {
       className="inline-block relative"
       style={{ 
         height: '1.2em',
-        width: '3.8em',
+        width: '4.5em',
         transformStyle: 'preserve-3d',
         display: 'inline-flex',
         alignItems: 'center',
@@ -60,7 +60,7 @@ const MorphingText = () => {
               transformOrigin: 'center center'
             }}
             animate={{
-              x: isVisible ? `${(targetPos - 2) * 0.58}em` : '0em',
+              x: isVisible ? `${(targetPos - 2) * 0.72}em` : '0em',
               y: isVisible ? '-50%' : '-70%',
               opacity: isVisible ? 1 : 0,
               scale: isVisible ? 1 : 0.8,
