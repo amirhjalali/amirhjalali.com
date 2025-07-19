@@ -26,7 +26,7 @@ const projects = [
     progress: 70,
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
-    image: '/images/projects/0074289c3bf8420b9eb32a884275f158.jpg',
+    image: '/images/projects/697708edbb82e14a4a127560ef91f02e.jpg',
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const projects = [
     status: 'Live' as const,
     progress: 90,
     link: 'https://avenu.ai/',
-    image: '/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg',
+    image: '/images/ai-tools/6df8a39d8c6862f85a9bcd4f82bffd2a.jpg',
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ const projects = [
     status: 'Live' as const,
     progress: 85,
     link: 'https://www.getplaiced.com/',
-    image: '/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg',
+    image: '/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg',
   },
   {
     id: 4,
@@ -81,7 +81,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: '/',
-    image: '/images/ai-tools/6df8a39d8c6862f85a9bcd4f82bffd2a.jpg',
+    image: '/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg',
   },
 ]
 
