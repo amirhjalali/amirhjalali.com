@@ -60,6 +60,7 @@ module.exports = {
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
         'space': ['Space Grotesk', 'sans-serif'],
+        'lato': ['Lato', 'sans-serif'],
       },
       animation: {
         'text-morph': 'morph 4s ease-in-out infinite',

@@ -91,8 +91,8 @@ export default function NavigationEnhanced() {
                 whileTap={{ scale: 0.95 }}
                 className="relative"
               >
-                <h2 className="text-2xl font-space font-bold relative z-10">
-                  <span className="text-gradient">MR AI</span>
+                <h2 className="text-2xl font-lato font-black relative z-10 uppercase tracking-wide">
+                  <span className="text-gradient">AMIR H. JALALI</span>
                 </h2>
                 <motion.div 
                   className="absolute -inset-2 bg-gradient-to-r from-ai-green/20 to-ai-blue/20 rounded-full blur-xl"
@@ -176,8 +176,8 @@ export default function NavigationEnhanced() {
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l border-border bg-background">
                   <SheetHeader>
-                    <SheetTitle className="text-2xl font-space">
-                      <span className="text-gradient">MR AI</span>
+                    <SheetTitle className="text-2xl font-lato font-black uppercase tracking-wide">
+                      <span className="text-gradient">AMIR H. JALALI</span>
                     </SheetTitle>
                   </SheetHeader>
                   
