@@ -8,7 +8,7 @@ import LazyImage from '@/components/LazyImage'
 
 // Articles are now loaded dynamically from the articles library
 
-const categories = ['All', 'Vibe Coding', 'AI Programming', 'Philosophy', 'AI Training', 'LLMs', 'Data Strategy', 'OpenAI', 'Multimodal AI', 'DeepSEEK', 'Reasoning Models', 'Chain of Thought', 'AI Transparency', 'LLAMA3', 'AI Accessibility', 'Societal Impact', 'Data Quality', 'Economic Models', 'Identity', 'Creativity', 'Synthetic Data']
+const categories = ['All', 'Vibe Coding', 'AI Programming', 'Philosophy', 'AI Training', 'LLMs', 'Data Strategy', 'OpenAI', 'Multimodal AI', 'DeepSEEK', 'Reasoning Models', 'Chain of Thought', 'AI Transparency', 'LLAMA3', 'AI Accessibility', 'Societal Impact', 'Data Quality', 'Economic Models', 'Identity', 'Creativity', 'Synthetic Data', 'Reality', 'Consciousness', 'AI Revolution', 'Technology', 'Society', 'Optimism', 'Personal Growth', 'Authenticity', 'Education', 'Learning', 'Future of Work', 'Art', 'Human Expression', 'Information', 'Digital Literacy', 'Knowledge Management']
 
 const container = {
   hidden: { opacity: 0 },
