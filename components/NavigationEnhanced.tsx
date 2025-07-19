@@ -36,10 +36,6 @@ import {
   Zap,
   Code,
   Palette,
-  Globe,
-  Github,
-  Linkedin,
-  Twitter
 } from 'lucide-react'
 
 const navItems = [
@@ -149,37 +145,6 @@ export default function NavigationEnhanced() {
 
             {/* Desktop CTA and Actions */}
             <div className="hidden lg:flex items-center gap-4">
-              {/* Social Links Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                    <Globe className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="glass border-white/10">
-                  <DropdownMenuLabel className="text-gray-400">Connect</DropdownMenuLabel>
-                  <DropdownMenuSeparator className="bg-white/10" />
-                  <DropdownMenuItem asChild>
-                    <a href="https://github.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                      <Github className="h-4 w-4 mr-2" />
-                      GitHub
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a href="https://linkedin.com/in/amirhjalali" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                      <Linkedin className="h-4 w-4 mr-2" />
-                      LinkedIn
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a href="https://twitter.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                      <Twitter className="h-4 w-4 mr-2" />
-                      Twitter
-                    </a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
               <Link
                 href="/contact"
                 className="group relative px-6 py-2.5 overflow-hidden rounded-full font-medium transition-all"
@@ -246,17 +211,6 @@ export default function NavigationEnhanced() {
                       </Link>
                     </div>
                     
-                    <div className="mt-6 flex justify-center gap-4">
-                      <a href="https://github.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                        <Github className="h-5 w-5" />
-                      </a>
-                      <a href="https://linkedin.com/in/amirhjalali" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                        <Linkedin className="h-5 w-5" />
-                      </a>
-                      <a href="https://twitter.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                        <Twitter className="h-5 w-5" />
-                      </a>
-                    </div>
                   </div>
                 </SheetContent>
               </Sheet>
