@@ -209,9 +209,7 @@ export default function ProjectsPage() {
               }`}
             >
               {filteredProjects.map((project, index) => (
-                <div key={project.id} className="h-full flex">
-                  <ProjectCard project={project} index={index} />
-                </div>
+                <ProjectCard key={project.id} project={project} index={index} />
               ))}
             </motion.div>
           )}
