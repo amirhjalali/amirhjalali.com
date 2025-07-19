@@ -59,7 +59,7 @@ const projects = [
     status: 'Live' as const,
     progress: 80,
     link: 'https://www.argumend.org/',
-    image: '/images/ai-tools/42bb6faf6ae907625e09db4798f39158.jpg',
+    image: 'https://lh6.googleusercontent.com/aHQ6L4yMU6EG0sjfJIHSy8nmD24ND7_srAWekwMC8LTevZ98-bL8Hj8dlbPXYOFmf3bt8C-OPn1bOZbJHFJy424gbAM5J1JXclIEx3g4bO0m5gMBaFFt2USFzOkKiFBXgO0GBNzs1xI=w16383',
   },
   {
     id: 5,
