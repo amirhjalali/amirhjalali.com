@@ -19,16 +19,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu'
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from '@/components/ui/command'
 import { Button } from '@/components/ui/button'
 import { 
   Home, 
@@ -42,8 +32,6 @@ import {
   Mail,
   Menu,
   ChevronDown,
-  Search,
-  Command as CommandIcon,
   X,
   Zap,
   Code,
@@ -57,7 +45,6 @@ import {
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/projects', label: 'Projects', icon: FolderOpen },
-  { href: '/articles', label: 'Articles', icon: FileText },
   { href: '/thoughts', label: 'Thoughts', icon: Brain },
   { href: '/ai-tools', label: 'AI Tools', icon: Cpu },
   { href: '/resume', label: 'Resume', icon: FileUser },
@@ -65,18 +52,11 @@ const navItems = [
   { href: '/generate', label: 'Generate', icon: Sparkles },
 ]
 
-const quickActions = [
-  { label: 'View Projects', href: '/projects', icon: FolderOpen },
-  { label: 'Read Articles', href: '/articles', icon: FileText },
-  { label: 'AI Assistant', href: '/generate', icon: Sparkles },
-  { label: 'Contact Me', href: '/contact', icon: Mail },
-]
 
 export default function NavigationEnhanced() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [commandOpen, setCommandOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,17 +66,6 @@ export default function NavigationEnhanced() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    // Cmd+K shortcut
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setCommandOpen((open) => !open)
-      }
-    }
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [])
 
   useEffect(() => {
     setMobileOpen(false)
@@ -147,39 +116,8 @@ export default function NavigationEnhanced() {
             {/* Desktop Navigation with dropdowns */}
             <div className="hidden lg:block">
               <div className="flex items-center space-x-1">
-                {/* Quick Access Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="relative px-4 py-2 text-sm font-medium text-gray-400 hover:text-white group"
-                    >
-                      Quick Access
-                      <ChevronDown className="ml-1 h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56 glass border-white/10">
-                    <DropdownMenuLabel className="text-gray-400">Navigation</DropdownMenuLabel>
-                    <DropdownMenuSeparator className="bg-white/10" />
-                    {navItems.map((item) => {
-                      const Icon = item.icon
-                      return (
-                        <DropdownMenuItem key={item.href} asChild>
-                          <Link 
-                            href={item.href}
-                            className="flex items-center gap-2 cursor-pointer"
-                          >
-                            <Icon className="h-4 w-4" />
-                            {item.label}
-                          </Link>
-                        </DropdownMenuItem>
-                      )
-                    })}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
                 {/* Regular nav items */}
-                {navItems.slice(0, 5).map((item) => {
+                {navItems.slice(0, 6).map((item) => {
                   const isActive = pathname === item.href
                   return (
                     <Link
@@ -206,18 +144,6 @@ export default function NavigationEnhanced() {
                   )
                 })}
 
-                {/* Command palette trigger */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setCommandOpen(true)}
-                  className="ml-2 text-gray-400 hover:text-white"
-                  aria-label="Open command palette (Command+K)"
-                  aria-keyshortcuts="Command+K"
-                >
-                  <CommandIcon className="h-4 w-4 mr-2" />
-                  <span className="text-xs">⌘K</span>
-                </Button>
               </div>
             </div>
 
@@ -271,17 +197,6 @@ export default function NavigationEnhanced() {
             
             {/* Mobile menu trigger with Sheet */}
             <div className="lg:hidden flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setCommandOpen(true)}
-                className="text-gray-400 hover:text-white"
-                aria-label="Search (Command+K)"
-                aria-keyshortcuts="Command+K"
-              >
-                <Search className="h-5 w-5" />
-              </Button>
-              
               <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
                 <SheetTrigger asChild>
                   <Button 
@@ -350,51 +265,6 @@ export default function NavigationEnhanced() {
         </div>
       </motion.nav>
 
-      {/* Command Palette */}
-      <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
-        <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          
-          <CommandGroup heading="Quick Actions">
-            {quickActions.map((action) => {
-              const Icon = action.icon
-              return (
-                <CommandItem
-                  key={action.href}
-                  onSelect={() => {
-                    setCommandOpen(false)
-                    window.location.href = action.href
-                  }}
-                >
-                  <Icon className="mr-2 h-4 w-4" />
-                  <span>{action.label}</span>
-                </CommandItem>
-              )
-            })}
-          </CommandGroup>
-          
-          <CommandSeparator />
-          
-          <CommandGroup heading="All Pages">
-            {navItems.map((item) => {
-              const Icon = item.icon
-              return (
-                <CommandItem
-                  key={item.href}
-                  onSelect={() => {
-                    setCommandOpen(false)
-                    window.location.href = item.href
-                  }}
-                >
-                  <Icon className="mr-2 h-4 w-4" />
-                  <span>{item.label}</span>
-                </CommandItem>
-              )
-            })}
-          </CommandGroup>
-        </CommandList>
-      </CommandDialog>
     </>
   )
 }

@@ -6,7 +6,7 @@ import { useParams, notFound } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { getArticleById } from '@/lib/articles'
 
-export default function ArticlePage() {
+export default function ThoughtPage() {
   const params = useParams()
   const id = params.id as string
   const [article, setArticle] = useState<any>(null)
@@ -46,7 +46,7 @@ export default function ArticlePage() {
           className="mb-8"
         >
           <Link
-            href="/articles"
+            href="/thoughts"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

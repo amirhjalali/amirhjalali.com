@@ -112,7 +112,7 @@ export default function GeneratePage() {
       })
       
       // Redirect to the saved article
-      router.push(`/articles/${savedArticle.id}`)
+      router.push(`/thoughts/${savedArticle.id}`)
     } catch (err) {
       setError('Failed to save article')
     } finally {
