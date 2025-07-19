@@ -26,7 +26,7 @@ const projects = [
     progress: 70,
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
-    image: '/images/projects/697708edbb82e14a4a127560ef91f02e.jpg',
+    image: '/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg',
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const projects = [
     status: 'Live' as const,
     progress: 90,
     link: 'https://avenu.ai/',
-    image: '/images/ai-tools/6df8a39d8c6862f85a9bcd4f82bffd2a.jpg',
+    image: 'https://avenu.ai/wp-content/uploads/2023/06/avenu-featured-image-1.jpg',
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ const projects = [
     status: 'Live' as const,
     progress: 85,
     link: 'https://www.getplaiced.com/',
-    image: '/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg',
+    image: 'https://www.getplaiced.com/og-image.jpg',
   },
   {
     id: 4,
@@ -70,7 +70,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: 'https://www.campalborz.org/',
-    image: '/images/home/7e53325289b9a03a24845876cff10e2c.jpg',
+    image: '/images/projects/697708edbb82e14a4a127560ef91f02e.jpg',
   },
   {
     id: 6,
@@ -81,7 +81,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: '/',
-    image: '/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg',
+    image: '/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg',
   },
 ]
 
