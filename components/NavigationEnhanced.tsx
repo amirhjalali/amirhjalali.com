@@ -121,7 +121,7 @@ export default function NavigationEnhanced() {
                       href={item.href}
                       className="relative px-5 py-2 text-sm font-medium transition-all group"
                     >
-                      <span className={`relative z-10 flex items-center gap-2 ${
+                      <span className={`relative z-10 flex items-center gap-2 uppercase tracking-wide ${
                         isActive
                           ? 'text-white'
                           : 'text-gray-400 group-hover:text-white'
@@ -189,7 +189,7 @@ export default function NavigationEnhanced() {
                         <Link
                           key={item.href}
                           href={item.href}
-                          className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all ${
+                          className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all uppercase tracking-wide ${
                             isActive
                               ? 'bg-gradient-to-r from-ai-green/20 to-ai-blue/20 text-white'
                               : 'text-gray-400 hover:text-white hover:bg-white/5'
