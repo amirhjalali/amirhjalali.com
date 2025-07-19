@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/select"
 import { Loader2, Send, Sparkles, CheckCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { trackContactFormSubmit } from '@/lib/analytics'
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -63,18 +64,27 @@ export default function ContactForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    console.log(values)
-    setIsSubmitting(false)
-    setIsSuccess(true)
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      form.reset()
-      setIsSuccess(false)
-    }, 3000)
+    try {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      console.log(values)
+      
+      // Track successful form submission
+      trackContactFormSubmit()
+      
+      setIsSubmitting(false)
+      setIsSuccess(true)
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        form.reset()
+        setIsSuccess(false)
+      }, 3000)
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setIsSubmitting(false)
+    }
   }
 
   return (
