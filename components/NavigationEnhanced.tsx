@@ -146,12 +146,12 @@ export default function NavigationEnhanced() {
             {/* Desktop CTA and Actions */}
             <div className="hidden lg:flex items-center gap-4">
               <Link
-                href="/contact"
+                href="/book"
                 className="group relative px-6 py-2.5 overflow-hidden rounded-full font-medium transition-all"
               >
                 <span className="relative z-10 flex items-center gap-2 text-black">
                   <Zap className="h-4 w-4" />
-                  Get in Touch
+                  Book Consultation
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-ai-green to-ai-blue" />
                 <motion.div 
@@ -203,11 +203,11 @@ export default function NavigationEnhanced() {
                     
                     <div className="mt-6 pt-6 border-t border-white/10">
                       <Link
-                        href="/contact"
+                        href="/book"
                         className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-medium rounded-full hover:scale-105 transition-transform"
                       >
                         <Mail className="h-5 w-5" />
-                        Get in Touch
+                        Book Consultation
                       </Link>
                     </div>
                     
