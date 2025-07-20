@@ -317,7 +317,7 @@ DeepSEEK's approach creates ripple effects across the industry:
         tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/86d9adef95da3dd0ab6bd46f7b7dcba4.jpg',
+        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
       },
       {
         title: 'REASONING MODELS',
@@ -438,7 +438,7 @@ The primary benefit is **trustworthy AI**:
         tags: ['Chain of Thought', 'Problem Solving', 'AI Transparency'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/4fb9db71c2577e4d655d31bc26acd1b4.jpg',
+        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
       },
       {
         title: 'LLAMA3 and the era of abundant ai',
@@ -668,7 +668,7 @@ Perhaps the answer lies not in resolution but in the questioning itself:
         tags: ['Philosophy', 'Identity', 'Creativity'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/46bdfc5dcaa7f0c7ac5ab89c7bb9a75e.jpg',
+        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
       },
       {
         title: 'Synthetic Data vs \'Real\' DATA',
@@ -778,7 +778,7 @@ Choosing between synthetic and real data requires considering:
         tags: ['Synthetic Data', 'AI Training', 'Data Strategy'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/86d9adef95da3dd0ab6bd46f7b7dcba4.jpg',
+        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
       },
       {
         title: 'What is real? How do you define "real"?',
@@ -840,7 +840,7 @@ Perhaps the question isn't what is "real" but rather:
         tags: ['Philosophy', 'Reality', 'Consciousness', 'AI'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/46bdfc5dcaa7f0c7ac5ab89c7bb9a75e.jpg',
+        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
       },
       {
         title: 'The AI revolution is upon us. So why is everyone so glum?',

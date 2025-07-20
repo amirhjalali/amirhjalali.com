@@ -8,25 +8,22 @@ import LazyImage from '@/components/LazyImage'
 
 // Articles are now loaded dynamically from the articles library
 
-const categories = ['All', 'Vibe Coding', 'AI Programming', 'Philosophy', 'AI Training', 'LLMs', 'Data Strategy', 'OpenAI', 'Multimodal AI', 'DeepSEEK', 'Reasoning Models', 'Chain of Thought', 'AI Transparency', 'LLAMA3', 'AI Accessibility', 'Societal Impact', 'Data Quality', 'Economic Models', 'Identity', 'Creativity', 'Synthetic Data', 'Reality', 'Consciousness', 'AI Revolution', 'Technology', 'Society', 'Optimism', 'Personal Growth', 'Authenticity', 'Education', 'Learning', 'Future of Work', 'Art', 'Human Expression', 'Information', 'Digital Literacy', 'Knowledge Management']
-
 const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.2
     }
   }
 }
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   show: { opacity: 1, y: 0 }
 }
 
 export default function ThoughtsPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
   const [allArticles, setAllArticles] = useState<any[]>([])
   
   useEffect(() => {
@@ -36,10 +33,6 @@ export default function ThoughtsPage() {
     const storedArticles = getArticles()
     setAllArticles(storedArticles)
   }, [])
-  
-  const filteredArticles = selectedCategory === 'All' 
-    ? allArticles 
-    : allArticles.filter(article => article.tags.some((tag: string) => tag === selectedCategory))
 
   return (
     <div className="min-h-screen relative">
@@ -57,152 +50,126 @@ export default function ThoughtsPage() {
           <h1 className="text-5xl md:text-7xl font-space font-black mb-6">
             <span className="text-gradient">Thoughts</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Insights on AI trends, programming paradigms, and the future of technology
           </p>
-          
-          {/* AI Generation Notice */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-ai-green/30">
-            <div className="w-2 h-2 bg-ai-green rounded-full animate-pulse" />
-            <span className="text-sm text-ai-green font-medium">AI-Powered Content Generation</span>
-          </div>
         </motion.div>
 
-        {/* Categories Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
-        >
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
-                selectedCategory === category
-                  ? 'bg-gradient-to-r from-ai-green to-ai-blue text-black'
-                  : 'glass border border-white/20 text-gray-300 hover:border-ai-green/50 hover:text-white'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Articles Grid */}
+        {/* Articles - Vertical Scroll Layout */}
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="space-y-20 max-w-5xl mx-auto"
         >
-          {filteredArticles.map((article) => (
+          {allArticles.map((article, index) => (
             <motion.article
               key={article.id}
               variants={item}
-              whileHover={{ y: -5 }}
-              className="group relative"
+              className="relative"
             >
-              <div className="glass rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col overflow-hidden">
-                {/* Article Image */}
-                {article.imageUrl && (
-                  <div className="aspect-video overflow-hidden">
-                    <LazyImage 
-                      src={article.imageUrl} 
-                      alt={article.title}
-                      className="group-hover:scale-105 transition-transform duration-300"
-                      wrapperClassName="w-full h-full"
-                      aspectRatio="video"
-                      placeholder="skeleton"
-                    />
-                  </div>
-                )}
-                
-                <div className="p-6 flex flex-col flex-grow">
-                  {/* Header */}
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-2">
-                      {article.aiGenerated && (
-                        <div className="w-3 h-3 bg-ai-green rounded-full" />
-                      )}
-                      <span className="text-xs text-gray-400">{article.author}</span>
-                    </div>
-                    <span className="text-xs text-gray-500">{article.readTime}</span>
-                  </div>
+              {/* Divider between articles */}
+              {index > 0 && (
+                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-0.5 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              )}
 
-                  {/* Title */}
-                  <h2 className="text-xl font-bold mb-3 group-hover:text-gradient transition-all line-clamp-2">
-                    {article.title}
-                  </h2>
+              {/* Article Image - Full Width */}
+              {article.imageUrl && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="mb-8 overflow-hidden rounded-2xl border border-white/10"
+                >
+                  <LazyImage 
+                    src={article.imageUrl} 
+                    alt={article.title}
+                    className="hover:scale-105 transition-transform duration-700"
+                    wrapperClassName="w-full"
+                    aspectRatio="wide"
+                    placeholder="skeleton"
+                    priority={index < 2}
+                  />
+                </motion.div>
+              )}
+              
+              {/* Article Content */}
+              <div className="glass p-8 md:p-12 rounded-2xl border border-white/10">
+                {/* Meta Info */}
+                <div className="flex items-center gap-4 mb-6 text-sm text-gray-400">
+                  <div className="flex items-center gap-2">
+                    {article.aiGenerated && (
+                      <div className="w-2 h-2 bg-ai-green rounded-full animate-pulse" />
+                    )}
+                    <span>{article.author}</span>
+                  </div>
+                  <span>•</span>
+                  <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+                  <span>•</span>
+                  <span>{article.readTime}</span>
+                </div>
 
-                {/* Excerpt */}
-                <p className="text-gray-400 mb-4 flex-grow leading-relaxed">
-                  {article.excerpt}
-                </p>
+                {/* Title */}
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient">
+                  {article.title}
+                </h2>
+
+                {/* Full Content - Rendered as HTML */}
+                <div 
+                  className="prose prose-lg prose-invert max-w-none mb-8"
+                  dangerouslySetInnerHTML={{ 
+                    __html: article.content
+                      .replace(/\n\n/g, '</p><p class="mb-4 text-gray-300 leading-relaxed">')
+                      .replace(/\n/g, '<br/>')
+                      .replace(/^/, '<p class="mb-4 text-gray-300 leading-relaxed">')
+                      .replace(/$/, '</p>')
+                      .replace(/## (.*)/g, '<h2 class="text-2xl font-bold mt-8 mb-4 text-white">$1</h2>')
+                      .replace(/### (.*)/g, '<h3 class="text-xl font-semibold mt-6 mb-3 text-ai-green">$1</h3>')
+                      .replace(/# (.*)/g, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gradient">$1</h1>')
+                      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
+                      .replace(/\*(.*?)\*/g, '<em class="text-ai-green">$1</em>')
+                      .replace(/- (.*)/g, '<li class="ml-6 mb-2 text-gray-300">$1</li>')
+                      .replace(/(<li.*?<\/li>)/g, '<ul class="mb-4">$1</ul>')
+                      .replace(/<\/ul><ul class="mb-4">/g, '')
+                  }} 
+                />
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 pt-6 border-t border-white/10">
                   {article.tags.map((tag: string) => (
                     <span
                       key={tag}
-                      className="text-xs px-2 py-1 bg-white/5 rounded-md text-gray-400"
+                      className="px-3 py-1 bg-white/5 rounded-full text-sm text-gray-400 hover:bg-white/10 transition-colors cursor-default"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-
-                  {/* Meta and CTA */}
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">
-                      {new Date(article.publishedAt).toLocaleDateString()}
-                    </span>
-                    <Link
-                      href={`/thoughts/${article.id}`}
-                      className="text-ai-green hover:text-ai-green/80 font-medium text-sm transition-colors group-hover:gap-2 inline-flex items-center gap-1"
-                    >
-                      Read More
-                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
               </div>
-              
-              {/* Glow effect on hover */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-green/10 to-ai-blue/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
             </motion.article>
           ))}
         </motion.div>
 
-        {/* Create New Article CTA */}
+        {/* Bottom Navigation */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           className="text-center mt-20"
         >
-          <div className="glass p-8 rounded-2xl border border-white/10 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Share Your Thoughts</h3>
-            <p className="text-gray-400 mb-6">
-              Have ideas about AI, technology, or programming? Use the AI assistant to turn your thoughts into compelling articles.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/generate"
-                className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center"
-              >
-                Generate New Article
-              </Link>
-              <Link
-                href="/contact"
-                className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all inline-block text-center"
-              >
-                Get in Touch
-              </Link>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/generate"
+              className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center"
+            >
+              Generate New Article
+            </Link>
+            <Link
+              href="/contact"
+              className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all inline-block text-center"
+            >
+              Get in Touch
+            </Link>
           </div>
         </motion.div>
       </div>
