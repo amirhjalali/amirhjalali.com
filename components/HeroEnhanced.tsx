@@ -52,7 +52,8 @@ const LetterMorphAnimation = () => {
               textShadow: `
                 0 0 20px rgba(0, 255, 136, 0.8),
                 0 0 40px rgba(0, 255, 136, 0.4),
-                0 0 60px rgba(0, 255, 136, 0.2)
+                0 0 60px rgba(0, 255, 136, 0.2),
+                0 0 80px rgba(0, 255, 136, 0.1)
               `,
               display: 'inline-block',
             }}
@@ -82,22 +83,6 @@ const LetterMorphAnimation = () => {
           >
             {letter}
             
-            {/* Glow effect that intensifies during transition */}
-            <motion.div
-              className="absolute inset-0 pointer-events-none"
-              animate={{
-                opacity: isAmir ? 0 : [0, 0.5, 0]
-              }}
-              transition={{
-                duration: 2,
-                ease: "easeInOut"
-              }}
-              style={{
-                background: 'radial-gradient(circle, rgba(0, 255, 136, 0.4) 0%, transparent 70%)',
-                filter: 'blur(20px)',
-                transform: 'scale(1.5)'
-              }}
-            />
           </motion.span>
         )
       })}
