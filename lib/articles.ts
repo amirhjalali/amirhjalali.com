@@ -159,7 +159,7 @@ The recommendation is clear: **keep projects local as long as possible** to main
         tags: ['Vibe Coding', 'AI Programming', 'Development'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
+        imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
       },
       {
         title: '4O Image Generation',
@@ -206,7 +206,7 @@ The implications for creative workflows and AI-assisted design are profound.`,
         tags: ['OpenAI', 'Image Generation', 'Multimodal AI'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
+        imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.jpg',
       },
       {
         title: 'The ERA of VIBE CODING',
@@ -376,7 +376,7 @@ Organizations implementing reasoning models see:
         tags: ['Reasoning Models', 'Chain of Thought', 'AI Reliability'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/a2f87a49a39b33d777e7a8b07cd5c46b.jpg',
+        imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
       },
       {
         title: 'CHAIN OF THOUGHT',
@@ -580,7 +580,7 @@ The data landscape is evolving toward:
         tags: ['Data Quality', 'AI Training', 'Economic Models'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
+        imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
       },
       {
         title: 'Are we our IDEAS?',
