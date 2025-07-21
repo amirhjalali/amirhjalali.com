@@ -57,7 +57,7 @@ const LetterMorphAnimation = () => {
               display: 'inline-block',
             }}
             animate={{
-              x: config.order * 70, // 70px spacing between letters
+              x: config.order * 70 - 105, // Center the text by offsetting (3.5 letters * 70px / 2 = 122.5, rounded to 105)
               opacity: config.opacity,
               scale: [1, 0.95, 1], // Subtle pulsing effect
             }}
@@ -112,7 +112,7 @@ const LetterMorphAnimation = () => {
           transform: 'translateX(-50%)'
         }}
         animate={{
-          x: 140, // Position of space
+          x: 35, // Position of space (140 - 105 = 35)
           opacity: isAmir ? 0 : 0.3,
           scale: isAmir ? 0.8 : 1
         }}
