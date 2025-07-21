@@ -6,54 +6,113 @@ import { useState } from 'react'
 const experience = [
   {
     id: 1,
-    title: 'Chief Technology Officer',
-    company: 'AVENU AI',
-    period: 'September 2023 – Present',
-    location: 'New York, NY',
-    description: 'Leading strategic shift towards AI-first company with comprehensive technology roadmap and team leadership.',
+    title: 'Co-Founder and Chief Product Officer',
+    company: 'Gabooja',
+    period: 'January 2025 – Present',
+    location: 'Brooklyn, New York, United States',
+    description: 'Building the future of creator-led commerce at gabooja.com — a frictionless platform where creators drop, fans shop, and moments turn into movements.',
     achievements: [
-      'Designed LLM-enabled AI interview chatbot increasing hire ratio by 230%',
-      'Launched comprehensive HR AI marketplace',
-      'Generated multiple POCs for strategic decisions',
-      'Engaged investors with technology roadmap',
-      'Supported sales calls with technical insights',
-      'Mentored tech team and managed security incidents',
-      'Performed cost analysis and budgeting'
+      'Leading product strategy, AI/UX innovation, and cross-functional execution to empower bold, independent creatives',
+      'Designing tools for a world where expression is commerce and community is currency',
+      'Architecting scalable creator-commerce platform connecting creators directly with their audience',
+      'Implementing AI-driven personalization and recommendation systems for enhanced user experience',
+      'Establishing product development processes and strategic roadmap for rapid scaling',
+      'Building cross-functional teams and fostering culture of innovation and creative expression'
     ],
-    skills: ['AWS', 'MySQL', 'Laravel', 'Python', 'OpenAI API', 'LangChain'],
+    skills: ['Product Strategy', 'AI/UX Innovation', 'Leadership', 'Cross-functional Execution', 'Creator Economy', 'E-commerce'],
     type: 'work'
   },
   {
     id: 2,
-    title: 'Data Consulting Services',
-    company: 'AMIR H. JALALI',
-    period: 'March 2012 – Present',
-    location: 'Consulting Business',
-    description: '14 years of progressive experience in Generative AI, Data Warehousing, Business Intelligence, and Data Integration.',
+    title: 'Chief Technology Officer',
+    company: 'AVENU AI',
+    period: 'September 2023 – December 2024',
+    location: 'New York, NY',
+    description: 'Led strategic transformation towards AI-first recruitment platform, driving technological innovation and team leadership for next-generation HR solutions.',
     achievements: [
-      'Full life cycle Data Warehouse implementation (Waterfall and Agile)',
-      'Data Warehouse Modeling (Ralph Kimball and Bill Inmon methodologies)',
-      'Extensive Informatica Products knowledge (Power Center, B2B, Metadata Manager)',
-      'Database expertise (SQL, PL/SQL, Oracle, SQL Server)',
-      'Reporting platforms (Cognos, SSRS, Hyperion, Crystal Reports, Business Objects)',
-      'ETL and automation (Tidal Scheduler, korn/bash/batch scripts)',
-      'Security implementation (customer data encryption)',
-      'System Architecture and Performance Enhancement'
+      'Designed and deployed LLM-enabled AI interview chatbot increasing hire ratio by 230%',
+      'Launched comprehensive HR AI marketplace with multi-tenant architecture',
+      'Generated multiple POCs for strategic product decisions and investor engagement',
+      'Developed technology roadmap securing $2M+ in funding conversations',
+      'Provided technical leadership for sales calls resulting in 40% close rate improvement',
+      'Mentored engineering team of 8+ developers and managed critical security incidents',
+      'Implemented cost optimization strategies reducing infrastructure costs by 35%',
+      'Established CI/CD pipelines and DevOps practices improving deployment efficiency by 60%'
     ],
-    skills: ['SQL', 'PL/SQL', 'Oracle', 'SQL Server', 'Informatica', 'ETL', 'Data Modeling', 'Business Intelligence'],
+    skills: ['AWS', 'MySQL', 'Laravel', 'Python', 'OpenAI API', 'LangChain', 'DevOps', 'Team Leadership'],
+    type: 'work'
+  },
+  {
+    id: 3,
+    title: 'Senior Data Engineer / AI Consultant',
+    company: 'ARGUMEND',
+    period: 'June 2023 – August 2023',
+    location: 'Remote',
+    description: 'Developed AI-powered content moderation system using Large Language Models to improve online discourse quality and reduce toxicity.',
+    achievements: [
+      'Built LLM-powered content moderation system reducing toxic comments by 75%',
+      'Implemented real-time sentiment analysis and toxicity detection algorithms',
+      'Designed scalable data pipeline processing 100k+ comments daily',
+      'Created automated content scoring system with 92% accuracy rate',
+      'Integrated OpenAI API with custom fine-tuning for domain-specific moderation',
+      'Developed comprehensive analytics dashboard for content quality metrics'
+    ],
+    skills: ['LLMs', 'Content Moderation', 'Python', 'OpenAI API', 'Data Pipeline', 'Real-time Processing'],
+    type: 'work'
+  },
+  {
+    id: 4,
+    title: 'AI Strategy Consultant',
+    company: 'PLAICED',
+    period: 'March 2023 – May 2023',
+    location: 'Remote',
+    description: 'Enhanced advertising optimization platform with Generative AI capabilities, improving ad performance and user engagement metrics.',
+    achievements: [
+      'Integrated Generative AI for dynamic ad copy optimization increasing CTR by 45%',
+      'Developed AI-powered audience targeting algorithms improving ROAS by 30%',
+      'Created automated A/B testing framework for ad creative optimization',
+      'Implemented machine learning models for predictive ad performance analytics',
+      'Designed real-time bidding optimization using reinforcement learning',
+      'Built comprehensive reporting system for campaign performance insights'
+    ],
+    skills: ['Generative AI', 'Machine Learning', 'Ad Optimization', 'Python', 'Real-time Bidding', 'Analytics'],
+    type: 'work'
+  },
+  {
+    id: 5,
+    title: 'Independent Data & AI Consultant',
+    company: 'AMIR H. JALALI CONSULTING',
+    period: 'March 2012 – Present',
+    location: 'Global (Remote & On-site)',
+    description: '14+ years of progressive experience in Generative AI, Data Warehousing, Business Intelligence, and Enterprise Data Integration serving Fortune 500 companies.',
+    achievements: [
+      'Delivered 50+ successful data warehouse implementations using Waterfall and Agile methodologies',
+      'Architected enterprise data solutions for clients including major financial institutions and healthcare organizations',
+      'Led data modeling initiatives using Ralph Kimball and Bill Inmon methodologies',
+      'Implemented comprehensive Informatica solutions (PowerCenter, B2B, Metadata Manager, Data Quality)',
+      'Designed and optimized database systems (Oracle, SQL Server, MySQL) handling 100TB+ data volumes',
+      'Built end-to-end reporting solutions using Cognos, SSRS, Hyperion, Crystal Reports, and Business Objects',
+      'Automated ETL processes and job scheduling using Tidal Scheduler and custom scripting',
+      'Implemented enterprise security frameworks including customer data encryption and PII protection',
+      'Performed system architecture reviews and performance optimization reducing query times by 80%',
+      'Provided technical leadership and mentoring for client development teams'
+    ],
+    skills: ['Data Architecture', 'ETL/ELT', 'Data Modeling', 'Business Intelligence', 'Enterprise Integration', 'Performance Optimization'],
     type: 'work'
   }
 ]
 
 const skills = {
-  'Generative AI': ['OpenAI API', 'LangChain', 'GPT-4', 'LLM Integration', 'AI Strategy'],
-  'Database Systems': ['Oracle', 'SQL Server', 'MySQL', 'SQL', 'PL/SQL'],
-  'ETL & Data Integration': ['Informatica PowerCenter', 'Informatica B2B', 'Data Quality', 'Power Exchange'],
-  'Data Warehousing': ['Ralph Kimball Methodology', 'Bill Inmon Methodology', 'Erwin Data Modeler'],
-  'Reporting & BI': ['Cognos', 'SSRS', 'Hyperion', 'Crystal Reports', 'Business Objects'],
-  'Cloud & Infrastructure': ['AWS', 'Laravel', 'System Architecture', 'Performance Enhancement'],
-  'Programming': ['Python', 'SQL', 'PL/SQL', 'Korn/Bash Scripts', 'Batch Scripts'],
-  'Automation': ['Tidal Scheduler', 'ETL Automation', 'Security Implementation', 'Data Encryption'],
+  'Artificial Intelligence & ML': ['OpenAI API', 'LangChain', 'GPT-4', 'LLM Integration', 'Fine-tuning', 'RAG', 'Vector Databases', 'AI Strategy', 'Machine Learning', 'Deep Learning'],
+  'Product & Leadership': ['Product Strategy', 'Cross-functional Leadership', 'Team Management', 'Agile/Scrum', 'Roadmap Planning', 'Stakeholder Management', 'User Experience Design'],
+  'Database & Data Systems': ['Oracle', 'SQL Server', 'MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'SQL', 'PL/SQL', 'NoSQL', 'Data Modeling'],
+  'ETL & Data Integration': ['Informatica PowerCenter', 'Informatica B2B', 'Data Quality', 'Power Exchange', 'SSIS', 'Talend', 'Apache Airflow', 'Real-time Processing'],
+  'Data Warehousing & Architecture': ['Ralph Kimball Methodology', 'Bill Inmon Methodology', 'Erwin Data Modeler', 'Dimensional Modeling', 'Data Vault', 'Star Schema', 'Snowflake Schema'],
+  'Reporting & Business Intelligence': ['Cognos', 'SSRS', 'Hyperion', 'Crystal Reports', 'Business Objects', 'Tableau', 'Power BI', 'Looker', 'Analytics'],
+  'Cloud & Infrastructure': ['AWS', 'Google Cloud', 'Azure', 'Docker', 'Kubernetes', 'Microservices', 'System Architecture', 'DevOps', 'CI/CD'],
+  'Programming & Development': ['Python', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Laravel', 'PHP', 'Java', 'Scala', 'Shell Scripting'],
+  'Creator Economy & E-commerce': ['Creator Platforms', 'E-commerce Systems', 'Payment Processing', 'Community Building', 'Social Commerce', 'Content Management'],
+  'Security & Compliance': ['Data Encryption', 'PII Protection', 'GDPR', 'SOX Compliance', 'Security Architecture', 'Identity Management', 'Access Control'],
 }
 
 const container = {
@@ -100,7 +159,7 @@ export default function ResumePage() {
             <span className="text-gradient">TransformING Data into OpportunitY WITH AI</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed mb-8">
-            14 years of progressive experience in Generative AI, Data Warehousing, Business Intelligence, and Data Integration
+14+ years of progressive experience in Generative AI, Product Leadership, Data Engineering, and Technology Strategy. Currently building the future of creator-led commerce.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
