@@ -7,45 +7,165 @@ import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 import { RippleButton } from '@/components/ui/ripple-button'
 import { MagneticWrapper } from '@/components/ui/magnetic-wrapper'
 
-const MorphingText = () => {
-  const [text, setText] = useState('AMIR')
+const MagneticLetterDance = () => {
+  const [phase, setPhase] = useState(0) // 0: AMIR, 1: scattered, 2: MR AI
+  const [screenShake, setScreenShake] = useState(false)
   
   useEffect(() => {
-    const interval = setInterval(() => {
-      setText(prev => prev === 'AMIR' ? 'MR AI' : 'AMIR')
-    }, 4500)
+    const sequence = async () => {
+      // Stay as AMIR for 3 seconds
+      await new Promise(resolve => setTimeout(resolve, 3000))
+      
+      // Phase 1: Scatter letters (dramatic pull apart)
+      setPhase(1)
+      
+      // Wait for scatter animation to complete
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      // Phase 2: Magnetic snap to MR AI with screen shake
+      setScreenShake(true)
+      setPhase(2)
+      
+      // End screen shake
+      setTimeout(() => setScreenShake(false), 200)
+      
+      // Stay as MR AI for 3 seconds
+      await new Promise(resolve => setTimeout(resolve, 3000))
+      
+      // Reset to AMIR
+      setPhase(0)
+    }
+    
+    sequence()
+    const interval = setInterval(sequence, 8500) // Total cycle: 8.5 seconds
     return () => clearInterval(interval)
   }, [])
 
+  // Letter positions for each phase
+  const letterPositions = {
+    // Phase 0: AMIR positions
+    0: [
+      { letter: 'A', x: 0, y: 0, rotation: 0 },
+      { letter: 'M', x: 80, y: 0, rotation: 0 },
+      { letter: 'I', x: 160, y: 0, rotation: 0 },
+      { letter: 'R', x: 200, y: 0, rotation: 0 }
+    ],
+    // Phase 1: Scattered positions (magnetic chaos)
+    1: [
+      { letter: 'A', x: -120, y: -80, rotation: -45 },
+      { letter: 'M', x: 150, y: -120, rotation: 30 },
+      { letter: 'I', x: -80, y: 100, rotation: 60 },
+      { letter: 'R', x: 180, y: 90, rotation: -30 }
+    ],
+    // Phase 2: MR AI positions  
+    2: [
+      { letter: 'M', x: 0, y: 0, rotation: 0 },
+      { letter: 'R', x: 80, y: 0, rotation: 0 },
+      { letter: ' ', x: 160, y: 0, rotation: 0 },
+      { letter: 'A', x: 180, y: 0, rotation: 0 },
+      { letter: 'I', x: 220, y: 0, rotation: 0 }
+    ]
+  }
+
   return (
     <motion.div
-      className="inline-flex"
+      className="relative inline-flex items-center justify-center"
       style={{
-        letterSpacing: '0.1em',
-        minWidth: '5em', // Fixed width to prevent layout shift
-        justifyContent: 'center'
+        width: '300px',
+        height: '120px',
+        letterSpacing: '0.1em'
       }}
+      animate={screenShake ? {
+        x: [0, -2, 2, -2, 2, 0],
+        y: [0, -1, 1, -1, 1, 0]
+      } : {}}
+      transition={{ duration: 0.2 }}
     >
-      {text.split('').map((char, index) => (
-        <motion.span
-          key={`${text}-${index}`}
-          initial={{ opacity: 0, y: 20, scale: 0.8 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -20, scale: 0.8 }}
-          transition={{ 
-            duration: 0.8,
-            delay: index * 0.1,
-            ease: [0.25, 0.46, 0.45, 0.94]
+      {/* Render letters based on current phase */}
+      {(phase === 2 ? letterPositions[2] : letterPositions[0]).map((letterData, index) => {
+        const scatterData = letterPositions[1][index] || { x: 0, y: 0, rotation: 0 }
+        
+        return (
+          <motion.span
+            key={`letter-${letterData.letter}-${index}`}
+            className="absolute text-6xl md:text-8xl font-bold"
+            style={{
+              color: '#00FF88',
+              textShadow: `
+                0 0 20px rgba(0, 255, 136, 0.8),
+                0 0 40px rgba(0, 255, 136, 0.4),
+                0 0 60px rgba(0, 255, 136, 0.2)
+              `,
+              display: 'inline-block',
+              transformOrigin: 'center'
+            }}
+            animate={{
+              x: phase === 1 ? scatterData.x : letterData.x,
+              y: phase === 1 ? scatterData.y : letterData.y,
+              rotate: phase === 1 ? scatterData.rotation : letterData.rotation,
+              scale: phase === 1 ? 1.2 : 1,
+              opacity: letterData.letter === ' ' ? 0 : 1
+            }}
+            transition={{
+              type: phase === 2 ? "spring" : "spring",
+              stiffness: phase === 2 ? 400 : 150,
+              damping: phase === 2 ? 25 : 20,
+              duration: phase === 1 ? 1.2 : 0.8,
+              ease: phase === 1 ? [0.25, 0.46, 0.45, 0.94] : [0.68, -0.55, 0.265, 1.55]
+            }}
+          >
+            {letterData.letter === ' ' ? '\u00A0' : letterData.letter}
+            
+            {/* Particle trail effect during scatter */}
+            {phase === 1 && (
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 0.6, repeat: 2 }}
+              >
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-ai-green rounded-full"
+                    style={{
+                      left: '50%',
+                      top: '50%'
+                    }}
+                    animate={{
+                      x: (Math.random() - 0.5) * 100,
+                      y: (Math.random() - 0.5) * 100,
+                      opacity: [1, 0]
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      delay: i * 0.05,
+                      ease: "easeOut"
+                    }}
+                  />
+                ))}
+              </motion.div>
+            )}
+          </motion.span>
+        )
+      })}
+      
+      {/* Electromagnetic field effect during snap */}
+      {phase === 2 && (
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ 
+            opacity: [0, 0.6, 0],
+            scale: [0.5, 1.5, 2],
           }}
+          transition={{ duration: 0.4 }}
           style={{
-            color: '#00FF88',
-            textShadow: '0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4)',
-            display: 'inline-block'
+            background: `radial-gradient(circle, transparent 40%, rgba(0, 255, 136, 0.1) 70%, transparent 90%)`,
+            borderRadius: '50%'
           }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
+        />
+      )}
     </motion.div>
   )
 }
@@ -169,8 +289,7 @@ export default function HeroEnhanced() {
               }}
             >
               <span className="relative inline-block" style={{ color: '#00FF88' }}>
-                <MorphingText />
-                <Sparkles className="absolute -top-8 -right-8 w-8 h-8 text-ai-green animate-pulse" />
+                <MagneticLetterDance />
               </span>
             </motion.h1>
             <motion.p 
