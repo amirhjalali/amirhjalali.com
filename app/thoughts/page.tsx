@@ -58,89 +58,114 @@ export default function ThoughtsPage() {
           </p>
         </motion.div>
 
-        {/* Articles Grid */}
+        {/* Thought Bubbles */}
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto"
         >
-          {allArticles.map((article) => (
-            <motion.article
+          {allArticles.map((article, index) => (
+            <motion.div
               key={article.id}
               variants={item}
-              whileHover={{ y: -5 }}
-              className="group relative"
+              whileHover={{ 
+                scale: 1.05,
+                rotate: Math.random() * 4 - 2, // Random slight rotation
+                y: -10
+              }}
+              className="group relative cursor-pointer"
+              onClick={() => window.location.href = `/thoughts/${article.id}`}
+              style={{
+                transform: `rotate(${Math.random() * 6 - 3}deg)` // Random initial rotation
+              }}
             >
-              <Link href={`/thoughts/${article.id}`} className="block h-full">
-                <div className="glass rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col overflow-hidden cursor-pointer">
-                {/* Article Image */}
-                {article.imageUrl && (
-                  <div className="aspect-video overflow-hidden">
-                    <LazyImage 
-                      src={article.imageUrl} 
-                      alt={article.title}
-                      className="group-hover:scale-105 transition-transform duration-300"
-                      wrapperClassName="w-full h-full"
-                      aspectRatio="video"
-                      placeholder="skeleton"
-                    />
-                  </div>
-                )}
+              {/* Main thought bubble */}
+              <div className="relative">
+                {/* Bubble tail */}
+                <div className="absolute -bottom-4 left-8 w-6 h-6 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
+                <div className="absolute -bottom-2 left-12 w-3 h-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
                 
-                <div className="p-6 flex flex-col flex-grow">
-                  {/* Header */}
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-2">
-                      {article.aiGenerated && (
-                        <div className="w-3 h-3 bg-ai-green rounded-full" />
-                      )}
-                      <span className="text-xs text-gray-400">{article.author}</span>
-                    </div>
-                    <span className="text-xs text-gray-500">{article.readTime}</span>
+                {/* Main bubble */}
+                <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-full p-8 hover:bg-ai-green/10 hover:border-ai-green/30 transition-all duration-300 min-h-[300px] flex flex-col justify-between">
+                  {/* Floating orb inside bubble */}
+                  <div className="absolute top-4 right-4 w-2 h-2 bg-ai-green/60 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* AI indicator */}
+                  {article.aiGenerated && (
+                    <div className="absolute top-3 left-3 w-3 h-3 bg-ai-green rounded-full animate-pulse" />
+                  )}
+                  
+                  {/* Content */}
+                  <div className="text-center">
+                    <h3 className="text-lg font-bold mb-3 text-white group-hover:text-gradient transition-all duration-300 line-clamp-3">
+                      {article.title}
+                    </h3>
+                    
+                    <p className="text-gray-300 text-sm leading-relaxed line-clamp-4 mb-4">
+                      {article.excerpt}
+                    </p>
                   </div>
-
-                  {/* Title */}
-                  <h2 className="text-xl font-bold mb-3 group-hover:text-gradient transition-all line-clamp-2">
-                    {article.title}
-                  </h2>
-
-                {/* Excerpt */}
-                <p className="text-gray-400 mb-4 flex-grow leading-relaxed">
-                  {article.excerpt}
-                </p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {article.tags.map((tag: string) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-2 py-1 bg-white/5 rounded-md text-gray-400"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                  {/* Meta and CTA */}
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">
-                      {new Date(article.publishedAt).toLocaleDateString()}
-                    </span>
-                    <span className="text-ai-green hover:text-ai-green/80 font-medium text-sm transition-colors group-hover:gap-2 inline-flex items-center gap-1">
-                      Read More
-                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </span>
+                  
+                  {/* Bottom info */}
+                  <div className="text-center">
+                    {/* Tags (show max 2) */}
+                    <div className="flex flex-wrap gap-1 justify-center mb-3">
+                      {article.tags.slice(0, 2).map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-400 group-hover:text-ai-green transition-colors"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {article.tags.length > 2 && (
+                        <span className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-500">
+                          +{article.tags.length - 2}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* Date and read time */}
+                    <div className="text-xs text-gray-500 space-y-1">
+                      <div>{new Date(article.publishedAt).toLocaleDateString()}</div>
+                      <div className="text-ai-green opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {article.readTime} • Click to read
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              </Link>
               
               {/* Glow effect on hover */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-green/10 to-ai-blue/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
-            </motion.article>
+              <div className="absolute -inset-4 bg-gradient-to-r from-ai-green/20 to-ai-blue/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
+              
+              {/* Floating particles around bubble */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-ai-green/60 rounded-full"
+                    initial={{ 
+                      x: Math.random() * 200 - 100,
+                      y: Math.random() * 200 - 100,
+                      opacity: 0 
+                    }}
+                    animate={{
+                      x: Math.random() * 200 - 100,
+                      y: Math.random() * 200 - 100,
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2 + Math.random(),
+                      repeat: Infinity,
+                      delay: i * 0.5,
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
+              </div>
+            </motion.div>
           ))}
         </motion.div>
 
