@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useParams, notFound } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { getArticleById } from '@/lib/articles'
+import { getArticleById, initializeDefaultArticles } from '@/lib/articles'
 
 export default function ThoughtPage() {
   const params = useParams()
@@ -13,9 +13,14 @@ export default function ThoughtPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Initialize default articles if needed
+    initializeDefaultArticles()
+    
+    // Load the specific article
     const loadedArticle = getArticleById(id)
     if (!loadedArticle) {
-      notFound()
+      setLoading(false)
+      return
     }
     setArticle(loadedArticle)
     setLoading(false)

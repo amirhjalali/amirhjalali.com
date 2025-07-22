@@ -77,25 +77,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
           </div>
 
-          {/* Header with status and progress */}
-          <div className="relative z-10 flex justify-between items-start mb-6">
+          {/* Header with status */}
+          <div className="relative z-10 mb-6">
             <Badge className={`${statusConfig.bg} ${statusConfig.text} border-0`}>
               <StatusIcon className="w-3 h-3 mr-1" />
               {project.status}
             </Badge>
-            
-            <div className="text-right">
-              <div className="text-xs text-muted-foreground mb-1">Progress</div>
-              <div className="w-16 h-2 bg-border rounded-full overflow-hidden">
-                <motion.div 
-                  className="h-full bg-gradient-to-r from-ai-green to-ai-blue rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${project.progress}%` }}
-                  transition={{ delay: index * 0.1 + 0.5, duration: 1, ease: "easeOut" }}
-                />
-              </div>
-              <div className="text-xs text-muted-foreground mt-1">{project.progress}%</div>
-            </div>
           </div>
           
           {/* Title with gradient effect on hover */}
