@@ -58,108 +58,127 @@ export default function ThoughtsPage() {
           </p>
         </motion.div>
 
-        {/* Thought Bubbles */}
+        {/* Thought Cards */}
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {allArticles.map((article, index) => (
             <motion.div
               key={article.id}
               variants={item}
               whileHover={{ 
-                scale: 1.05,
-                rotate: Math.random() * 4 - 2, // Random slight rotation
-                y: -10
+                y: -8,
+                scale: 1.02
               }}
               className="group relative cursor-pointer"
               onClick={() => window.location.href = `/thoughts/${article.id}`}
               style={{
-                transform: `rotate(${Math.random() * 6 - 3}deg)` // Random initial rotation
+                transform: `rotate(${Math.random() * 2 - 1}deg)` // Subtle random rotation
               }}
             >
-              {/* Main thought bubble */}
-              <div className="relative">
-                {/* Bubble tail */}
-                <div className="absolute -bottom-4 left-8 w-6 h-6 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
-                <div className="absolute -bottom-2 left-12 w-3 h-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
+              {/* Thought bubble tail */}
+              <div className="absolute -bottom-3 left-6 w-4 h-4 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
+              <div className="absolute -bottom-1 left-9 w-2 h-2 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
+              
+              {/* Main card */}
+              <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden hover:bg-ai-green/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col">
                 
-                {/* Main bubble */}
-                <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-full p-8 hover:bg-ai-green/10 hover:border-ai-green/30 transition-all duration-300 min-h-[300px] flex flex-col justify-between">
-                  {/* Floating orb inside bubble */}
-                  <div className="absolute top-4 right-4 w-2 h-2 bg-ai-green/60 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* AI indicator */}
-                  {article.aiGenerated && (
-                    <div className="absolute top-3 left-3 w-3 h-3 bg-ai-green rounded-full animate-pulse" />
-                  )}
-                  
-                  {/* Content */}
-                  <div className="text-center">
-                    <h3 className="text-lg font-bold mb-3 text-white group-hover:text-gradient transition-all duration-300 line-clamp-3">
-                      {article.title}
-                    </h3>
+                {/* Image */}
+                {article.imageUrl && (
+                  <div className="relative h-48 overflow-hidden">
+                    <LazyImage 
+                      src={article.imageUrl} 
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      wrapperClassName="w-full h-full"
+                      aspectRatio="wide"
+                      placeholder="skeleton"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     
-                    <p className="text-gray-300 text-sm leading-relaxed line-clamp-4 mb-4">
-                      {article.excerpt}
-                    </p>
+                    {/* AI indicator on image */}
+                    {article.aiGenerated && (
+                      <div className="absolute top-3 left-3 flex items-center gap-2 px-2 py-1 bg-ai-green/90 rounded-full text-xs font-medium text-black">
+                        <div className="w-2 h-2 bg-black rounded-full animate-pulse" />
+                        AI
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Header info */}
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-xs text-gray-400">{article.author}</span>
+                    <span className="text-xs text-gray-500">{article.readTime}</span>
                   </div>
                   
-                  {/* Bottom info */}
-                  <div className="text-center">
-                    {/* Tags (show max 2) */}
-                    <div className="flex flex-wrap gap-1 justify-center mb-3">
-                      {article.tags.slice(0, 2).map((tag: string) => (
-                        <span
-                          key={tag}
-                          className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-400 group-hover:text-ai-green transition-colors"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {article.tags.length > 2 && (
-                        <span className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-500">
-                          +{article.tags.length - 2}
-                        </span>
-                      )}
-                    </div>
-                    
-                    {/* Date and read time */}
-                    <div className="text-xs text-gray-500 space-y-1">
-                      <div>{new Date(article.publishedAt).toLocaleDateString()}</div>
-                      <div className="text-ai-green opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {article.readTime} • Click to read
-                      </div>
-                    </div>
+                  {/* Title */}
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gradient transition-all duration-300 line-clamp-2">
+                    {article.title}
+                  </h3>
+                  
+                  {/* Excerpt */}
+                  <p className="text-gray-300 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow">
+                    {article.excerpt}
+                  </p>
+                  
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {article.tags.slice(0, 3).map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-400 group-hover:text-ai-green transition-colors"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {article.tags.length > 3 && (
+                      <span className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-500">
+                        +{article.tags.length - 3}
+                      </span>
+                    )}
+                  </div>
+                  
+                  {/* Footer */}
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-500">
+                      {new Date(article.publishedAt).toLocaleDateString()}
+                    </span>
+                    <span className="text-ai-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
+                      Read more →
+                    </span>
                   </div>
                 </div>
               </div>
               
               {/* Glow effect on hover */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-ai-green/20 to-ai-blue/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-ai-green/20 to-ai-blue/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
               
-              {/* Floating particles around bubble */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                {[...Array(3)].map((_, i) => (
+              {/* Floating thought particles */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                {[...Array(2)].map((_, i) => (
                   <motion.div
                     key={i}
                     className="absolute w-1 h-1 bg-ai-green/60 rounded-full"
                     initial={{ 
-                      x: Math.random() * 200 - 100,
-                      y: Math.random() * 200 - 100,
+                      x: Math.random() * 100 + 50,
+                      y: Math.random() * 100 + 50,
                       opacity: 0 
                     }}
                     animate={{
-                      x: Math.random() * 200 - 100,
-                      y: Math.random() * 200 - 100,
+                      x: Math.random() * 100 + 50,
+                      y: Math.random() * 100 + 50,
                       opacity: [0, 1, 0],
                     }}
                     transition={{
-                      duration: 2 + Math.random(),
+                      duration: 3,
                       repeat: Infinity,
-                      delay: i * 0.5,
+                      delay: i * 1,
                       ease: "easeInOut"
                     }}
                   />

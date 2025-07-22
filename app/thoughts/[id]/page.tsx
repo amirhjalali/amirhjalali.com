@@ -111,13 +111,16 @@ export default function ThoughtPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-12"
+            className="mb-12 -mx-6"
           >
-            <img 
-              src={article.imageUrl} 
-              alt={article.title}
-              className="w-full rounded-2xl border border-white/10"
-            />
+            <div className="relative h-80 md:h-96 overflow-hidden rounded-2xl border border-white/10">
+              <img 
+                src={article.imageUrl} 
+                alt={article.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            </div>
           </motion.div>
         )}
 
