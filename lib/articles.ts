@@ -123,68 +123,33 @@ export function initializeDefaultArticles() {
     const defaultArticles = [
       {
         title: 'THE EDGE OF VIBE CODING',
-        excerpt: 'Exploring the limits and challenges of AI-assisted programming, including database integration friction and the advantages of file-based formats.',
-        content: `# The Edge of Vibe Coding
+        excerpt: 'A few months back, I wrote about the promise of vibe coding. Now, 2.5 months into practicing it daily, I still believe the nature of programming has shifted. But I\'m also seeing the current limits more clearly.',
+        content: `# THE EDGE OF VIBE CODING
 
-In the world of **Vibe Coding**, we encounter fascinating challenges that push the boundaries of AI-assisted development.
+A few months back, I wrote about the promise of vibe coding. Now, 2.5 months into practicing it daily, I still believe the nature of programming has shifted. But I'm also seeing the current limits more clearly.
 
-## Database Integration Friction
+The biggest friction point comes when a project needs to interact with external data. Whether it's a database or API calls, progress slows down significantly. This happens regardless of the model being used.
 
-One of the most significant challenges in modern development is the friction created by database integration. Traditional database setups often slow down the development process, requiring:
+Right now, the best move is to delay database integration. In the early stages, the data model needs to stay flexible. File-based formats like JSON work better and are easier for the LLM to navigate. Once you involve a real database, errors become more frequent and the process becomes much harder to manage.
 
-- Complex schema migrations
-- Intricate ORM configurations  
-- Database-specific optimization concerns
-- Connection management overhead
-
-## File-Based Advantages
-
-In contrast, file-based formats offer distinct advantages:
-
-- **Simplicity**: Direct file manipulation without database layers
-- **Portability**: Easy to move, backup, and version control
-- **Development Speed**: Immediate access without connection setup
-- **Debugging**: Human-readable format for easier troubleshooting
-
-## The Recommendation
-
-The recommendation is clear: **keep projects local as long as possible** to maintain development velocity. This approach allows developers to:
-
-1. Focus on core functionality first
-2. Iterate rapidly without infrastructure concerns
-3. Deploy to production only when absolutely necessary
-4. Maintain the flow state that makes vibe coding so effective
-
-*The future of development lies in removing friction, not adding complexity.*`,
+Keep it local as long as possible. That's where vibe coding still flows.`,
         tags: ['Vibe Coding', 'AI Programming', 'Development'],
         author: 'Amir Jalali',
         aiGenerated: false,
         imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
       },
       {
-        title: '4O IMAGE GENERATION',
-        excerpt: 'OpenAI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is multimodal-native and non-diffusion-based.',
-        content: `# 4O IMAGE GENERATION
+        title: '4O image generation',
+        excerpt: 'Open AI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is multimodal-native and non-diffusion-based.',
+        content: `# 4O image generation
 
-OpenAI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is:
+Open AI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is:
 
-## Multimodal-native
-Unlike diffusion models that generate images from text prompts only, 4o can **directly understand and generate** across text, images, and audio in a unified architecture.
+• **Multimodal-native**: Unlike diffusion models that generate images from text prompts only, 4o can directly understand and generate across text, images, and audio in a unified architecture.
 
-## Non-diffusion-based
-It doesn't use a step-by-step denoising process like Stable Diffusion or DALL-E 2. Instead, image reasoning and generation are integrated more like language modeling, allowing for faster and more flexible interaction.
+• **Non-diffusion-based**: It doesn't use a step-by-step denoising process like Stable Diffusion or DALL·E 2. Instead, image reasoning and generation are integrated more like language modeling, allowing for faster and more flexible interaction.
 
-This has led to a giant step up in usability of this model. The long prompts of Midjourney days are gone and we can now collaborate more closely with the model for our desired outputs.
-
-### Example Outputs
-
-**A eye** - A striking close-up of a red cybernetic eye
-
-**A short story** - Multiple panels showing a dark, cyberpunk narrative with AI elements
-
-**Of immortality** - Abstract cosmic imagery exploring themes of eternal existence
-
-The model excels at understanding context and generating coherent visual narratives across different styles and themes.`,
+This has led to a giant step up in usability of this model. The long prompts of Midjourney days are gone and we can now collaborate more closely with the model for our desired outputs.`,
         tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
         author: 'Amir Jalali',
         aiGenerated: false,
@@ -195,7 +160,7 @@ The model excels at understanding context and generating coherent visual narrati
         excerpt: 'Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.',
         content: `# THE ERA OF VIBE CODING
 
-Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.
+Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMS, without actually writing any of the code yourself.
 
 As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
 
@@ -209,46 +174,14 @@ Vibe Coding in 2025 will do to software what MidJourney has done for image gener
       },
       {
         title: 'DeepSEEK',
-        excerpt: 'A cost-effective AI development breakthrough that enables major cost reductions and democratizes AI access across the industry.',
-        content: `# DeepSEEK: A Cost-Effective AI Breakthrough
+        excerpt: 'DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces.',
+        content: `# DeepSEEK
 
-**DeepSEEK** represents a breakthrough in cost-effective AI development that's changing the landscape of artificial intelligence accessibility.
+DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces. Unlike many large-scale models that require massive computational resources, DeepSeek has managed to develop a model on par with OpenAI's leading systems at a fraction of the cost. This efficiency makes high-performance AI more accessible, opening doors for businesses, researchers, and developers who previously faced prohibitive expenses when integrating advanced AI into their work.
 
-## The Cost Revolution
+By dramatically lowering the cost of AI inference and training, DeepSeek-R1 could drive widespread adoption across industries, from healthcare and finance to education and creative fields. Companies that once relied on expensive proprietary models may now have access to open-source alternatives without compromising on quality. This shift not only democratizes AI but also increases competition, pushing the industry toward more sustainable and cost-effective innovation. If this trend continues, AI deployment could become significantly cheaper, leading to a future where high-quality AI assistance is a standard tool rather than a luxury reserved for the largest tech companies.
 
-DeepSEEK enables major cost reductions in AI development:
-
-- **Reduced Training Costs**: Significantly lower computational requirements
-- **Efficient Inference**: Optimized models that run on less expensive hardware
-- **Scalable Architecture**: Cost-effective scaling for enterprise deployments
-- **Resource Optimization**: Better performance per dollar spent
-
-## Democratizing AI Access
-
-The implications extend far beyond cost savings:
-
-### Increased Competition
-- Lower barriers to entry for AI startups
-- More diverse AI solutions in the market
-- Innovation from unexpected sources
-- Reduced monopolization of AI capabilities
-
-### Sustainable Innovation
-- Environmentally conscious AI development
-- Accessible research for academic institutions
-- Global participation in AI advancement
-- Ethical development practices
-
-## Industry Impact
-
-DeepSEEK's approach creates ripple effects across the industry:
-
-1. **Educational Access**: Universities can afford cutting-edge AI research
-2. **Small Business Integration**: SMEs can implement AI solutions
-3. **Global Development**: Developing countries can participate in AI innovation
-4. **Open Source Growth**: More resources for open source AI projects
-
-*The future of AI should be accessible to everyone, not just tech giants.*`,
+The immediate takeaway is that many use cases that were not deemed viable just recently, are immediately much more feasible.`,
         tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
         author: 'Amir Jalali',
         aiGenerated: false,
