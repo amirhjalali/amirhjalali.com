@@ -149,7 +149,13 @@ Open AI recently released their 4o image generation model. GPT-4o image model di
 
 • **Non-diffusion-based**: It doesn't use a step-by-step denoising process like Stable Diffusion or DALL·E 2. Instead, image reasoning and generation are integrated more like language modeling, allowing for faster and more flexible interaction.
 
-This has led to a giant step up in usability of this model. The long prompts of Midjourney days are gone and we can now collaborate more closely with the model for our desired outputs.`,
+This has led to a giant step up in usability of this model. The long prompts of Midjourney days are gone and we can now collaborate more closely with the model for our desired outputs.
+
+<div class="article-gallery">
+<img src="/images/thoughts/a-eye.jpg" alt="A eye" class="gallery-image" />
+<img src="/images/thoughts/a-short-story.jpg" alt="A short story" class="gallery-image" />
+<img src="/images/thoughts/of-immortality.jpg" alt="Of immortality" class="gallery-image" />
+</div>`,
         tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
         author: 'Amir Jalali',
         aiGenerated: false,
@@ -163,6 +169,11 @@ This has led to a giant step up in usability of this model. The long prompts of 
 Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMS, without actually writing any of the code yourself.
 
 As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
+
+<div class="article-videos">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wUQnN9axM2Q" title="Vibe Coding Example 1" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/another-video-id" title="Vibe Coding Example 2" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+</div>
 
 As of current, a technical background and systems thinking is still helpful to guide the development process. Nonetheless the difference between what it meant to be a programmer 2 years ago till today is quite whiplash inducing.
 

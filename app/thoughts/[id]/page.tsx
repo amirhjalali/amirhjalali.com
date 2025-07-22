@@ -158,6 +158,7 @@ export default function ThoughtPage() {
                 .replace(/# (.*)/g, '<h1>$1</h1>')
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/• \*\*(.*?)\*\*/g, '• <strong>$1</strong>')
             }} 
           />
         </motion.article>
@@ -239,6 +240,51 @@ export default function ThoughtPage() {
           padding: 0.125rem 0.25rem;
           border-radius: 0.25rem;
           font-family: monospace;
+        }
+        .article-gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+          margin: 2rem 0;
+          padding: 1rem;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 1rem;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gallery-image {
+          width: 100%;
+          height: auto;
+          border-radius: 0.75rem;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-image:hover {
+          transform: scale(1.05);
+          box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+        }
+        .article-videos {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          margin: 2rem 0;
+        }
+        .article-videos iframe {
+          width: 100%;
+          max-width: 560px;
+          height: 315px;
+          border-radius: 1rem;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+          .article-videos {
+            flex-direction: row;
+            justify-content: center;
+          }
+          .article-videos iframe {
+            flex: 1;
+            max-width: calc(50% - 0.75rem);
+          }
         }
       `}</style>
     </div>
