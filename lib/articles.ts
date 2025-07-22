@@ -1486,18 +1486,16 @@ With great access comes great responsibility:
       { ...defaultArticles[15], publishedAt: '2023-12-15T10:00:00.000Z', readTime: '9 min read' },
     ]
     
-    articlesWithDates.forEach(article => {
-      const newArticle: Article = {
-        ...article,
-        id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
-      }
-      const articles = getArticles()
-      articles.unshift(newArticle)
-      try {
-        localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
-      } catch (error) {
-        console.error('Error saving article:', error)
-      }
-    })
+    // Create articles with consistent IDs
+    const articlesToSave = articlesWithDates.map((article, index) => ({
+      ...article,
+      id: `article-${index + 1}` // Consistent IDs that won't change
+    }))
+    
+    try {
+      localStorage.setItem(ARTICLES_KEY, JSON.stringify(articlesToSave))
+    } catch (error) {
+      console.error('Error saving articles:', error)
+    }
   }
 }
