@@ -99,6 +99,62 @@ const experience = [
     ],
     skills: ['Data Architecture', 'ETL/ELT', 'Data Modeling', 'Business Intelligence', 'Enterprise Integration', 'Performance Optimization'],
     type: 'work'
+  },
+  {
+    id: 6,
+    title: 'Senior Data Warehouse Developer',
+    company: 'ING Direct',
+    period: 'January 2010 – March 2012',
+    location: 'Wilmington, DE',
+    description: 'Led data warehouse development initiatives for one of the largest online banks in North America, supporting critical financial reporting and analytics.',
+    achievements: [
+      'Designed and implemented enterprise data warehouse using Oracle and Informatica PowerCenter',
+      'Developed complex ETL processes for financial data integration across multiple source systems',
+      'Built dimensional data models supporting regulatory reporting and business intelligence',
+      'Optimized database performance achieving 50% reduction in query execution times',
+      'Created automated data quality monitoring and validation frameworks',
+      'Collaborated with business analysts and stakeholders to translate requirements into technical solutions',
+      'Maintained 99.9% data accuracy for critical financial reporting processes',
+      'Supported SOX compliance initiatives and audit requirements'
+    ],
+    skills: ['Oracle', 'Informatica PowerCenter', 'PL/SQL', 'Data Warehousing', 'Financial Data', 'ETL', 'Performance Tuning', 'SOX Compliance'],
+    type: 'work'
+  },
+  {
+    id: 7,
+    title: 'Data Warehouse Developer',
+    company: 'ING Direct',
+    period: 'June 2008 – December 2009',
+    location: 'Wilmington, DE',
+    description: 'Developed and maintained data warehouse solutions for retail banking operations, focusing on customer analytics and operational reporting.',
+    achievements: [
+      'Built ETL processes using Informatica PowerCenter for customer data integration',
+      'Developed dimensional models for customer behavior analysis and segmentation',
+      'Created automated reporting solutions using Oracle and PL/SQL',
+      'Implemented data validation and quality assurance procedures',
+      'Supported business intelligence initiatives and ad-hoc analysis requests',
+      'Collaborated with cross-functional teams to ensure data consistency and accuracy'
+    ],
+    skills: ['Informatica PowerCenter', 'Oracle', 'PL/SQL', 'Data Integration', 'Business Intelligence', 'Banking Domain'],
+    type: 'work'
+  },
+  {
+    id: 8,
+    title: 'Bachelor of Science in Information Systems',
+    company: 'Drexel University',
+    period: '2004 – 2008',
+    location: 'Philadelphia, PA',
+    description: 'Comprehensive education in information systems, database management, and business technology with focus on enterprise systems and data management.',
+    achievements: [
+      'Graduated with concentration in Database Management and Business Intelligence',
+      'Completed cooperative education program with hands-on industry experience',
+      'Relevant coursework: Database Design, Systems Analysis, Data Structures, Business Intelligence',
+      'Senior capstone project: Enterprise Data Warehouse Design for Financial Services',
+      'Dean\'s List recognition for academic excellence',
+      'Active member of Information Systems Student Association'
+    ],
+    skills: ['Database Design', 'Systems Analysis', 'Business Intelligence', 'Data Structures', 'Project Management', 'Academic Research'],
+    type: 'education'
   }
 ]
 
