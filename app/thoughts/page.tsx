@@ -29,9 +29,12 @@ export default function ThoughtsPage() {
   useEffect(() => {
     // Initialize default articles if needed
     initializeDefaultArticles()
-    // Load all articles from storage
+    // Load all articles from storage and sort by date (newest first)
     const storedArticles = getArticles()
-    setAllArticles(storedArticles)
+    const sortedArticles = storedArticles.sort((a, b) => {
+      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    })
+    setAllArticles(sortedArticles)
   }, [])
 
   return (
@@ -69,7 +72,8 @@ export default function ThoughtsPage() {
               whileHover={{ y: -5 }}
               className="group relative"
             >
-              <div className="glass rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col overflow-hidden">
+              <Link href={`/thoughts/${article.id}`} className="block h-full">
+                <div className="glass rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col overflow-hidden cursor-pointer">
                 {/* Article Image */}
                 {article.imageUrl && (
                   <div className="aspect-video overflow-hidden">
@@ -123,18 +127,16 @@ export default function ThoughtsPage() {
                     <span className="text-xs text-gray-500">
                       {new Date(article.publishedAt).toLocaleDateString()}
                     </span>
-                    <Link
-                      href={`/thoughts/${article.id}`}
-                      className="text-ai-green hover:text-ai-green/80 font-medium text-sm transition-colors group-hover:gap-2 inline-flex items-center gap-1"
-                    >
+                    <span className="text-ai-green hover:text-ai-green/80 font-medium text-sm transition-colors group-hover:gap-2 inline-flex items-center gap-1">
                       Read More
                       <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
-                    </Link>
+                    </span>
                   </div>
                 </div>
               </div>
+              </Link>
               
               {/* Glow effect on hover */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-green/10 to-ai-blue/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
