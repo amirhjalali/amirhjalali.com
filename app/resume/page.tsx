@@ -140,20 +140,94 @@ const experience = [
   },
   {
     id: 8,
-    title: 'Bachelor of Science in Information Systems',
-    company: 'Drexel University',
-    period: '2004 – 2008',
-    location: 'Philadelphia, PA',
-    description: 'Comprehensive education in information systems, database management, and business technology with focus on enterprise systems and data management.',
+    title: 'Research Assistant / Graduate Student',
+    company: 'West Virginia University',
+    period: 'January 2004 – December 2007',
+    location: 'Morgantown, WV',
+    description: 'Graduate research assistant developing software architecture analysis tools and conducting research in software metrics and product line architectures.',
     achievements: [
-      'Graduated with concentration in Database Management and Business Intelligence',
-      'Completed cooperative education program with hands-on industry experience',
-      'Relevant coursework: Database Design, Systems Analysis, Data Structures, Business Intelligence',
-      'Senior capstone project: Enterprise Data Warehouse Design for Financial Services',
-      'Dean\'s List recognition for academic excellence',
-      'Active member of Information Systems Student Association'
+      'Developed Software Architecture Metrics tool (SARA tool) for product line architecture analysis',
+      'Conducted research in software metrics and data mining techniques for architectural evaluation',
+      'Modeled software product lines using Star UML and advanced modeling methodologies',
+      'Applied data mining techniques to analyze software architecture patterns and metrics',
+      'Developed supporting websites and documentation for research projects',
+      'Administered research lab network and systems infrastructure',
+      'Researched and procured hardware and software for laboratory operations'
     ],
-    skills: ['Database Design', 'Systems Analysis', 'Business Intelligence', 'Data Structures', 'Project Management', 'Academic Research'],
+    skills: ['Software Architecture', 'Data Mining', 'Research', 'Star UML', 'Software Metrics', 'Product Line Architecture', 'System Administration'],
+    type: 'work'
+  },
+  {
+    id: 9,
+    title: 'System Admin / BI Analyst',
+    company: 'West Virginia University Student Card Services',
+    period: 'January 2003 – January 2004',
+    location: 'Morgantown, WV',
+    description: 'System administrator and business intelligence analyst for university student card services, managing technical infrastructure and generating analytical reports.',
+    achievements: [
+      'Created custom reports using SQL and Crystal Reports for administrative decision-making',
+      'Wrote complex ad-hoc SQL queries for data analysis and reporting requirements',
+      'Participated in backup strategy design and implementation for critical systems',
+      'Researched and evaluated hardware and software purchases for departmental needs',
+      'Troubleshot hardware, network, and operating system issues across campus infrastructure',
+      'Implemented biometric identification systems for enhanced security',
+      'Registered students and issued student identification cards'
+    ],
+    skills: ['SQL', 'Crystal Reports', 'System Administration', 'Network Troubleshooting', 'Biometric Systems', 'Hardware Management'],
+    type: 'work'
+  },
+  {
+    id: 10,
+    title: 'IT Consultant (Freelance)',
+    company: 'Various Clients',
+    period: '2002 – Present',
+    location: 'Various Locations',
+    description: 'Providing comprehensive IT consulting services to friends, family businesses, and small organizations across multiple domains.',
+    achievements: [
+      'Designed and implemented network infrastructure for dental and medical practices',
+      'Provided web design and graphic design services for small businesses',
+      'Translated technical and business documents from Farsi to English',
+      'Built custom PCs and configured home/office networks for optimal performance',
+      'Delivered end-to-end IT solutions including hardware selection and software implementation',
+      'Maintained long-term client relationships through reliable support and consultation'
+    ],
+    skills: ['Network Design', 'Web Design', 'Graphic Design', 'Translation Services', 'Hardware Assembly', 'IT Consulting'],
+    type: 'work'
+  },
+  {
+    id: 11,
+    title: 'Master of Science in Computer Science',
+    company: 'West Virginia University',
+    period: 'December 2005 – May 2008',
+    location: 'Morgantown, WV',
+    description: 'Advanced degree focusing on software architecture and data mining with thesis research in product line architecture risk assessment.',
+    achievements: [
+      'Thesis: "A Methodology for Risk Assessment of Product Line Architectures"',
+      'Emphasis in Software Architecture and Data Mining methodologies',
+      'Conducted original research in software architecture metrics and evaluation',
+      'Published research findings and presented at academic conferences',
+      'Collaborated with faculty on advanced software engineering projects',
+      'Teaching assistant for undergraduate computer science courses'
+    ],
+    skills: ['Software Architecture', 'Data Mining', 'Research Methodology', 'Academic Writing', 'Product Line Architecture', 'Risk Assessment'],
+    type: 'education'
+  },
+  {
+    id: 12,
+    title: 'Bachelor of Science in Computer Science',
+    company: 'West Virginia University',
+    period: '2002 – December 2005',
+    location: 'Morgantown, WV',
+    description: 'Comprehensive undergraduate education in computer science with minor in History, providing strong foundation in programming, algorithms, and software development.',
+    achievements: [
+      'Minor in History providing interdisciplinary perspective and strong analytical skills',
+      'Strong foundation in programming languages, data structures, and algorithms',
+      'Participated in software development projects and computer science research',
+      'Active involvement in computer science student organizations and activities',
+      'Dean\'s List recognition for academic excellence',
+      'Completed internships and work-study programs in technology roles'
+    ],
+    skills: ['Programming', 'Data Structures', 'Algorithms', 'Software Development', 'Computer Science Theory', 'Historical Analysis'],
     type: 'education'
   }
 ]
