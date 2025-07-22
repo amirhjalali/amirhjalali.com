@@ -162,111 +162,46 @@ The recommendation is clear: **keep projects local as long as possible** to main
         imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
       },
       {
-        title: '4O Image Generation',
-        excerpt: 'OpenAI\'s 4o image generation model represents a breakthrough with its multimodal-native, non-diffusion-based architecture.',
-        content: `# 4O Image Generation: A New Era
+        title: '4O IMAGE GENERATION',
+        excerpt: 'OpenAI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is multimodal-native and non-diffusion-based.',
+        content: `# 4O IMAGE GENERATION
 
-OpenAI's **4o image generation model** marks a significant advancement in AI image creation technology.
+OpenAI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is:
 
-## Breakthrough Architecture
+## Multimodal-native
+Unlike diffusion models that generate images from text prompts only, 4o can **directly understand and generate** across text, images, and audio in a unified architecture.
 
-This model represents a departure from traditional approaches:
+## Non-diffusion-based
+It doesn't use a step-by-step denoising process like Stable Diffusion or DALL-E 2. Instead, image reasoning and generation are integrated more like language modeling, allowing for faster and more flexible interaction.
 
-### Multimodal-Native Design
-- Built from the ground up to handle multiple modalities
-- Seamless integration between text, image, and audio processing
-- Native understanding of cross-modal relationships
+This has led to a giant step up in usability of this model. The long prompts of Midjourney days are gone and we can now collaborate more closely with the model for our desired outputs.
 
-### Non-Diffusion-Based Approach
-Unlike previous models that rely on diffusion processes, 4o uses:
-- Direct generation techniques
-- Improved speed and efficiency  
-- Better consistency across generations
-- Reduced computational overhead
+### Example Outputs
 
-## Improved Usability
+**A eye** - A striking close-up of a red cybernetic eye
 
-The 4o model delivers enhanced usability through:
+**A short story** - Multiple panels showing a dark, cyberpunk narrative with AI elements
 
-- **Faster generation times**
-- **More intuitive prompting**
-- **Better prompt adherence**
-- **Consistent style maintenance**
+**Of immortality** - Abstract cosmic imagery exploring themes of eternal existence
 
-## Collaboration Benefits
-
-This architecture enables better collaboration between different AI modalities:
-
-1. **Text-to-image** with improved context understanding
-2. **Image-to-text** with better descriptive capabilities
-3. **Cross-modal reasoning** for complex tasks
-4. **Unified workflows** across different content types
-
-The implications for creative workflows and AI-assisted design are profound.`,
-        tags: ['OpenAI', 'Image Generation', 'Multimodal AI'],
+The model excels at understanding context and generating coherent visual narratives across different styles and themes.`,
+        tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.jpg',
+        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
       },
       {
-        title: 'The ERA of VIBE CODING',
-        excerpt: 'A new programming paradigm using LLMs to write software with AI assistance without manual coding, revolutionizing efficiency for all skill levels.',
-        content: `# The Era of Vibe Coding
+        title: 'THE ERA OF VIBE CODING',
+        excerpt: 'Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.',
+        content: `# THE ERA OF VIBE CODING
 
-We are entering the **era of Vibe Coding** - a revolutionary programming paradigm that's transforming how we build software.
+Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.
 
-## What is Vibe Coding?
+As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
 
-Vibe Coding is a development approach where programmers write software using **LLM assistance** without traditional manual coding. Think of it as the programming equivalent of how MidJourney transformed image generation.
+As of current, a technical background and systems thinking is still helpful to guide the development process. Nonetheless the difference between what it meant to be a programmer 2 years ago till today is quite whiplash inducing.
 
-## The Paradigm Shift
-
-This represents a fundamental change in how we approach software development:
-
-### Traditional Coding
-- Manual syntax writing
-- Debugging line by line
-- Extensive documentation reading
-- Time-intensive iteration cycles
-
-### Vibe Coding
-- **Natural language descriptions** of desired functionality
-- **AI-assisted implementation** with immediate feedback
-- **Rapid prototyping** and iteration
-- **Intent-driven development**
-
-## Efficiency Gains
-
-The benefits are significant for developers at all levels:
-
-### For Experienced Programmers
-- **10x faster prototyping**
-- Focus on architecture over syntax
-- Rapid exploration of ideas
-- More time for creative problem-solving
-
-### For Junior Developers
-- **Reduced learning curve**
-- Access to best practices through AI
-- Immediate feedback and suggestions
-- Faster skill development
-
-## The MidJourney Parallel
-
-Just as MidJourney democratized image creation by allowing anyone to generate professional-quality images through text prompts, Vibe Coding is democratizing software development.
-
-**The future is about expressing intent, not memorizing syntax.**
-
-## Implementation Strategy
-
-To embrace Vibe Coding effectively:
-
-1. **Start with clear intent** - Know what you want to build
-2. **Iterate quickly** - Let AI handle the implementation details  
-3. **Review and refine** - Maintain quality through human oversight
-4. **Learn continuously** - Understand the generated code to improve prompts
-
-*This is not just a tool change—it's a fundamental shift in how we think about programming.*`,
+Vibe Coding in 2025 will do to software what MidJourney has done for image generation since 2023. Meaning there will be a massive amount of output, but getting to a final shippable product will still required tenacity and reliance on traditional skills.`,
         tags: ['Vibe Coding', 'LLMs', 'Programming Paradigm'],
         author: 'Amir Jalali',
         aiGenerated: false,
