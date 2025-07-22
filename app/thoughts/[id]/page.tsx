@@ -43,7 +43,7 @@ export default function ThoughtPage() {
       {/* Background effects */}
       <div className="absolute inset-0 mesh-gradient opacity-10" />
       
-      <div className="relative z-10 px-6 py-20 max-w-4xl mx-auto">
+      <div className="relative z-10 px-6 py-20 max-w-5xl mx-auto">
         {/* Back button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -61,43 +61,23 @@ export default function ThoughtPage() {
           </Link>
         </motion.div>
 
-        {/* Article Header */}
+        {/* Article Excerpt and Tags */}
         <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
           className="mb-12"
         >
-          {/* AI Badge */}
-          {article.aiGenerated && (
-            <div className="inline-flex items-center gap-2 px-3 py-1 glass rounded-full border border-ai-green/30 mb-6">
-              <div className="w-2 h-2 bg-ai-green rounded-full animate-pulse" />
-              <span className="text-xs text-ai-green font-medium">AI Generated</span>
-            </div>
-          )}
-
-          <h1 className="text-4xl md:text-6xl font-space font-black mb-6 leading-tight">
-            <span className="text-gradient">{article.title}</span>
-          </h1>
-
-          <p className="text-xl text-gray-400 mb-8 leading-relaxed">
+          <p className="text-xl text-gray-400 mb-6 leading-relaxed font-light">
             {article.excerpt}
           </p>
 
-          {/* Meta info */}
-          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500">
-            <div className="flex items-center gap-2">
-              <span>By {article.author}</span>
-            </div>
-            <div>{new Date(article.publishedAt).toLocaleDateString()}</div>
-            <div>{article.readTime}</div>
-          </div>
-
           {/* Tags */}
-          <div className="flex flex-wrap gap-2 mt-6">
+          <div className="flex flex-wrap gap-2">
             {article.tags.map((tag: string) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-white/5 rounded-full text-sm text-gray-400"
+                className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-sm text-gray-400 transition-colors"
               >
                 {tag}
               </span>
@@ -111,15 +91,52 @@ export default function ThoughtPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-12 -mx-6"
+            className="mb-12 -mx-6 lg:-mx-12"
           >
-            <div className="relative h-80 md:h-96 overflow-hidden rounded-2xl border border-white/10">
+            <div className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-2xl border border-white/10">
               <img 
                 src={article.imageUrl} 
                 alt={article.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+              
+              {/* Image overlay with article title */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
+                <div className="max-w-4xl">
+                  <motion.h1 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-4xl md:text-5xl lg:text-6xl font-space font-black mb-4 text-white leading-tight"
+                  >
+                    {article.title}
+                  </motion.h1>
+                  
+                  {/* Meta info overlay */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="flex flex-wrap items-center gap-4 text-white/90"
+                  >
+                    <span>By {article.author}</span>
+                    <span>•</span>
+                    <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+                    <span>•</span>
+                    <span>{article.readTime}</span>
+                    {article.aiGenerated && (
+                      <>
+                        <span>•</span>
+                        <div className="flex items-center gap-2 px-3 py-1 bg-ai-green/20 rounded-full border border-ai-green/30">
+                          <div className="w-2 h-2 bg-ai-green rounded-full animate-pulse" />
+                          <span className="text-xs font-medium text-ai-green">AI Generated</span>
+                        </div>
+                      </>
+                    )}
+                  </motion.div>
+                </div>
+              </div>
             </div>
           </motion.div>
         )}
@@ -128,7 +145,7 @@ export default function ThoughtPage() {
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.6 }}
           className="prose prose-invert prose-lg max-w-none"
         >
           <div 
