@@ -76,7 +76,7 @@ export default function ThoughtsPage() {
               className="group relative cursor-pointer"
               onClick={() => window.location.href = `/thoughts/${article.id}`}
               style={{
-                transform: `rotate(${Math.random() * 2 - 1}deg)` // Subtle random rotation
+                transform: `rotate(${index % 2 === 0 ? -0.5 : 0.5}deg)` // Subtle rotation based on index
               }}
             >
               {/* Thought bubble tail */}
@@ -166,13 +166,13 @@ export default function ThoughtsPage() {
                     key={i}
                     className="absolute w-1 h-1 bg-ai-green/60 rounded-full"
                     initial={{ 
-                      x: Math.random() * 100 + 50,
-                      y: Math.random() * 100 + 50,
+                      x: 50 + i * 50,
+                      y: 50 + i * 50,
                       opacity: 0 
                     }}
                     animate={{
-                      x: Math.random() * 100 + 50,
-                      y: Math.random() * 100 + 50,
+                      x: 100 + i * 50,
+                      y: 100 + i * 50,
                       opacity: [0, 1, 0],
                     }}
                     transition={{

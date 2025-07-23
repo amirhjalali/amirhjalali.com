@@ -152,9 +152,9 @@ Open AI recently released their 4o image generation model. GPT-4o image model di
 This has led to a giant step up in usability of this model. The long prompts of Midjourney days are gone and we can now collaborate more closely with the model for our desired outputs.
 
 <div class="article-gallery">
-<img src="/images/thoughts/a-eye.jpg" alt="A eye" class="gallery-image" />
-<img src="/images/thoughts/a-short-story.jpg" alt="A short story" class="gallery-image" />
-<img src="/images/thoughts/of-immortality.jpg" alt="Of immortality" class="gallery-image" />
+<img src="/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg" alt="A eye" class="gallery-image" />
+<img src="/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg" alt="A short story" class="gallery-image" />
+<img src="/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.jpg" alt="Of immortality" class="gallery-image" />
 </div>`,
         tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
         author: 'Amir Jalali',
@@ -171,8 +171,8 @@ Vibe coding is a new paradigm from early 2025 which essentially refers to writin
 As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
 
 <div class="article-videos">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wUQnN9axM2Q" title="Vibe Coding Example 1" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/another-video-id" title="Vibe Coding Example 2" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/h2EJXKpv6zs" title="Vibe Coding in Action - Building Apps with AI" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7QcW8Bdy5eM" title="AI-Assisted Development Workflow" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 </div>
 
 As of current, a technical background and systems thinking is still helpful to guide the development process. Nonetheless the difference between what it meant to be a programmer 2 years ago till today is quite whiplash inducing.
