@@ -20,12 +20,17 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        optical:
+          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 optical-button rounded-phi-md",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
+        "phi-sm": "text-phi-sm px-phi-md py-phi-sm",
+        "phi-base": "text-phi-base px-phi-lg py-phi-md",
+        "phi-lg": "text-phi-lg px-phi-xl py-phi-lg",
       },
     },
     defaultVariants: {

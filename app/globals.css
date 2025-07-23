@@ -26,6 +26,44 @@
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
     --radius: 0.5rem;
+    
+    /* Golden Ratio System (φ = 1.618) */
+    --phi: 1.618;
+    --phi-2: 2.618; /* φ² */
+    --phi-3: 4.236; /* φ³ */
+    --phi-inv: 0.618; /* 1/φ */
+    --phi-inv-2: 0.382; /* 1/φ² */
+    
+    /* Golden Ratio Spacing Scale */
+    --space-phi-xs: calc(0.25rem * var(--phi-inv-2)); /* ~0.095rem */
+    --space-phi-sm: calc(0.5rem * var(--phi-inv)); /* ~0.309rem */
+    --space-phi-base: 0.5rem; /* Base unit */
+    --space-phi-md: calc(0.5rem * var(--phi)); /* ~0.809rem */
+    --space-phi-lg: calc(0.5rem * var(--phi-2)); /* ~1.309rem */
+    --space-phi-xl: calc(0.5rem * var(--phi-3)); /* ~2.118rem */
+    --space-phi-2xl: calc(0.5rem * var(--phi-3) * var(--phi)); /* ~3.427rem */
+    --space-phi-3xl: calc(0.5rem * var(--phi-3) * var(--phi-2)); /* ~5.545rem */
+    
+    /* Golden Ratio Font Scale */
+    --text-phi-xs: calc(1rem / var(--phi-2)); /* ~0.382rem */
+    --text-phi-sm: calc(1rem / var(--phi)); /* ~0.618rem */
+    --text-phi-base: 1rem; /* Base font size */
+    --text-phi-lg: calc(1rem * var(--phi)); /* ~1.618rem */
+    --text-phi-xl: calc(1rem * var(--phi-2)); /* ~2.618rem */
+    --text-phi-2xl: calc(1rem * var(--phi-3)); /* ~4.236rem */
+    --text-phi-3xl: calc(1rem * var(--phi-3) * var(--phi)); /* ~6.854rem */
+    
+    /* Optical Corrections */
+    --optical-adjust-sm: -0.05em; /* Small text optical adjustment */
+    --optical-adjust-icon: -0.125em; /* Icon spacing adjustment */
+    --optical-adjust-button: calc(var(--space-phi-md) * 1.1); /* Button padding adjustment */
+    
+    /* Golden Ratio Border Radius */
+    --radius-phi-sm: calc(var(--radius) * var(--phi-inv)); /* ~0.309rem */
+    --radius-phi: var(--radius); /* 0.5rem */
+    --radius-phi-md: calc(var(--radius) * var(--phi)); /* ~0.809rem */
+    --radius-phi-lg: calc(var(--radius) * var(--phi-2)); /* ~1.309rem */
+    --radius-phi-full: 9999px;
   }
 
   .dark {
@@ -144,5 +182,102 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+  
+  /* Golden Ratio Typography Classes */
+  .text-phi-xs { font-size: var(--text-phi-xs); }
+  .text-phi-sm { font-size: var(--text-phi-sm); }
+  .text-phi-base { font-size: var(--text-phi-base); }
+  .text-phi-lg { font-size: var(--text-phi-lg); }
+  .text-phi-xl { font-size: var(--text-phi-xl); }
+  .text-phi-2xl { font-size: var(--text-phi-2xl); }
+  .text-phi-3xl { font-size: var(--text-phi-3xl); }
+  
+  /* Golden Ratio Spacing Classes */
+  .p-phi-xs { padding: var(--space-phi-xs); }
+  .p-phi-sm { padding: var(--space-phi-sm); }
+  .p-phi-base { padding: var(--space-phi-base); }
+  .p-phi-md { padding: var(--space-phi-md); }
+  .p-phi-lg { padding: var(--space-phi-lg); }
+  .p-phi-xl { padding: var(--space-phi-xl); }
+  .p-phi-2xl { padding: var(--space-phi-2xl); }
+  .p-phi-3xl { padding: var(--space-phi-3xl); }
+  
+  .px-phi-md { padding-left: var(--space-phi-md); padding-right: var(--space-phi-md); }
+  .py-phi-md { padding-top: var(--space-phi-md); padding-bottom: var(--space-phi-md); }
+  .px-phi-lg { padding-left: var(--space-phi-lg); padding-right: var(--space-phi-lg); }
+  .py-phi-lg { padding-top: var(--space-phi-lg); padding-bottom: var(--space-phi-lg); }
+  
+  .gap-phi-sm { gap: var(--space-phi-sm); }
+  .gap-phi-md { gap: var(--space-phi-md); }
+  .gap-phi-lg { gap: var(--space-phi-lg); }
+  .gap-phi-xl { gap: var(--space-phi-xl); }
+  
+  /* Golden Ratio Border Radius */
+  .rounded-phi-sm { border-radius: var(--radius-phi-sm); }
+  .rounded-phi { border-radius: var(--radius-phi); }
+  .rounded-phi-md { border-radius: var(--radius-phi-md); }
+  .rounded-phi-lg { border-radius: var(--radius-phi-lg); }
+  .rounded-phi-full { border-radius: var(--radius-phi-full); }
+  
+  /* Optical Harmony Classes */
+  .optical-balance {
+    /* Apply optical adjustments for better visual balance */
+    letter-spacing: var(--optical-adjust-sm);
+  }
+  
+  .optical-button {
+    /* Enhanced button with optical corrections */
+    padding: var(--optical-adjust-button) calc(var(--optical-adjust-button) * 2);
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-phi-sm);
+  }
+  
+  .optical-button > svg,
+  .optical-button > [data-icon] {
+    /* Correct icon spacing in buttons */
+    margin-left: var(--optical-adjust-icon);
+    margin-right: calc(var(--optical-adjust-icon) / 2);
+  }
+  
+  .optical-card {
+    /* Card with golden ratio proportions */
+    padding: var(--space-phi-xl);
+    border-radius: var(--radius-phi-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .optical-card:hover {
+    /* Subtle scale on hover using golden ratio */
+    transform: scale(calc(1 / var(--phi-inv-2)));
+  }
+  
+  /* Golden Ratio Grid System */
+  .grid-phi {
+    display: grid;
+    gap: var(--space-phi-lg);
+  }
+  
+  .grid-phi-2 {
+    grid-template-columns: 1fr var(--phi)fr;
+  }
+  
+  .grid-phi-3 {
+    grid-template-columns: 1fr var(--phi)fr 1fr;
+  }
+  
+  /* Visual Rhythm Classes */
+  .rhythm-tight {
+    line-height: var(--phi);
+  }
+  
+  .rhythm-normal {
+    line-height: var(--phi-2);
+  }
+  
+  .rhythm-loose {
+    line-height: var(--phi-3);
   }
 }
