@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { getArticles, initializeDefaultArticles } from '@/lib/articles'
 import LazyImage from '@/components/LazyImage'
@@ -24,6 +25,7 @@ const item = {
 }
 
 export default function ThoughtsPage() {
+  const router = useRouter()
   const [allArticles, setAllArticles] = useState<any[]>([])
   
   useEffect(() => {
@@ -63,7 +65,7 @@ export default function ThoughtsPage() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           {allArticles.map((article, index) => (
             <motion.div
@@ -74,7 +76,7 @@ export default function ThoughtsPage() {
                 scale: 1.02
               }}
               className="group relative cursor-pointer"
-              onClick={() => window.location.href = `/thoughts/${article.id}`}
+              onClick={() => router.push(`/thoughts/${article.id}`)}
               style={{
                 transform: `rotate(${index % 2 === 0 ? -0.5 : 0.5}deg)` // Subtle rotation based on index
               }}
@@ -200,16 +202,16 @@ export default function ThoughtsPage() {
             <p className="text-gray-400 mb-6">
               Have ideas about AI, technology, or programming? Use the AI assistant to turn your thoughts into compelling articles.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link
                 href="/generate"
-                className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center text-sm sm:text-base"
               >
                 Generate New Article
               </Link>
               <Link
                 href="/contact"
-                className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all inline-block text-center"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all inline-block text-center text-sm sm:text-base"
               >
                 Get in Touch
               </Link>
