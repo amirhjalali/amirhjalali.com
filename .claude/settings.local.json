@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(touch:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(python3:*)",
+      "Bash(npx:*)",
+      "Bash(npm run dev:*)",
+      "Bash(git config:*)",
+      "Bash(npm run build:*)",
+      "Bash(mv:*)",
+      "Bash(true)",
+      "Bash(git merge:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git reset:*)",
+      "WebFetch(domain:amirhjalali.com)",
+      "WebFetch(domain:www.amirhjalali.com)",
+      "Bash(grep:*)",
+      "WebFetch(domain:www.getplaiced.com)",
+      "WebFetch(domain:www.argumend.org)"
+    ],
+    "deny": [],
+    "defaultMode": "acceptEdits"
+  }
+}

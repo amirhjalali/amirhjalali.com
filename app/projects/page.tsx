@@ -37,7 +37,7 @@ const projects = [
     status: 'Live' as const,
     progress: 90,
     link: 'https://avenu.ai/',
-    image: 'https://avenu.ai/wp-content/uploads/2023/06/avenu-featured-image-1.jpg',
+    image: '/images/projects/avenu-ai.jpg',
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ const projects = [
     status: 'Live' as const,
     progress: 85,
     link: 'https://www.getplaiced.com/',
-    image: 'https://www.getplaiced.com/og-image.jpg',
+    image: '/images/projects/plaiced.png',
   },
   {
     id: 4,
@@ -59,7 +59,7 @@ const projects = [
     status: 'Live' as const,
     progress: 80,
     link: 'https://www.argumend.org/',
-    image: 'https://lh6.googleusercontent.com/aHQ6L4yMU6EG0sjfJIHSy8nmD24ND7_srAWekwMC8LTevZ98-bL8Hj8dlbPXYOFmf3bt8C-OPn1bOZbJHFJy424gbAM5J1JXclIEx3g4bO0m5gMBaFFt2USFzOkKiFBXgO0GBNzs1xI=w16383',
+    image: '/images/projects/argumend.jpg',
   },
   {
     id: 5,
