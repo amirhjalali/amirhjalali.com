@@ -79,7 +79,15 @@ The repository uses an auto-commit system. When making changes:
    ```
 5. Do not leave changes uncommitted or unpushed
 
+### Git Configuration
+**IMPORTANT: Always configure git before making commits:**
+```bash
+git config user.name "Amir H. Jalali"
+git config user.email "hello@amirhjalali.com"
+```
+
 ### Commit Message Guidelines
 - Do NOT mention Claude AI, Claude Code, or any AI assistance in commit messages
 - Use standard, professional commit messages without AI attribution
 - Focus on describing the changes made, not the tool used to make them
+- All commits should be attributed to the repository owner
