@@ -51,7 +51,7 @@ export default function NewsletterSignup({
       // Simulate newsletter signup
       await new Promise(resolve => setTimeout(resolve, 1500))
       
-      console.log('Newsletter signup:', values)
+      // Newsletter signup successful
       
       // Track successful email subscription
       trackEmailSubscription()
@@ -65,7 +65,7 @@ export default function NewsletterSignup({
         setIsSuccess(false)
       }, 3000)
     } catch (error) {
-      console.error('Newsletter signup error:', error)
+      // Newsletter signup error
       setIsSubmitting(false)
     }
   }

@@ -68,7 +68,7 @@ export default function ContactForm() {
       // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 2000))
       
-      console.log(values)
+      // Form submitted successfully
       
       // Track successful form submission
       trackContactFormSubmit()
@@ -82,7 +82,7 @@ export default function ContactForm() {
         setIsSuccess(false)
       }, 3000)
     } catch (error) {
-      console.error('Form submission error:', error)
+      // Form submission error
       setIsSubmitting(false)
     }
   }
