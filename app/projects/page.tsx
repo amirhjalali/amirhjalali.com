@@ -48,7 +48,7 @@ const projects = [
     status: 'Live' as const,
     progress: 85,
     link: 'https://www.getplaiced.com/',
-    image: '/images/projects/plaiced.png',
+    image: '/images/projects/plaiced-optimized.jpg',
   },
   {
     id: 4,

@@ -29,7 +29,8 @@
       "WebFetch(domain:www.amirhjalali.com)",
       "Bash(grep:*)",
       "WebFetch(domain:www.getplaiced.com)",
-      "WebFetch(domain:www.argumend.org)"
+      "WebFetch(domain:www.argumend.org)",
+      "Bash(dir \"C:\\Users\\amirh\\amirhjalali.com\\public\\images\\projects\")"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
