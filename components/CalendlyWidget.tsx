@@ -30,7 +30,7 @@ export default function CalendlyWidget({
     const handleCalendlyEvent = (e: any) => {
       if (e.data.event === 'calendly.event_scheduled') {
         trackCalendlyBooking()
-        console.log('Calendly booking completed:', e.data)
+        // Calendly booking completed
       }
     }
 
