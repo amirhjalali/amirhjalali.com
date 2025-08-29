@@ -113,3 +113,22 @@ export const trackExternalLinkClick = (url: string, linkName: string) => {
     link_name: linkName,
   })
 }
+
+// Track scroll depth
+export const trackScrollDepth = (percentage: number) => {
+  trackEvent('scroll_depth', {
+    event_category: 'engagement',
+    event_label: 'scroll',
+    value: percentage,
+  })
+}
+
+// Track time spent on page
+export const trackTimeSpent = (seconds: number, pageName: string) => {
+  trackEvent('time_spent', {
+    event_category: 'engagement',
+    event_label: 'time_on_page',
+    value: seconds,
+    page_name: pageName,
+  })
+}
