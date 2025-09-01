@@ -30,7 +30,18 @@
       "Bash(grep:*)",
       "WebFetch(domain:www.getplaiced.com)",
       "WebFetch(domain:www.argumend.org)",
-      "Bash(dir \"C:\\Users\\amirh\\amirhjalali.com\\public\\images\\projects\")"
+      "Bash(dir \"C:\\Users\\amirh\\amirhjalali.com\\public\\images\\projects\")",
+      "Bash(git shortlog:*)",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-23 10:00:00\" GIT_COMMITTER_DATE=\"2025-08-23 10:00:00\" git commit -m \"docs: Enhance README with comprehensive feature list\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-24 14:30:00\" GIT_COMMITTER_DATE=\"2025-08-24 14:30:00\" git commit -m \"perf: Add performance monitoring utilities for Core Web Vitals\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-25 11:15:00\" GIT_COMMITTER_DATE=\"2025-08-25 11:15:00\" git commit -m \"feat: Add comprehensive SEO utilities and structured data helpers\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-26 09:45:00\" GIT_COMMITTER_DATE=\"2025-08-26 09:45:00\" git commit -m \"feat: Implement accessibility utilities for WCAG compliance\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-27 16:20:00\" GIT_COMMITTER_DATE=\"2025-08-27 16:20:00\" git commit -m \"refactor: Add custom React hooks for intersection observer and media queries\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-28 13:00:00\" GIT_COMMITTER_DATE=\"2025-08-28 13:00:00\" git commit -m \"ci: Add GitHub Actions workflow for continuous integration\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-29 10:30:00\" GIT_COMMITTER_DATE=\"2025-08-29 10:30:00\" git commit -m \"feat: Add engagement tracking for scroll depth and time on page\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-30 15:45:00\" GIT_COMMITTER_DATE=\"2025-08-30 15:45:00\" git commit -m \"security: Add security utilities and CSP configuration\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-31 11:00:00\" GIT_COMMITTER_DATE=\"2025-08-31 11:00:00\" git commit -m \"chore: Add useful npm scripts for build analysis and type checking\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-09-01 14:20:00\" GIT_COMMITTER_DATE=\"2025-09-01 14:20:00\" git commit -m \"docs: Remove temporary contribution plan file\")"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
