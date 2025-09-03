@@ -196,3 +196,7 @@ For questions or issues:
 ---
 
 Built with ❤️ using AI and modern web technologies.
+
+---
+
+*Last updated: September 2025*
