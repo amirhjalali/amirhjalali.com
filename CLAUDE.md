@@ -83,7 +83,7 @@ The repository uses an auto-commit system. When making changes:
 **IMPORTANT: Always configure git before making commits:**
 ```bash
 git config user.name "Amir H. Jalali"
-git config user.email "hello@amirhjalali.com"
+git config user.email "amirhjalali@gmail.com"
 ```
 
 ### Commit Message Guidelines

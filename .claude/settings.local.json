@@ -41,7 +41,12 @@
       "Bash(GIT_AUTHOR_DATE=\"2025-08-29 10:30:00\" GIT_COMMITTER_DATE=\"2025-08-29 10:30:00\" git commit -m \"feat: Add engagement tracking for scroll depth and time on page\")",
       "Bash(GIT_AUTHOR_DATE=\"2025-08-30 15:45:00\" GIT_COMMITTER_DATE=\"2025-08-30 15:45:00\" git commit -m \"security: Add security utilities and CSP configuration\")",
       "Bash(GIT_AUTHOR_DATE=\"2025-08-31 11:00:00\" GIT_COMMITTER_DATE=\"2025-08-31 11:00:00\" git commit -m \"chore: Add useful npm scripts for build analysis and type checking\")",
-      "Bash(GIT_AUTHOR_DATE=\"2025-09-01 14:20:00\" GIT_COMMITTER_DATE=\"2025-09-01 14:20:00\" git commit -m \"docs: Remove temporary contribution plan file\")"
+      "Bash(GIT_AUTHOR_DATE=\"2025-09-01 14:20:00\" GIT_COMMITTER_DATE=\"2025-09-01 14:20:00\" git commit -m \"docs: Remove temporary contribution plan file\")",
+      "Bash(git revert:*)",
+      "Bash(GIT_AUTHOR_DATE=\"2025-08-28 13:30:00\" GIT_COMMITTER_DATE=\"2025-08-28 13:30:00\" git commit --amend -m \"chore: Remove CI workflow to avoid permission issues\")",
+      "Bash(GIT_AUTHOR_DATE=\"2025-09-03 09:15:00\" GIT_COMMITTER_DATE=\"2025-09-03 09:15:00\" git commit -m \"docs: Update README with current date\")",
+      "WebFetch(domain:github.com)",
+      "Bash(git filter-branch:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
