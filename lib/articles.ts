@@ -170,11 +170,6 @@ Vibe coding is a new paradigm from early 2025 which essentially refers to writin
 
 As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
 
-<div class="article-videos">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/h2EJXKpv6zs" title="Vibe Coding in Action - Building Apps with AI" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7QcW8Bdy5eM" title="AI-Assisted Development Workflow" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-</div>
-
 As of current, a technical background and systems thinking is still helpful to guide the development process. Nonetheless the difference between what it meant to be a programmer 2 years ago till today is quite whiplash inducing.
 
 Vibe Coding in 2025 will do to software what MidJourney has done for image generation since 2023. Meaning there will be a massive amount of output, but getting to a final shippable product will still required tenacity and reliance on traditional skills.`,
