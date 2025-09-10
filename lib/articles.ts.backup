@@ -170,6 +170,11 @@ Vibe coding is a new paradigm from early 2025 which essentially refers to writin
 
 As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
 
+<div class="article-videos">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/h2EJXKpv6zs" title="Vibe Coding in Action - Building Apps with AI" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7QcW8Bdy5eM" title="AI-Assisted Development Workflow" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+</div>
+
 As of current, a technical background and systems thinking is still helpful to guide the development process. Nonetheless the difference between what it meant to be a programmer 2 years ago till today is quite whiplash inducing.
 
 Vibe Coding in 2025 will do to software what MidJourney has done for image generation since 2023. Meaning there will be a massive amount of output, but getting to a final shippable product will still required tenacity and reliance on traditional skills.`,
@@ -401,7 +406,7 @@ Perhaps the answer lies not in resolution but in the questioning itself:
         imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
       },
       {
-        title: 'Synthetic Data vs "Real" DATA',
+        title: 'Synthetic Data vs \'Real\' DATA',
         excerpt: 'Comparing synthetic and real data in AI training, exploring quality, authenticity, and the implications for model performance.',
         content: `# Synthetic Data vs 'Real' Data
 
@@ -509,6 +514,52 @@ Choosing between synthetic and real data requires considering:
         author: 'Amir Jalali',
         aiGenerated: false,
         imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
+      }
+    ]
+    
+- **Social interactions** through digital platforms
+- **Information consumption** through algorithms
+- **Work and creativity** in virtual environments
+- **Entertainment** in simulated worlds
+
+## The Brain's Interpretation
+
+Neuroscience tells us that all experience is fundamentally the brain's interpretation of electrical signals:
+
+### Sensory Processing
+- Light waves become vision
+- Sound waves become hearing
+- Chemical compounds become taste and smell
+- Pressure becomes touch
+
+### Memory and Meaning
+- Past experiences shape present perception
+- Context influences interpretation
+- Emotions color our understanding of reality
+
+## AI and Simulated Experience
+
+As artificial intelligence becomes more sophisticated, we face new questions:
+
+- **Virtual Reality**: Immersive experiences that feel completely real
+- **AI Companions**: Relationships with non-human entities
+- **Generated Content**: Art, music, and writing created by machines
+- **Augmented Reality**: Digital overlays on physical reality
+
+## Living in Multiple Realities
+
+Perhaps the question isn't what is "real" but rather:
+
+1. **Which realities matter?** What experiences contribute to our growth and happiness?
+2. **How do we maintain agency?** How do we choose which realities to engage with?
+3. **What defines authentic experience?** Is it the source or the impact on our consciousness?
+4. **How do we stay grounded?** What anchors us when everything can be simulated?
+
+*In a world where reality is increasingly constructed, perhaps the most real thing is our capacity to choose what to pay attention to.*`,
+        tags: ['Philosophy', 'Reality', 'Consciousness', 'AI'],
+        author: 'Amir Jalali',
+        aiGenerated: false,
+        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
       },
       {
         title: 'The AI revolution is upon us. So why is everyone so glum?',
@@ -605,6 +656,109 @@ We can choose to focus on:
         author: 'Amir Jalali',
         aiGenerated: false,
         imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
+      },
+      {
+        title: 'We are what we pretend to be',
+        excerpt: 'A reflection on identity, authenticity, and the power of conscious choice in shaping who we become.',
+        content: `# We are what we pretend to be
+
+**So we must be careful about what we pretend to be.**
+
+> *"We are what we pretend to be, so we must be careful about what we pretend to be."*
+> 
+> — Kurt Vonnegut
+
+## The Power of Pretending
+
+This seemingly simple observation contains profound wisdom about human nature and personal development. When we "pretend" to be something, we often become it.
+
+## Identity as Performance
+
+### Daily Choices
+Every day, we choose how to present ourselves:
+- **Professional identity**: The competent expert at work
+- **Social roles**: The caring friend, the supportive family member  
+- **Digital personas**: Our carefully curated online selves
+- **Internal narrative**: How we speak to ourselves
+
+### The Feedback Loop
+Our performances shape our reality:
+1. **We act** according to a chosen identity
+2. **Others respond** to our performance
+3. **We internalize** their responses
+4. **Our self-concept evolves** based on these interactions
+
+## The Authenticity Paradox
+
+### What is "Real"?
+- Is our "authentic self" the unfiltered, unthinking version?
+- Or is it the consciously chosen, intentionally crafted version?
+- Perhaps authenticity is about **conscious choice** rather than spontaneous expression
+
+### Constructive Pretending
+Some forms of "pretending" are deeply beneficial:
+- **Confidence before competence**: Acting confident until you become confident
+- **Kindness as practice**: Choosing kindness until it becomes natural
+- **Growth mindset**: Believing in your ability to improve
+- **Professional development**: Growing into roles through practice
+
+## Modern Applications
+
+### Digital Identity
+In our online world, this principle is more relevant than ever:
+- **Social media personas**: The curated self we share
+- **Professional networks**: How we present our expertise
+- **Avatar worlds**: Digital representations of who we want to be
+
+### AI and Identity
+As we interact more with AI systems:
+- **Prompt engineering**: How we describe ourselves to AI affects our self-perception
+- **AI assistance**: The capabilities we access shape our sense of possibility
+- **Virtual collaboration**: Working alongside AI changes our professional identity
+
+## The Responsibility
+
+### Conscious Curation
+If we become what we pretend to be, then we have a responsibility to:
+- **Choose wisely** what we practice being
+- **Model positively** for those who observe us
+- **Grow intentionally** rather than accidentally
+- **Align actions** with our deepest values
+
+### Individual Impact
+Our "pretending" affects:
+- **Personal growth**: The direction of our own development
+- **Relationships**: How others learn to interact with us
+- **Communities**: The culture we help create
+- **Future generations**: The example we set
+
+### Collective Responsibility
+On a societal level:
+- **Cultural norms** emerge from collective "pretending"
+- **Professional standards** develop through shared performance
+- **Social progress** happens when we pretend a better world is possible
+
+## Living Intentionally
+
+### Daily Practice
+- **Morning intention**: Who do you choose to be today?
+- **Moment-to-moment awareness**: Is this action aligned with who you want to become?
+- **Evening reflection**: Did today's "pretending" move you toward your goals?
+
+### Long-term Vision
+- **Values clarification**: What qualities do you want to embody?
+- **Identity evolution**: How do you want to grow?
+- **Legacy consideration**: What example do you want to leave?
+
+## The Creative Act of Self
+
+Perhaps our greatest creative act is the conscious construction of our identity. We are all, in a sense, works of art in progress.
+
+*We are what we pretend to be. So let's pretend to be something wonderful.*`,
+        tags: ['Identity', 'Personal Growth', 'Philosophy', 'Authenticity'],
+        author: 'Amir Jalali',
+        aiGenerated: false,
+        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
       },
       {
         title: 'Education',
@@ -1037,14 +1191,18 @@ With great access comes great responsibility:
       { ...defaultArticles[8], publishedAt: '2024-05-10T10:00:00.000Z', readTime: '6 min read' },
       // Synthetic Data vs 'Real' DATA (April 2024)
       { ...defaultArticles[9], publishedAt: '2024-04-15T10:00:00.000Z', readTime: '5 min read' },
-      // The AI revolution is upon us. So why is everyone so glum? (March 2024)
-      { ...defaultArticles[10], publishedAt: '2024-03-20T10:00:00.000Z', readTime: '7 min read' },
-      // Education (February 2024)
-      { ...defaultArticles[11], publishedAt: '2024-02-25T10:00:00.000Z', readTime: '8 min read' },
+      // What is real? How do you define "real"? (March 2024)
+      { ...defaultArticles[10], publishedAt: '2024-03-20T10:00:00.000Z', readTime: '4 min read' },
+      // The AI revolution is upon us. So why is everyone so glum? (February 2024)
+      { ...defaultArticles[11], publishedAt: '2024-02-25T10:00:00.000Z', readTime: '7 min read' },
+      // We are what we pretend to be (February 2024)
+      { ...defaultArticles[12], publishedAt: '2024-02-10T10:00:00.000Z', readTime: '3 min read' },
+      // Education (January 2024)
+      { ...defaultArticles[13], publishedAt: '2024-01-20T10:00:00.000Z', readTime: '8 min read' },
       // Art (January 2024)
-      { ...defaultArticles[12], publishedAt: '2024-01-20T10:00:00.000Z', readTime: '6 min read' },
+      { ...defaultArticles[14], publishedAt: '2024-01-05T10:00:00.000Z', readTime: '6 min read' },
       // Information (oldest - December 2023)
-      { ...defaultArticles[13], publishedAt: '2023-12-15T10:00:00.000Z', readTime: '9 min read' },
+      { ...defaultArticles[15], publishedAt: '2023-12-15T10:00:00.000Z', readTime: '9 min read' },
     ]
     
     // Create articles with consistent IDs

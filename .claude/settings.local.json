@@ -46,7 +46,12 @@
       "Bash(GIT_AUTHOR_DATE=\"2025-08-28 13:30:00\" GIT_COMMITTER_DATE=\"2025-08-28 13:30:00\" git commit --amend -m \"chore: Remove CI workflow to avoid permission issues\")",
       "Bash(GIT_AUTHOR_DATE=\"2025-09-03 09:15:00\" GIT_COMMITTER_DATE=\"2025-09-03 09:15:00\" git commit -m \"docs: Update README with current date\")",
       "WebFetch(domain:github.com)",
-      "Bash(git filter-branch:*)"
+      "Bash(git filter-branch:*)",
+      "Bash(dir:*)",
+      "Bash(sed:*)",
+      "Bash(for:*)",
+      "Bash(do echo -n \"$img: \")",
+      "Bash(done)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
