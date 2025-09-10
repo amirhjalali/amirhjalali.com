@@ -1,111 +1,104 @@
-// SEO utilities and metadata generation
+// SEO utilities and structured data helpers
+import { Metadata } from 'next';
 
-export interface SEOMetadata {
-  title: string;
-  description: string;
-  keywords?: string[];
-  ogImage?: string;
-  canonicalUrl?: string;
-  author?: string;
-  publishedTime?: string;
-  modifiedTime?: string;
-}
-
-export const generateMetadata = (metadata: SEOMetadata) => {
-  const {
-    title,
-    description,
-    keywords = [],
-    ogImage = '/og-image.png',
-    canonicalUrl,
-    author = 'Amir H. Jalali',
-    publishedTime,
-    modifiedTime,
-  } = metadata;
-
+export const generateSEOMetadata = (
+  title: string,
+  description: string,
+  path: string = '/',
+  image?: string
+): Metadata => {
+  const baseUrl = 'https://amirhjalali.com';
+  const defaultImage = '/images/og-image.jpg';
+  
   return {
     title,
     description,
-    keywords: keywords.join(', '),
-    authors: [{ name: author }],
     openGraph: {
       title,
       description,
-      images: [ogImage],
+      url: `${baseUrl}${path}`,
+      siteName: 'Amir H. Jalali',
+      images: [
+        {
+          url: image || defaultImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      locale: 'en_US',
       type: 'website',
-      ...(canonicalUrl && { url: canonicalUrl }),
-      ...(publishedTime && { publishedTime }),
-      ...(modifiedTime && { modifiedTime }),
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImage],
-      creator: '@amirhjalali',
+      images: [image || defaultImage],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
     alternates: {
-      ...(canonicalUrl && { canonical: canonicalUrl }),
+      canonical: `${baseUrl}${path}`,
     },
   };
 };
 
-// Generate JSON-LD structured data for articles
-export const generateArticleSchema = (article: any) => {
-  return {
+// Generate JSON-LD structured data
+export const generateStructuredData = (type: string, data: any) => {
+  const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: article.title,
-    description: article.summary,
-    image: article.image,
-    datePublished: article.date,
-    dateModified: article.updatedDate || article.date,
-    author: {
-      '@type': 'Person',
-      name: 'Amir H. Jalali',
-      url: 'https://amirhjalali.com',
-    },
-    publisher: {
-      '@type': 'Person',
-      name: 'Amir H. Jalali',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://amirhjalali.com/og-image.png',
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://amirhjalali.com/thoughts/${article.id}`,
-    },
+    '@type': type,
+    ...data,
   };
+  
+  return JSON.stringify(structuredData);
+};
+
+// Person schema for portfolio
+export const generatePersonSchema = () => {
+  return generateStructuredData('Person', {
+    name: 'Amir H. Jalali',
+    url: 'https://amirhjalali.com',
+    image: 'https://amirhjalali.com/images/profile.jpg',
+    jobTitle: 'Software Developer',
+    sameAs: [
+      'https://github.com/amirhjalali',
+      'https://linkedin.com/in/amirhjalali',
+      'https://twitter.com/amirhjalali',
+    ],
+  });
+};
+
+// Website schema
+export const generateWebsiteSchema = () => {
+  return generateStructuredData('WebSite', {
+    name: 'Amir H. Jalali Portfolio',
+    url: 'https://amirhjalali.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://amirhjalali.com/search?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  });
 };
 
 // Generate breadcrumb schema
-export const generateBreadcrumbSchema = (items: Array<{ name: string; url: string }>) => {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
+export const generateBreadcrumbSchema = (items: Array<{name: string; url: string}>) => {
+  return generateStructuredData('BreadcrumbList', {
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
       item: item.url,
     })),
-  };
+  });
 };
-
-// Common keywords for the site
-export const siteKeywords = [
-  'AI Consultant',
-  'Generative AI',
-  'Machine Learning',
-  'Data Engineering',
-  'AI Strategy',
-  'LLMs',
-  'GPT',
-  'AI Implementation',
-  'Business Intelligence',
-  'Data Warehousing',
-  'Technology Consulting',
-  'AI Advisory',
-];
