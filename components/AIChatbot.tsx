@@ -242,10 +242,11 @@ export default function AIChatbot() {
     setIsTyping(true)
 
     // Track chatbot interaction
-    trackEvent('chatbot_interaction', {
-      event_category: 'engagement',
-      event_label: 'chatbot',
-      message_length: content.length,
+    trackEvent({
+      category: 'Engagement',
+      action: 'Chatbot Interaction',
+      label: 'User Message',
+      value: content.length,
     })
 
     // Simulate AI thinking time
