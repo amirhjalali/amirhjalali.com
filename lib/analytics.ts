@@ -123,3 +123,21 @@ export const trackError = (error: Error, fatal: boolean = false) => {
     label: error.message,
   });
 };
+
+// Track Calendly booking events
+export const trackCalendlyBooking = (eventType: string = 'scheduled') => {
+  trackEvent({
+    category: 'Calendly',
+    action: 'Booking',
+    label: eventType,
+  });
+};
+
+// Track contact form submissions
+export const trackContactFormSubmit = (formData?: { name?: string; email?: string; subject?: string }) => {
+  trackEvent({
+    category: 'Contact',
+    action: 'Form Submit',
+    label: formData?.subject || 'Contact Form',
+  });
+};
