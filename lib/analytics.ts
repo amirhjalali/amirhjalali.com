@@ -141,3 +141,12 @@ export const trackContactFormSubmit = (formData?: { name?: string; email?: strin
     label: formData?.subject || 'Contact Form',
   });
 };
+
+// Track AI tools interactions
+export const trackAIToolsInteraction = (toolName: string, action: string = 'interact') => {
+  trackEvent({
+    category: 'AI Tools',
+    action: action,
+    label: toolName,
+  });
+};
