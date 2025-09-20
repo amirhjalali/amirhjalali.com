@@ -150,3 +150,12 @@ export const trackAIToolsInteraction = (toolName: string, action: string = 'inte
     label: toolName,
   });
 };
+
+// Track email newsletter subscriptions
+export const trackEmailSubscription = (email?: string, status: string = 'subscribed') => {
+  trackEvent({
+    category: 'Newsletter',
+    action: 'Subscription',
+    label: status,
+  });
+};
