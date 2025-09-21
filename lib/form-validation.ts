@@ -4,6 +4,11 @@ export interface ValidationRule {
   message: string;
 }
 
+export interface CrossFieldValidationRule {
+  test: (value: any, formData: any) => boolean;
+  message: string;
+}
+
 export interface ValidationSchema {
   [field: string]: ValidationRule[];
 }
@@ -71,8 +76,10 @@ export const validators = {
     message,
   }),
 
-  confirmPassword: (passwordField: string, message = 'Passwords do not match'): ValidationRule => ({
-    test: (value, formData) => value === formData?.[passwordField],
+  // Note: confirmPassword requires form-level validation, not field-level
+  // Use createCrossFieldValidator for password confirmation
+  confirmPassword: (expectedValue: string, message = 'Passwords do not match'): ValidationRule => ({
+    test: (value) => value === expectedValue,
     message,
   }),
 
@@ -136,3 +143,13 @@ export const hasErrors = (errors: Record<string, string[]>): boolean => {
 export const getFieldError = (errors: Record<string, string[]>, field: string): string | null => {
   return errors[field]?.[0] || null;
 };
+
+// Create a cross-field validator for comparing fields
+export const createCrossFieldValidator = (
+  field1: string,
+  field2: string,
+  message = 'Fields do not match'
+): CrossFieldValidationRule => ({
+  test: (value, formData) => formData[field1] === formData[field2],
+  message,
+});
