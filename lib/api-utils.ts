@@ -48,7 +48,7 @@ export const apiClient = {
 
         if (!response.ok) {
           return {
-            data: null,
+            data: undefined,
             error: data.message || `HTTP ${response.status}: ${response.statusText}`,
             status: response.status,
             success: false,
