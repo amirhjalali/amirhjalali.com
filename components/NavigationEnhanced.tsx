@@ -39,13 +39,13 @@ import {
 } from 'lucide-react'
 
 const navItems = [
-  { href: '/', label: 'Home', icon: Home },
   { href: '/projects', label: 'Projects', icon: FolderOpen },
   { href: '/thoughts', label: 'Thoughts', icon: Brain },
   { href: '/ai-tools', label: 'AI Tools', icon: Cpu },
   { href: '/resume', label: 'Resume', icon: FileUser },
   { href: '/resources', label: 'Resources', icon: BookOpen },
   { href: '/generate', label: 'Generate', icon: Sparkles },
+  { href: '/contact', label: 'Contact', icon: Mail },
 ]
 
 
@@ -113,7 +113,7 @@ export default function NavigationEnhanced() {
             <div className="hidden lg:block">
               <div className="flex items-center space-x-1">
                 {/* Regular nav items */}
-                {navItems.slice(0, 6).map((item) => {
+                {navItems.map((item) => {
                   const isActive = pathname === item.href
                   return (
                     <Link
