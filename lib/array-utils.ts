@@ -152,7 +152,7 @@ export const objectUtils = {
   },
 
   // Pick properties
-  pick: <T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> => {
+  pick: <T extends object, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> => {
     const result: any = {};
     keys.forEach(key => {
       if (key in obj) result[key] = obj[key];
@@ -161,7 +161,7 @@ export const objectUtils = {
   },
 
   // Omit properties
-  omit: <T, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
+  omit: <T extends object, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
     const result: any = { ...obj };
     keys.forEach(key => delete result[key]);
     return result;
