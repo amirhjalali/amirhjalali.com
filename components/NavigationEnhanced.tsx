@@ -41,7 +41,6 @@ import {
 const navItems = [
   { href: '/projects', label: 'Projects', icon: FolderOpen },
   { href: '/thoughts', label: 'Thoughts', icon: Brain },
-  { href: '/ai-tools', label: 'AI Tools', icon: Cpu },
   { href: '/resume', label: 'Resume', icon: FileUser },
   { href: '/resources', label: 'Resources', icon: BookOpen },
   { href: '/generate', label: 'Generate', icon: Sparkles },
