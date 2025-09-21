@@ -206,8 +206,8 @@ export const mockApi = {
 
   mockFetch: (responses: Map<string, any>) => {
     const originalFetch = global.fetch;
-    
-    global.fetch = jest.fn((url: string) => {
+
+    global.fetch = ((url: string) => {
       const response = responses.get(url);
       if (response) {
         return Promise.resolve({
@@ -216,7 +216,7 @@ export const mockApi = {
         } as Response);
       }
       return Promise.reject(new Error(`No mock response for ${url}`));
-    });
+    }) as typeof global.fetch;
 
     return () => {
       global.fetch = originalFetch;

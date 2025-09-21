@@ -121,7 +121,7 @@ export const validateForm = (
     const value = data[field];
 
     rules.forEach((rule) => {
-      if (!rule.test(value, data)) {
+      if (!rule.test(value)) {
         fieldErrors.push(rule.message);
       }
     });
