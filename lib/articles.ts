@@ -728,7 +728,7 @@ Education must prepare students not just for the jobs that exist today, but for 
         tags: ['Education', 'AI', 'Learning', 'Future of Work'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
+        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
       },
       {
         title: 'Art',
