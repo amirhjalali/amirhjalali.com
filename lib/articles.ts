@@ -1029,8 +1029,8 @@ With great access comes great responsibility:
       { ...defaultArticles[4], publishedAt: '2024-09-25T10:00:00.000Z', readTime: '4 min read' },
       // CHAIN OF THOUGHT (August 2024)
       { ...defaultArticles[5], publishedAt: '2024-08-05T10:00:00.000Z', readTime: '3 min read' },
-      // LLAMA3 and the era of abundant ai (July 2024)
-      { ...defaultArticles[6], publishedAt: '2024-07-15T10:00:00.000Z', readTime: '5 min read' },
+      // LLAMA3 and the era of abundant ai (April 2024)
+      { ...defaultArticles[6], publishedAt: '2024-04-20T10:00:00.000Z', readTime: '5 min read' },
       // THE NEXT GREAT DATA CROP (June 2024)
       { ...defaultArticles[7], publishedAt: '2024-06-20T10:00:00.000Z', readTime: '4 min read' },
       // Are we our IDEAS? (May 2024)
