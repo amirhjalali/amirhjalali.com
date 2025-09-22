@@ -508,7 +508,7 @@ Choosing between synthetic and real data requires considering:
         tags: ['Synthetic Data', 'AI Training', 'Data Strategy'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.jpg',
+        imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.jpg',
       },
       {
         title: 'The AI revolution is upon us. So why is everyone so glum?',
