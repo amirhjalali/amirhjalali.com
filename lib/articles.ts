@@ -136,7 +136,7 @@ Keep it local as long as possible. That's where vibe coding still flows.`,
         tags: ['Vibe Coding', 'AI Programming', 'Development'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
+        imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
       },
       {
         title: '4O image generation',
