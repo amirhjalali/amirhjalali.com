@@ -191,7 +191,7 @@ The immediate takeaway is that many use cases that were not deemed viable just r
         tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
+        imageUrl: '/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.jpg',
       },
       {
         title: 'REASONING MODELS',
