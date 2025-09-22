@@ -208,7 +208,7 @@ The concept of Test-Time Compute (TTC) allows AI more processing time to refine 
         tags: ['Reasoning Models', 'Chain of Thought', 'AI Reliability'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
+        imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
       },
       {
         title: 'CHAIN OF THOUGHT',
