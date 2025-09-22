@@ -1,0 +1,144 @@
+/* Print styles for resume page */
+@media print {
+  /* Hide navigation, footer, and interactive elements */
+  nav,
+  .no-print,
+  button,
+  .glass:before,
+  .glass:after,
+  .mesh-gradient,
+  .bg-gradient-to-r,
+  .animate-pulse,
+  .motion-safe\:animate-float,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Reset background colors for print */
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Set page margins */
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+
+  /* Ensure proper page breaks */
+  .page-break {
+    page-break-after: always;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+
+  /* Typography adjustments for print */
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 10pt;
+    border-bottom: 2px solid black;
+    padding-bottom: 5pt;
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-top: 15pt;
+    margin-bottom: 8pt;
+    border-bottom: 1px solid #666;
+    padding-bottom: 3pt;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-top: 10pt;
+    margin-bottom: 5pt;
+  }
+
+  /* Links - show URLs in print */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* But hide internal links */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  /* Skills and tags */
+  .skill-tag,
+  .badge {
+    border: 1px solid #333 !important;
+    padding: 2pt 6pt !important;
+    margin: 2pt !important;
+    display: inline-block !important;
+  }
+
+  /* Experience sections */
+  .experience-item {
+    page-break-inside: avoid;
+    margin-bottom: 15pt;
+  }
+
+  /* Contact info */
+  .contact-info {
+    border: 1px solid #666;
+    padding: 10pt;
+    margin-bottom: 15pt;
+  }
+
+  /* Adjust widths for print */
+  .max-w-5xl {
+    max-width: 100% !important;
+  }
+
+  /* Hide decorative elements */
+  .absolute,
+  .fixed {
+    position: static !important;
+  }
+
+  /* Ensure text is readable */
+  .text-gray-400,
+  .text-gray-500,
+  .text-gray-600,
+  .text-muted-foreground {
+    color: #333 !important;
+  }
+
+  .text-gradient {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: black !important;
+  }
+
+  /* Progress bars for skills */
+  .progress-bar {
+    border: 1px solid #333;
+    height: 10pt;
+    position: relative;
+  }
+
+  .progress-bar::after {
+    content: attr(data-progress) "%";
+    position: absolute;
+    right: 5pt;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8pt;
+  }
+}

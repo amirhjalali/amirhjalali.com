@@ -2,6 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { Printer, Download } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import './print.css'
 
 const experience = [
   {
@@ -293,15 +296,21 @@ export default function ResumePage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
-              onClick={downloadPDF}
-              className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2"
+            <Button
+              onClick={() => window.print()}
+              className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+              <Printer className="w-4 h-4" />
+              Print Resume
+            </Button>
+            <Button
+              onClick={downloadPDF}
+              variant="outline"
+              className="px-6 py-3 font-semibold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print"
+            >
+              <Download className="w-4 h-4" />
               Download PDF
-            </button>
+            </Button>
             
             {/* Filter buttons */}
             <div className="flex gap-2">

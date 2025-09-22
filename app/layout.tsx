@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     default: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     template: '%s | Amir H. Jalali'
   },
+  manifest: '/manifest.webmanifest',
   description: 'Generative AI consultant with 14 years experience in Data Warehousing, Business Intelligence, and AI Strategy. Currently CTO at AVENU AI. Specializing in LLMs, prompt engineering, and AI-driven solutions.',
   keywords: [
     'Amir Jalali',

@@ -68,7 +68,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden rounded-t-2xl">
             <LazyImage
               src={project.image}
-              alt={project.title}
+              alt={`${project.title} - ${project.description}`}
               className="w-full h-full object-cover"
               wrapperClassName="w-full h-full"
               aspectRatio="wide"
@@ -127,7 +127,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               asChild
               className="group/btn bg-gradient-to-r from-ai-green to-ai-blue text-black hover:from-ai-blue hover:to-ai-green font-medium"
             >
-              <Link href={project.link}>
+              <Link
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {project.status === 'Live' ? 'View Project' : 'Learn More'}
                 <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
               </Link>

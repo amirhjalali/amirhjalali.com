@@ -30,7 +30,7 @@ const resources = [
     longDescription: 'A curated collection of research papers and articles from Ilya Sutskever, the former head of research at OpenAI. This reading list provides deep insights into the foundations of modern AI and machine learning.',
     category: 'Research',
     type: 'Paper Collection',
-    url: '#', // Note: Original site didn't provide direct link
+    url: 'https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE',
     features: [
       'Research papers collection',
       'OpenAI insights',
@@ -39,6 +39,120 @@ const resources = [
       'Expert curation'
     ],
     tags: ['Research Papers', 'OpenAI', 'Deep Learning', 'Academic'],
+    difficulty: 'Advanced',
+    recommended: true,
+  },
+  {
+    id: 3,
+    name: 'Hugging Face',
+    description: 'The AI community building the future',
+    longDescription: 'Platform for sharing and collaborating on machine learning models, datasets, and applications. Hosts thousands of pre-trained models and provides tools for model deployment.',
+    category: 'Tools',
+    type: 'Platform',
+    url: 'https://huggingface.co/',
+    features: [
+      'Pre-trained models',
+      'Model hosting',
+      'Dataset repository',
+      'Collaborative tools',
+      'Inference API'
+    ],
+    tags: ['Models', 'Datasets', 'Community', 'Open Source'],
+    difficulty: 'All Levels',
+    recommended: true,
+  },
+  {
+    id: 4,
+    name: 'Papers With Code',
+    description: 'Machine learning papers with implementation code',
+    longDescription: 'A free resource that links research papers with their code implementations, datasets, and evaluation tables. Essential for staying up-to-date with ML research.',
+    category: 'Research',
+    type: 'Repository',
+    url: 'https://paperswithcode.com/',
+    features: [
+      'Paper implementations',
+      'Benchmark tracking',
+      'Code repositories',
+      'Dataset links',
+      'State-of-the-art tracking'
+    ],
+    tags: ['Research', 'Code', 'Benchmarks', 'Academic'],
+    difficulty: 'Intermediate to Advanced',
+    recommended: true,
+  },
+  {
+    id: 5,
+    name: 'OpenAI Cookbook',
+    description: 'Examples and guides for using OpenAI API',
+    longDescription: 'Collection of code examples and guides demonstrating how to accomplish common tasks with the OpenAI API, including GPT, DALL-E, and Whisper.',
+    category: 'Documentation',
+    type: 'Guide',
+    url: 'https://cookbook.openai.com/',
+    features: [
+      'API examples',
+      'Best practices',
+      'Code snippets',
+      'Integration guides',
+      'Cost optimization tips'
+    ],
+    tags: ['OpenAI', 'API', 'Tutorials', 'GPT'],
+    difficulty: 'Beginner to Intermediate',
+    recommended: true,
+  },
+  {
+    id: 6,
+    name: 'LangChain Documentation',
+    description: 'Build applications with LLMs through composability',
+    longDescription: 'Framework for developing applications powered by language models. Provides tools for prompt management, chains, agents, and memory.',
+    category: 'Documentation',
+    type: 'Framework',
+    url: 'https://python.langchain.com/',
+    features: [
+      'LLM orchestration',
+      'Prompt templates',
+      'Chain composition',
+      'Agent framework',
+      'Vector stores'
+    ],
+    tags: ['LLMs', 'Framework', 'Python', 'Development'],
+    difficulty: 'Intermediate',
+    recommended: true,
+  },
+  {
+    id: 7,
+    name: 'Google AI',
+    description: 'Research and tools from Google AI',
+    longDescription: 'Google's AI research hub featuring publications, tools, datasets, and educational resources. Includes TensorFlow, Colab, and various AI experiments.',
+    category: 'Research',
+    type: 'Platform',
+    url: 'https://ai.google/',
+    features: [
+      'Research papers',
+      'TensorFlow ecosystem',
+      'Colab notebooks',
+      'AI experiments',
+      'Educational content'
+    ],
+    tags: ['Google', 'TensorFlow', 'Research', 'Tools'],
+    difficulty: 'All Levels',
+    recommended: true,
+  },
+  {
+    id: 8,
+    name: 'Anthropic Research',
+    description: 'AI safety research and Claude documentation',
+    longDescription: 'Research and resources from Anthropic, focusing on AI safety, interpretability, and the Claude AI assistant family.',
+    category: 'Research',
+    type: 'Documentation',
+    url: 'https://www.anthropic.com/research',
+    features: [
+      'AI safety research',
+      'Claude documentation',
+      'Constitutional AI',
+      'Interpretability tools',
+      'Technical papers'
+    ],
+    tags: ['Claude', 'AI Safety', 'Research', 'Anthropic'],
     difficulty: 'Advanced',
     recommended: true,
   },
@@ -168,6 +282,8 @@ export default function ResourcesPage() {
                   {resource.url !== '#' ? (
                     <a
                       href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform text-center"

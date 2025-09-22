@@ -63,19 +63,29 @@ export default function ContactForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-    
+
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      // Form submitted successfully
-      
+      // Submit to actual API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
       // Track successful form submission
-      trackContactFormSubmit()
-      
+      trackContactFormSubmit(values)
+
       setIsSubmitting(false)
       setIsSuccess(true)
-      
+
       // Reset form after 3 seconds
       setTimeout(() => {
         form.reset()

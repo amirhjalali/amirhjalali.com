@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useParams, notFound } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { getArticleById, initializeDefaultArticles } from '@/lib/articles'
+import SocialShare from '@/components/SocialShare'
 
 export default function ThoughtPage() {
   const params = useParams()
@@ -72,16 +73,23 @@ export default function ThoughtPage() {
             {article.excerpt}
           </p>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2">
-            {article.tags.map((tag: string) => (
-              <span
-                key={tag}
-                className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-sm text-gray-400 transition-colors"
-              >
-                {tag}
-              </span>
-            ))}
+          {/* Tags and Social Share */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex flex-wrap gap-2">
+              {article.tags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-sm text-gray-400 transition-colors"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <SocialShare
+              url={`/thoughts/${id}`}
+              title={article.title}
+              description={article.excerpt}
+            />
           </div>
         </motion.header>
 
