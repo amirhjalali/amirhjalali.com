@@ -136,7 +136,7 @@ Keep it local as long as possible. That's where vibe coding still flows.`,
         tags: ['Vibe Coding', 'AI Programming', 'Development'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
+        imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
       },
       {
         title: '4O image generation',
@@ -159,7 +159,7 @@ This has led to a giant step up in usability of this model. The long prompts of 
         tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
+        imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
       },
       {
         title: 'THE ERA OF VIBE CODING',
@@ -176,7 +176,7 @@ Vibe Coding in 2025 will do to software what MidJourney has done for image gener
         tags: ['Vibe Coding', 'LLMs', 'Programming Paradigm'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
+        imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
       },
       {
         title: 'DeepSEEK',
@@ -191,7 +191,7 @@ The immediate takeaway is that many use cases that were not deemed viable just r
         tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
+        imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
       },
       {
         title: 'REASONING MODELS',
@@ -208,7 +208,7 @@ The concept of Test-Time Compute (TTC) allows AI more processing time to refine 
         tags: ['Reasoning Models', 'Chain of Thought', 'AI Reliability'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
+        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
       },
       {
         title: 'CHAIN OF THOUGHT',
@@ -223,7 +223,7 @@ This pedagogical approach to AI interaction represents a shift toward more colla
         tags: ['Chain of Thought', 'Problem Solving', 'AI Transparency'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
+        imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
       },
       {
         title: 'LLAMA3 and the era of abundant ai',
@@ -238,7 +238,7 @@ As we enter this era of abundant artificial intelligence, the question becomes n
         tags: ['LLAMA3', 'AI Accessibility', 'Societal Impact'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
+        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
       },
       {
         title: 'THE NEXT GREAT DATA CROP',
@@ -310,7 +310,7 @@ The data landscape is evolving toward:
         tags: ['Data Quality', 'AI Training', 'Economic Models'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
+        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
       },
       {
         title: 'Are we our IDEAS?',
@@ -398,7 +398,7 @@ Perhaps the answer lies not in resolution but in the questioning itself:
         tags: ['Philosophy', 'Identity', 'Creativity'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
+        imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
       },
       {
         title: 'Synthetic Data vs "Real" DATA',
@@ -508,7 +508,7 @@ Choosing between synthetic and real data requires considering:
         tags: ['Synthetic Data', 'AI Training', 'Data Strategy'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
+        imageUrl: '/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.jpg',
       },
       {
         title: 'The AI revolution is upon us. So why is everyone so glum?',
@@ -604,7 +604,7 @@ We can choose to focus on:
         tags: ['AI Revolution', 'Technology', 'Society', 'Optimism'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
+        imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
       },
       {
         title: 'Education',
@@ -728,7 +728,7 @@ Education must prepare students not just for the jobs that exist today, but for 
         tags: ['Education', 'AI', 'Learning', 'Future of Work'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
+        imageUrl: '/images/thoughts/94dc1ac3e582cc5e24b3c59f5b0ea1cf.jpg',
       },
       {
         title: 'Art',
@@ -1011,7 +1011,7 @@ With great access comes great responsibility:
         tags: ['Information', 'Digital Literacy', 'AI', 'Knowledge Management'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
+        imageUrl: '/images/thoughts/b64e4f979e4e4b6e829e76065e5ad8d5.jpg',
       }
     ]
     
