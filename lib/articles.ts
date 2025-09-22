@@ -1011,7 +1011,7 @@ With great access comes great responsibility:
         tags: ['Information', 'Digital Literacy', 'AI', 'Knowledge Management'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/f879650ab2636bc07463162dfcc68d5b.jpg',
+        imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
       }
     ]
     
