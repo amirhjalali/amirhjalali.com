@@ -728,7 +728,7 @@ Education must prepare students not just for the jobs that exist today, but for 
         tags: ['Education', 'AI', 'Learning', 'Future of Work'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/94dc1ac3e582cc5e24b3c59f5b0ea1cf.jpg',
+        imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
       },
       {
         title: 'Art',
@@ -1011,7 +1011,7 @@ With great access comes great responsibility:
         tags: ['Information', 'Digital Literacy', 'AI', 'Knowledge Management'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/b64e4f979e4e4b6e829e76065e5ad8d5.jpg',
+        imageUrl: '/images/thoughts/f879650ab2636bc07463162dfcc68d5b.jpg',
       }
     ]
     
