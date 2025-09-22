@@ -122,7 +122,7 @@ const resources = [
     id: 7,
     name: 'Google AI',
     description: 'Research and tools from Google AI',
-    longDescription: 'Google's AI research hub featuring publications, tools, datasets, and educational resources. Includes TensorFlow, Colab, and various AI experiments.',
+    longDescription: 'Google\'s AI research hub featuring publications, tools, datasets, and educational resources. Includes TensorFlow, Colab, and various AI experiments.',
     category: 'Research',
     type: 'Platform',
     url: 'https://ai.google/',
