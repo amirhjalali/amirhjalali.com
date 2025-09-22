@@ -284,8 +284,6 @@ export default function ResourcesPage() {
                       href={resource.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="flex-1 px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform text-center"
                     >
                       Visit Resource
