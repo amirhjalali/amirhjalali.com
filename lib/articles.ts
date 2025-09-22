@@ -1019,32 +1019,32 @@ With great access comes great responsibility:
     const articlesWithDates = [
       // Latest: The Edge of Vibe Coding (most recent - January 2025)
       { ...defaultArticles[0], publishedAt: '2025-01-15T10:00:00.000Z', readTime: '3 min read' },
-      // 4O Image Generation (December 2024)
-      { ...defaultArticles[1], publishedAt: '2024-12-20T10:00:00.000Z', readTime: '4 min read' },
-      // The ERA of VIBE CODING (November 2024)
-      { ...defaultArticles[2], publishedAt: '2024-11-01T10:00:00.000Z', readTime: '5 min read' },
-      // DeepSEEK (January 2025)
-      { ...defaultArticles[3], publishedAt: '2025-01-10T10:00:00.000Z', readTime: '3 min read' },
-      // REASONING MODELS (September 2024)
-      { ...defaultArticles[4], publishedAt: '2024-09-25T10:00:00.000Z', readTime: '4 min read' },
-      // CHAIN OF THOUGHT (August 2024)
-      { ...defaultArticles[5], publishedAt: '2024-08-05T10:00:00.000Z', readTime: '3 min read' },
-      // LLAMA3 and the era of abundant ai (April 2024)
-      { ...defaultArticles[6], publishedAt: '2024-04-20T10:00:00.000Z', readTime: '5 min read' },
-      // THE NEXT GREAT DATA CROP (June 2024)
-      { ...defaultArticles[7], publishedAt: '2024-06-20T10:00:00.000Z', readTime: '4 min read' },
-      // Are we our IDEAS? (May 2024)
-      { ...defaultArticles[8], publishedAt: '2024-05-10T10:00:00.000Z', readTime: '6 min read' },
-      // Synthetic Data vs 'Real' DATA (April 2024)
-      { ...defaultArticles[9], publishedAt: '2024-04-15T10:00:00.000Z', readTime: '5 min read' },
-      // The AI revolution is upon us. So why is everyone so glum? (March 2024)
-      { ...defaultArticles[10], publishedAt: '2024-03-20T10:00:00.000Z', readTime: '7 min read' },
-      // Education (February 2024)
-      { ...defaultArticles[11], publishedAt: '2024-02-25T10:00:00.000Z', readTime: '8 min read' },
-      // Art (January 2024)
-      { ...defaultArticles[12], publishedAt: '2024-01-20T10:00:00.000Z', readTime: '6 min read' },
-      // Information (oldest - December 2023)
-      { ...defaultArticles[13], publishedAt: '2023-12-15T10:00:00.000Z', readTime: '9 min read' },
+      // 4O Image Generation (January 2025)
+      { ...defaultArticles[1], publishedAt: '2025-01-10T10:00:00.000Z', readTime: '4 min read' },
+      // The ERA of VIBE CODING (January 2025)
+      { ...defaultArticles[2], publishedAt: '2025-01-05T10:00:00.000Z', readTime: '5 min read' },
+      // DeepSEEK (December 2024)
+      { ...defaultArticles[3], publishedAt: '2024-12-20T10:00:00.000Z', readTime: '3 min read' },
+      // REASONING MODELS (December 2024)
+      { ...defaultArticles[4], publishedAt: '2024-12-15T10:00:00.000Z', readTime: '4 min read' },
+      // CHAIN OF THOUGHT (November 2024)
+      { ...defaultArticles[5], publishedAt: '2024-11-25T10:00:00.000Z', readTime: '3 min read' },
+      // LLAMA3 and the era of abundant ai (October 2024)
+      { ...defaultArticles[6], publishedAt: '2024-10-15T10:00:00.000Z', readTime: '5 min read' },
+      // THE NEXT GREAT DATA CROP (September 2024)
+      { ...defaultArticles[7], publishedAt: '2024-09-20T10:00:00.000Z', readTime: '4 min read' },
+      // Are we our IDEAS? (August 2024)
+      { ...defaultArticles[8], publishedAt: '2024-08-10T10:00:00.000Z', readTime: '6 min read' },
+      // Synthetic Data vs 'Real' DATA (July 2024)
+      { ...defaultArticles[9], publishedAt: '2024-07-15T10:00:00.000Z', readTime: '5 min read' },
+      // The AI revolution is upon us. So why is everyone so glum? (June 2024)
+      { ...defaultArticles[10], publishedAt: '2024-06-20T10:00:00.000Z', readTime: '7 min read' },
+      // Education (May 2024)
+      { ...defaultArticles[11], publishedAt: '2024-05-25T10:00:00.000Z', readTime: '8 min read' },
+      // Art (April 2024)
+      { ...defaultArticles[12], publishedAt: '2024-04-20T10:00:00.000Z', readTime: '6 min read' },
+      // Information (oldest - March 2024)
+      { ...defaultArticles[13], publishedAt: '2024-03-15T10:00:00.000Z', readTime: '9 min read' },
     ]
     
     // Create articles with consistent IDs
