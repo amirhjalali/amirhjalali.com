@@ -310,7 +310,7 @@ The data landscape is evolving toward:
         tags: ['Data Quality', 'AI Training', 'Economic Models'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
+        imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
       },
       {
         title: 'Are we our IDEAS?',
