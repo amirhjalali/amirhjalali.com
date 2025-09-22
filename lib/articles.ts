@@ -176,7 +176,7 @@ Vibe Coding in 2025 will do to software what MidJourney has done for image gener
         tags: ['Vibe Coding', 'LLMs', 'Programming Paradigm'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
+        imageUrl: '/images/thoughts/6649f1eeeebe0365e09bf0f697f118b1.jpg',
       },
       {
         title: 'DeepSEEK',
