@@ -1017,8 +1017,8 @@ With great access comes great responsibility:
 
     // Map articles with estimated publication dates (in chronological order)
     const articlesWithDates = [
-      // Latest: The Edge of Vibe Coding (most recent - December 2024)
-      { ...defaultArticles[0], publishedAt: '2024-12-15T10:00:00.000Z', readTime: '3 min read' },
+      // Latest: The Edge of Vibe Coding (most recent - January 2025)
+      { ...defaultArticles[0], publishedAt: '2025-01-15T10:00:00.000Z', readTime: '3 min read' },
       // 4O Image Generation (December 2024)
       { ...defaultArticles[1], publishedAt: '2024-12-20T10:00:00.000Z', readTime: '4 min read' },
       // The ERA of VIBE CODING (October 2024)
