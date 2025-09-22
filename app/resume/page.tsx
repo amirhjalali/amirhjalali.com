@@ -289,7 +289,7 @@ export default function ResumePage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-space font-black mb-6">
-            <span className="text-gradient">TransformING Data into OpportunitY WITH AI</span>
+            <span className="text-gradient">Transforming Data into Opportunity with AI</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed mb-8">
 14+ years of progressive experience in Generative AI, Product Leadership, Data Engineering, and Technology Strategy. Currently building the future of creator-led commerce.
