@@ -856,7 +856,7 @@ Art will continue to evolve as humans and AI learn to create together. The quest
         tags: ['Art', 'Creativity', 'AI', 'Human Expression'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/7f2ffb1cdd6559e882d41dd8d646a852.jpg',
+        imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
       },
       {
         title: 'Information',
