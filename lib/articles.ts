@@ -223,7 +223,7 @@ This pedagogical approach to AI interaction represents a shift toward more colla
         tags: ['Chain of Thought', 'Problem Solving', 'AI Transparency'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
+        imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
       },
       {
         title: 'LLAMA3 and the era of abundant ai',
