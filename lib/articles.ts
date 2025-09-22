@@ -1023,8 +1023,8 @@ With great access comes great responsibility:
       { ...defaultArticles[1], publishedAt: '2024-12-20T10:00:00.000Z', readTime: '4 min read' },
       // The ERA of VIBE CODING (November 2024)
       { ...defaultArticles[2], publishedAt: '2024-11-01T10:00:00.000Z', readTime: '5 min read' },
-      // DeepSEEK (September 2024)
-      { ...defaultArticles[3], publishedAt: '2024-09-10T10:00:00.000Z', readTime: '3 min read' },
+      // DeepSEEK (January 2025)
+      { ...defaultArticles[3], publishedAt: '2025-01-10T10:00:00.000Z', readTime: '3 min read' },
       // REASONING MODELS (August 2024)
       { ...defaultArticles[4], publishedAt: '2024-08-25T10:00:00.000Z', readTime: '4 min read' },
       // CHAIN OF THOUGHT (August 2024)
