@@ -604,7 +604,7 @@ We can choose to focus on:
         tags: ['AI Revolution', 'Technology', 'Society', 'Optimism'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
+        imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
       },
       {
         title: 'Education',
