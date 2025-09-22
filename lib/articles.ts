@@ -398,7 +398,7 @@ Perhaps the answer lies not in resolution but in the questioning itself:
         tags: ['Philosophy', 'Identity', 'Creativity'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
+        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
       },
       {
         title: 'Synthetic Data vs "Real" DATA',
