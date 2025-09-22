@@ -238,7 +238,7 @@ As we enter this era of abundant artificial intelligence, the question becomes n
         tags: ['LLAMA3', 'AI Accessibility', 'Societal Impact'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
+        imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
       },
       {
         title: 'THE NEXT GREAT DATA CROP',
