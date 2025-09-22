@@ -20,15 +20,14 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { 
-  Home, 
-  FolderOpen, 
-  FileText, 
-  Brain, 
-  Cpu, 
-  FileUser, 
-  BookOpen, 
-  Sparkles,
+import {
+  Home,
+  FolderOpen,
+  FileText,
+  Brain,
+  Cpu,
+  FileUser,
+  BookOpen,
   Mail,
   Menu,
   ChevronDown,
@@ -43,7 +42,6 @@ const navItems = [
   { href: '/thoughts', label: 'Thoughts', icon: Brain },
   { href: '/resume', label: 'Resume', icon: FileUser },
   { href: '/resources', label: 'Resources', icon: BookOpen },
-  { href: '/generate', label: 'Generate', icon: Sparkles },
   { href: '/contact', label: 'Contact', icon: Mail },
 ]
 
