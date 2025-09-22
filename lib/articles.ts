@@ -159,7 +159,7 @@ This has led to a giant step up in usability of this model. The long prompts of 
         tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
+        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
       },
       {
         title: 'THE ERA OF VIBE CODING',
