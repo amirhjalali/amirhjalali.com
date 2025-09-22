@@ -1011,10 +1011,10 @@ With great access comes great responsibility:
         tags: ['Information', 'Digital Literacy', 'AI', 'Knowledge Management'],
         author: 'Amir Jalali',
         aiGenerated: false,
-        imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
+        imageUrl: '/images/thoughts/7f2ffb1cdd6559e882d41dd8d646a852.jpg',
       }
     ]
-    
+
     // Map articles with estimated publication dates (in chronological order)
     const articlesWithDates = [
       // Latest: The Edge of Vibe Coding (most recent - December 2024)
