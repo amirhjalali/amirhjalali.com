@@ -1019,8 +1019,8 @@ With great access comes great responsibility:
     const articlesWithDates = [
       // Latest: The Edge of Vibe Coding (most recent - December 2024)
       { ...defaultArticles[0], publishedAt: '2024-12-15T10:00:00.000Z', readTime: '3 min read' },
-      // 4O Image Generation (November 2024)
-      { ...defaultArticles[1], publishedAt: '2024-11-20T10:00:00.000Z', readTime: '4 min read' },
+      // 4O Image Generation (December 2024)
+      { ...defaultArticles[1], publishedAt: '2024-12-20T10:00:00.000Z', readTime: '4 min read' },
       // The ERA of VIBE CODING (October 2024)
       { ...defaultArticles[2], publishedAt: '2024-10-15T10:00:00.000Z', readTime: '5 min read' },
       // DeepSEEK (September 2024)
