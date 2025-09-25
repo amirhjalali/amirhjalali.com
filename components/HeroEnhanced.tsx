@@ -259,8 +259,8 @@ export default function HeroEnhanced() {
                 <LetterMorphAnimation />
               </span>
             </motion.h1>
-            <motion.p 
-              className="text-lg md:text-xl text-gray-400 mt-2 font-light tracking-widest uppercase"
+            <motion.p
+              className="text-lg md:text-xl text-gray-400 mt-6 font-light tracking-widest uppercase"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
