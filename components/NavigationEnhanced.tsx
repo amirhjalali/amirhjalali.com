@@ -41,7 +41,6 @@ const navItems = [
   { href: '/projects', label: 'Projects', icon: FolderOpen },
   { href: '/thoughts', label: 'Thoughts', icon: Brain },
   { href: '/resume', label: 'Resume', icon: FileUser },
-  { href: '/resources', label: 'Resources', icon: BookOpen },
   { href: '/contact', label: 'Contact', icon: Mail },
 ]
 
@@ -140,22 +139,6 @@ export default function NavigationEnhanced() {
               </div>
             </div>
 
-            {/* Desktop CTA and Actions */}
-            <div className="hidden lg:flex items-center gap-4">
-              <Link
-                href="/book"
-                className="group relative px-6 py-2.5 overflow-hidden rounded-full font-medium transition-all"
-              >
-                <span className="relative z-10 flex items-center gap-2 text-black">
-                  <Zap className="h-4 w-4" />
-                  Book Consultation
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-ai-green to-ai-blue" />
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-ai-blue to-ai-green opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
-              </Link>
-            </div>
             
             {/* Mobile menu trigger with Sheet */}
             <div className="lg:hidden flex items-center gap-2">
@@ -197,17 +180,6 @@ export default function NavigationEnhanced() {
                         </Link>
                       )
                     })}
-                    
-                    <div className="mt-6 pt-6 border-t border-white/10">
-                      <Link
-                        href="/book"
-                        className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-medium rounded-full hover:scale-105 transition-transform"
-                      >
-                        <Mail className="h-5 w-5" />
-                        Book Consultation
-                      </Link>
-                    </div>
-                    
                   </div>
                 </SheetContent>
               </Sheet>

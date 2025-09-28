@@ -10,9 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: '/projects', changeFrequency: 'weekly' as const, priority: 0.8 },
     { route: '/thoughts', changeFrequency: 'daily' as const, priority: 0.8 },
     { route: '/resume', changeFrequency: 'monthly' as const, priority: 0.7 },
-    { route: '/resources', changeFrequency: 'weekly' as const, priority: 0.7 },
     { route: '/contact', changeFrequency: 'monthly' as const, priority: 0.9 },
-    { route: '/book', changeFrequency: 'monthly' as const, priority: 0.8 },
   ]
 
   const staticPages = staticRoutes.map(item => ({

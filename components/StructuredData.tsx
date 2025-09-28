@@ -97,18 +97,12 @@ export default function StructuredData() {
           {
             "@type": "ListItem",
             "position": 4,
-            "name": "AI Tools",
-            "item": "https://amirhjalali.com/ai-tools"
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
             "name": "Resume",
             "item": "https://amirhjalali.com/resume"
           },
           {
             "@type": "ListItem",
-            "position": 6,
+            "position": 5,
             "name": "Contact",
             "item": "https://amirhjalali.com/contact"
           }
