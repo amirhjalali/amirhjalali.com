@@ -327,18 +327,6 @@ export default function HeroEnhanced() {
                 </RippleButton>
               </Link>
             </MagneticWrapper>
-
-            <MagneticWrapper magneticStrength={0.2}>
-              <Link href="/generate">
-                <RippleButton
-                  variant="outline"
-                  className="px-8 py-4 border-2 border-ai-blue/30 text-ai-blue font-medium text-lg hover:border-ai-blue hover:bg-ai-blue/10 hover:shadow-lg hover:shadow-ai-blue/20"
-                  rippleColor="rgba(0, 217, 255, 0.3)"
-                >
-                  AI Assistant
-                </RippleButton>
-              </Link>
-            </MagneticWrapper>
           </motion.div>
 
           {/* Social links */}
