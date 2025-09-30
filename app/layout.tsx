@@ -3,6 +3,7 @@ import NavigationEnhanced from '@/components/NavigationEnhanced'
 import SkipNavigation from '@/components/SkipNavigation'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import StructuredData from '@/components/StructuredData'
+import { ThemeProvider } from '@/components/ThemeProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -88,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
@@ -98,13 +99,15 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-screen font-inter antialiased">
-        <GoogleAnalytics />
-        <StructuredData />
-        <SkipNavigation />
-        <NavigationEnhanced />
-        <main id="main-content" className="pt-20" role="main">
-          {children}
-        </main>
+        <ThemeProvider defaultTheme="dark">
+          <GoogleAnalytics />
+          <StructuredData />
+          <SkipNavigation />
+          <NavigationEnhanced />
+          <main id="main-content" className="pt-20" role="main">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   )

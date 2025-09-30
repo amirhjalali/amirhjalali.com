@@ -260,7 +260,7 @@ export default function HeroEnhanced() {
               </span>
             </motion.h1>
             <motion.p
-              className="text-lg md:text-xl text-gray-400 mt-6 font-light tracking-widest uppercase"
+              className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mt-6 font-light tracking-widest uppercase"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
@@ -277,7 +277,7 @@ export default function HeroEnhanced() {
             className="text-2xl md:text-4xl font-light text-foreground mb-6 leading-relaxed"
           >
             Building the future with
-            <span className="text-white font-medium"> Artificial Intelligence</span>
+            <span className="text-ai-green dark:text-white font-medium"> Artificial Intelligence</span>
           </motion.p>
 
           {/* Enhanced description */}

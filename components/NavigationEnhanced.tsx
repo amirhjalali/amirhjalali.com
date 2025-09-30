@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
 } from '@/components/ui/sheet'
 import {
   DropdownMenu,
@@ -36,6 +36,7 @@ import {
   Code,
   Palette,
 } from 'lucide-react'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 const navItems = [
   { href: '/projects', label: 'Projects', icon: FolderOpen },
@@ -73,9 +74,9 @@ export default function NavigationEnhanced() {
         animate={{ y: 0 }}
         transition={{ duration: 0.8 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'glass border-b border-white/10 shadow-lg shadow-black/5' 
-            : 'bg-dark-bg/50'
+          scrolled
+            ? 'glass border-b shadow-lg shadow-black/5 dark:shadow-black/5'
+            : 'bg-white/50 dark:bg-dark-bg/50'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -119,8 +120,8 @@ export default function NavigationEnhanced() {
                     >
                       <span className={`relative z-10 flex items-center gap-2 uppercase tracking-wide ${
                         isActive
-                          ? 'text-white'
-                          : 'text-gray-400 group-hover:text-white'
+                          ? 'text-ai-green dark:text-white'
+                          : 'text-gray-600 dark:text-gray-400 group-hover:text-ai-green dark:group-hover:text-white'
                       }`}>
                         {item.label}
                       </span>
@@ -136,18 +137,21 @@ export default function NavigationEnhanced() {
                   )
                 })}
 
+                {/* Theme Toggle */}
+                <ThemeToggle />
               </div>
             </div>
 
-            
+
             {/* Mobile menu trigger with Sheet */}
             <div className="lg:hidden flex items-center gap-2">
+              <ThemeToggle />
               <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
                 <SheetTrigger asChild>
                   <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="text-gray-400 hover:text-white"
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-600 dark:text-gray-400 hover:text-ai-green dark:hover:text-white"
                     aria-label="Open navigation menu"
                     aria-expanded={mobileOpen}
                   >

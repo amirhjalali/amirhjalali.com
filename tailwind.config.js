@@ -51,6 +51,7 @@ module.exports = {
         },
         'ai-green': '#00FF88',
         'ai-blue': '#00D9FF',
+        'dark-bg': 'hsl(var(--dark-bg))',
       },
       borderRadius: {
         lg: "var(--radius)",
