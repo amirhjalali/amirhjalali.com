@@ -120,8 +120,8 @@ export default function NavigationEnhanced() {
                     >
                       <span className={`relative z-10 flex items-center gap-2 uppercase tracking-wide ${
                         isActive
-                          ? 'text-ai-amber dark:text-white'
-                          : 'text-gray-600 dark:text-gray-400 group-hover:text-ai-amber dark:group-hover:text-white'
+                          ? 'text-ai-green dark:text-white'
+                          : 'text-gray-600 dark:text-gray-400 group-hover:text-ai-green dark:group-hover:text-white'
                       }`}>
                         {item.label}
                       </span>
@@ -151,7 +151,7 @@ export default function NavigationEnhanced() {
                   <Button 
                     variant="ghost"
                     size="icon"
-                    className="text-gray-600 dark:text-gray-400 hover:text-ai-amber dark:hover:text-white"
+                    className="text-gray-600 dark:text-gray-400 hover:text-ai-green dark:hover:text-white"
                     aria-label="Open navigation menu"
                     aria-expanded={mobileOpen}
                   >
@@ -175,8 +175,8 @@ export default function NavigationEnhanced() {
                           href={item.href}
                           className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all uppercase tracking-wide ${
                             isActive
-                              ? 'bg-gradient-to-r from-ai-yellow/20 to-ai-amber/20 dark:from-ai-green/20 dark:to-ai-blue/20 text-ai-amber dark:text-white'
-                              : 'text-gray-600 dark:text-gray-400 hover:text-ai-amber dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+                              ? 'bg-gradient-to-r from-ai-yellow/20 to-ai-amber/20 dark:from-ai-green/20 dark:to-ai-blue/20 text-ai-green dark:text-white'
+                              : 'text-gray-600 dark:text-gray-400 hover:text-ai-green dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                           }`}
                         >
                           <Icon className="h-5 w-5" />

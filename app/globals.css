@@ -139,29 +139,6 @@
     @apply outline-none ring-2 ring-ai-green ring-offset-2 ring-offset-background;
   }
   
-  /* Light mode gradient - warm yellows and ambers */
-  .light .text-gradient {
-    background: linear-gradient(to right, #FFD700, #FFB800, #FFD700);
-    background-size: 200% auto;
-    color: #FFB800 !important;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 3s linear infinite;
-  }
-
-  /* Dark mode gradient - original green/blue */
-  .dark .text-gradient {
-    background: linear-gradient(to right, #00FF88, #00D9FF, #00FF88);
-    background-size: 200% auto;
-    color: #00FF88 !important;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 3s linear infinite;
-  }
-
-  /* Default for system without theme class */
   .text-gradient {
     background: linear-gradient(to right, #00FF88, #00D9FF, #00FF88);
     background-size: 200% auto;
@@ -194,12 +171,29 @@
     @apply backdrop-blur-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10;
   }
 
+  /* Light mode background gradients - warm yellows */
+  .light .hero-gradient {
+    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+  }
+
+  .light .mesh-gradient {
+    background-image:
+      radial-gradient(at 40% 20%, rgba(255, 215, 0, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(255, 184, 0, 0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(255, 215, 0, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, rgba(255, 184, 0, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(255, 215, 0, 0.05) 0px, transparent 50%);
+  }
+
+  /* Dark mode background gradients - original green/blue */
+  .dark .hero-gradient,
   .hero-gradient {
     background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
   }
 
+  .dark .mesh-gradient,
   .mesh-gradient {
-    background-image: 
+    background-image:
       radial-gradient(at 40% 20%, rgba(0, 255, 136, 0.2) 0px, transparent 50%),
       radial-gradient(at 80% 0%, rgba(0, 217, 255, 0.15) 0px, transparent 50%),
       radial-gradient(at 0% 50%, rgba(0, 255, 136, 0.1) 0px, transparent 50%),
