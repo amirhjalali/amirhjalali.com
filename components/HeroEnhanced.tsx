@@ -277,7 +277,7 @@ export default function HeroEnhanced() {
             className="text-2xl md:text-4xl font-light text-foreground mb-6 leading-relaxed"
           >
             Building the future with
-            <span className="text-ai-green dark:text-white font-medium"> Artificial Intelligence</span>
+            <span className="text-ai-amber dark:text-white font-medium"> Artificial Intelligence</span>
           </motion.p>
 
           {/* Enhanced description */}

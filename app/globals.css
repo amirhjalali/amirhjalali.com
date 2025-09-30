@@ -68,26 +68,26 @@
   }
 
   .light {
-    /* Light theme - clean, professional */
+    /* Light theme - warm, professional */
     --background: 0 0% 98%;
     --foreground: 0 0% 10%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
-    --primary: 152 100% 30%;
+    --primary: 45 95% 50%;  /* Warm yellow/gold */
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 10%;
     --muted: 0 0% 94%;
     --muted-foreground: 0 0% 40%;
-    --accent: 152 70% 40%;
+    --accent: 38 90% 55%;  /* Warm orange-yellow */
     --accent-foreground: 0 0% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89%;
     --input: 0 0% 89%;
-    --ring: 152 100% 40%;
+    --ring: 45 95% 50%;
     --dark-bg: 0 0% 98%;
   }
 
@@ -139,6 +139,29 @@
     @apply outline-none ring-2 ring-ai-green ring-offset-2 ring-offset-background;
   }
   
+  /* Light mode gradient - warm yellows and ambers */
+  .light .text-gradient {
+    background: linear-gradient(to right, #FFD700, #FFB800, #FFD700);
+    background-size: 200% auto;
+    color: #FFB800 !important;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 3s linear infinite;
+  }
+
+  /* Dark mode gradient - original green/blue */
+  .dark .text-gradient {
+    background: linear-gradient(to right, #00FF88, #00D9FF, #00FF88);
+    background-size: 200% auto;
+    color: #00FF88 !important;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 3s linear infinite;
+  }
+
+  /* Default for system without theme class */
   .text-gradient {
     background: linear-gradient(to right, #00FF88, #00D9FF, #00FF88);
     background-size: 200% auto;
