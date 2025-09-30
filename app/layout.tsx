@@ -3,7 +3,6 @@ import NavigationEnhanced from '@/components/NavigationEnhanced'
 import SkipNavigation from '@/components/SkipNavigation'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import StructuredData from '@/components/StructuredData'
-import AIChatbot from '@/components/AIChatbot'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -106,7 +105,6 @@ export default function RootLayout({
         <main id="main-content" className="pt-20" role="main">
           {children}
         </main>
-        <AIChatbot />
       </body>
     </html>
   )
