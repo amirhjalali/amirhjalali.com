@@ -1,43 +1,91 @@
-# MR AI Portfolio
+# Amir H. Jalali - Personal Portfolio Website
 
-A modern, AI-powered portfolio website built with Next.js, featuring voice-to-article generation, interactive resume timeline, and AI tools showcase.
+A modern, responsive portfolio website showcasing AI consulting expertise, data engineering experience, and thought leadership in artificial intelligence.
 
-## ✨ Features
+## 🌟 Overview
 
-- **🎨 Modern Design**: Beautiful dark theme with glassmorphism effects and smooth animations
-- **🎤 Voice-to-Article**: Transform voice recordings into polished articles using AI
-- **📝 AI Content Generation**: Generate articles from text prompts with automated image creation
-- **💼 Interactive Resume**: Timeline-based resume with filtering and animations
-- **🔧 AI Tools Showcase**: Display of AI projects with detailed modals
-- **📱 Responsive Design**: Optimized for all devices with mobile-first approach
-- **⚡ Performance**: Built with Next.js 15 and optimized for Core Web Vitals
-- **♿ Accessibility**: WCAG 2.1 compliant with keyboard navigation support
-- **🔍 SEO Optimized**: Server-side rendering with meta tags and structured data
-- **📊 Analytics Ready**: Google Analytics 4 integration support
+This is the personal portfolio website for Amir H. Jalali, an AI Consultant and Data Engineering Expert with 14+ years of experience. The site features a dynamic, animated interface with a focus on AI and technology content.
 
-## 🚀 Tech Stack
+**Live Site**: [amirhjalali.com](https://amirhjalali.com)
 
-- **Framework**: Next.js 14 (App Router)
+## ✨ Key Features
+
+### 🎯 Core Pages
+
+- **Home**: Dynamic hero section with animated name morphing (AMIR ↔ MR AI), interactive 3D effects, and quick navigation
+- **Projects**: Showcase of professional projects including Argumend, Plaiced AI, and data engineering work
+- **Thoughts**: Blog-style articles on AI, machine learning, and technology trends
+- **Resume**: Interactive timeline-based resume with skills visualization and experience details
+- **Contact**: Professional contact form with social media links
+
+### 🎨 Design Features
+
+- **Dark Theme**: Modern dark interface with glassmorphism effects
+- **Animated Elements**: Framer Motion animations throughout
+- **Responsive Design**: Mobile-first approach with adaptive layouts
+- **Interactive Components**: Magnetic buttons, ripple effects, and smooth transitions
+- **Typography**: Custom fonts (Space Grotesk, Lato) for enhanced readability
+
+### 🚀 Technical Features
+
+- **Performance Optimized**: Built with Next.js 15 and Turbopack
+- **SEO Ready**: Server-side rendering, meta tags, and structured data
+- **Accessibility**: WCAG 2.1 compliant with keyboard navigation
+- **Analytics**: Google Analytics 4 integration
+- **PWA Ready**: Manifest file for progressive web app functionality
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15.4.1 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
-- **AI Integration**: OpenAI API (GPT-4, Whisper, DALL-E)
+- **UI Components**: Radix UI (shadcn/ui)
+- **Icons**: Lucide React
 - **Deployment**: Vercel
 
-## 🛠️ Setup Instructions
+## 📁 Project Structure
+
+```
+amirhjalali.com/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   │   └── contact/       # Contact form endpoint
+│   ├── projects/          # Projects showcase page
+│   ├── thoughts/          # Blog/articles pages
+│   │   └── [id]/         # Individual article pages
+│   ├── resume/           # Interactive resume page
+│   ├── contact/          # Contact page
+│   └── page.tsx          # Homepage
+├── components/            # React components
+│   ├── ui/               # Reusable UI components
+│   ├── HeroEnhanced.tsx  # Homepage hero section
+│   ├── NavigationEnhanced.tsx  # Main navigation
+│   └── ProjectShowcase.tsx     # Projects display
+├── lib/                   # Utility functions
+│   ├── articles.ts       # Article data and management
+│   ├── analytics.ts     # Analytics tracking
+│   └── utils/            # Helper functions
+└── public/               # Static assets
+    └── images/          # Image assets
+        ├── projects/    # Project images
+        └── thoughts/    # Article images
+```
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
-- OpenAI API key
+- Git
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
    git clone https://github.com/amirhjalali/amirhjalali.com.git
-   cd amirhjalali.com/mrai-portfolio
+   cd amirhjalali.com
    ```
 
 2. **Install dependencies**
@@ -49,10 +97,10 @@ A modern, AI-powered portfolio website built with Next.js, featuring voice-to-ar
    ```bash
    cp .env.example .env.local
    ```
-   
-   Edit `.env.local` and add your OpenAI API key:
+
+   Edit `.env.local` and add required variables:
    ```env
-   OPENAI_API_KEY=your_openai_api_key_here
+   NEXT_PUBLIC_GA_ID=your_google_analytics_id
    ```
 
 4. **Run the development server**
@@ -63,140 +111,96 @@ A modern, AI-powered portfolio website built with Next.js, featuring voice-to-ar
 5. **Open in browser**
    Visit [http://localhost:3000](http://localhost:3000)
 
-## 🎯 Key Features Explained
-
-### Voice-to-Article Generation
-
-1. **Record Audio**: Use the built-in voice recorder to capture your thoughts
-2. **AI Transcription**: Whisper API converts speech to text
-3. **Content Generation**: GPT-4 transforms transcription into structured articles
-4. **Image Generation**: DALL-E creates relevant images for the article
-5. **Export**: Copy generated content or use in your blog
-
-### Interactive Resume
-
-- Timeline-based layout with work/education filtering
-- Animated progress indicators
-- Skills categorization
-- PDF download functionality (placeholder)
-
-### AI Tools Showcase
-
-- Filterable tool gallery
-- Detailed modal views
-- Status indicators (Live, Beta, Development)
-- Technology stack displays
-
-## 📁 Project Structure
-
-```
-mrai-portfolio/
-├── app/
-│   ├── api/generate/         # AI content generation API
-│   ├── articles/             # Blog/articles pages
-│   ├── ai-tools/             # AI tools showcase
-│   ├── generate/             # Voice-to-article interface
-│   ├── projects/             # Projects showcase
-│   ├── resume/               # Interactive resume
-│   └── contact/              # Contact page
-├── components/
-│   ├── VoiceRecorder.tsx     # Voice recording component
-│   ├── Navigation.tsx        # Main navigation
-│   └── AnimatedLogo.tsx      # Logo animation
-└── public/                   # Static assets
-```
-
-## 🔧 Configuration
-
-### OpenAI API Setup
-
-1. Get your API key from [OpenAI Platform](https://platform.openai.com/)
-2. Add it to your `.env.local` file
-3. Ensure you have credits for:
-   - GPT-4 (content generation)
-   - Whisper (voice transcription)
-   - DALL-E 3 (image generation)
-
-### Customization
-
-- **Colors**: Edit `tailwind.config.js` for color scheme
-- **Content**: Update article data in `app/articles/page.tsx`
-- **Resume**: Modify experience data in `app/resume/page.tsx`
-- **Tools**: Update tools data in `app/ai-tools/page.tsx`
-
 ## 📝 Content Management
 
-### Adding Articles
+### Articles/Thoughts
 
-Currently, articles are stored in the component files. For production use, consider:
-
-- Adding a headless CMS (Contentful, Strapi)
-- Using a database (PostgreSQL, MongoDB)
-- Implementing a markdown-based system
-
-### Generated Content
-
-AI-generated articles include:
-- Structured content with headings
-- SEO-optimized formatting
-- Relevant tags and metadata
+Articles are managed through the `lib/articles.ts` file with the following structure:
+- Title, excerpt, and full content
+- Tags and categories
+- Publication dates
 - Reading time estimates
-- Word counts
+- Featured images
+
+### Projects
+
+Projects are showcased with:
+- Detailed descriptions
+- Technology stacks
+- Live/demo links
+- Visual previews
+- Key features and achievements
+
+## 🎨 Customization
+
+### Colors
+The site uses a custom color scheme defined in `tailwind.config.js`:
+- Primary: AI Green (`#00FF88`)
+- Secondary: AI Blue (`#00D9FF`)
+- Background: Dark theme with gradient effects
+
+### Typography
+- Headers: Space Grotesk
+- Body: Lato
+- Code: JetBrains Mono
+
+## 📊 Performance
+
+- **Lighthouse Score**: 95+ Performance
+- **Core Web Vitals**: Optimized for LCP, FID, and CLS
+- **Bundle Size**: Code-split and lazy-loaded components
+- **Image Optimization**: Next.js Image component with responsive sizing
+
+## 🔐 Security
+
+- Server-side form validation
+- Rate limiting on API endpoints
+- Secure headers configuration
+- Environment variable protection
 
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
 
 1. **Connect Repository**
-   - Import project in Vercel dashboard
-   - Set root directory to `mrai-portfolio`
+   ```bash
+   vercel --prod
+   ```
 
 2. **Environment Variables**
-   - Add `OPENAI_API_KEY` in project settings
-   - Deploy
+   Set in Vercel dashboard:
+   - `NEXT_PUBLIC_GA_ID`
+   - Any other required variables
 
 3. **Custom Domain**
-   - Add your domain in project settings
-   - Update DNS records
+   Configure in Vercel dashboard → Settings → Domains
 
-### Other Platforms
+## 📈 Analytics & Monitoring
 
-The project can be deployed on any platform supporting Next.js:
-- Netlify
-- Railway
-- DigitalOcean App Platform
-- AWS Amplify
-
-## 🔐 Security Considerations
-
-- API keys are server-side only
-- File upload validation for voice recordings
-- Rate limiting on API routes (recommended)
-- Content moderation for generated articles
+- **Google Analytics 4**: Page views, events, and user behavior
+- **Web Vitals**: Performance monitoring
+- **Error Tracking**: Console error logging
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+While this is a personal portfolio, suggestions and bug reports are welcome:
+
+1. Open an issue for bugs or suggestions
+2. Fork for major changes
+3. Submit pull requests with clear descriptions
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Copyright © 2024 Amir H. Jalali. All rights reserved.
 
-## 🙋‍♂️ Support
+## 📧 Contact
 
-For questions or issues:
-- Open an issue on GitHub
-- Contact: hello@amirhjalali.com
-- LinkedIn: [amirhjalali](https://linkedin.com/in/amirhjalali)
-
----
-
-Built with ❤️ using AI and modern web technologies.
+- **Email**: hello@amirhjalali.com
+- **LinkedIn**: [amirhjalali](https://linkedin.com/in/amirhjalali)
+- **GitHub**: [amirhjalali](https://github.com/amirhjalali)
 
 ---
 
-*Last updated: September 2025*
+**Current Version**: 2.0.0
+**Last Updated**: September 2024
+**Built with**: Next.js, TypeScript, and modern web technologies
