@@ -35,22 +35,43 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build with Next.js
+      - name: Clean any previous builds
         run: |
-          echo "Starting Next.js build..."
-          npm run build || (echo "Build failed with exit code $?" && exit 1)
-          echo "Build completed successfully"
+          rm -rf .next out
+          echo "Cleaned .next and out directories"
 
-      - name: List all files after build
+      - name: Show next.config.ts
         run: |
-          echo "=== Root directory ==="
-          ls -la
+          echo "=== next.config.ts content ==="
+          cat next.config.ts
           echo ""
-          echo "=== Looking for out directory ==="
-          find . -maxdepth 2 -type d -name "out" || echo "No out directory found"
-          echo ""
-          echo "=== Checking .next directory ==="
-          ls -la .next/ || echo ".next directory not found"
+
+      - name: Build with Next.js (with verbose output)
+        run: |
+          echo "Starting build..."
+          npm run build
+          echo "Build command completed"
+
+      - name: Check build output
+        run: |
+          echo "=== Checking for out directory ==="
+          if [ -d "out" ]; then
+            echo "✓ SUCCESS: out directory exists!"
+            echo "Contents of out/:"
+            ls -la out/ | head -20
+          else
+            echo "✗ FAILED: out directory does not exist"
+            echo ""
+            echo "=== Checking .next directory ==="
+            ls -la .next/ | head -20
+            echo ""
+            echo "=== Checking for any generated config files ==="
+            ls -la next.config.* 2>/dev/null || echo "No next.config files found"
+            echo ""
+            echo "=== Checking package.json scripts ==="
+            cat package.json | grep -A 5 '"scripts"'
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
