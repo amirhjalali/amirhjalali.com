@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
-import { getArticles } from '@/lib/articles'
+
+export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://amirhjalali.com'
@@ -20,11 +21,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: item.priority,
   }))
 
-  // Get dynamic article routes
-  const articles = getArticles()
-  const articlePages = articles.map(article => ({
-    url: `${baseUrl}/thoughts/${article.id}`,
-    lastModified: new Date(article.publishedAt),
+  // Statically define article routes (matching generateStaticParams in thoughts/[id]/page.tsx)
+  const articlePages = Array.from({ length: 14 }, (_, i) => ({
+    url: `${baseUrl}/thoughts/article-${i + 1}`,
+    lastModified: new Date(),
     changeFrequency: 'yearly' as const,
     priority: 0.6,
   }))
