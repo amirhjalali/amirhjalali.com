@@ -7,6 +7,14 @@ import { useEffect, useState } from 'react'
 import { getArticleById, initializeDefaultArticles } from '@/lib/articles'
 import SocialShare from '@/components/SocialShare'
 
+// Generate static params for all article IDs
+export async function generateStaticParams() {
+  // Return the list of article IDs that will be pre-rendered
+  return Array.from({ length: 14 }, (_, i) => ({
+    id: `article-${i + 1}`
+  }))
+}
+
 export default function ThoughtPage() {
   const params = useParams()
   const id = params.id as string
