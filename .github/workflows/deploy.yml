@@ -35,41 +35,38 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Clean any previous builds
+      - name: Remove any stray config files
+        run: |
+          echo "=== Removing any old config files ==="
+          rm -f next.config.js next.config.ts
+          echo "Only keeping next.config.mjs"
+          ls -la next.config.* || echo "No config files found"
+
+      - name: Show next.config.mjs content
+        run: |
+          echo "=== next.config.mjs content ==="
+          cat next.config.mjs
+
+      - name: Clean previous builds
         run: |
           rm -rf .next out
           echo "Cleaned .next and out directories"
 
-      - name: Show next.config.ts
-        run: |
-          echo "=== next.config.ts content ==="
-          cat next.config.ts
-          echo ""
-
-      - name: Build with Next.js (with verbose output)
+      - name: Build with Next.js
         run: |
           echo "Starting build..."
           npm run build
           echo "Build command completed"
 
-      - name: Check build output
+      - name: Verify out directory exists
         run: |
           echo "=== Checking for out directory ==="
           if [ -d "out" ]; then
             echo "✓ SUCCESS: out directory exists!"
-            echo "Contents of out/:"
             ls -la out/ | head -20
           else
-            echo "✗ FAILED: out directory does not exist"
-            echo ""
-            echo "=== Checking .next directory ==="
-            ls -la .next/ | head -20
-            echo ""
-            echo "=== Checking for any generated config files ==="
-            ls -la next.config.* 2>/dev/null || echo "No next.config files found"
-            echo ""
-            echo "=== Checking package.json scripts ==="
-            cat package.json | grep -A 5 '"scripts"'
+            echo "✗ FAILED: out directory not created"
+            echo "Something is wrong with the static export"
             exit 1
           fi
 
