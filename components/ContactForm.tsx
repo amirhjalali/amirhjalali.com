@@ -65,20 +65,19 @@ export default function ContactForm() {
     setIsSubmitting(true)
 
     try {
-      // Submit to actual API endpoint
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      })
+      // Create mailto link with form data
+      const subject = encodeURIComponent(`${values.projectType}: ${values.subject}`)
+      const body = encodeURIComponent(
+        `Name: ${values.name}\n` +
+        `Email: ${values.email}\n` +
+        `Project Type: ${values.projectType}\n\n` +
+        `Message:\n${values.message}`
+      )
 
-      const data = await response.json()
+      const mailtoLink = `mailto:hello@amirhjalali.com?subject=${subject}&body=${body}`
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message')
-      }
+      // Open email client
+      window.location.href = mailtoLink
 
       // Track successful form submission
       trackContactFormSubmit(values)
