@@ -42,18 +42,16 @@ This is the personal portfolio website for Amir H. Jalali, an AI Consultant and 
 - **Animations**: Framer Motion
 - **UI Components**: Radix UI (shadcn/ui)
 - **Icons**: Lucide React
-- **Deployment**: Vercel
+- **Deployment**: GitHub Pages (Static Export)
 
 ## 📁 Project Structure
 
 ```
 amirhjalali.com/
 ├── app/                    # Next.js app directory
-│   ├── api/               # API routes
-│   │   └── contact/       # Contact form endpoint
 │   ├── projects/          # Projects showcase page
 │   ├── thoughts/          # Blog/articles pages
-│   │   └── [id]/         # Individual article pages
+│   │   └── [id]/         # Individual article pages (static export)
 │   ├── resume/           # Interactive resume page
 │   ├── contact/          # Contact page
 │   └── page.tsx          # Homepage
@@ -160,20 +158,42 @@ The site uses a custom color scheme defined in `tailwind.config.js`:
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### GitHub Pages (Current)
 
-1. **Connect Repository**
+This site is deployed as a static site on GitHub Pages using Next.js static export.
+
+#### Automatic Deployment
+
+The site automatically deploys on push to the `main` branch via GitHub Actions.
+
+#### Manual Deployment
+
+1. **Build Static Site**
    ```bash
-   vercel --prod
+   npm run build
    ```
+   This creates static files in the `out/` directory.
 
-2. **Environment Variables**
-   Set in Vercel dashboard:
-   - `NEXT_PUBLIC_GA_ID`
-   - Any other required variables
+2. **GitHub Actions Workflow**
+   The workflow file (`.github/workflows/deploy.yml`) handles:
+   - Building the static site
+   - Uploading to GitHub Pages
+   - Deploying to production
 
-3. **Custom Domain**
-   Configure in Vercel dashboard → Settings → Domains
+3. **Configure GitHub Pages**
+   - Go to repository Settings → Pages
+   - Set source to "GitHub Actions"
+   - Custom domain: `amirhjalali.com` (configured via `public/CNAME`)
+
+4. **DNS Configuration**
+   Point your domain to GitHub Pages:
+   - A records: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - Or CNAME: `<username>.github.io`
+
+#### Important Notes
+- Contact form uses `mailto:` links (no server-side processing)
+- All pages are pre-rendered at build time
+- Images are served unoptimized (no Next.js image optimization)
 
 ## 📈 Analytics & Monitoring
 
@@ -201,6 +221,7 @@ Copyright © 2024 Amir H. Jalali. All rights reserved.
 
 ---
 
-**Current Version**: 2.0.0
-**Last Updated**: September 2024
-**Built with**: Next.js, TypeScript, and modern web technologies
+**Current Version**: 3.0.0
+**Last Updated**: October 2024
+**Built with**: Next.js 15 (Static Export), TypeScript, and modern web technologies
+**Deployment**: GitHub Pages with GitHub Actions automation
