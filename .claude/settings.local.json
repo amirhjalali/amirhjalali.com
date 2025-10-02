@@ -71,7 +71,8 @@
       "Bash(GIT_AUTHOR_DATE=\"2025-09-09 13:30:00\" GIT_COMMITTER_DATE=\"2025-09-09 13:30:00\" git commit -m \"feat: Add array and object manipulation utilities\")",
       "Bash(GIT_AUTHOR_DATE=\"2025-09-09 14:00:00\" GIT_COMMITTER_DATE=\"2025-09-09 14:00:00\" git commit -m \"feat: Add browser and device detection utilities\")",
       "Bash(curl:*)",
-      "Bash(npm run type-check:*)"
+      "Bash(npm run type-check:*)",
+      "WebFetch(domain:amirhjalali.github.io)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
