@@ -1,10 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   output: 'export',
   poweredByHeader: false,
   reactStrictMode: true,
-  // Performance optimizations
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
