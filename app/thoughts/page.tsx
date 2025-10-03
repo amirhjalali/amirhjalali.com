@@ -7,6 +7,13 @@ import { useState, useEffect } from 'react'
 import { getArticles, initializeDefaultArticles } from '@/lib/articles'
 import LazyImage from '@/components/LazyImage'
 
+// Helper to add basePath to image URLs
+const getImageUrl = (url: string | undefined) => {
+  if (!url) return undefined
+  const basePath = process.env.NODE_ENV === 'production' ? '/amirhjalali.com' : ''
+  return url.startsWith('/') ? `${basePath}${url}` : url
+}
+
 // Articles are now loaded dynamically from the articles library
 
 const container = {
@@ -91,8 +98,8 @@ export default function ThoughtsPage() {
                 {/* Image */}
                 {article.imageUrl && (
                   <div className="relative h-48 overflow-hidden">
-                    <LazyImage 
-                      src={article.imageUrl} 
+                    <LazyImage
+                      src={getImageUrl(article.imageUrl) || ''}
                       alt={article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       wrapperClassName="w-full h-full"
