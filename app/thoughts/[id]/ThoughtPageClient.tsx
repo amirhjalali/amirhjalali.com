@@ -7,6 +7,13 @@ import { useEffect, useState } from 'react'
 import { getArticleById, initializeDefaultArticles } from '@/lib/articles'
 import SocialShare from '@/components/SocialShare'
 
+// Helper to add basePath to image URLs
+const getImageUrl = (url: string | undefined) => {
+  if (!url) return undefined
+  const basePath = process.env.NODE_ENV === 'production' ? '/amirhjalali.com' : ''
+  return url.startsWith('/') ? `${basePath}${url}` : url
+}
+
 export default function ThoughtPageClient({ id }: { id: string }) {
   const [article, setArticle] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -101,7 +108,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
           >
             <div className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-2xl border border-white/10">
               <img
-                src={article.imageUrl}
+                src={getImageUrl(article.imageUrl)}
                 alt={article.title}
                 className="w-full h-full object-cover"
               />
