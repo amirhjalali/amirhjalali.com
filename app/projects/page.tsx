@@ -9,6 +9,12 @@ import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Filter, Grid, List, Sparkles } from 'lucide-react'
 
+// Helper to add basePath to image URLs
+const getImageUrl = (url: string) => {
+  const basePath = process.env.NODE_ENV === 'production' ? '/amirhjalali.com' : ''
+  return url.startsWith('/') ? `${basePath}${url}` : url
+}
+
 // Dynamic import for ProjectCard with loading state
 const ProjectCard = dynamic(() => import('@/components/ProjectCard'), {
   loading: () => <ProjectSkeleton />,
@@ -26,7 +32,7 @@ const projects = [
     progress: 70,
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
-    image: '/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg',
+    image: getImageUrl('/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg'),
   },
   {
     id: 2,
@@ -37,7 +43,7 @@ const projects = [
     status: 'Live' as const,
     progress: 90,
     link: 'https://avenu.ai/',
-    image: '/images/projects/avenu-ai.jpg',
+    image: getImageUrl('/images/projects/avenu-ai.jpg'),
   },
   {
     id: 3,
@@ -48,7 +54,7 @@ const projects = [
     status: 'Live' as const,
     progress: 85,
     link: 'https://www.getplaiced.com/',
-    image: '/images/projects/plaiced-optimized.jpg',
+    image: getImageUrl('/images/projects/plaiced-optimized.jpg'),
   },
   {
     id: 4,
@@ -59,7 +65,7 @@ const projects = [
     status: 'Live' as const,
     progress: 80,
     link: 'https://www.argumend.org/',
-    image: '/images/projects/argumend.jpg',
+    image: getImageUrl('/images/projects/argumend.jpg'),
   },
   {
     id: 5,
@@ -70,7 +76,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: 'https://www.campalborz.org/',
-    image: '/images/projects/697708edbb82e14a4a127560ef91f02e.jpg',
+    image: getImageUrl('/images/projects/697708edbb82e14a4a127560ef91f02e.jpg'),
   },
   {
     id: 6,
@@ -81,7 +87,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: '/',
-    image: '/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg',
+    image: getImageUrl('/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg'),
   },
 ]
 
