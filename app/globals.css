@@ -126,6 +126,25 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* Standardized typography */
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  h1 { @apply font-black; }
+  h2, h3 { @apply font-bold; }
+
+  p {
+    line-height: 1.7;
+  }
+
+  /* Uppercase text gets better spacing */
+  .uppercase {
+    letter-spacing: 0.05em;
   }
   
   ::selection {
