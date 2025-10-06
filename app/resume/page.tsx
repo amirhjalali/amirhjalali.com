@@ -288,10 +288,10 @@ export default function ResumePage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-6xl font-space font-black mb-6">
+          <h1 className="text-4xl md:text-6xl font-space mb-6">
             <span className="text-gradient">Transforming Data into Opportunity with AI</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto mb-8">
 14+ years of progressive experience in Generative AI, Product Leadership, Data Engineering, and Technology Strategy. Currently building the future of creator-led commerce.
           </p>
           
@@ -361,7 +361,7 @@ export default function ResumePage() {
                   {/* Content */}
                   <div className="glass p-6 rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all">
                     <div className="flex flex-wrap justify-between items-start mb-3">
-                      <h3 className="text-xl font-bold text-white">{exp.title}</h3>
+                      <h3 className="text-xl text-white">{exp.title}</h3>
                       <span className="text-sm text-gray-400">{exp.period}</span>
                     </div>
                     
@@ -410,12 +410,12 @@ export default function ResumePage() {
               transition={{ delay: 0.4 }}
               className="sticky top-24"
             >
-              <h2 className="text-2xl font-bold mb-6">Technical Skills</h2>
+              <h2 className="text-2xl mb-6">Technical Skills</h2>
               
               <div className="space-y-6">
                 {Object.entries(skills).map(([category, skillList]) => (
                   <div key={category} className="glass p-4 rounded-xl border border-white/10">
-                    <h3 className="text-lg font-semibold mb-3 text-ai-green">
+                    <h3 className="text-lg mb-3 text-ai-green">
                       {category}
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -434,7 +434,7 @@ export default function ResumePage() {
               
               {/* Contact CTA */}
               <div className="mt-8 glass p-6 rounded-xl border border-white/10 text-center">
-                <h3 className="text-lg font-bold mb-3">Let's Connect</h3>
+                <h3 className="text-lg mb-3">Let's Connect</h3>
                 <p className="text-gray-400 mb-4 text-sm">
                   Interested in collaboration or have questions about my experience?
                 </p>

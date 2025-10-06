@@ -88,7 +88,7 @@ export default function NavigationEnhanced() {
                 whileTap={{ scale: 0.95 }}
                 className="relative"
               >
-                <h2 className="text-2xl font-lato font-black relative z-10 uppercase tracking-wide">
+                <h2 className="text-2xl font-lato relative z-10 uppercase">
                   <span className="text-gradient">AMIR H. JALALI</span>
                 </h2>
                 <motion.div
@@ -118,7 +118,7 @@ export default function NavigationEnhanced() {
                       href={item.href}
                       className="relative px-5 py-2 text-sm font-medium transition-all group"
                     >
-                      <span className={`relative z-10 flex items-center gap-2 uppercase tracking-wide ${
+                      <span className={`relative z-10 flex items-center gap-2 uppercase ${
                         isActive
                           ? 'text-ai-green dark:text-white'
                           : 'text-gray-600 dark:text-gray-400 group-hover:text-ai-green dark:group-hover:text-white'
@@ -160,7 +160,7 @@ export default function NavigationEnhanced() {
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l border-border bg-background">
                   <SheetHeader>
-                    <SheetTitle className="text-2xl font-lato font-black uppercase tracking-wide">
+                    <SheetTitle className="text-2xl font-lato uppercase">
                       <span className="text-gradient">AMIR H. JALALI</span>
                     </SheetTitle>
                   </SheetHeader>
@@ -173,7 +173,7 @@ export default function NavigationEnhanced() {
                         <Link
                           key={item.href}
                           href={item.href}
-                          className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all uppercase tracking-wide ${
+                          className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all uppercase ${
                             isActive
                               ? 'bg-gradient-to-r from-ai-yellow/20 to-ai-amber/20 dark:from-ai-green/20 dark:to-ai-blue/20 text-ai-green dark:text-white'
                               : 'text-gray-600 dark:text-gray-400 hover:text-ai-green dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'

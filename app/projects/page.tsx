@@ -141,10 +141,10 @@ export default function ProjectsPage() {
             Portfolio Showcase
           </motion.div>
           
-          <h1 className="text-5xl md:text-7xl font-space font-black mb-6">
+          <h1 className="text-5xl md:text-7xl font-space mb-6">
             <span className="text-gradient">Projects</span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
             Exploring the intersection of AI, technology, and innovation through impactful projects
           </p>
         </motion.div>
@@ -229,7 +229,7 @@ export default function ProjectsPage() {
             className="text-center py-20"
           >
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl font-bold mb-2">No projects found</h3>
+            <h3 className="text-2xl mb-2">No projects found</h3>
             <p className="text-muted-foreground mb-6">Try selecting a different category</p>
             <Button onClick={() => handleCategoryChange('All')}>
               View All Projects
@@ -245,10 +245,10 @@ export default function ProjectsPage() {
           className="text-center mt-20"
         >
           <div className="glass border border-border rounded-2xl p-8 md:p-12 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold mb-4">
+            <h3 className="text-3xl mb-4">
               <span className="text-gradient">Let's Build Something Amazing</span>
             </h3>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-lg">
               I'm always exploring new ideas and open to working on innovative AI projects. 
               Whether you're looking for technical expertise, strategic guidance, or investment opportunities,
               let's collaborate to create the future.
