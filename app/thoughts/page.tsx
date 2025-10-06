@@ -59,10 +59,10 @@ export default function ThoughtsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-space font-black mb-6">
+          <h1 className="text-5xl md:text-7xl font-space mb-6">
             <span className="text-gradient">Thoughts</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
             Insights on AI trends, programming paradigms, and the future of technology
           </p>
         </motion.div>
@@ -127,12 +127,12 @@ export default function ThoughtsPage() {
                   </div>
                   
                   {/* Title */}
-                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gradient transition-all duration-300 line-clamp-2">
+                  <h3 className="text-xl mb-3 text-white group-hover:text-gradient transition-all duration-300 line-clamp-2">
                     {article.title}
                   </h3>
-                  
+
                   {/* Excerpt */}
-                  <p className="text-gray-300 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow">
+                  <p className="text-gray-300 text-sm line-clamp-3 mb-4 flex-grow">
                     {article.excerpt}
                   </p>
                   
@@ -205,7 +205,7 @@ export default function ThoughtsPage() {
           className="text-center mt-20"
         >
           <div className="glass p-8 rounded-2xl border border-white/10 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Share Your Thoughts</h3>
+            <h3 className="text-2xl mb-4">Share Your Thoughts</h3>
             <p className="text-gray-400 mb-6">
               Have ideas about AI, technology, or programming? Use the AI assistant to turn your thoughts into compelling articles.
             </p>

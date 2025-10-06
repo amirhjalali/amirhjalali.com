@@ -99,10 +99,10 @@ export default function ContactPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-space font-black mb-6">
+          <h1 className="text-5xl md:text-7xl font-space mb-6">
             <span className="text-gradient">Let's Connect</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
             Whether you're interested in collaboration, have questions about AI, or want to discuss a project, I'd love to hear from you.
           </p>
         </motion.div>
@@ -126,7 +126,7 @@ export default function ContactPage() {
           >
             {/* Contact Methods */}
             <div>
-              <h2 className="text-2xl font-bold mb-6">Other Ways to Connect</h2>
+              <h2 className="text-2xl mb-6">Other Ways to Connect</h2>
               <div className="space-y-4">
                 {contactMethods.map((method, index) => (
                   <motion.div
@@ -141,7 +141,7 @@ export default function ContactPage() {
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold mb-1">{method.title}</h3>
+                        <h3 className="mb-1">{method.title}</h3>
                         <p className="text-gray-400 text-sm mb-2">{method.description}</p>
                         <p className="text-ai-green text-sm mb-3">{method.value}</p>
                         <a
@@ -162,7 +162,7 @@ export default function ContactPage() {
 
             {/* FAQ */}
             <div>
-              <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+              <h2 className="text-2xl mb-6">Frequently Asked Questions</h2>
               <div className="space-y-3">
                 {faqs.map((faq, index) => (
                   <motion.div

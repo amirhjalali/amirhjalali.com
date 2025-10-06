@@ -72,7 +72,13 @@
       "Bash(GIT_AUTHOR_DATE=\"2025-09-09 14:00:00\" GIT_COMMITTER_DATE=\"2025-09-09 14:00:00\" git commit -m \"feat: Add browser and device detection utilities\")",
       "Bash(curl:*)",
       "Bash(npm run type-check:*)",
-      "WebFetch(domain:amirhjalali.github.io)"
+      "WebFetch(domain:amirhjalali.github.io)",
+      "Bash(cat:*)",
+      "Bash(git rm:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(git stash:*)",
+      "Bash(GIT_AUTHOR_DATE=\"2025-10-03 12:00:00\" GIT_COMMITTER_DATE=\"2025-10-03 12:00:00\" git commit --amend --no-edit)",
+      "Bash(GIT_AUTHOR_DATE=\"2025-10-03 12:00:00\" GIT_COMMITTER_DATE=\"2025-10-03 12:00:00\" git commit --amend --no-edit --date=\"2025-10-03 12:00:00\")"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
