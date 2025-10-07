@@ -92,7 +92,7 @@ export default function NavigationEnhanced() {
                   <span className="text-gradient">AMIR H. JALALI</span>
                 </h2>
                 <motion.div
-                  className="absolute -inset-2 bg-gradient-to-r from-ai-yellow/20 to-ai-amber/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-full blur-xl"
+                  className="absolute -inset-2 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-full blur-xl"
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0.5, 0.8, 0.5],
@@ -120,15 +120,15 @@ export default function NavigationEnhanced() {
                     >
                       <span className={`relative z-10 flex items-center gap-2 uppercase ${
                         isActive
-                          ? 'text-ai-green dark:text-white'
-                          : 'text-gray-600 dark:text-gray-400 group-hover:text-ai-green dark:group-hover:text-white'
+                          ? 'text-ai-teal dark:text-white'
+                          : 'text-gray-600 dark:text-gray-400 group-hover:text-ai-teal dark:group-hover:text-white'
                       }`}>
                         {item.label}
                       </span>
                       {isActive && (
                         <motion.div
                           layoutId="navbar"
-                          className="absolute inset-0 bg-gradient-to-r from-ai-yellow/20 to-ai-amber/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-full"
+                          className="absolute inset-0 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-full"
                           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                         />
                       )}
@@ -151,7 +151,7 @@ export default function NavigationEnhanced() {
                   <Button 
                     variant="ghost"
                     size="icon"
-                    className="text-gray-600 dark:text-gray-400 hover:text-ai-green dark:hover:text-white"
+                    className="text-gray-600 dark:text-gray-400 hover:text-ai-teal dark:hover:text-white"
                     aria-label="Open navigation menu"
                     aria-expanded={mobileOpen}
                   >
@@ -175,8 +175,8 @@ export default function NavigationEnhanced() {
                           href={item.href}
                           className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all uppercase ${
                             isActive
-                              ? 'bg-gradient-to-r from-ai-yellow/20 to-ai-amber/20 dark:from-ai-green/20 dark:to-ai-blue/20 text-ai-green dark:text-white'
-                              : 'text-gray-600 dark:text-gray-400 hover:text-ai-green dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+                              ? 'bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 text-ai-teal dark:text-white'
+                              : 'text-gray-600 dark:text-gray-400 hover:text-ai-teal dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                           }`}
                         >
                           <Icon className="h-5 w-5" />
