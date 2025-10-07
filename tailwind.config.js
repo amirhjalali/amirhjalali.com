@@ -53,6 +53,8 @@ module.exports = {
         'ai-blue': '#00D9FF',
         'ai-yellow': '#FFD700',
         'ai-amber': '#FFB800',
+        'ai-teal': '#0D9488',
+        'ai-cyan': '#0891B2',
         'dark-bg': 'hsl(var(--dark-bg))',
       },
       borderRadius: {

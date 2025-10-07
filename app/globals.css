@@ -68,26 +68,26 @@
   }
 
   .light {
-    /* Light theme - warm, professional */
+    /* Light theme - professional with better contrast */
     --background: 0 0% 98%;
     --foreground: 0 0% 10%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
-    --primary: 45 95% 50%;  /* Warm yellow/gold */
+    --primary: 158 64% 35%;  /* Darker teal/green for better contrast */
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 10%;
     --muted: 0 0% 94%;
     --muted-foreground: 0 0% 40%;
-    --accent: 38 90% 55%;  /* Warm orange-yellow */
-    --accent-foreground: 0 0% 10%;
+    --accent: 158 64% 35%;  /* Match primary for consistency */
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89%;
     --input: 0 0% 89%;
-    --ring: 45 95% 50%;
+    --ring: 158 64% 35%;
     --dark-bg: 0 0% 98%;
   }
 
@@ -147,8 +147,17 @@
     letter-spacing: 0.05em;
   }
   
+  /* Light mode selection - darker teal */
+  .light ::selection {
+    background-color: rgba(13, 148, 136, 0.3);
+    color: hsl(0 0% 10%);
+  }
+
+  /* Dark mode selection - bright green */
+  .dark ::selection,
   ::selection {
-    @apply bg-ai-green/30 text-white dark:bg-ai-green/30 dark:text-white;
+    background-color: rgba(0, 255, 136, 0.3);
+    color: white;
   }
 }
 
@@ -158,6 +167,8 @@
     @apply outline-none ring-2 ring-ai-green ring-offset-2 ring-offset-background;
   }
   
+  /* Dark mode gradient (bright green/blue) */
+  .dark .text-gradient,
   .text-gradient {
     background: linear-gradient(to right, #00FF88, #00D9FF, #00FF88);
     background-size: 200% auto;
@@ -167,12 +178,29 @@
     -webkit-text-fill-color: transparent;
     animation: gradient-shift 3s linear infinite;
   }
-  
+
+  /* Light mode gradient (darker teal/cyan) */
+  .light .text-gradient {
+    background: linear-gradient(to right, #0D9488, #0891B2, #0D9488);
+    background-size: 200% auto;
+    color: #0D9488 !important;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 3s linear infinite;
+  }
+
   /* Fallback for browsers that don't support background-clip */
   @supports not (background-clip: text) and not (-webkit-background-clip: text) {
+    .dark .text-gradient,
     .text-gradient {
       background: none;
       color: #00FF88 !important;
+    }
+
+    .light .text-gradient {
+      background: none;
+      color: #0D9488 !important;
     }
   }
 
@@ -190,18 +218,18 @@
     @apply backdrop-blur-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10;
   }
 
-  /* Light mode background gradients - warm yellows */
+  /* Light mode background gradients - subtle teal/green */
   .light .hero-gradient {
-    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+    background: radial-gradient(ellipse at center, rgba(13, 148, 136, 0.08) 0%, transparent 50%);
   }
 
   .light .mesh-gradient {
     background-image:
-      radial-gradient(at 40% 20%, rgba(255, 215, 0, 0.15) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, rgba(255, 184, 0, 0.1) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, rgba(255, 215, 0, 0.08) 0px, transparent 50%),
-      radial-gradient(at 80% 50%, rgba(255, 184, 0, 0.08) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(255, 215, 0, 0.05) 0px, transparent 50%);
+      radial-gradient(at 40% 20%, rgba(13, 148, 136, 0.12) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(8, 145, 178, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(13, 148, 136, 0.06) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, rgba(8, 145, 178, 0.06) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(13, 148, 136, 0.04) 0px, transparent 50%);
   }
 
   /* Dark mode background gradients - original green/blue */
