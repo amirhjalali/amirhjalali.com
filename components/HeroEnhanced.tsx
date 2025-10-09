@@ -7,31 +7,22 @@ import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 import { RippleButton } from '@/components/ui/ripple-button'
 import { MagneticWrapper } from '@/components/ui/magnetic-wrapper'
 
-const LetterMorphAnimation = () => {
-  const [isAmir, setIsAmir] = useState(true)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAmir(prev => !prev)
-    }, 6000) // Switch every 6 seconds
-    return () => clearInterval(interval)
-  }, [])
-
+const NameDisplay = () => {
   return (
     <motion.div
       className="relative inline-flex items-center justify-center"
-      key={isAmir ? 'amir' : 'mrai'}
-      initial={{ opacity: 0.9 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0.9 }}
-      transition={{ duration: 0.4 }}
+      animate={{
+        opacity: [1, 0.9, 1]
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut"
+      }}
     >
       <span className="text-6xl md:text-8xl font-bold text-gradient">
-        {isAmir ? 'AMIR' : (
-          <>
-            MR <span style={{ display: 'inline-block', width: '0.2em' }} />AI
-          </>
-        )}
+        AMIR
       </span>
     </motion.div>
   )
@@ -132,7 +123,7 @@ export default function HeroEnhanced() {
               }}
             >
               <span className="relative inline-block">
-                <LetterMorphAnimation />
+                <NameDisplay />
               </span>
             </motion.h1>
             <motion.p
