@@ -57,12 +57,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         className="relative h-full"
       >
         <div className="relative h-full min-h-[500px] glass border border-border hover:border-ai-teal/30 dark:hover:border-ai-green/30 rounded-2xl p-6 transition-all duration-300 overflow-hidden flex flex-col">
-          {/* Animated background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-ai-teal/5 via-transparent to-ai-cyan/5 dark:from-ai-green/5 dark:via-transparent dark:to-ai-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Floating orbs */}
-          <div className="absolute top-4 right-4 w-20 h-20 bg-ai-teal/10 dark:bg-ai-green/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-          <div className="absolute bottom-4 left-4 w-16 h-16 bg-ai-blue/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
+          {/* Subtle background gradient on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-ai-teal/3 via-transparent to-ai-cyan/3 dark:from-ai-green/3 dark:via-transparent dark:to-ai-blue/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           {/* Project Image */}
           <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden rounded-t-2xl">
@@ -152,8 +148,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
         </div>
 
-        {/* Glow effect */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
+        {/* Subtle glow effect */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-teal/10 to-ai-cyan/10 dark:from-ai-green/10 dark:to-ai-blue/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-lg -z-10" />
       </motion.div>
     </motion.div>
   )
