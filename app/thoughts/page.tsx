@@ -89,11 +89,11 @@ export default function ThoughtsPage() {
               }}
             >
               {/* Thought bubble tail */}
-              <div className="absolute -bottom-3 left-6 w-4 h-4 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
-              <div className="absolute -bottom-1 left-9 w-2 h-2 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-green/20 transition-all duration-300"></div>
+              <div className="absolute -bottom-3 left-6 w-4 h-4 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-teal/20 dark:group-hover:bg-ai-green/20 transition-all duration-300"></div>
+              <div className="absolute -bottom-1 left-9 w-2 h-2 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-teal/20 dark:group-hover:bg-ai-green/20 transition-all duration-300"></div>
               
               {/* Main card */}
-              <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden hover:bg-ai-green/10 hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col">
+              <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden hover:bg-ai-teal/10 dark:hover:bg-ai-green/10 hover:border-ai-teal/30 dark:hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col">
                 
                 {/* Image */}
                 {article.imageUrl && (
@@ -110,7 +110,7 @@ export default function ThoughtsPage() {
                     
                     {/* AI indicator on image */}
                     {article.aiGenerated && (
-                      <div className="absolute top-3 left-3 flex items-center gap-2 px-2 py-1 bg-ai-green/90 rounded-full text-xs font-medium text-black">
+                      <div className="absolute top-3 left-3 flex items-center gap-2 px-2 py-1 bg-ai-teal/90 dark:bg-ai-green/90 rounded-full text-xs font-medium text-white">
                         <div className="w-2 h-2 bg-black rounded-full animate-pulse" />
                         AI
                       </div>
@@ -141,7 +141,7 @@ export default function ThoughtsPage() {
                     {article.tags.slice(0, 3).map((tag: string) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-400 group-hover:text-ai-green transition-colors"
+                        className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-400 group-hover:text-ai-teal dark:group-hover:text-ai-green transition-colors"
                       >
                         {tag}
                       </span>
@@ -158,7 +158,7 @@ export default function ThoughtsPage() {
                     <span className="text-gray-500">
                       {new Date(article.publishedAt).toLocaleDateString()}
                     </span>
-                    <span className="text-ai-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
+                    <span className="text-ai-teal dark:text-ai-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
                       Read more →
                     </span>
                   </div>
@@ -166,14 +166,14 @@ export default function ThoughtsPage() {
               </div>
               
               {/* Glow effect on hover */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-ai-green/20 to-ai-blue/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
               
               {/* Floating thought particles */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {[...Array(2)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-1 h-1 bg-ai-green/60 rounded-full"
+                    className="absolute w-1 h-1 bg-ai-teal/60 dark:bg-ai-green/60 rounded-full"
                     initial={{ 
                       x: 50 + i * 50,
                       y: 50 + i * 50,
@@ -212,13 +212,13 @@ export default function ThoughtsPage() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link
                 href="/generate"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center text-sm sm:text-base"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center text-sm sm:text-base"
               >
                 Generate New Article
               </Link>
               <Link
                 href="/contact"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all inline-block text-center text-sm sm:text-base"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 glass border border-white/20 rounded-full hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-all inline-block text-center text-sm sm:text-base"
               >
                 Get in Touch
               </Link>
