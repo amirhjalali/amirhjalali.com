@@ -64,11 +64,11 @@ export default function HeroEnhanced() {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
-  const x = useSpring(useTransform(mouseX, [0, window.innerWidth], [-20, 20]), {
+  const x = useSpring(useTransform(mouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-20, 20]), {
     stiffness: 50,
     damping: 20
   })
-  const y = useSpring(useTransform(mouseY, [0, window.innerHeight], [-20, 20]), {
+  const y = useSpring(useTransform(mouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-20, 20]), {
     stiffness: 50,
     damping: 20
   })
