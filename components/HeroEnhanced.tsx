@@ -9,22 +9,11 @@ import { MagneticWrapper } from '@/components/ui/magnetic-wrapper'
 
 const NameDisplay = () => {
   return (
-    <motion.div
-      className="relative inline-flex items-center justify-center"
-      animate={{
-        opacity: [1, 0.9, 1]
-      }}
-      transition={{
-        duration: 4,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut"
-      }}
-    >
+    <div className="relative inline-flex items-center justify-center">
       <span className="text-6xl md:text-8xl font-bold text-gradient">
         AMIR
       </span>
-    </motion.div>
+    </div>
   )
 }
 
@@ -82,10 +71,8 @@ export default function HeroEnhanced() {
       <div className="absolute inset-0">
         <div className="absolute inset-0 mesh-gradient opacity-30" />
 
-        {/* Floating orbs */}
+        {/* Floating orbs - reduced for cleaner look */}
         <FloatingOrb delay={0} />
-        <FloatingOrb delay={2} />
-        <FloatingOrb delay={4} />
 
         {/* Grid with parallax */}
         <motion.div
