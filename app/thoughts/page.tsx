@@ -78,20 +78,13 @@ export default function ThoughtsPage() {
             <motion.div
               key={article.id}
               variants={item}
-              whileHover={{ 
-                y: -8,
-                scale: 1.02
+              whileHover={{
+                y: -4,
+                scale: 1.01
               }}
               className="group relative cursor-pointer"
               onClick={() => router.push(`/thoughts/${article.id}`)}
-              style={{
-                transform: `rotate(${index % 2 === 0 ? -0.5 : 0.5}deg)` // Subtle rotation based on index
-              }}
             >
-              {/* Thought bubble tail */}
-              <div className="absolute -bottom-3 left-6 w-4 h-4 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-teal/20 dark:group-hover:bg-ai-green/20 transition-all duration-300"></div>
-              <div className="absolute -bottom-1 left-9 w-2 h-2 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 group-hover:bg-ai-teal/20 dark:group-hover:bg-ai-green/20 transition-all duration-300"></div>
-              
               {/* Main card */}
               <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden hover:bg-ai-teal/10 dark:hover:bg-ai-green/10 hover:border-ai-teal/30 dark:hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col">
                 
@@ -166,33 +159,7 @@ export default function ThoughtsPage() {
               </div>
               
               {/* Glow effect on hover */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
-              
-              {/* Floating thought particles */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                {[...Array(2)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-1 h-1 bg-ai-teal/60 dark:bg-ai-green/60 rounded-full"
-                    initial={{ 
-                      x: 50 + i * 50,
-                      y: 50 + i * 50,
-                      opacity: 0 
-                    }}
-                    animate={{
-                      x: 100 + i * 50,
-                      y: 100 + i * 50,
-                      opacity: [0, 1, 0],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      delay: i * 1,
-                      ease: "easeInOut"
-                    }}
-                  />
-                ))}
-              </div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-ai-teal/10 to-ai-cyan/10 dark:from-ai-green/10 dark:to-ai-blue/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity blur-lg -z-10" />
             </motion.div>
           ))}
         </motion.div>
