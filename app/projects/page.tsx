@@ -120,9 +120,9 @@ export default function ProjectsPage() {
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDYwIDAgTCAwIDAgMCA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
       
       {/* Floating elements */}
-      <div className="absolute top-20 left-10 w-2 h-2 bg-ai-green rounded-full animate-pulse" />
-      <div className="absolute top-40 right-20 w-1 h-1 bg-ai-blue rounded-full animate-pulse delay-1000" />
-      <div className="absolute bottom-40 left-20 w-1.5 h-1.5 bg-ai-green rounded-full animate-pulse delay-2000" />
+      <div className="absolute top-20 left-10 w-2 h-2 bg-ai-teal dark:bg-ai-green rounded-full animate-pulse" />
+      <div className="absolute top-40 right-20 w-1 h-1 bg-ai-cyan dark:bg-ai-blue rounded-full animate-pulse delay-1000" />
+      <div className="absolute bottom-40 left-20 w-1.5 h-1.5 bg-ai-teal dark:bg-ai-green rounded-full animate-pulse delay-2000" />
       
       <div className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
         {/* Header */}
@@ -135,9 +135,9 @@ export default function ProjectsPage() {
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-ai-green/20 to-ai-blue/20 rounded-full text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-full text-sm font-medium mb-6"
           >
-            <Sparkles className="w-4 h-4 text-ai-green" />
+            <Sparkles className="w-4 h-4 text-ai-teal dark:text-ai-green" />
             Portfolio Showcase
           </motion.div>
           
@@ -254,7 +254,7 @@ export default function ProjectsPage() {
               let's collaborate to create the future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-gradient-to-r from-ai-green to-ai-blue text-black hover:from-ai-blue hover:to-ai-green">
+              <Button asChild size="lg" className="bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white hover:scale-105 transition-transform">
                 <Link href="/contact">
                   Get in Touch
                 </Link>
