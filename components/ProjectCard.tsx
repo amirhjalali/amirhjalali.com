@@ -56,12 +56,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         }}
         className="relative h-full"
       >
-        <div className="relative h-full min-h-[500px] glass border border-border hover:border-ai-green/30 rounded-2xl p-6 transition-all duration-300 overflow-hidden flex flex-col">
+        <div className="relative h-full min-h-[500px] glass border border-border hover:border-ai-teal/30 dark:hover:border-ai-green/30 rounded-2xl p-6 transition-all duration-300 overflow-hidden flex flex-col">
           {/* Animated background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-ai-green/5 via-transparent to-ai-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          
+          <div className="absolute inset-0 bg-gradient-to-br from-ai-teal/5 via-transparent to-ai-cyan/5 dark:from-ai-green/5 dark:via-transparent dark:to-ai-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
           {/* Floating orbs */}
-          <div className="absolute top-4 right-4 w-20 h-20 bg-ai-green/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          <div className="absolute top-4 right-4 w-20 h-20 bg-ai-teal/10 dark:bg-ai-green/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           <div className="absolute bottom-4 left-4 w-16 h-16 bg-ai-blue/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
 
           {/* Project Image */}
@@ -125,7 +125,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           <div className="flex flex-col gap-3 relative z-10 mt-auto">
             <Button 
               asChild
-              className="group/btn bg-gradient-to-r from-ai-green to-ai-blue text-black hover:from-ai-blue hover:to-ai-green font-medium"
+              className="group/btn bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-medium hover:scale-105 transition-transform"
             >
               <Link
                 href={project.link}
@@ -153,7 +153,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         {/* Glow effect */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-green/20 to-ai-blue/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
       </motion.div>
     </motion.div>
   )
