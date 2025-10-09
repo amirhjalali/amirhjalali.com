@@ -119,10 +119,6 @@ export default function ProjectsPage() {
       <div className="absolute inset-0 mesh-gradient opacity-30" />
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDYwIDAgTCAwIDAgMCA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
       
-      {/* Floating elements */}
-      <div className="absolute top-20 left-10 w-2 h-2 bg-ai-teal dark:bg-ai-green rounded-full animate-pulse" />
-      <div className="absolute top-40 right-20 w-1 h-1 bg-ai-cyan dark:bg-ai-blue rounded-full animate-pulse delay-1000" />
-      <div className="absolute bottom-40 left-20 w-1.5 h-1.5 bg-ai-teal dark:bg-ai-green rounded-full animate-pulse delay-2000" />
       
       <div className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
         {/* Header */}
