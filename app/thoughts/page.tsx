@@ -136,7 +136,7 @@ export default function ThoughtsPage() {
                     {article.tags.slice(0, 3).map((tag: string) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-1 bg-accent rounded-full text-muted-foreground group-hover:text-ai-teal dark:group-hover:text-ai-green transition-colors"
+                        className="text-xs px-2 py-1 bg-accent hover:bg-accent/80 rounded-full transition-all cursor-pointer"
                       >
                         {tag}
                       </span>
