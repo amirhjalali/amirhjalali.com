@@ -1053,10 +1053,10 @@ With great access comes great responsibility:
       { ...defaultArticles[13], publishedAt: '2024-03-15T10:00:00.000Z', readTime: '9 min read' },
     ]
     
-    // Create articles with consistent IDs
+    // Create articles with consistent IDs (reversed numbering - newest is 14, oldest is 1)
     const articlesToSave = articlesWithDates.map((article, index) => ({
       ...article,
-      id: `article-${index + 1}` // Consistent IDs that won't change
+      id: `article-${articlesWithDates.length - index}` // Reversed: article-14 is newest, article-1 is oldest
     }))
     
     try {
