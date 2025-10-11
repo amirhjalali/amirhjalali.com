@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic'
 import ProjectSkeleton from '@/components/ProjectSkeleton'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Filter, Grid, List, Sparkles } from 'lucide-react'
 
 // Helper to add basePath to image URLs
 const getImageUrl = (url: string) => {
@@ -95,7 +94,6 @@ const categories = ['All', 'Live', 'In Development', 'AI Projects', 'Platforms']
 
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [isLoading, setIsLoading] = useState(false)
 
   const filteredProjects = selectedCategory === 'All' 
@@ -135,19 +133,19 @@ export default function ProjectsPage() {
           </p>
         </motion.div>
 
-        {/* Filters and View Controls */}
+        {/* Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="flex flex-col md:flex-row justify-between items-center gap-4 mb-12"
+          className="flex justify-center items-center mb-12"
         >
           {/* Category Tabs */}
           <Tabs value={selectedCategory} onValueChange={handleCategoryChange} className="w-full md:w-auto">
             <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full md:w-auto">
               {categories.map((category) => (
-                <TabsTrigger 
-                  key={category} 
+                <TabsTrigger
+                  key={category}
                   value={category}
                   className="text-xs md:text-sm"
                 >
@@ -156,24 +154,6 @@ export default function ProjectsPage() {
               ))}
             </TabsList>
           </Tabs>
-
-          {/* View Mode Toggle */}
-          <div className="flex items-center gap-2">
-            <Button
-              variant={viewMode === 'grid' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setViewMode('grid')}
-            >
-              <Grid className="w-4 h-4" />
-            </Button>
-            <Button
-              variant={viewMode === 'list' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setViewMode('list')}
-            >
-              <List className="w-4 h-4" />
-            </Button>
-          </div>
         </motion.div>
 
         {/* Projects Grid */}
@@ -194,11 +174,7 @@ export default function ProjectsPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className={`grid gap-8 ${
-                viewMode === 'grid' 
-                  ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' 
-                  : 'grid-cols-1'
-              }`}
+              className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
             >
               {filteredProjects.map((project, index) => (
                 <ProjectCard key={project.id} project={project} index={index} />
