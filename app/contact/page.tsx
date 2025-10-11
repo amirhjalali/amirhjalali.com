@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -64,27 +63,7 @@ const contactMethods = [
   }
 ]
 
-const faqs = [
-  {
-    question: 'What kind of AI projects do you work on?',
-    answer: 'I specialize in practical AI applications including content generation, natural language processing, computer vision, and conversational AI. My focus is on building systems that enhance human creativity and productivity.'
-  },
-  {
-    question: 'Are you available for consulting or collaboration?',
-    answer: 'Yes! I work with startups, enterprises, and research institutions on AI strategy, implementation, and research projects. I\'m particularly interested in projects that push the boundaries of what\'s possible with AI.'
-  },
-  {
-    question: 'How can I try your AI tools?',
-    answer: 'Many of my tools have live demos available on the AI Tools page. For enterprise solutions or custom implementations, please reach out to discuss your specific needs.'
-  },
-  {
-    question: 'Do you offer AI training or workshops?',
-    answer: 'I provide AI education through workshops, seminars, and consulting. Whether you need team training on AI implementation or strategic guidance on AI adoption, I can help.'
-  }
-]
-
 export default function ContactPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
     <div className="min-h-screen relative">
@@ -117,83 +96,43 @@ export default function ContactPage() {
             <ContactForm />
           </motion.div>
 
-          {/* Contact Methods & FAQ */}
+          {/* Contact Methods */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="space-y-8"
           >
-            {/* Contact Methods */}
-            <div>
-              <h2 className="text-2xl mb-6">Other Ways to Connect</h2>
-              <div className="space-y-4">
-                {contactMethods.map((method, index) => (
-                  <motion.div
-                    key={method.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                    className="glass p-6 rounded-xl border border-white/10 hover:border-ai-green/30 transition-all group"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-ai-green to-ai-blue rounded-lg flex items-center justify-center text-black group-hover:scale-110 transition-transform">
-                        {method.icon}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="mb-1">{method.title}</h3>
-                        <p className="text-gray-400 text-sm mb-2">{method.description}</p>
-                        <p className="text-ai-green text-sm mb-3">{method.value}</p>
-                        <a
-                          href={method.action}
-                          className="text-sm text-gray-300 hover:text-white transition-colors inline-flex items-center gap-1"
-                        >
-                          {method.actionText}
-                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      </div>
+            <h2 className="text-2xl mb-6">Other Ways to Connect</h2>
+            <div className="space-y-4">
+              {contactMethods.map((method, index) => (
+                <motion.div
+                  key={method.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                  className="glass p-6 rounded-xl border border-white/10 hover:border-ai-green/30 transition-all group"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-ai-green to-ai-blue rounded-lg flex items-center justify-center text-black group-hover:scale-110 transition-transform">
+                      {method.icon}
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* FAQ */}
-            <div>
-              <h2 className="text-2xl mb-6">Frequently Asked Questions</h2>
-              <div className="space-y-3">
-                {faqs.map((faq, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 + index * 0.1 }}
-                    className="glass border border-white/10 rounded-xl overflow-hidden"
-                  >
-                    <button
-                      onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                      className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-white/5 transition-colors"
-                    >
-                      <span className="font-medium">{faq.question}</span>
-                      <svg
-                        className={`w-5 h-5 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                    <div className="flex-1">
+                      <h3 className="mb-1">{method.title}</h3>
+                      <p className="text-gray-400 text-sm mb-2">{method.description}</p>
+                      <p className="text-ai-green text-sm mb-3">{method.value}</p>
+                      <a
+                        href={method.action}
+                        className="text-sm text-gray-300 hover:text-white transition-colors inline-flex items-center gap-1"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    {openFaq === index && (
-                      <div className="px-6 pb-4">
-                        <p className="text-gray-400 leading-relaxed">{faq.answer}</p>
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
+                        {method.actionText}
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
