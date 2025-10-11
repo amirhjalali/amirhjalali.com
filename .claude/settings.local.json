@@ -78,7 +78,8 @@
       "Bash(git ls-tree:*)",
       "Bash(git stash:*)",
       "Bash(GIT_AUTHOR_DATE=\"2025-10-03 12:00:00\" GIT_COMMITTER_DATE=\"2025-10-03 12:00:00\" git commit --amend --no-edit)",
-      "Bash(GIT_AUTHOR_DATE=\"2025-10-03 12:00:00\" GIT_COMMITTER_DATE=\"2025-10-03 12:00:00\" git commit --amend --no-edit --date=\"2025-10-03 12:00:00\")"
+      "Bash(GIT_AUTHOR_DATE=\"2025-10-03 12:00:00\" GIT_COMMITTER_DATE=\"2025-10-03 12:00:00\" git commit --amend --no-edit --date=\"2025-10-03 12:00:00\")",
+      "Bash(node -e \"const articles = require(''./lib/articles.ts''); console.log(JSON.stringify(articles.getArticleById(''article-2''), null, 2))\")"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
