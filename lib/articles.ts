@@ -26,6 +26,8 @@ export interface Article {
 }
 
 const ARTICLES_KEY = 'portfolio_articles'
+const ARTICLES_VERSION_KEY = 'portfolio_articles_version'
+const CURRENT_VERSION = '2' // Increment this when article structure changes
 
 // Get all articles from localStorage
 export function getArticles(): Article[] {
@@ -120,11 +122,15 @@ export function getArticlesByTag(tag: string): Article[] {
   )
 }
 
-// Initialize with default articles if none exist
+// Initialize with default articles if none exist or version changed
 export function initializeDefaultArticles() {
+  if (typeof window === 'undefined') return
+
+  const storedVersion = localStorage.getItem(ARTICLES_VERSION_KEY)
   const articles = getArticles()
-  
-  if (articles.length === 0) {
+
+  // Reinitialize if no articles or version mismatch
+  if (articles.length === 0 || storedVersion !== CURRENT_VERSION) {
     // Add the thoughts/blog posts as default articles - matching live site exactly (10 posts)
     const defaultArticles = [
       {
@@ -1059,9 +1065,10 @@ With great access comes great responsibility:
       ...article,
       id: `article-${index + 1}` // article-1 is oldest (March 2024), article-14 is newest (Jan 2025)
     }))
-    
+
     try {
       localStorage.setItem(ARTICLES_KEY, JSON.stringify(articlesToSave))
+      localStorage.setItem(ARTICLES_VERSION_KEY, CURRENT_VERSION)
     } catch (error) {
       console.error('Error saving articles:', error)
     }
