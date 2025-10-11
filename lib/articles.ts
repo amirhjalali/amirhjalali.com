@@ -1053,10 +1053,11 @@ With great access comes great responsibility:
       { ...defaultArticles[13], publishedAt: '2024-03-15T10:00:00.000Z', readTime: '9 min read' },
     ]
     
-    // Create articles with consistent IDs (reversed numbering - newest is 14, oldest is 1)
-    const articlesToSave = articlesWithDates.map((article, index) => ({
+    // Create articles with consistent IDs (article-1 is oldest, article-14 is newest)
+    // articlesWithDates is ordered newest to oldest, so we reverse the numbering
+    const articlesToSave = articlesWithDates.reverse().map((article, index) => ({
       ...article,
-      id: `article-${articlesWithDates.length - index}` // Reversed: article-14 is newest, article-1 is oldest
+      id: `article-${index + 1}` // article-1 is oldest (March 2024), article-14 is newest (Jan 2025)
     }))
     
     try {
