@@ -86,7 +86,9 @@ export default function ThoughtsPage() {
               onClick={() => router.push(`/thoughts/${article.id}`)}
             >
               {/* Main card */}
-              <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden hover:bg-ai-teal/10 dark:hover:bg-ai-green/10 hover:border-ai-teal/30 dark:hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col">
+              <div className="relative glass border border-border rounded-3xl overflow-hidden hover:border-ai-teal/30 dark:hover:border-ai-green/30 transition-all duration-300 h-full flex flex-col">
+                {/* Subtle background gradient on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-ai-teal/3 via-transparent to-ai-cyan/3 dark:from-ai-green/3 dark:via-transparent dark:to-ai-blue/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 {/* Image */}
                 {article.imageUrl && (
