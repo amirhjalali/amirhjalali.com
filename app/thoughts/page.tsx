@@ -62,7 +62,7 @@ export default function ThoughtsPage() {
           <h1 className="text-5xl md:text-7xl font-space mb-6">
             <span className="text-gradient">Thoughts</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
             Insights on AI trends, programming paradigms, and the future of technology
           </p>
         </motion.div>
@@ -117,40 +117,40 @@ export default function ThoughtsPage() {
                 <div className="p-6 flex flex-col flex-grow">
                   {/* Header info */}
                   <div className="flex justify-between items-start mb-3">
-                    <span className="text-xs text-gray-400">{article.author}</span>
-                    <span className="text-xs text-gray-500">{article.readTime}</span>
+                    <span className="text-xs text-muted-foreground">{article.author}</span>
+                    <span className="text-xs text-muted-foreground">{article.readTime}</span>
                   </div>
-                  
+
                   {/* Title */}
-                  <h3 className="text-xl mb-3 text-white group-hover:text-gradient transition-all duration-300 line-clamp-2">
+                  <h3 className="text-xl mb-3 group-hover:text-gradient transition-all duration-300 line-clamp-2">
                     {article.title}
                   </h3>
 
                   {/* Excerpt */}
-                  <p className="text-gray-300 text-sm line-clamp-3 mb-4 flex-grow">
+                  <p className="text-muted-foreground text-sm line-clamp-3 mb-4 flex-grow">
                     {article.excerpt}
                   </p>
-                  
+
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {article.tags.slice(0, 3).map((tag: string) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-400 group-hover:text-ai-teal dark:group-hover:text-ai-green transition-colors"
+                        className="text-xs px-2 py-1 bg-accent rounded-full text-muted-foreground group-hover:text-ai-teal dark:group-hover:text-ai-green transition-colors"
                       >
                         {tag}
                       </span>
                     ))}
                     {article.tags.length > 3 && (
-                      <span className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-500">
+                      <span className="text-xs px-2 py-1 bg-muted/20 rounded-full text-muted-foreground">
                         +{article.tags.length - 3}
                       </span>
                     )}
                   </div>
-                  
+
                   {/* Footer */}
                   <div className="flex justify-between items-center text-xs">
-                    <span className="text-gray-500">
+                    <span className="text-muted-foreground">
                       {new Date(article.publishedAt).toLocaleDateString()}
                     </span>
                     <span className="text-ai-teal dark:text-ai-green opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
@@ -173,9 +173,9 @@ export default function ThoughtsPage() {
           transition={{ delay: 0.6 }}
           className="text-center mt-20"
         >
-          <div className="glass p-8 rounded-2xl border border-white/10 max-w-2xl mx-auto">
+          <div className="glass p-8 rounded-2xl border border-border max-w-2xl mx-auto">
             <h3 className="text-2xl mb-4">Share Your Thoughts</h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-muted-foreground mb-6">
               Have ideas about AI, technology, or programming? Use the AI assistant to turn your thoughts into compelling articles.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -187,7 +187,7 @@ export default function ThoughtsPage() {
               </Link>
               <Link
                 href="/contact"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 glass border border-white/20 rounded-full hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-all inline-block text-center text-sm sm:text-base"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 glass border border-border rounded-full hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-all inline-block text-center text-sm sm:text-base"
               >
                 Get in Touch
               </Link>
