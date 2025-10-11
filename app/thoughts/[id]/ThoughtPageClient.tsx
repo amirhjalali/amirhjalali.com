@@ -58,7 +58,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
         >
           <Link
             href="/thoughts"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -74,7 +74,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
           transition={{ delay: 0.5 }}
           className="mb-12"
         >
-          <p className="text-xl text-gray-400 mb-6 leading-relaxed font-light">
+          <p className="text-xl text-muted-foreground mb-6 leading-relaxed font-light">
             {article.excerpt}
           </p>
 
@@ -84,7 +84,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
               {article.tags.map((tag: string) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-sm text-gray-400 transition-colors"
+                  className="px-3 py-1 bg-accent hover:bg-accent/80 rounded-full text-sm transition-colors"
                 >
                   {tag}
                 </span>
@@ -172,6 +172,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 .replace(/• \*\*(.*?)\*\*/g, '• <strong>$1</strong>')
+                .replace(/src="\/images\//g, `src="${getImageUrl('/images/')}`)
             }}
           />
         </motion.article>
@@ -181,23 +182,23 @@ export default function ThoughtPageClient({ id }: { id: string }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mt-16 pt-8 border-t border-white/10"
+          className="mt-16 pt-8 border-t border-border"
         >
           <div className="text-center">
             <h3 className="text-xl font-bold mb-4">Enjoyed this article?</h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-muted-foreground mb-6">
               Explore more insights or create your own AI-powered articles.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/thoughts"
-                className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform"
+                className="px-6 py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-full hover:scale-105 transition-transform"
               >
                 Read More Thoughts
               </Link>
               <Link
                 href="/generate"
-                className="px-6 py-3 glass border border-white/20 rounded-full hover:border-ai-green/50 transition-all"
+                className="px-6 py-3 glass border border-border rounded-full hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-all"
               >
                 Generate New Article
               </Link>
@@ -210,42 +211,67 @@ export default function ThoughtPageClient({ id }: { id: string }) {
         .article-content h1 {
           font-size: 2rem;
           font-weight: bold;
-          margin: 2rem 0 1rem 0;
-          background: linear-gradient(to right, #00FF88, #00D9FF);
+          margin: 3rem 0 1.5rem 0;
+          background: linear-gradient(to right, #0D9488, #0891B2);
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
         }
+        .dark .article-content h1 {
+          background: linear-gradient(to right, #00FF88, #00D9FF);
+          background-clip: text;
+          -webkit-background-clip: text;
+        }
         .article-content h2 {
           font-size: 1.5rem;
           font-weight: 600;
-          margin: 1.5rem 0 1rem 0;
+          margin: 2.5rem 0 1.25rem 0;
+          color: #1f2937;
+        }
+        .dark .article-content h2 {
           color: white;
         }
         .article-content h3 {
           font-size: 1.25rem;
           font-weight: 600;
-          margin: 1rem 0 0.5rem 0;
+          margin: 2rem 0 1rem 0;
+          color: #0D9488;
+        }
+        .dark .article-content h3 {
           color: #00FF88;
         }
         .article-content p {
-          margin-bottom: 1rem;
-          line-height: 1.7;
-          color: #d1d5db;
+          margin-bottom: 1.5rem;
+          line-height: 1.8;
+          color: #6b7280;
+          font-size: 1.125rem;
+        }
+        .dark .article-content p {
+          color: #9ca3af;
         }
         .article-content ul, .article-content ol {
-          margin: 1rem 0;
+          margin: 1.5rem 0;
           padding-left: 1.5rem;
         }
         .article-content li {
-          margin: 0.5rem 0;
-          color: #d1d5db;
+          margin: 1rem 0;
+          color: #6b7280;
+          line-height: 1.8;
+        }
+        .dark .article-content li {
+          color: #9ca3af;
         }
         .article-content strong {
-          color: white;
+          color: #1f2937;
           font-weight: 600;
         }
+        .dark .article-content strong {
+          color: white;
+        }
         .article-content em {
+          color: #0D9488;
+        }
+        .dark .article-content em {
           color: #00FF88;
         }
         .article-content code {
