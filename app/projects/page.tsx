@@ -1,12 +1,10 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import ProjectSkeleton from '@/components/ProjectSkeleton'
 import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 // Helper to add basePath to image URLs
 const getImageUrl = (url: string) => {
@@ -90,26 +88,7 @@ const projects = [
   },
 ]
 
-const categories = ['All', 'Live', 'In Development', 'AI Projects', 'Platforms']
-
 export default function ProjectsPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [isLoading, setIsLoading] = useState(false)
-
-  const filteredProjects = selectedCategory === 'All' 
-    ? projects 
-    : selectedCategory === 'AI Projects'
-    ? projects.filter(project => project.tags.some(tag => tag.toLowerCase().includes('ai')))
-    : selectedCategory === 'Platforms'
-    ? projects.filter(project => project.tags.some(tag => ['Platform', 'E-commerce', 'Social Media'].includes(tag)))
-    : projects.filter(project => project.status === selectedCategory)
-
-  const handleCategoryChange = (category: string) => {
-    setIsLoading(true)
-    setSelectedCategory(category)
-    // Simulate loading for smooth transition
-    setTimeout(() => setIsLoading(false), 500)
-  }
 
   return (
     <div className="min-h-screen relative">
@@ -133,71 +112,17 @@ export default function ProjectsPage() {
           </p>
         </motion.div>
 
-        {/* Filters */}
+        {/* Projects Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="flex justify-center items-center mb-12"
+          className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
         >
-          {/* Category Tabs */}
-          <Tabs value={selectedCategory} onValueChange={handleCategoryChange} className="w-full md:w-auto">
-            <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full md:w-auto">
-              {categories.map((category) => (
-                <TabsTrigger
-                  key={category}
-                  value={category}
-                  className="text-xs md:text-sm"
-                >
-                  {category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          {projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
         </motion.div>
-
-        {/* Projects Grid */}
-        <AnimatePresence mode="wait">
-          {isLoading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <ProjectSkeleton />
-            </motion.div>
-          ) : (
-            <motion.div
-              key={selectedCategory}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
-            >
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* No results message */}
-        {!isLoading && filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
-          >
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl mb-2">No projects found</h3>
-            <p className="text-muted-foreground mb-6">Try selecting a different category</p>
-            <Button onClick={() => handleCategoryChange('All')}>
-              View All Projects
-            </Button>
-          </motion.div>
-        )}
 
         {/* Call to action */}
         <motion.div
