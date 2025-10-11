@@ -162,7 +162,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
           className="prose prose-invert prose-lg max-w-none"
         >
           <div
-            className="article-content"
+            className="article-content text-muted-foreground"
             dangerouslySetInnerHTML={{
               __html: article.content
                 .replace(/\n/g, '<br/>')
@@ -243,11 +243,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
         .article-content p {
           margin-bottom: 1.5rem;
           line-height: 1.8;
-          color: #6b7280;
           font-size: 1.125rem;
-        }
-        .dark .article-content p {
-          color: #9ca3af;
         }
         .article-content ul, .article-content ol {
           margin: 1.5rem 0;
@@ -255,11 +251,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
         }
         .article-content li {
           margin: 1rem 0;
-          color: #6b7280;
           line-height: 1.8;
-        }
-        .dark .article-content li {
-          color: #9ca3af;
         }
         .article-content strong {
           color: #1f2937;
