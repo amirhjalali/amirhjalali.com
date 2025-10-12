@@ -164,15 +164,18 @@ export default function ThoughtPageClient({ id }: { id: string }) {
           <div
             className="article-content text-muted-foreground"
             dangerouslySetInnerHTML={{
-              __html: article.content
-                .replace(/\n/g, '<br/>')
-                .replace(/## (.*)/g, '<h2>$1</h2>')
-                .replace(/### (.*)/g, '<h3>$1</h3>')
-                .replace(/# (.*)/g, '<h1>$1</h1>')
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/• \*\*(.*?)\*\*/g, '• <strong>$1</strong>')
-                .replace(/src="\/images\//g, `src="${getImageUrl('/images/')}`)
+              __html: (() => {
+                const basePath = process.env.NODE_ENV === 'production' ? '/amirhjalali.com' : ''
+                return article.content
+                  .replace(/\n/g, '<br/>')
+                  .replace(/## (.*)/g, '<h2>$1</h2>')
+                  .replace(/### (.*)/g, '<h3>$1</h3>')
+                  .replace(/# (.*)/g, '<h1>$1</h1>')
+                  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                  .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                  .replace(/• \*\*(.*?)\*\*/g, '• <strong>$1</strong>')
+                  .replace(/src="\/images\//g, `src="${basePath}/images/`)
+              })()
             }}
           />
         </motion.article>
