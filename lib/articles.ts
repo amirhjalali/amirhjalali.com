@@ -1,14 +1,12 @@
 // Article management utilities using localStorage
 // In a production app, this would use a database
 
-// Helper to get the correct image path with basePath
-// Note: This runs at build time, so we always include the basePath
-// The images will work both locally (with basePath) and in production
+// Helper to get the correct image path
+// NOTE: We store paths WITHOUT basePath, and add it at render time
 const getImagePath = (path: string) => {
-  // For GitHub Pages, we need the basePath in the stored data
-  // because process.env is not available in the browser at runtime
-  const basePath = '/amirhjalali.com';
-  return `${basePath}${path}`;
+  // Return the path as-is, without basePath
+  // The basePath will be added by Next.js automatically at runtime
+  return path;
 };
 
 export interface Article {
@@ -31,7 +29,7 @@ export interface Article {
 
 const ARTICLES_KEY = 'portfolio_articles'
 const ARTICLES_VERSION_KEY = 'portfolio_articles_version'
-const CURRENT_VERSION = '3' // Increment this when article structure changes
+const CURRENT_VERSION = '4' // Increment this when article structure changes
 
 // Get all articles from localStorage
 export function getArticles(): Article[] {
