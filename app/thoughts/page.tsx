@@ -7,10 +7,12 @@ import { useState, useEffect } from 'react'
 import { getArticles, initializeDefaultArticles } from '@/lib/articles'
 import LazyImage from '@/components/LazyImage'
 
-// Helper function - articles already have basePath included from articles.ts
+// Helper to add basePath to image URLs at render time
 const getImageUrl = (url: string | undefined) => {
-  // Articles from the library already have the correct path with basePath
-  return url || undefined
+  if (!url) return undefined
+  // Add basePath for GitHub Pages deployment
+  const basePath = '/amirhjalali.com'
+  return url.startsWith('/') ? `${basePath}${url}` : url
 }
 
 // Articles are now loaded dynamically from the articles library

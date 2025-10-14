@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react'
 import { getArticleById, initializeDefaultArticles } from '@/lib/articles'
 import SocialShare from '@/components/SocialShare'
 
-// Helper function - articles already have basePath included from articles.ts
+// Helper to add basePath to image URLs at render time
 const getImageUrl = (url: string | undefined) => {
-  // Articles from the library already have the correct path with basePath
-  return url
+  if (!url) return undefined
+  // Add basePath for GitHub Pages deployment
+  const basePath = '/amirhjalali.com'
+  return url.startsWith('/') ? `${basePath}${url}` : url
 }
 
 export default function ThoughtPageClient({ id }: { id: string }) {
