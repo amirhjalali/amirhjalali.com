@@ -361,17 +361,17 @@ export default function ResumePage() {
                   {/* Content */}
                   <div className="glass p-6 rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all">
                     <div className="flex flex-wrap justify-between items-start mb-3">
-                      <h3 className="text-xl text-white">{exp.title}</h3>
-                      <span className="text-sm text-gray-400">{exp.period}</span>
+                      <h3 className="text-xl text-foreground">{exp.title}</h3>
+                      <span className="text-sm text-muted-foreground">{exp.period}</span>
                     </div>
                     
                     <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="text-ai-green font-medium">{exp.company}</span>
-                      <span className="text-gray-400">•</span>
-                      <span className="text-gray-400">{exp.location}</span>
+                      <span className="text-ai-teal dark:text-ai-green font-medium">{exp.company}</span>
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-muted-foreground">{exp.location}</span>
                     </div>
-                    
-                    <p className="text-gray-400 mb-4 leading-relaxed">
+
+                    <p className="text-muted-foreground mb-4 leading-relaxed">
                       {exp.description}
                     </p>
                     
