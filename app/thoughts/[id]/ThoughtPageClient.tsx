@@ -7,11 +7,10 @@ import { useEffect, useState } from 'react'
 import { getArticleById, initializeDefaultArticles } from '@/lib/articles'
 import SocialShare from '@/components/SocialShare'
 
-// Helper to add basePath to image URLs
+// Helper function - articles already have basePath included from articles.ts
 const getImageUrl = (url: string | undefined) => {
-  if (!url) return undefined
-  const basePath = process.env.NODE_ENV === 'production' ? '/amirhjalali.com' : ''
-  return url.startsWith('/') ? `${basePath}${url}` : url
+  // Articles from the library already have the correct path with basePath
+  return url
 }
 
 export default function ThoughtPageClient({ id }: { id: string }) {
@@ -165,7 +164,8 @@ export default function ThoughtPageClient({ id }: { id: string }) {
             className="article-content text-muted-foreground"
             dangerouslySetInnerHTML={{
               __html: (() => {
-                const basePath = process.env.NODE_ENV === 'production' ? '/amirhjalali.com' : ''
+                // Inline images need the basePath added at render time
+                const basePath = '/amirhjalali.com'
                 return article.content
                   .replace(/\n/g, '<br/>')
                   .replace(/## (.*)/g, '<h2>$1</h2>')
