@@ -53,6 +53,9 @@ jobs:
           echo "Cleaned .next and out directories"
 
       - name: Build with Next.js
+        env:
+          NEXT_PUBLIC_ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          NEXT_PUBLIC_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
           echo "Starting build..."
           npm run build
