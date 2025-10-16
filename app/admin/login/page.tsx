@@ -17,25 +17,21 @@ export default function AdminLoginPage() {
     setError('')
     setLoading(true)
 
+    // Import auth functions dynamically to avoid SSR issues
+    const { verifyCredentials, createSession } = await import('@/lib/auth')
+
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      })
+      // Verify credentials
+      const isValid = verifyCredentials(username, password)
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        setError(data.error || 'Login failed')
+      if (!isValid) {
+        setError('Invalid username or password')
         setLoading(false)
         return
       }
 
-      // Store token in localStorage
-      localStorage.setItem('admin_token', data.token)
+      // Create session
+      createSession(username)
 
       // Redirect to admin dashboard
       router.push('/admin')
