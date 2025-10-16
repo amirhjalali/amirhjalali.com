@@ -2,11 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-
-export interface AuthUser {
-  username: string
-  role: string
-}
+import { getSession, clearSession, type AuthUser } from '@/lib/auth'
 
 export function useAuth(requireAuth: boolean = true) {
   const [user, setUser] = useState<AuthUser | null>(null)
@@ -14,10 +10,10 @@ export function useAuth(requireAuth: boolean = true) {
   const router = useRouter()
 
   useEffect(() => {
-    const verifyToken = async () => {
-      const token = localStorage.getItem('admin_token')
+    const checkSession = () => {
+      const session = getSession()
 
-      if (!token) {
+      if (!session) {
         setLoading(false)
         if (requireAuth) {
           router.push('/admin/login')
@@ -25,42 +21,15 @@ export function useAuth(requireAuth: boolean = true) {
         return
       }
 
-      try {
-        const response = await fetch('/api/auth/verify', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        })
-
-        if (!response.ok) {
-          // Token is invalid or expired
-          localStorage.removeItem('admin_token')
-          setUser(null)
-          if (requireAuth) {
-            router.push('/admin/login')
-          }
-          return
-        }
-
-        const data = await response.json()
-        setUser(data.user)
-      } catch (error) {
-        console.error('Auth verification error:', error)
-        localStorage.removeItem('admin_token')
-        setUser(null)
-        if (requireAuth) {
-          router.push('/admin/login')
-        }
-      } finally {
-        setLoading(false)
-      }
+      setUser(session)
+      setLoading(false)
     }
 
-    verifyToken()
+    checkSession()
   }, [requireAuth, router])
 
   const logout = () => {
-    localStorage.removeItem('admin_token')
+    clearSession()
     setUser(null)
     router.push('/admin/login')
   }
