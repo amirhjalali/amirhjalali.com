@@ -20,6 +20,7 @@ export interface Article {
   author: string
   publishedAt: string
   readTime: string
+  status?: 'published' | 'draft' // Add status field
   metadata?: {
     style?: string
     length?: string
@@ -28,6 +29,7 @@ export interface Article {
 }
 
 const ARTICLES_KEY = 'portfolio_articles'
+const DRAFT_ARTICLES_KEY = 'portfolio_draft_articles'
 const ARTICLES_VERSION_KEY = 'portfolio_articles_version'
 const CURRENT_VERSION = '4' // Increment this when article structure changes
 
@@ -119,9 +121,123 @@ export function searchArticles(query: string): Article[] {
 // Get articles by tag
 export function getArticlesByTag(tag: string): Article[] {
   const articles = getArticles()
-  return articles.filter(article => 
+  return articles.filter(article =>
     article.tags.some(t => t.toLowerCase() === tag.toLowerCase())
   )
+}
+
+// ===== DRAFT ARTICLE MANAGEMENT =====
+
+// Get all draft articles
+export function getDraftArticles(): Article[] {
+  if (typeof window === 'undefined') return []
+
+  try {
+    const stored = localStorage.getItem(DRAFT_ARTICLES_KEY)
+    return stored ? JSON.parse(stored) : []
+  } catch (error) {
+    console.error('Error loading draft articles:', error)
+    return []
+  }
+}
+
+// Save article as draft
+export function saveDraftArticle(article: Omit<Article, 'id' | 'publishedAt' | 'readTime' | 'status'>): Article {
+  const drafts = getDraftArticles()
+
+  const newDraft: Article = {
+    ...article,
+    id: `draft-${Date.now()}`,
+    publishedAt: new Date().toISOString(),
+    readTime: `${Math.ceil((article.content.split(' ').length || 0) / 200)} min read`,
+    status: 'draft'
+  }
+
+  drafts.unshift(newDraft)
+
+  try {
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(drafts))
+    return newDraft
+  } catch (error) {
+    console.error('Error saving draft article:', error)
+    throw new Error('Failed to save draft article')
+  }
+}
+
+// Get a single draft article by ID
+export function getDraftArticleById(id: string): Article | null {
+  const drafts = getDraftArticles()
+  return drafts.find(article => article.id === id) || null
+}
+
+// Publish a draft article (move from drafts to published)
+export function publishDraftArticle(draftId: string): Article | null {
+  const drafts = getDraftArticles()
+  const draftIndex = drafts.findIndex(article => article.id === draftId)
+
+  if (draftIndex === -1) return null
+
+  const draft = drafts[draftIndex]
+
+  // Remove from drafts
+  drafts.splice(draftIndex, 1)
+
+  // Add to published articles with new ID
+  const articles = getArticles()
+  const publishedArticle: Article = {
+    ...draft,
+    id: `article-${Date.now()}`,
+    publishedAt: new Date().toISOString(),
+    status: 'published'
+  }
+
+  articles.unshift(publishedArticle)
+
+  try {
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(drafts))
+    localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
+    return publishedArticle
+  } catch (error) {
+    console.error('Error publishing draft article:', error)
+    return null
+  }
+}
+
+// Delete a draft article
+export function deleteDraftArticle(id: string): boolean {
+  const drafts = getDraftArticles()
+  const filtered = drafts.filter(article => article.id !== id)
+
+  try {
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(filtered))
+    return true
+  } catch (error) {
+    console.error('Error deleting draft article:', error)
+    return false
+  }
+}
+
+// Update a draft article
+export function updateDraftArticle(id: string, updates: Partial<Article>): Article | null {
+  const drafts = getDraftArticles()
+  const index = drafts.findIndex(article => article.id === id)
+
+  if (index === -1) return null
+
+  // Recalculate read time if content changed
+  if (updates.content) {
+    updates.readTime = `${Math.ceil((updates.content.split(' ').length || 0) / 200)} min read`
+  }
+
+  drafts[index] = { ...drafts[index], ...updates }
+
+  try {
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(drafts))
+    return drafts[index]
+  } catch (error) {
+    console.error('Error updating draft article:', error)
+    return null
+  }
 }
 
 // Initialize with default articles if none exist or version changed
