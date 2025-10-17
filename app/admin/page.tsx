@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
 import { getDraftArticles, publishDraftArticle, deleteDraftArticle, type Article } from '@/lib/articles'
 import { FileText, Eye, CheckCircle, Trash2, LogOut, Loader2, AlertCircle } from 'lucide-react'
+import ArticleGenerator from '@/components/ArticleGenerator'
 
 export default function AdminDashboard() {
   const { user, loading, logout } = useAuth(true)
@@ -111,6 +112,16 @@ export default function AdminDashboard() {
               <h3 className="text-sm text-muted-foreground">Draft Articles</h3>
             </div>
             <p className="text-3xl font-bold">{drafts.length}</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="glass p-6 rounded-2xl border border-border md:col-span-2"
+          >
+            <h3 className="text-sm text-muted-foreground mb-4">AI Article Generator</h3>
+            <ArticleGenerator onArticleGenerated={loadDrafts} />
           </motion.div>
         </div>
 
