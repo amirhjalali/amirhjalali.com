@@ -48,56 +48,21 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
   const generateArticle = async () => {
     setIsGenerating(true);
     setStatus('generating');
-    setMessage('Generating article with AI...');
+    setMessage('Article generation is handled by GitHub Actions. Trigger the workflow from the Actions tab in your repository.');
 
-    try {
-      const response = await fetch('/api/generate-article', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          provider: 'anthropic' // or 'openai'
-        }),
-      });
+    // For static sites, we can't generate articles from the UI
+    // Users need to trigger the GitHub Actions workflow
+    setTimeout(() => {
+      setStatus('idle');
+      setMessage('');
 
-      const data: GenerationResponse = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to generate article');
+      // Open instructions
+      if (confirm('Article generation for GitHub Pages is handled via GitHub Actions.\n\nWould you like to see instructions?')) {
+        window.open('https://github.com/amirhjalali/amirhjalali.com/blob/main/AI_GENERATION_README.md', '_blank');
       }
+    }, 3000);
 
-      // Save as draft
-      saveDraftArticle(data.article);
-      setLastArticle(data.article);
-
-      setStatus('success');
-      setMessage(`✨ Generated "${data.article.title}" (${data.stats.wordCount} words)`);
-
-      // Notify parent component
-      if (onArticleGenerated) {
-        onArticleGenerated();
-      }
-
-      // Reset after 3 seconds
-      setTimeout(() => {
-        setStatus('idle');
-        setMessage('');
-      }, 3000);
-
-    } catch (error: any) {
-      console.error('Error generating article:', error);
-      setStatus('error');
-      setMessage(error.message || 'Failed to generate article');
-
-      // Reset after 5 seconds
-      setTimeout(() => {
-        setStatus('idle');
-        setMessage('');
-      }, 5000);
-    } finally {
-      setIsGenerating(false);
-    }
+    setIsGenerating(false);
   };
 
   return (
@@ -181,11 +146,19 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
 
       {/* Instructions */}
       {status === 'idle' && (
-        <div className="text-sm text-gray-600 space-y-2">
-          <p>Click to generate a new AI article.</p>
+        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+          <p className="font-semibold">GitHub Actions Workflow</p>
           <p className="text-xs opacity-70">
-            Articles are saved as drafts and can be reviewed before publishing.
+            Article generation runs via GitHub Actions. Go to your repository's Actions tab and manually trigger the "Generate AI Article" workflow, or wait for the daily automatic run.
           </p>
+          <a
+            href="https://github.com/amirhjalali/amirhjalali.com/actions"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-xs text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            → Open GitHub Actions
+          </a>
         </div>
       )}
     </div>
