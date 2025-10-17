@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
-import { getDraftArticles, publishDraftArticle, deleteDraftArticle, type Article } from '@/lib/articles'
+import { getDraftArticles, publishDraftArticle, deleteDraftArticle, initializeDrafts, type Article } from '@/lib/articles'
 import { FileText, Eye, CheckCircle, Trash2, LogOut, Loader2, AlertCircle } from 'lucide-react'
 import ArticleGenerator from '@/components/ArticleGenerator'
 
@@ -17,7 +17,9 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!loading && user) {
-      loadDrafts()
+      initializeDrafts().then(() => {
+        loadDrafts()
+      })
     }
   }, [loading, user])
 

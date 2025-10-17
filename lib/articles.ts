@@ -128,6 +128,51 @@ export function getArticlesByTag(tag: string): Article[] {
 
 // ===== DRAFT ARTICLE MANAGEMENT =====
 
+// Load drafts from public JSON file (for GitHub Pages static builds)
+async function loadDraftsFromFile(): Promise<Article[]> {
+  try {
+    const response = await fetch('/data/drafts.json')
+    if (!response.ok) {
+      return []
+    }
+    const drafts = await response.json()
+    return Array.isArray(drafts) ? drafts : []
+  } catch (error) {
+    console.warn('Could not load drafts from file:', error)
+    return []
+  }
+}
+
+// Initialize drafts from JSON file (called once on app load)
+let draftsInitialized = false
+export async function initializeDrafts(): Promise<void> {
+  if (typeof window === 'undefined' || draftsInitialized) return
+
+  draftsInitialized = true
+
+  try {
+    // Load drafts from JSON file
+    const fileDrafts = await loadDraftsFromFile()
+
+    if (fileDrafts.length > 0) {
+      // Get existing localStorage drafts
+      const stored = localStorage.getItem(DRAFT_ARTICLES_KEY)
+      const localDrafts = stored ? JSON.parse(stored) : []
+
+      // Merge: file drafts + localStorage drafts (avoid duplicates by ID)
+      const existingIds = new Set(localDrafts.map((d: Article) => d.id))
+      const newDrafts = fileDrafts.filter(d => !existingIds.has(d.id))
+      const merged = [...fileDrafts, ...localDrafts.filter((d: Article) => !fileDrafts.some(fd => fd.id === d.id))]
+
+      // Save merged drafts to localStorage
+      localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(merged))
+      console.log(`Loaded ${fileDrafts.length} drafts from file, ${localDrafts.length} from localStorage`)
+    }
+  } catch (error) {
+    console.error('Error initializing drafts:', error)
+  }
+}
+
 // Get all draft articles
 export function getDraftArticles(): Article[] {
   if (typeof window === 'undefined') return []
