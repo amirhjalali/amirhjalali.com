@@ -58,7 +58,7 @@ Value: sk-... (your API key)
 2. Sign up for an account
 3. Go to API Keys
 4. Create a new API key
-5. Estimated cost: ~$1.50-2.00 per article (GPT-5 text + DALL-E 3 image)
+5. Estimated cost: ~$0.25-0.35 per article (GPT-4o-mini text + DALL-E 3 image)
 
 ### 3. Enable GitHub Actions
 
@@ -152,15 +152,15 @@ By default, articles are generated:
 - Better at following instructions
 - No image generation (text only)
 
-**OpenAI GPT-5 + DALL-E 3:**
-- Text generation (GPT-5): ~$40-50/month
-- Image generation (DALL-E 3): ~$6/month ($0.04 per image × 2 images per article)
-- Total: ~$45-60/month
-- Highest quality output
+**OpenAI GPT-4o-mini + DALL-E 3 (RECOMMENDED):**
+- Text generation (GPT-4o-mini): ~$2-4/month
+- Image generation (DALL-E 3): ~$6/month ($0.04 per image × 30 articles)
+- Total: ~$8-10/month
+- Excellent quality output
 - Featured images automatically generated
-- Latest model with best reasoning
+- Best value for money
 
-**Note:** These are estimates. Actual costs may vary based on article length, token usage, and API pricing. GPT-5 costs $1.25/1M input tokens and $10/1M output tokens. DALL-E 3 costs $0.04 per standard quality image (1792x1024).
+**Note:** These are estimates. Actual costs may vary based on article length, token usage, and API pricing. GPT-4o-mini is very cost-effective while maintaining high quality. DALL-E 3 costs $0.04 per standard quality image (1792x1024).
 
 ## Troubleshooting
 
