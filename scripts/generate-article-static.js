@@ -109,7 +109,7 @@ Format the response as a JSON object with:
   };
 
   const postData = {
-    model: 'gpt-5',
+    model: 'gpt-4o-mini',
     messages: [
       { role: 'system', content: 'You are a thoughtful tech blogger who writes engaging, insightful articles about AI and technology.' },
       { role: 'user', content: prompt }
@@ -285,7 +285,7 @@ async function main() {
       modelUsed = 'claude-3-5-sonnet';
     } else {
       articleData = await generateWithOpenAI(topic);
-      modelUsed = 'gpt-5';
+      modelUsed = 'gpt-4o-mini';
     }
 
     // Generate featured image with DALL-E 3
