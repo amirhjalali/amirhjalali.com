@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const crypto = require('crypto');
 
 // Configuration
 const config = {
@@ -108,7 +109,7 @@ Format the response as a JSON object with:
   };
 
   const postData = {
-    model: 'gpt-4o-mini',
+    model: 'gpt-5',
     messages: [
       { role: 'system', content: 'You are a thoughtful tech blogger who writes engaging, insightful articles about AI and technology.' },
       { role: 'user', content: prompt }
@@ -119,6 +120,48 @@ Format the response as a JSON object with:
 
   const response = await makeRequest(options, postData);
   return JSON.parse(response.choices[0].message.content);
+}
+
+// Generate image using DALL-E 3
+async function generateImageWithDALLE(title, topic) {
+  if (!config.openaiKey) {
+    console.log('⚠️  OpenAI API key not found, skipping image generation');
+    return '';
+  }
+
+  console.log('🎨 Generating featured image with DALL-E 3...');
+
+  const imagePrompt = `Create an artistic, modern featured image for a tech blog article titled "${title}" about ${topic}. Style: abstract, contemporary, tech-focused, visually striking. Use vibrant colors and geometric shapes.`;
+
+  const options = {
+    hostname: 'api.openai.com',
+    port: 443,
+    path: '/v1/images/generations',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${config.openaiKey}`
+    }
+  };
+
+  const postData = {
+    model: 'dall-e-3',
+    prompt: imagePrompt,
+    n: 1,
+    size: '1792x1024', // Landscape format for featured image
+    quality: 'standard',
+    style: 'vivid'
+  };
+
+  try {
+    const response = await makeRequest(options, postData);
+    const imageUrl = response.data[0].url;
+    console.log('✅ Image generated successfully');
+    return imageUrl;
+  } catch (error) {
+    console.warn('⚠️  Image generation failed:', error.message);
+    return '';
+  }
 }
 
 // Generate article using Anthropic (Claude)
@@ -236,11 +279,17 @@ async function main() {
 
     // Generate article content
     let articleData;
+    let modelUsed;
     if (config.useAnthropic) {
       articleData = await generateWithAnthropic(topic);
+      modelUsed = 'claude-3-5-sonnet';
     } else {
       articleData = await generateWithOpenAI(topic);
+      modelUsed = 'gpt-5';
     }
+
+    // Generate featured image with DALL-E 3
+    const imageUrl = await generateImageWithDALLE(articleData.title, topic);
 
     // Calculate metadata
     const wordCount = articleData.content.trim().split(/\s+/).length;
@@ -253,7 +302,7 @@ async function main() {
       content: articleData.content,
       excerpt: articleData.excerpt,
       tags: articleData.tags || ['AI', 'Technology'],
-      imageUrl: '', // Can be added later with image generation
+      imageUrl: imageUrl,
       aiGenerated: true,
       author: 'Amir H. Jalali',
       publishedAt: new Date().toISOString(),
@@ -265,7 +314,8 @@ async function main() {
         wordCount: wordCount,
         generatedAt: new Date().toISOString(),
         topic: topic,
-        model: config.useAnthropic ? 'claude-3-5-sonnet' : 'gpt-4o-mini'
+        model: modelUsed,
+        imageModel: imageUrl ? 'dall-e-3' : 'none'
       }
     };
 
@@ -278,6 +328,9 @@ async function main() {
     console.log(`Tags: ${article.tags.join(', ')}`);
     console.log(`Word Count: ${wordCount}`);
     console.log(`Read Time: ${readTime}`);
+    if (imageUrl) {
+      console.log(`Image: ${imageUrl}`);
+    }
     console.log(`\nContent Preview:\n${article.content.substring(0, 300)}...\n`);
     console.log('='.repeat(80));
 
@@ -295,7 +348,8 @@ async function main() {
     console.log(`   ID: ${article.id}`);
     console.log(`   Words: ${wordCount}`);
     console.log(`   Read Time: ${readTime}`);
-    console.log(`   Model: ${article.metadata.model}`);
+    console.log(`   Text Model: ${article.metadata.model}`);
+    console.log(`   Image Model: ${article.metadata.imageModel}`);
     console.log(`   Total Drafts: ${drafts.length}`);
     console.log(`\n✨ Done! Article saved to ${config.draftsFile}`);
 
@@ -310,4 +364,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { generateWithOpenAI, generateWithAnthropic, calculateReadTime };
+module.exports = { generateWithOpenAI, generateWithAnthropic, generateImageWithDALLE, calculateReadTime };
