@@ -94,7 +94,10 @@
       "Bash(node -e \"const fs = require(''fs''); const content = fs.readFileSync(''.github/workflows/generate-article.yml'', ''utf8''); console.log(''First 500 chars:''); console.log(content.substring(0, 500)); console.log(''---''); console.log(''Has tabs:'', content.includes(''\\t'')); console.log(''Line endings:'', content.includes(''\\r\\n'') ? ''CRLF'' : ''LF'');\")",
       "Bash(gh workflow run generate-article.yml --field topic=\"Testing AI article generation system\")",
       "Bash(gh workflow run \"Test Dispatch\" --field test=\"hello\")",
-      "Bash(GIT_AUTHOR_DATE=\"2025-10-21 14:00:00\" GIT_COMMITTER_DATE=\"2025-10-21 14:00:00\" git commit -m \"fix: Recreate generate-article workflow to fix GitHub Actions parsing\n\n- Delete and recreate workflow file to force GitHub to re-parse\n- Remove test workflows\n- Maintain all original functionality\n- Fixes workflow_dispatch trigger not being recognized\")"
+      "Bash(GIT_AUTHOR_DATE=\"2025-10-21 14:00:00\" GIT_COMMITTER_DATE=\"2025-10-21 14:00:00\" git commit -m \"fix: Recreate generate-article workflow to fix GitHub Actions parsing\n\n- Delete and recreate workflow file to force GitHub to re-parse\n- Remove test workflows\n- Maintain all original functionality\n- Fixes workflow_dispatch trigger not being recognized\")",
+      "Bash(gh workflow run generate-article.yml --field topic=\"AI coding assistants and the future of development\")",
+      "Bash(git mv .github/workflows/generate-article.yml .github/workflows/ai-article-generator.yml)",
+      "Bash(GIT_AUTHOR_DATE=\"2025-10-21 14:10:00\" GIT_COMMITTER_DATE=\"2025-10-21 14:10:00\" git commit -m \"fix: Rename workflow file to force new GitHub Actions workflow ID\n\n- Rename generate-article.yml to ai-article-generator.yml\n- Forces GitHub to create new workflow with fresh parsing\n- Workaround for GitHub Actions caching issue\")"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
