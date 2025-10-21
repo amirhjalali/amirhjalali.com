@@ -17,6 +17,9 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const crypto = require('crypto');
+const { pipeline } = require('stream');
+const { promisify } = require('util');
+const streamPipeline = promisify(pipeline);
 
 // Configuration
 const config = {
@@ -122,6 +125,31 @@ Format the response as a JSON object with:
   return JSON.parse(response.choices[0].message.content);
 }
 
+// Download image from URL
+async function downloadImage(url, filepath) {
+  return new Promise((resolve, reject) => {
+    https.get(url, (response) => {
+      if (response.statusCode !== 200) {
+        reject(new Error(`Failed to download image: ${response.statusCode}`));
+        return;
+      }
+
+      const fileStream = fs.createWriteStream(filepath);
+      response.pipe(fileStream);
+
+      fileStream.on('finish', () => {
+        fileStream.close();
+        resolve(filepath);
+      });
+
+      fileStream.on('error', (err) => {
+        fs.unlink(filepath, () => {}); // Delete partial file
+        reject(err);
+      });
+    }).on('error', reject);
+  });
+}
+
 // Generate image using DALL-E 3
 async function generateImageWithDALLE(title, topic) {
   if (!config.openaiKey) {
@@ -155,9 +183,24 @@ async function generateImageWithDALLE(title, topic) {
 
   try {
     const response = await makeRequest(options, postData);
-    const imageUrl = response.data[0].url;
+    const tempImageUrl = response.data[0].url;
     console.log('✅ Image generated successfully');
-    return imageUrl;
+
+    // Download and save the image locally
+    const imagesDir = path.join(__dirname, '..', 'public', 'images', 'thoughts');
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+
+    const imageFileName = `ai-${Date.now()}.png`;
+    const imagePath = path.join(imagesDir, imageFileName);
+
+    console.log('📥 Downloading image...');
+    await downloadImage(tempImageUrl, imagePath);
+    console.log('✅ Image saved locally');
+
+    // Return the public path for the image
+    return `/images/thoughts/${imageFileName}`;
   } catch (error) {
     console.warn('⚠️  Image generation failed:', error.message);
     return '';
