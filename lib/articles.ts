@@ -146,11 +146,16 @@ async function loadDraftsFromFile(): Promise<Article[]> {
 }
 
 // Initialize drafts from JSON file (called once on app load)
-let draftsInitialized = false
+const DRAFTS_SYNC_KEY = 'portfolio_drafts_last_sync'
 export async function initializeDrafts(): Promise<void> {
-  if (typeof window === 'undefined' || draftsInitialized) return
+  if (typeof window === 'undefined') return
 
-  draftsInitialized = true
+  // Check if we've already synced in this session
+  const lastSync = sessionStorage.getItem(DRAFTS_SYNC_KEY)
+  if (lastSync) {
+    console.log('Drafts already synced in this session')
+    return
+  }
 
   try {
     // Load drafts from JSON file
@@ -161,15 +166,22 @@ export async function initializeDrafts(): Promise<void> {
       const stored = localStorage.getItem(DRAFT_ARTICLES_KEY)
       const localDrafts = stored ? JSON.parse(stored) : []
 
-      // Merge: file drafts + localStorage drafts (avoid duplicates by ID)
+      // Only add NEW drafts from file (ones not already in localStorage)
       const existingIds = new Set(localDrafts.map((d: Article) => d.id))
       const newDrafts = fileDrafts.filter(d => !existingIds.has(d.id))
-      const merged = [...fileDrafts, ...localDrafts.filter((d: Article) => !fileDrafts.some(fd => fd.id === d.id))]
 
-      // Save merged drafts to localStorage
-      localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(merged))
-      console.log(`Loaded ${fileDrafts.length} drafts from file, ${localDrafts.length} from localStorage`)
+      if (newDrafts.length > 0) {
+        // Add new drafts to the beginning
+        const merged = [...newDrafts, ...localDrafts]
+        localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(merged))
+        console.log(`Added ${newDrafts.length} new drafts from file`)
+      } else {
+        console.log('No new drafts to sync')
+      }
     }
+
+    // Mark as synced for this session
+    sessionStorage.setItem(DRAFTS_SYNC_KEY, Date.now().toString())
   } catch (error) {
     console.error('Error initializing drafts:', error)
   }
