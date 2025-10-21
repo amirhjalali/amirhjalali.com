@@ -53,6 +53,7 @@ jobs:
       - name: Commit and push changes
         run: |
           git add public/data/drafts.json
+          git add public/images/thoughts/
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
