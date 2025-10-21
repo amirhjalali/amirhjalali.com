@@ -1,14 +1,14 @@
 name: Generate AI Article
 
 on:
-  schedule:
-    - cron: '0 9 * * *'
   workflow_dispatch:
     inputs:
       topic:
         description: 'Article topic (optional, random if not specified)'
         required: false
         type: string
+  schedule:
+    - cron: '0 9 * * *'
 
 jobs:
   generate:
