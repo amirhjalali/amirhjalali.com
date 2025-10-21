@@ -131,7 +131,9 @@ export function getArticlesByTag(tag: string): Article[] {
 // Load drafts from public JSON file (for GitHub Pages static builds)
 async function loadDraftsFromFile(): Promise<Article[]> {
   try {
-    const response = await fetch('/data/drafts.json')
+    // Use basePath for GitHub Pages deployment
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '/amirhjalali.com'
+    const response = await fetch(`${basePath}/data/drafts.json`)
     if (!response.ok) {
       return []
     }
