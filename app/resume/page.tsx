@@ -291,7 +291,7 @@ export default function ResumePage() {
           <h1 className="text-4xl md:text-6xl font-space mb-6">
             <span className="text-gradient">Data. AI. Innovation. Execution.</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto mb-8">
+          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-400 max-w-4xl mx-auto mb-8">
 14+ years of progressive experience in Generative AI, Product Leadership, Data Engineering, and Technology Strategy. Currently building the future of creator-led commerce.
           </p>
           
@@ -320,8 +320,8 @@ export default function ResumePage() {
                   onClick={() => setSelectedType(type as any)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     selectedType === type
-                      ? 'bg-white/20 text-white'
-                      : 'text-gray-400 hover:text-white hover:bg-white/10'
+                      ? 'bg-white/20 text-white dark:text-white'
+                      : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -362,35 +362,35 @@ export default function ResumePage() {
                   <div className="glass p-6 rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all">
                     <div className="flex flex-wrap justify-between items-start mb-3">
                       <h3 className="text-xl text-foreground">{exp.title}</h3>
-                      <span className="text-sm text-muted-foreground">{exp.period}</span>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="text-ai-teal dark:text-ai-green font-medium">{exp.company}</span>
-                      <span className="text-muted-foreground">•</span>
-                      <span className="text-muted-foreground">{exp.location}</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</span>
                     </div>
 
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="text-ai-teal dark:text-ai-green font-medium">{exp.company}</span>
+                      <span className="text-gray-600 dark:text-gray-400">•</span>
+                      <span className="text-gray-600 dark:text-gray-400">{exp.location}</span>
+                    </div>
+
+                    <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
                       {exp.description}
                     </p>
                     
                     {/* Achievements */}
                     <ul className="space-y-2 mb-4">
                       {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
                           <div className="w-1.5 h-1.5 bg-ai-green rounded-full mt-2 flex-shrink-0"></div>
                           {achievement}
                         </li>
                       ))}
                     </ul>
-                    
+
                     {/* Skills */}
                     <div className="flex flex-wrap gap-1">
                       {exp.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="text-xs px-2 py-1 bg-white/5 rounded-md text-gray-400"
+                          className="text-xs px-2 py-1 bg-white/5 rounded-md text-gray-600 dark:text-gray-400"
                         >
                           {skill}
                         </span>
@@ -435,7 +435,7 @@ export default function ResumePage() {
               {/* Contact CTA */}
               <div className="mt-8 glass p-6 rounded-xl border border-white/10 text-center">
                 <h3 className="text-lg mb-3">Let's Connect</h3>
-                <p className="text-gray-400 mb-4 text-sm">
+                <p className="text-gray-700 dark:text-gray-400 mb-4 text-sm">
                   Interested in collaboration or have questions about my experience?
                 </p>
                 <a href="/contact" className="block w-full px-4 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform text-center">
