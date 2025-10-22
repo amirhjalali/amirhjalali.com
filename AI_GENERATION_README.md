@@ -4,7 +4,7 @@ This repository includes an automated AI article generation system that works wi
 
 ## How It Works
 
-The system generates AI-powered articles and stores them as drafts that can be reviewed and published through the admin panel.
+The system generates AI-powered articles with featured images and stores them as drafts that can be reviewed and published through the admin panel. All generated images are permanently saved to the repository to prevent URL expiration.
 
 ### Components
 
