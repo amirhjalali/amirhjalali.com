@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "article-1729612800000-test123",
+    "title": "The Future of AI-Assisted Development",
+    "content": "# The Future of AI-Assisted Development\n\nArtificial intelligence is fundamentally changing how we write software. Today's AI coding assistants can understand context, suggest intelligent completions, and even write entire functions based on natural language descriptions.\n\n## The Current State\n\nModern AI assistants like GitHub Copilot, Claude Code, and ChatGPT have demonstrated impressive capabilities in code generation, debugging, and refactoring. They can understand multiple programming languages and frameworks, making them valuable tools for developers at all skill levels.\n\n## What's Next\n\nAs these tools continue to evolve, we're likely to see:\n\n- More sophisticated context understanding\n- Better integration with development workflows\n- Improved ability to understand project-specific patterns\n- Enhanced collaboration between human developers and AI\n\n## Embracing the Change\n\nThe key is not to resist these tools, but to learn how to use them effectively. They're not replacing developers; they're augmenting our capabilities and allowing us to focus on higher-level problem-solving and creative work.\n\nThe future of development is collaborative, with humans and AI working together to build better software faster.",
+    "excerpt": "Exploring how AI coding assistants are transforming software development and what the future holds for human-AI collaboration in programming.",
+    "tags": ["AI", "Development", "Programming", "Future Tech"],
+    "imageUrl": "",
+    "aiGenerated": true,
+    "author": "Amir H. Jalali",
+    "publishedAt": "2025-10-22T12:00:00.000Z",
+    "readTime": "4 min read",
+    "status": "draft",
+    "metadata": {
+      "style": "casual",
+      "length": "medium",
+      "wordCount": 234,
+      "generatedAt": "2025-10-22T12:00:00.000Z",
+      "topic": "AI-Assisted Development",
+      "model": "test",
+      "imageModel": "none"
+    }
+  }
+]
