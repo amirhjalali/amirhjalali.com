@@ -1,49 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Check, X } from 'lucide-react';
-import { saveDraftArticle } from '@/lib/articles';
-
-interface GeneratedArticle {
-  id: string;
-  title: string;
-  content: string;
-  excerpt: string;
-  tags: string[];
-  imageUrl: string;
-  aiGenerated: boolean;
-  author: string;
-  publishedAt: string;
-  readTime: string;
-  status: 'draft';
-  metadata?: {
-    style: string;
-    length: string;
-    wordCount: number;
-    generatedAt: string;
-    topic: string;
-    model: string;
-  };
-}
-
-interface GenerationResponse {
-  success: boolean;
-  article: GeneratedArticle;
-  stats: {
-    wordCount: number;
-    readTime: string;
-    model: string;
-    topic: string;
-  };
-  error?: string;
-}
+import { Sparkles } from 'lucide-react';
 
 export default function ArticleGenerator({ onArticleGenerated }: { onArticleGenerated?: () => void }) {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'generating' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState('');
-  const [lastArticle, setLastArticle] = useState<GeneratedArticle | null>(null);
 
   const generateArticle = async () => {
     // For static sites, we can't generate articles from the UI
@@ -69,33 +29,6 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
           <span>Open GitHub Actions</span>
         </div>
       </motion.button>
-
-      {/* Status message */}
-      {message && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className={`
-            p-4 rounded-lg border
-            ${status === 'success'
-              ? 'bg-green-50 border-green-200 text-green-800'
-              : status === 'error'
-              ? 'bg-red-50 border-red-200 text-red-800'
-              : 'bg-blue-50 border-blue-200 text-blue-800'
-            }
-          `}
-        >
-          <p className="text-sm">{message}</p>
-          {lastArticle && status === 'success' && (
-            <div className="mt-2 text-xs opacity-70">
-              <p>Topic: {lastArticle.metadata?.topic}</p>
-              <p>Model: {lastArticle.metadata?.model}</p>
-              <p>Tags: {lastArticle.tags.join(', ')}</p>
-            </div>
-          )}
-        </motion.div>
-      )}
 
       {/* Instructions */}
       <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
