@@ -229,24 +229,6 @@ export function getDraftArticleById(id: string): Article | null {
   return drafts.find(article => article.id === id) || null
 }
 
-// Update a draft article
-export function updateDraftArticle(draftId: string, updates: Partial<Article>): Article | null {
-  const drafts = getDraftArticles()
-  const draftIndex = drafts.findIndex(article => article.id === draftId)
-
-  if (draftIndex === -1) return null
-
-  drafts[draftIndex] = { ...drafts[draftIndex], ...updates }
-
-  try {
-    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(drafts))
-    return drafts[draftIndex]
-  } catch (error) {
-    console.error('Error updating draft article:', error)
-    return null
-  }
-}
-
 // Duplicate a draft article
 export function duplicateDraftArticle(draftId: string): Article | null {
   const draft = getDraftArticleById(draftId)
