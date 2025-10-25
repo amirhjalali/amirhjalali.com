@@ -229,6 +229,123 @@ export function getDraftArticleById(id: string): Article | null {
   return drafts.find(article => article.id === id) || null
 }
 
+// Update a draft article
+export function updateDraftArticle(draftId: string, updates: Partial<Article>): Article | null {
+  const drafts = getDraftArticles()
+  const draftIndex = drafts.findIndex(article => article.id === draftId)
+
+  if (draftIndex === -1) return null
+
+  drafts[draftIndex] = { ...drafts[draftIndex], ...updates }
+
+  try {
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(drafts))
+    return drafts[draftIndex]
+  } catch (error) {
+    console.error('Error updating draft article:', error)
+    return null
+  }
+}
+
+// Duplicate a draft article
+export function duplicateDraftArticle(draftId: string): Article | null {
+  const draft = getDraftArticleById(draftId)
+  if (!draft) return null
+
+  const newDraft: Article = {
+    ...draft,
+    id: `draft-${Date.now()}`,
+    title: `${draft.title} (Copy)`,
+    publishedAt: new Date().toISOString()
+  }
+
+  const drafts = getDraftArticles()
+  drafts.unshift(newDraft)
+
+  try {
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(drafts))
+    return newDraft
+  } catch (error) {
+    console.error('Error duplicating draft:', error)
+    return null
+  }
+}
+
+// Bulk delete drafts
+export function bulkDeleteDrafts(draftIds: string[]): boolean {
+  try {
+    const drafts = getDraftArticles()
+    const filtered = drafts.filter(draft => !draftIds.includes(draft.id))
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(filtered))
+    return true
+  } catch (error) {
+    console.error('Error bulk deleting drafts:', error)
+    return false
+  }
+}
+
+// Bulk publish drafts
+export function bulkPublishDrafts(draftIds: string[]): boolean {
+  try {
+    const drafts = getDraftArticles()
+    const articles = getArticles()
+
+    draftIds.forEach(id => {
+      const draft = drafts.find(d => d.id === id)
+      if (draft) {
+        const publishedArticle: Article = {
+          ...draft,
+          id: `article-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          publishedAt: new Date().toISOString(),
+          status: 'published'
+        }
+        articles.unshift(publishedArticle)
+      }
+    })
+
+    const filtered = drafts.filter(draft => !draftIds.includes(draft.id))
+
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(filtered))
+    localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
+    return true
+  } catch (error) {
+    console.error('Error bulk publishing drafts:', error)
+    return false
+  }
+}
+
+// Unpublish article (convert published back to draft)
+export function unpublishArticle(articleId: string): boolean {
+  try {
+    const articles = getArticles()
+    const articleIndex = articles.findIndex(a => a.id === articleId)
+
+    if (articleIndex === -1) return false
+
+    const article = articles[articleIndex]
+    const draft: Article = {
+      ...article,
+      id: `draft-${Date.now()}`,
+      status: 'draft'
+    }
+
+    // Remove from published
+    articles.splice(articleIndex, 1)
+
+    // Add to drafts
+    const drafts = getDraftArticles()
+    drafts.unshift(draft)
+
+    localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
+    localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(drafts))
+
+    return true
+  } catch (error) {
+    console.error('Error unpublishing article:', error)
+    return false
+  }
+}
+
 // Publish a draft article (move from drafts to published)
 export function publishDraftArticle(draftId: string): Article | null {
   const drafts = getDraftArticles()
