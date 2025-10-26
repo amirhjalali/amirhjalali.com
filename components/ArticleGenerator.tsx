@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { generateArticle } from '@/lib/generateArticle';
 import { saveDraftArticle } from '@/lib/articles';
 
 export default function ArticleGenerator({ onArticleGenerated }: { onArticleGenerated?: () => void }) {
@@ -19,10 +18,23 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
     setProgress('Initializing...');
 
     try {
-      // Generate the article
-      const result = await generateArticle(undefined, (step) => {
-        setProgress(step);
+      // Call server-side API route (keeps API key secure)
+      setProgress('Generating article content...');
+      const response = await fetch('/api/generate-article', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({})
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate article');
+      }
+
+      setProgress('Processing results...');
+      const result = await response.json();
 
       // Calculate read time
       const readTime = `${Math.ceil(result.wordCount / 200)} min read`;
@@ -135,6 +147,7 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         <p className="text-xs opacity-70">
           Click the button above to generate a new article instantly using GPT-4o-mini and DALL-E 3.
           Articles are saved as drafts for review before publishing.
+          <span className="text-green-600 dark:text-green-400 font-medium"> 🔒 API key secured server-side</span>
         </p>
       </div>
     </div>
