@@ -56,7 +56,9 @@ jobs:
         env:
           NEXT_PUBLIC_ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           NEXT_PUBLIC_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          NEXT_PUBLIC_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Note: OPENAI_API_KEY intentionally NOT included here
+          # For security, article generation is done via GitHub Actions workflow only
+          # See .github/workflows/ai-article-generator.yml
         run: |
           echo "Starting build..."
           npm run build

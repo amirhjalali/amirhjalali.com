@@ -29,6 +29,17 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
       });
 
       if (!response.ok) {
+        // Check if this is a 404 (API route doesn't exist in static export)
+        if (response.status === 404) {
+          throw new Error(
+            'API routes not available in static export.\n\n' +
+            'To enable this feature:\n' +
+            '1. Deploy to Vercel (free): https://vercel.com\n' +
+            '2. Or use GitHub Actions to generate articles\n\n' +
+            'See DEPLOYMENT.md for details.'
+          );
+        }
+
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to generate article');
       }
