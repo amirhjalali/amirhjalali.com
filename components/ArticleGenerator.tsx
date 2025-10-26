@@ -122,9 +122,9 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
           className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg flex items-start gap-2"
         >
           <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
-          <div>
+          <div className="flex-1">
             <p className="text-sm text-red-800 dark:text-red-200 font-semibold">Generation Failed</p>
-            <p className="text-xs text-red-700 dark:text-red-300 mt-1">{error}</p>
+            <pre className="text-xs text-red-700 dark:text-red-300 mt-1 whitespace-pre-wrap font-sans">{error}</pre>
           </div>
         </motion.div>
       )}
