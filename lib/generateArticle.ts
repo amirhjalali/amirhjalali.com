@@ -54,33 +54,38 @@ Format the response as a JSON object with:
   "tags": ["array", "of", "relevant", "tags"]
 }`;
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a thoughtful tech blogger who writes engaging, insightful articles about AI and technology.'
-        },
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: 0.8,
-      response_format: { type: "json_object" }
-    })
-  });
+  let response;
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a thoughtful tech blogger who writes engaging, insightful articles about AI and technology.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.8,
+        response_format: { type: "json_object" }
+      })
+    });
+  } catch (error: any) {
+    throw new Error(`Network error: ${error.message || 'Failed to connect to OpenAI API. Check your internet connection.'}`);
+  }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     const errorMessage = errorData.error?.message || `${response.status} ${response.statusText}`;
-    throw new Error(`Failed to generate article: ${errorMessage}`);
+    throw new Error(`OpenAI API error: ${errorMessage}`);
   }
 
   const data = await response.json();
@@ -102,26 +107,31 @@ Format the response as a JSON object with:
 async function generateImage(title: string, topic: string, apiKey: string): Promise<string> {
   const imagePrompt = `Create an artistic, modern featured image for a tech blog article titled "${title}" about ${topic}. Style: abstract, contemporary, tech-focused, visually striking. Use vibrant colors and geometric shapes.`;
 
-  const response = await fetch('https://api.openai.com/v1/images/generations', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: 'dall-e-3',
-      prompt: imagePrompt,
-      n: 1,
-      size: '1792x1024',
-      quality: 'standard',
-      style: 'vivid'
-    })
-  });
+  let response;
+  try {
+    response = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'dall-e-3',
+        prompt: imagePrompt,
+        n: 1,
+        size: '1792x1024',
+        quality: 'standard',
+        style: 'vivid'
+      })
+    });
+  } catch (error: any) {
+    throw new Error(`Network error generating image: ${error.message || 'Failed to connect to OpenAI API'}`);
+  }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     const errorMessage = errorData.error?.message || `${response.status} ${response.statusText}`;
-    throw new Error(`Failed to generate image: ${errorMessage}`);
+    throw new Error(`DALL-E API error: ${errorMessage}`);
   }
 
   const data = await response.json();
@@ -137,13 +147,23 @@ async function generateImage(title: string, topic: string, apiKey: string): Prom
  * Download image from URL and convert to base64
  */
 async function downloadImageAsBase64(url: string): Promise<string> {
-  const response = await fetch(url);
+  let response;
+  try {
+    response = await fetch(url);
+  } catch (error: any) {
+    throw new Error(`Failed to download image: ${error.message}`);
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to download image: ${response.status} ${response.statusText}`);
+  }
+
   const blob = await response.blob();
 
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = reject;
+    reader.onerror = () => reject(new Error('Failed to convert image to base64'));
     reader.readAsDataURL(blob);
   });
 }
@@ -157,8 +177,15 @@ export async function generateArticle(
 ): Promise<ArticleGenerationResult> {
   // Get API key from environment
   const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-  if (!apiKey) {
-    throw new Error('OpenAI API key not configured. Please set NEXT_PUBLIC_OPENAI_API_KEY in your environment.');
+  if (!apiKey || apiKey === 'your_openai_api_key_here') {
+    throw new Error(
+      'OpenAI API key not configured.\n\n' +
+      'For local development:\n' +
+      '1. Create a .env.local file in the project root\n' +
+      '2. Add: NEXT_PUBLIC_OPENAI_API_KEY=your_actual_api_key\n' +
+      '3. Restart the development server\n\n' +
+      'Get your API key from: https://platform.openai.com/api-keys'
+    );
   }
 
   // Select topic
