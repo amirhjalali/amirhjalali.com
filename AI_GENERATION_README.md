@@ -6,74 +6,75 @@ This repository includes an automated AI article generation system that works wi
 
 The system generates AI-powered articles with featured images and stores them as drafts that can be reviewed and published through the admin panel. All generated images are permanently saved to the repository to prevent URL expiration.
 
+**🔒 Security Note:** Article generation happens **server-side via GitHub Actions only** to keep API keys secure. The API key is stored in GitHub Secrets and never exposed to the client-side code or public repository.
+
 ### Components
 
 1. **Generation Script** (`scripts/generate-article-static.js`)
-   - Node.js script that calls OpenAI or Anthropic APIs
+   - Node.js script that calls OpenAI GPT-4o-mini and DALL-E 3 APIs
    - Generates 600-800 word articles on tech topics
+   - Creates high-quality featured images
    - Saves articles to `public/data/drafts.json`
+   - Downloads images as base64 to prevent URL expiration
 
-2. **GitHub Actions Workflow** (`.github/workflows/generate-article.yml`)
-   - Runs daily at 9 AM UTC (configurable)
-   - Can be triggered manually from GitHub Actions tab
+2. **GitHub Actions Workflow** (`.github/workflows/ai-article-generator.yml`)
+   - Runs **automatically** daily at 9 AM UTC
+   - Can be **triggered manually** from GitHub Actions tab
    - Commits generated articles to the repository
    - Triggers automatic deployment
+   - **API keys stay secure** in GitHub Secrets (never exposed)
 
 3. **Admin Panel** (`/admin`)
    - Review generated drafts
+   - Edit articles with full markdown editor
    - Publish articles to make them live
    - Delete unwanted drafts
+   - Links to GitHub Actions for manual triggering
 
 ## Setup Instructions
 
-### 1. Add API Keys to GitHub Secrets
+### 1. Add API Key to GitHub Secrets
 
 Go to your repository settings → Secrets and variables → Actions → New repository secret
 
-Add ONE of the following:
-
-**Option A - Anthropic Claude (Recommended)**
+**OpenAI API Key** (Required for GPT-4o-mini and DALL-E 3):
 ```
-Name: ANTHROPIC_API_KEY
-Value: sk-ant-... (your API key)
+Name: NEXT_PUBLIC_OPENAI_API_KEY
+Value: sk-... (your API key from https://platform.openai.com/api-keys)
 ```
 
-**Option B - OpenAI**
-```
-Name: OPENAI_API_KEY
-Value: sk-... (your API key)
-```
+**Cost:** ~$0.14 per article (GPT-4o-mini: ~$0.10, DALL-E 3: ~$0.04)
 
-### 2. Get API Keys
+### 2. Get OpenAI API Key
 
-**Anthropic Claude:**
-1. Go to https://console.anthropic.com/
+1. Go to https://platform.openai.com/
 2. Sign up for an account
 3. Go to API Keys section
 4. Create a new API key
-5. Estimated cost: $0.10-0.20 per article
-
-**OpenAI:**
-1. Go to https://platform.openai.com/
-2. Sign up for an account
-3. Go to API Keys
-4. Create a new API key
-5. Estimated cost: ~$0.25-0.35 per article (GPT-4o-mini text + DALL-E 3 image)
+5. **Set spending limits** to protect your account (recommended: $10/month)
+6. **Optional:** Restrict API key to specific models and domains for extra security
 
 ### 3. Enable GitHub Actions
 
-The workflows are already configured. They will start running automatically once you add the API key.
+The workflows are already configured. They will start running automatically once you add the API key to GitHub Secrets.
 
-### 4. Manual Generation (Optional)
+### 4. Manual Article Generation
 
-You can trigger article generation manually:
+You can trigger article generation on-demand from the **Admin Panel**:
 
-1. Go to your GitHub repository
-2. Click "Actions" tab
-3. Select "Generate AI Article" workflow
-4. Click "Run workflow"
-5. Optionally specify a topic
-6. Click "Run workflow" button
+1. Go to `/admin` on your site
+2. Click **"View GitHub Actions"** button in the AI Article Generator section
+3. This opens the GitHub Actions workflow page
+4. Click **"Run workflow"** dropdown
+5. Optionally specify a custom topic
+6. Click **"Run workflow"** button
+7. Wait ~30 seconds for generation to complete
+8. Refresh admin panel to see new draft
+
+**Alternative:** Directly visit:
+```
+https://github.com/YOUR_USERNAME/amirhjalali.com/actions/workflows/ai-article-generator.yml
+```
 
 ## Accessing the Admin Panel
 
@@ -141,6 +142,37 @@ By default, articles are generated:
 └── lib/
     └── articles.ts              # Article management with static file support
 ```
+
+## Security Architecture
+
+### Why GitHub Actions Only?
+
+This system generates articles **exclusively via GitHub Actions** (not in the browser) for security:
+
+**The Problem with Client-Side Generation:**
+- Any `NEXT_PUBLIC_*` environment variable gets embedded in the JavaScript bundle
+- Anyone can inspect your site's code and extract the API key
+- Attackers could use your key for unlimited API calls
+- Could result in massive unexpected bills
+
+**Our Solution:**
+- Article generation happens **server-side** in GitHub Actions
+- API key stored in **GitHub Secrets** (encrypted, never exposed)
+- Key is only accessible during the workflow run
+- Even if someone views your site's source code, they can't find the key
+
+**For Manual Generation:**
+- Users click "View GitHub Actions" in admin panel
+- Opens GitHub's secure workflow page
+- Must be logged into GitHub to trigger (authentication required)
+- Generation runs on GitHub's servers, not in the browser
+
+**Best Practices Applied:**
+1. ✅ API keys in GitHub Secrets only
+2. ✅ No client-side API calls
+3. ✅ GitHub authentication required for manual triggers
+4. ✅ Spending limits on OpenAI account
+5. ✅ Optional: API key restrictions (models, domains, rate limits)
 
 ## Cost Estimates
 
