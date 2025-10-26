@@ -393,13 +393,17 @@ export default function AdminDashboard() {
                           <p className="text-sm text-muted-foreground line-clamp-2">
                             {draft.excerpt}
                           </p>
-                          <div className="flex items-center gap-3 mt-2">
+                          <div className="flex items-center gap-3 mt-2 flex-wrap">
                             {draft.aiGenerated && (
                               <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-ai-teal/20 dark:bg-ai-green/20 rounded-full text-xs">
                                 <div className="w-1.5 h-1.5 bg-ai-teal dark:bg-ai-green rounded-full" />
                                 AI Generated
                               </span>
                             )}
+                            <span className="text-xs text-muted-foreground">
+                              {draft.content.trim().split(/\s+/).length} words
+                            </span>
+                            <span className="text-xs text-muted-foreground">•</span>
                             <span className="text-xs text-muted-foreground">{draft.readTime}</span>
                           </div>
                         </div>
