@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Removed 'output: export' to enable API routes (keeps key secure server-side)
-  // For GitHub Pages deployment, uncomment the line below:
-  // output: 'export',
-  basePath: process.env.NODE_ENV === 'production' && process.env.VERCEL !== '1' ? '/amirhjalali.com' : '',
+  // DEPLOYMENT CHOICE:
+  //
+  // GitHub Pages (current): Static export, no API routes, button won't work
+  output: 'export',
+  basePath: '/amirhjalali.com',
+  //
+  // Vercel (recommended): Server-side API routes, button works securely
+  // To switch to Vercel: comment out the two lines above and deploy to Vercel
+  // basePath: '',
+
   poweredByHeader: false,
   reactStrictMode: true,
   experimental: {
