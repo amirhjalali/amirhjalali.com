@@ -254,21 +254,33 @@ ${editedDraft.content}`
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium mb-2">Title</label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium">Title</label>
+              <span className={`text-xs ${editedDraft.title.length > 100 ? 'text-red-500' : 'text-muted-foreground'}`}>
+                {editedDraft.title.length}/100
+              </span>
+            </div>
             <input
               type="text"
               value={editedDraft.title}
               onChange={(e) => handleFieldChange('title', e.target.value)}
+              maxLength={120}
               className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-lg font-semibold"
             />
           </div>
 
           {/* Excerpt */}
           <div>
-            <label className="block text-sm font-medium mb-2">Excerpt</label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium">Excerpt</label>
+              <span className={`text-xs ${editedDraft.excerpt.length > 200 ? 'text-red-500' : 'text-muted-foreground'}`}>
+                {editedDraft.excerpt.length}/200
+              </span>
+            </div>
             <textarea
               value={editedDraft.excerpt}
               onChange={(e) => handleFieldChange('excerpt', e.target.value)}
+              maxLength={250}
               className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal resize-none"
               rows={2}
             />
