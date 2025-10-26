@@ -42,6 +42,7 @@ export default function AdminDashboard() {
   const [selectedDraft, setSelectedDraft] = useState<Article | null>(null)
   const [editingDraft, setEditingDraft] = useState<Article | null>(null)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
+  const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<'date' | 'title'>('date')
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
@@ -55,6 +56,15 @@ export default function AdminDashboard() {
       })
     }
   }, [loading, user])
+
+  // Debounce search input (300ms delay)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchQuery(searchInput)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [searchInput])
 
   const loadData = () => {
     setDrafts(getDraftArticles())
@@ -278,8 +288,8 @@ export default function AdminDashboard() {
                 <input
                   type="text"
                   placeholder="Search drafts..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
                 />
               </div>
