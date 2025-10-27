@@ -28,19 +28,21 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         body: JSON.stringify({})
       });
 
-      if (!response.ok) {
-        // Check if this is a 404 (API route doesn't exist in static export)
-        if (response.status === 404) {
-          throw new Error(
-            'API routes not available in static export.\n\n' +
-            'To enable this feature:\n' +
-            '1. Deploy to Vercel (free): https://vercel.com\n' +
-            '2. Or use GitHub Actions to generate articles\n\n' +
-            'See DEPLOYMENT.md for details.'
-          );
-        }
+      // Check if we got HTML instead of JSON (static export doesn't have API routes)
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('text/html')) {
+        throw new Error(
+          'Button not available on GitHub Pages.\n\n' +
+          'To generate articles:\n' +
+          '1. Use GitHub Actions (automatic daily at 9 AM UTC)\n' +
+          '2. Manual: GitHub → Actions → "Generate AI Article" → Run workflow\n\n' +
+          'Or deploy to Vercel for instant generation.\n' +
+          'See DEPLOYMENT_CHOICE.md for details.'
+        );
+      }
 
-        const errorData = await response.json();
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || 'Failed to generate article');
       }
 
