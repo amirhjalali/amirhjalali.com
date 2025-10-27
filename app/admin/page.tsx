@@ -115,9 +115,15 @@ export default function AdminDashboard() {
   }
 
   const handleDuplicate = (draftId: string) => {
-    const duplicated = duplicateDraftArticle(draftId)
-    if (duplicated) {
-      loadData()
+    setActionLoading(draftId)
+    try {
+      const duplicated = duplicateDraftArticle(draftId)
+      if (duplicated) {
+        loadData()
+        setSelectedDraft(duplicated)
+      }
+    } finally {
+      setActionLoading(null)
     }
   }
 
@@ -454,9 +460,14 @@ export default function AdminDashboard() {
 
                     <button
                       onClick={() => handleDuplicate(selectedDraft.id)}
-                      className="flex items-center justify-center gap-2 px-4 py-3 glass border border-border rounded-xl hover:border-ai-teal/50 transition-all"
+                      disabled={actionLoading === selectedDraft.id}
+                      className="flex items-center justify-center gap-2 px-4 py-3 glass border border-border rounded-xl hover:border-ai-teal/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <Copy className="w-4 h-4" />
+                      {actionLoading === selectedDraft.id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
                       Duplicate
                     </button>
 
