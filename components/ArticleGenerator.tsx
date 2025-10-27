@@ -20,34 +20,55 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
     try {
       // Call server-side API route (keeps API key secure)
       setProgress('Generating article content...');
-      const response = await fetch('/api/generate-article', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({})
-      });
+
+      let response;
+      try {
+        response = await fetch('/api/generate-article', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({})
+        });
+      } catch (fetchError: any) {
+        // Network error or fetch failed
+        throw new Error(
+          'API route not available.\n\n' +
+          'This site is deployed on GitHub Pages (static only).\n\n' +
+          'To generate articles:\n' +
+          '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
+          '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
+          'For instant generation, deploy to Vercel.\n' +
+          'See DEPLOYMENT_CHOICE.md for details.'
+        );
+      }
 
       // Check if we got HTML instead of JSON (static export doesn't have API routes)
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('text/html')) {
         throw new Error(
-          'Button not available on GitHub Pages.\n\n' +
+          'API route not available.\n\n' +
+          'This site is deployed on GitHub Pages (static only).\n\n' +
           'To generate articles:\n' +
-          '1. Use GitHub Actions (automatic daily at 9 AM UTC)\n' +
-          '2. Manual: GitHub → Actions → "Generate AI Article" → Run workflow\n\n' +
-          'Or deploy to Vercel for instant generation.\n' +
+          '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
+          '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
+          'For instant generation, deploy to Vercel.\n' +
           'See DEPLOYMENT_CHOICE.md for details.'
         );
       }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Failed to generate article');
+        throw new Error(errorData.error || `Server error: ${response.status}`);
       }
 
       setProgress('Processing results...');
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch (parseError) {
+        throw new Error('Invalid response from server. API routes may not be available on this deployment.');
+      }
 
       // Calculate read time
       const readTime = `${Math.ceil(result.wordCount / 200)} min read`;
