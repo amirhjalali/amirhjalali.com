@@ -346,9 +346,18 @@ ${editedDraft.content}`
             <label className="block text-sm font-medium mb-2">Content (Markdown)</label>
             <textarea
               value={editedDraft.content}
-              onChange={(e) => handleFieldChange('content', e.target.value)}
-              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal font-mono text-sm resize-none"
+              onChange={(e) => {
+                handleFieldChange('content', e.target.value)
+                // Auto-resize
+                e.target.style.height = 'auto'
+                e.target.style.height = e.target.scrollHeight + 'px'
+              }}
+              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal font-mono text-sm resize-none min-h-[400px]"
               rows={20}
+              onFocus={(e) => {
+                e.target.style.height = 'auto'
+                e.target.style.height = e.target.scrollHeight + 'px'
+              }}
             />
           </div>
         </div>
