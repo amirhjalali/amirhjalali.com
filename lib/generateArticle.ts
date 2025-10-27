@@ -78,11 +78,22 @@ Format the response as a JSON object with:
   });
 
   if (!response.ok) {
-    throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
+    const errorData = await response.json().catch(() => ({}));
+    const errorMessage = errorData.error?.message || `${response.status} ${response.statusText}`;
+    throw new Error(`Failed to generate article: ${errorMessage}`);
   }
 
   const data = await response.json();
-  return JSON.parse(data.choices[0].message.content);
+
+  if (!data.choices || !data.choices[0]) {
+    throw new Error('Invalid response from OpenAI API');
+  }
+
+  try {
+    return JSON.parse(data.choices[0].message.content);
+  } catch (error) {
+    throw new Error('Failed to parse article content from API response');
+  }
 }
 
 /**
@@ -108,10 +119,17 @@ async function generateImage(title: string, topic: string, apiKey: string): Prom
   });
 
   if (!response.ok) {
-    throw new Error(`DALL-E API error: ${response.status} ${response.statusText}`);
+    const errorData = await response.json().catch(() => ({}));
+    const errorMessage = errorData.error?.message || `${response.status} ${response.statusText}`;
+    throw new Error(`Failed to generate image: ${errorMessage}`);
   }
 
   const data = await response.json();
+
+  if (!data.data || !data.data[0] || !data.data[0].url) {
+    throw new Error('Invalid response from DALL-E API');
+  }
+
   return data.data[0].url;
 }
 
