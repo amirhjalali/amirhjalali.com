@@ -19,6 +19,36 @@ export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps
   const [historyIndex, setHistoryIndex] = useState(0)
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd/Ctrl + S to save
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault()
+        if (hasChanges) handleSave(false)
+      }
+      // Cmd/Ctrl + Z to undo
+      if ((e.metaKey || e.ctrlKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault()
+        handleUndo()
+      }
+      // Cmd/Ctrl + Shift + Z to redo
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'z') {
+        e.preventDefault()
+        handleRedo()
+      }
+      // Escape to close
+      if (e.key === 'Escape') {
+        if (!hasChanges || confirm('You have unsaved changes. Close anyway?')) {
+          onClose()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [hasChanges, historyIndex])
+
   // Track changes
   useEffect(() => {
     const changed = JSON.stringify(editedDraft) !== JSON.stringify(draft)
@@ -148,8 +178,11 @@ ${editedDraft.content}`
           <div className="flex items-center gap-4">
             <h2 className="text-2xl font-semibold">Edit Draft</h2>
             {hasChanges && (
-              <span className="text-xs text-yellow-500">● Unsaved changes</span>
+              <span className="text-xs text-yellow-500 animate-pulse">● Unsaved changes</span>
             )}
+            <span className="text-xs text-muted-foreground">
+              Auto-saves every 2s
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <button
