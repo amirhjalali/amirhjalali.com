@@ -264,7 +264,7 @@ export default function AdminDashboard() {
 
         {/* Toolbar */}
         <div className="glass p-4 rounded-2xl border border-border mb-6">
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-col md:flex-row md:flex-wrap items-stretch md:items-center gap-4">
             {/* Search */}
             <div className="flex-1 min-w-[200px]">
               <div className="relative">
@@ -443,7 +443,7 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Actions */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <button
                       onClick={() => setEditingDraft(selectedDraft)}
                       className="flex items-center justify-center gap-2 px-4 py-3 glass border border-border rounded-xl hover:border-ai-teal/50 transition-all"
@@ -510,7 +510,7 @@ export default function AdminDashboard() {
           /* Published Articles View */
           <div>
             <h2 className="text-2xl font-semibold mb-4">Published Articles ({publishedArticles.length})</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {publishedArticles.map((article) => (
                 <motion.div
                   key={article.id}
