@@ -23,7 +23,9 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
 
       let response;
       try {
-        response = await fetch('/api/generate-article', {
+        // Get basePath from Next.js config (for GitHub Pages deployment)
+        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+        response = await fetch(`${basePath}/api/generate-article`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -58,6 +60,33 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
       }
 
       if (!response.ok) {
+        // Handle 405 (Method Not Allowed) - API route exists but static export can't handle it
+        if (response.status === 405) {
+          throw new Error(
+            'API route not available.\n\n' +
+            'This site is deployed on GitHub Pages (static only).\n\n' +
+            'To generate articles:\n' +
+            '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
+            '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
+            'For instant generation, deploy to Vercel.\n' +
+            'See DEPLOYMENT_CHOICE.md for details.'
+          );
+        }
+
+        // Handle 404 - API route not found
+        if (response.status === 404) {
+          throw new Error(
+            'API route not available.\n\n' +
+            'This site is deployed on GitHub Pages (static only).\n\n' +
+            'To generate articles:\n' +
+            '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
+            '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
+            'For instant generation, deploy to Vercel.\n' +
+            'See DEPLOYMENT_CHOICE.md for details.'
+          );
+        }
+
+        // Other server errors
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || `Server error: ${response.status}`);
       }
