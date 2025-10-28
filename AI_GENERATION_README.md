@@ -60,20 +60,21 @@ The workflows are already configured. They will start running automatically once
 
 ### 4. Manual Article Generation
 
-You can trigger article generation on-demand from the **Admin Panel**:
+You can trigger article generation on-demand via **GitHub Actions**:
 
+**From Admin Panel:**
 1. Go to `/admin` on your site
-2. Click **"View GitHub Actions"** button in the AI Article Generator section
-3. This opens the GitHub Actions workflow page
+2. Click **"Generate Article on GitHub"** button
+3. This opens the GitHub Actions workflow page in a new tab
 4. Click **"Run workflow"** dropdown
 5. Optionally specify a custom topic
 6. Click **"Run workflow"** button
 7. Wait ~30 seconds for generation to complete
-8. Refresh admin panel to see new draft
+8. Return to admin panel and refresh to see new draft
 
-**Alternative:** Directly visit:
+**Direct Link:**
 ```
-https://github.com/YOUR_USERNAME/amirhjalali.com/actions/workflows/ai-article-generator.yml
+https://github.com/amirhjalali/amirhjalali.com/actions/workflows/ai-article-generator.yml
 ```
 
 ## Accessing the Admin Panel
