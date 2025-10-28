@@ -54,15 +54,16 @@ Complete guide to using the enhanced admin panel for managing articles on amirhj
 
 ## AI Article Generation
 
-### Using the Generator
+### Using GitHub Actions
 
-1. Click **"Generate AI Article"** button
-2. Watch real-time progress:
-   - Generating article content...
-   - Creating featured image...
-   - Processing image...
-   - Saving draft...
-3. Article appears in drafts list automatically
+1. Click **"Generate Article on GitHub"** button in admin panel
+2. Opens GitHub Actions page in new tab
+3. Click **"Run workflow"** dropdown
+4. Optionally enter a custom topic
+5. Click **"Run workflow"** to start
+6. Wait ~30 seconds for completion
+7. Return to admin panel and refresh page
+8. New draft appears in drafts list
 
 ### Features
 - Uses GPT-4o-mini for content (~$0.10 per article)
@@ -70,6 +71,7 @@ Complete guide to using the enhanced admin panel for managing articles on amirhj
 - Images stored as base64 (never expire)
 - Random topic selection from 15+ categories
 - 600-800 word articles with proper formatting
+- Automatic generation daily at 9 AM UTC
 
 ### Topics Include
 - AI and creativity
