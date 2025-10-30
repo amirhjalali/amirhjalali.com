@@ -147,12 +147,12 @@ async function loadDraftsFromFile(): Promise<Article[]> {
 
 // Initialize drafts from JSON file (called once on app load)
 const DRAFTS_SYNC_KEY = 'portfolio_drafts_last_sync'
-export async function initializeDrafts(): Promise<void> {
+export async function initializeDrafts(force: boolean = false): Promise<void> {
   if (typeof window === 'undefined') return
 
-  // Check if we've already synced in this session
+  // Check if we've already synced in this session (unless forced)
   const lastSync = sessionStorage.getItem(DRAFTS_SYNC_KEY)
-  if (lastSync) {
+  if (lastSync && !force) {
     console.log('Drafts already synced in this session')
     return
   }
@@ -160,6 +160,7 @@ export async function initializeDrafts(): Promise<void> {
   try {
     // Load drafts from JSON file
     const fileDrafts = await loadDraftsFromFile()
+    console.log(`Loaded ${fileDrafts.length} drafts from file`)
 
     if (fileDrafts.length > 0) {
       // Get existing localStorage drafts
@@ -178,6 +179,8 @@ export async function initializeDrafts(): Promise<void> {
       } else {
         console.log('No new drafts to sync')
       }
+    } else {
+      console.warn('No drafts found in file')
     }
 
     // Mark as synced for this session
