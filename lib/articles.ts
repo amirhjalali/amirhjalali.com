@@ -9,6 +9,19 @@ const getImagePath = (path: string) => {
   return path;
 };
 
+/**
+ * Generate a unique article ID with timestamp and random component
+ * Format: {prefix}-{timestamp}-{random9chars}
+ *
+ * @param prefix - ID prefix ('article' or 'draft')
+ * @returns Unique ID string
+ */
+function generateUniqueId(prefix: 'article' | 'draft' = 'article'): string {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substr(2, 9);
+  return `${prefix}-${timestamp}-${random}`;
+}
+
 export interface Article {
   id: string
   title: string
@@ -20,11 +33,24 @@ export interface Article {
   author: string
   publishedAt: string
   readTime: string
-  status?: 'published' | 'draft' // Add status field
+  status?: 'published' | 'draft'
+
+  // Track publishing history
+  sourceId?: string  // Original draft ID before publishing
+  publishHistory?: {
+    publishedFrom?: string  // Draft ID this was published from
+    publishedAt: string     // When it was published
+    originalCreatedAt?: string  // When draft was created
+  }
+
   metadata?: {
     style?: string
     length?: string
     wordCount?: number
+    generatedAt?: string
+    topic?: string
+    model?: string
+    imageModel?: string
   }
 }
 
@@ -49,16 +75,16 @@ export function getArticles(): Article[] {
 // Save an article to localStorage
 export function saveArticle(article: Omit<Article, 'id' | 'publishedAt' | 'readTime'>): Article {
   const articles = getArticles()
-  
+
   const newArticle: Article = {
     ...article,
-    id: Date.now().toString(),
+    id: generateUniqueId('article'),
     publishedAt: new Date().toISOString(),
     readTime: `${Math.ceil((article.content.split(' ').length || 0) / 200)} min read`
   }
-  
+
   articles.unshift(newArticle) // Add to beginning
-  
+
   try {
     localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
     return newArticle
@@ -210,7 +236,7 @@ export function saveDraftArticle(article: Omit<Article, 'id' | 'publishedAt' | '
 
   const newDraft: Article = {
     ...article,
-    id: `draft-${Date.now()}`,
+    id: generateUniqueId('draft'),
     publishedAt: new Date().toISOString(),
     readTime: `${Math.ceil((article.content.split(' ').length || 0) / 200)} min read`,
     status: 'draft'
@@ -240,7 +266,7 @@ export function duplicateDraftArticle(draftId: string): Article | null {
 
   const newDraft: Article = {
     ...draft,
-    id: `draft-${Date.now()}`,
+    id: generateUniqueId('draft'),
     title: `${draft.title} (Copy)`,
     publishedAt: new Date().toISOString()
   }
@@ -281,7 +307,7 @@ export function bulkPublishDrafts(draftIds: string[]): boolean {
       if (draft) {
         const publishedArticle: Article = {
           ...draft,
-          id: `article-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          id: generateUniqueId('article'),
           publishedAt: new Date().toISOString(),
           status: 'published'
         }
@@ -311,7 +337,7 @@ export function unpublishArticle(articleId: string): boolean {
     const article = articles[articleIndex]
     const draft: Article = {
       ...article,
-      id: `draft-${Date.now()}`,
+      id: generateUniqueId('draft'),
       status: 'draft'
     }
 
