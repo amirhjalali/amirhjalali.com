@@ -280,6 +280,54 @@ function generateId() {
   return `article-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
+// Check if article is a duplicate based on content similarity
+function isDuplicate(newArticle, existingDrafts) {
+  // Strategy 1: Check for exact title match
+  const titleMatch = existingDrafts.some(draft =>
+    draft.title.toLowerCase().trim() === newArticle.title.toLowerCase().trim()
+  );
+
+  if (titleMatch) {
+    console.log(`⚠️  Duplicate detected: Article with title "${newArticle.title}" already exists`);
+    return true;
+  }
+
+  // Strategy 2: Check content similarity (first 200 chars as fingerprint)
+  const newContentFingerprint = newArticle.content
+    .replace(/[^a-z0-9]/gi, '')
+    .toLowerCase()
+    .substring(0, 200);
+
+  const contentMatch = existingDrafts.some(draft => {
+    const existingFingerprint = draft.content
+      .replace(/[^a-z0-9]/gi, '')
+      .toLowerCase()
+      .substring(0, 200);
+
+    return existingFingerprint === newContentFingerprint;
+  });
+
+  if (contentMatch) {
+    console.log(`⚠️  Duplicate detected: Article with similar content already exists`);
+    return true;
+  }
+
+  // Strategy 3: Check topic similarity (if topics are very similar)
+  if (newArticle.metadata?.topic) {
+    const topicMatch = existingDrafts.some(draft =>
+      draft.metadata?.topic?.toLowerCase().trim() ===
+      newArticle.metadata.topic.toLowerCase().trim()
+    );
+
+    if (topicMatch) {
+      console.log(`⚠️  Duplicate detected: Article with same topic "${newArticle.metadata.topic}" already exists`);
+      return true;
+    }
+  }
+
+  return false;
+}
+
 // Load existing drafts
 function loadDrafts() {
   if (!fs.existsSync(config.draftsFile)) {
@@ -381,7 +429,21 @@ async function main() {
     const drafts = loadDrafts();
     console.log(`\nExisting drafts: ${drafts.length}`);
 
-    // Add new draft
+    // Check for duplicates before adding
+    if (isDuplicate(article, drafts)) {
+      console.log('\n⚠️  DUPLICATE ARTICLE DETECTED - Skipping generation');
+      console.log('   The article has similar content, title, or topic to an existing draft.');
+      console.log('   No new draft was created.');
+      console.log('\nTo generate a unique article, try:');
+      console.log('   1. Specifying a different topic');
+      console.log('   2. Deleting the similar draft from drafts.json');
+      console.log('   3. Publishing existing drafts to make room for new ones\n');
+
+      // Exit successfully (not an error)
+      process.exit(0);
+    }
+
+    // Add new draft (only if not duplicate)
     drafts.push(article);
 
     // Save back to file
