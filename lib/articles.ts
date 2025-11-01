@@ -154,6 +154,18 @@ export function getArticlesByTag(tag: string): Article[] {
 
 // ===== DRAFT ARTICLE MANAGEMENT =====
 
+// Generate hash of drafts array for change detection
+function hashArray(arr: Article[]): string {
+  const str = JSON.stringify(arr.map(a => a.id).sort());
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash.toString(36);
+}
+
 // Load drafts from public JSON file (for GitHub Pages static builds)
 async function loadDraftsFromFile(): Promise<Article[]> {
   try {
@@ -174,15 +186,10 @@ async function loadDraftsFromFile(): Promise<Article[]> {
 
 // Initialize drafts from JSON file (called once on app load)
 const DRAFTS_SYNC_KEY = 'portfolio_drafts_last_sync'
+const DRAFTS_HASH_KEY = 'portfolio_drafts_file_hash'
+
 export async function initializeDrafts(force: boolean = false): Promise<void> {
   if (typeof window === 'undefined') return
-
-  // Check if we've already synced in this session (unless forced)
-  const lastSync = sessionStorage.getItem(DRAFTS_SYNC_KEY)
-  if (lastSync && !force) {
-    console.log('Drafts already synced in this session')
-    return
-  }
 
   try {
     // Load drafts from JSON file
@@ -190,6 +197,17 @@ export async function initializeDrafts(force: boolean = false): Promise<void> {
     console.log(`Loaded ${fileDrafts.length} drafts from file`)
 
     if (fileDrafts.length > 0) {
+      // Check if file content changed (not just session)
+      const fileHash = hashArray(fileDrafts);
+      const storedHash = localStorage.getItem(DRAFTS_HASH_KEY);
+
+      const fileChanged = fileHash !== storedHash;
+
+      if (!fileChanged && !force) {
+        console.log('Drafts file unchanged since last sync');
+        return;
+      }
+
       // Get existing localStorage drafts
       const stored = localStorage.getItem(DRAFT_ARTICLES_KEY)
       const localDrafts = stored ? JSON.parse(stored) : []
@@ -202,16 +220,17 @@ export async function initializeDrafts(force: boolean = false): Promise<void> {
         // Add new drafts to the beginning
         const merged = [...newDrafts, ...localDrafts]
         localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(merged))
-        console.log(`Added ${newDrafts.length} new drafts from file`)
+        console.log(`✅ Added ${newDrafts.length} new drafts from file`)
       } else {
         console.log('No new drafts to sync')
       }
+
+      // Store hash instead of timestamp
+      localStorage.setItem(DRAFTS_HASH_KEY, fileHash);
+      sessionStorage.setItem(DRAFTS_SYNC_KEY, Date.now().toString())
     } else {
       console.warn('No drafts found in file')
     }
-
-    // Mark as synced for this session
-    sessionStorage.setItem(DRAFTS_SYNC_KEY, Date.now().toString())
   } catch (error) {
     console.error('Error initializing drafts:', error)
   }
