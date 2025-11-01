@@ -166,35 +166,6 @@ export default function ThoughtsPage() {
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Create New Article CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-20"
-        >
-          <div className="glass p-8 rounded-2xl border border-border max-w-2xl mx-auto">
-            <h3 className="text-2xl mb-4">Share Your Thoughts</h3>
-            <p className="text-muted-foreground mb-6">
-              Have ideas about AI, technology, or programming? Use the AI assistant to turn your thoughts into compelling articles.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <Link
-                href="/generate"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-full hover:scale-105 transition-transform inline-block text-center text-sm sm:text-base"
-              >
-                Generate New Article
-              </Link>
-              <Link
-                href="/contact"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 glass border border-border rounded-full hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-all inline-block text-center text-sm sm:text-base"
-              >
-                Get in Touch
-              </Link>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </div>
   )
