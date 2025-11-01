@@ -367,16 +367,48 @@ export function publishDraftArticle(draftId: string): Article | null {
 
   const draft = drafts[draftIndex]
 
+  // Check if content already published
+  const articles = getArticles()
+
+  // Content fingerprint (first 200 chars, normalized)
+  const draftFingerprint = draft.content
+    .replace(/[^a-z0-9]/gi, '')
+    .toLowerCase()
+    .substring(0, 200);
+
+  const existingArticle = articles.find(article => {
+    const articleFingerprint = article.content
+      .replace(/[^a-z0-9]/gi, '')
+      .toLowerCase()
+      .substring(0, 200);
+
+    return articleFingerprint === draftFingerprint;
+  });
+
+  if (existingArticle) {
+    console.warn(`⚠️  Article with similar content already published (ID: ${existingArticle.id})`);
+    console.warn(`   Title: "${existingArticle.title}"`);
+    console.warn(`   Published: ${existingArticle.publishedAt}`);
+    return null; // Prevent duplicate publish
+  }
+
   // Remove from drafts
   drafts.splice(draftIndex, 1)
 
-  // Add to published articles with new ID
-  const articles = getArticles()
+  // Create published article with tracking
   const publishedArticle: Article = {
     ...draft,
-    id: `article-${Date.now()}`,
+    id: generateUniqueId('article'),
     publishedAt: new Date().toISOString(),
-    status: 'published'
+    status: 'published',
+
+    // Track source
+    sourceId: draft.id,
+    publishHistory: {
+      publishedFrom: draft.id,
+      publishedAt: new Date().toISOString(),
+      originalCreatedAt: draft.publishedAt // Draft creation time
+    }
   }
 
   articles.unshift(publishedArticle)
