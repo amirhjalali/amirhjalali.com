@@ -302,23 +302,74 @@ export function bulkPublishDrafts(draftIds: string[]): boolean {
     const drafts = getDraftArticles()
     const articles = getArticles()
 
+    // Track how many were skipped
+    let publishedCount = 0;
+    let skippedCount = 0;
+    const skippedReasons: string[] = [];
+
     draftIds.forEach(id => {
       const draft = drafts.find(d => d.id === id)
-      if (draft) {
-        const publishedArticle: Article = {
-          ...draft,
-          id: generateUniqueId('article'),
-          publishedAt: new Date().toISOString(),
-          status: 'published'
-        }
-        articles.unshift(publishedArticle)
+      if (!draft) return;
+
+      // Check for duplicate content before publishing
+      const draftFingerprint = draft.content
+        .replace(/[^a-z0-9]/gi, '')
+        .toLowerCase()
+        .substring(0, 200);
+
+      const isDuplicate = articles.some(article => {
+        const articleFingerprint = article.content
+          .replace(/[^a-z0-9]/gi, '')
+          .toLowerCase()
+          .substring(0, 200);
+
+        return articleFingerprint === draftFingerprint;
+      });
+
+      if (isDuplicate) {
+        skippedCount++;
+        skippedReasons.push(`"${draft.title}" - duplicate content`);
+        return; // Skip this draft
       }
+
+      // Publish the draft
+      const publishedArticle: Article = {
+        ...draft,
+        id: generateUniqueId('article'),
+        publishedAt: new Date().toISOString(),
+        status: 'published',
+
+        // Track source
+        sourceId: draft.id,
+        publishHistory: {
+          publishedFrom: draft.id,
+          publishedAt: new Date().toISOString(),
+          originalCreatedAt: draft.publishedAt
+        }
+      }
+
+      articles.unshift(publishedArticle)
+      publishedCount++;
     })
 
-    const filtered = drafts.filter(draft => !draftIds.includes(draft.id))
+    // Only remove successfully published drafts
+    const publishedIds = new Set(
+      articles
+        .filter(a => a.sourceId && draftIds.includes(a.sourceId))
+        .map(a => a.sourceId)
+    );
+
+    const filtered = drafts.filter(draft => !publishedIds.has(draft.id))
 
     localStorage.setItem(DRAFT_ARTICLES_KEY, JSON.stringify(filtered))
     localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
+
+    // Log results
+    console.log(`✅ Bulk publish complete: ${publishedCount} published, ${skippedCount} skipped`);
+    if (skippedReasons.length > 0) {
+      console.log('⚠️  Skipped drafts:', skippedReasons);
+    }
+
     return true
   } catch (error) {
     console.error('Error bulk publishing drafts:', error)
