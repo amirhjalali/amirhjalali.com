@@ -289,17 +289,39 @@ ${editedDraft.content}`
           {/* Image */}
           <div>
             <label className="block text-sm font-medium mb-2">Featured Image</label>
-            <div className="flex gap-4">
-              {editedDraft.imageUrl && (
+
+            {/* Image Preview */}
+            {editedDraft.imageUrl && (
+              <div className="mb-4 relative group">
                 <img
                   src={editedDraft.imageUrl}
                   alt="Preview"
-                  className="w-32 h-32 object-cover rounded-xl border border-border"
+                  className="w-full max-h-64 object-cover rounded-xl border border-border"
                 />
-              )}
-              <label className="flex-1 flex items-center justify-center px-4 py-3 glass border border-dashed border-border rounded-xl cursor-pointer hover:border-ai-teal/50 transition-colors">
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => window.open(editedDraft.imageUrl, '_blank')}
+                    className="px-4 py-2 bg-white/90 text-black rounded-lg hover:bg-white"
+                  >
+                    <Eye className="w-4 h-4 inline mr-2" />
+                    View Full Size
+                  </button>
+                  <button
+                    onClick={() => handleFieldChange('imageUrl', '')}
+                    className="px-4 py-2 bg-red-500/90 text-white rounded-lg hover:bg-red-500"
+                  >
+                    <X className="w-4 h-4 inline mr-2" />
+                    Remove
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Image Upload Options */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <label className="flex items-center justify-center px-4 py-3 glass border border-dashed border-border rounded-xl cursor-pointer hover:border-ai-teal/50 transition-colors">
                 <Upload className="w-5 h-5 mr-2" />
-                <span>Upload New Image</span>
+                <span>Upload Image File</span>
                 <input
                   type="file"
                   accept="image/*"
@@ -307,6 +329,25 @@ ${editedDraft.content}`
                   className="hidden"
                 />
               </label>
+
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Or paste image URL"
+                  defaultValue={editedDraft.imageUrl}
+                  onBlur={(e) => {
+                    if (e.target.value) {
+                      handleFieldChange('imageUrl', e.target.value)
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleFieldChange('imageUrl', e.currentTarget.value)
+                    }
+                  }}
+                  className="flex-1 px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
+                />
+              </div>
             </div>
           </div>
 
@@ -355,7 +396,12 @@ ${editedDraft.content}`
 
           {/* Content */}
           <div>
-            <label className="block text-sm font-medium mb-2">Content (Markdown)</label>
+            <label className="block text-sm font-medium mb-2">
+              Content (Markdown)
+              <span className="ml-2 text-xs text-muted-foreground font-normal">
+                Supports markdown formatting
+              </span>
+            </label>
             <textarea
               value={editedDraft.content}
               onChange={(e) => {
@@ -364,13 +410,23 @@ ${editedDraft.content}`
                 e.target.style.height = 'auto'
                 e.target.style.height = e.target.scrollHeight + 'px'
               }}
-              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal font-mono text-sm resize-none min-h-[400px]"
-              rows={20}
+              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal font-mono text-sm resize-y min-h-[500px]"
+              rows={25}
+              placeholder="# Your Article Title
+
+Start writing your article content here in markdown format...
+
+## Section Heading
+
+Regular paragraph text goes here."
               onFocus={(e) => {
                 e.target.style.height = 'auto'
-                e.target.style.height = e.target.scrollHeight + 'px'
+                e.target.style.height = Math.max(500, e.target.scrollHeight) + 'px'
               }}
             />
+            <p className="mt-2 text-xs text-muted-foreground">
+              💡 Tip: The textarea will auto-resize as you type. You can also manually resize it.
+            </p>
           </div>
         </div>
 
