@@ -33,9 +33,16 @@ const config = {
 };
 
 // Helper to make HTTPS requests
-function makeRequest(url) {
+function makeRequest(url, headers = {}) {
   return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
+    const options = {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; ArticleBot/1.0)',
+        ...headers
+      }
+    };
+
+    https.get(url, options, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
