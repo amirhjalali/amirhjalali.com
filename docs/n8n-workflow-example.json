@@ -1,0 +1,181 @@
+{
+  "name": "AI Article Topic Finder",
+  "nodes": [
+    {
+      "name": "Daily Trigger",
+      "type": "n8n-nodes-base.cron",
+      "position": [250, 300],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyDay",
+              "hour": 8
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Fetch Hacker News",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [450, 200],
+      "parameters": {
+        "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "Fetch Reddit r/MachineLearning",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [450, 350],
+      "parameters": {
+        "url": "https://www.reddit.com/r/MachineLearning/hot.json?limit=20",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "Fetch Reddit r/artificial",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [450, 500],
+      "parameters": {
+        "url": "https://www.reddit.com/r/artificial/hot.json?limit=20",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "Merge Topics",
+      "type": "n8n-nodes-base.merge",
+      "position": [650, 350],
+      "parameters": {
+        "mode": "append"
+      }
+    },
+    {
+      "name": "Filter Tech Topics",
+      "type": "n8n-nodes-base.function",
+      "position": [850, 350],
+      "parameters": {
+        "functionCode": "const techKeywords = ['AI', 'ML', 'machine learning', 'programming', 'software', 'developer', 'coding', 'tech', 'algorithm', 'data science', 'neural network'];\n\nconst filteredItems = items.filter(item => {\n  const title = item.json.title || item.json.data?.title || '';\n  return techKeywords.some(keyword => title.toLowerCase().includes(keyword.toLowerCase()));\n});\n\nreturn filteredItems;"
+      }
+    },
+    {
+      "name": "Score with AI",
+      "type": "n8n-nodes-base.openAi",
+      "position": [1050, 350],
+      "parameters": {
+        "operation": "message",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "={{\"Rate this topic for a tech blog article from 1-10 and suggest a better angle: \" + $json.title}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Save to GitHub",
+      "type": "n8n-nodes-base.github",
+      "position": [1250, 350],
+      "parameters": {
+        "operation": "createOrUpdateFileContents",
+        "owner": "amirhjalali",
+        "repository": "amirhjalali.com",
+        "filePath": "public/data/topics-queue.json",
+        "commitMessage": "chore: Update topics queue from n8n"
+      }
+    }
+  ],
+  "connections": {
+    "Daily Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Hacker News",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Reddit r/MachineLearning",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Reddit r/artificial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Hacker News": {
+      "main": [
+        [
+          {
+            "node": "Merge Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Reddit r/MachineLearning": {
+      "main": [
+        [
+          {
+            "node": "Merge Topics",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Fetch Reddit r/artificial": {
+      "main": [
+        [
+          {
+            "node": "Merge Topics",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge Topics": {
+      "main": [
+        [
+          {
+            "node": "Filter Tech Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Tech Topics": {
+      "main": [
+        [
+          {
+            "node": "Score with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score with AI": {
+      "main": [
+        [
+          {
+            "node": "Save to GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
