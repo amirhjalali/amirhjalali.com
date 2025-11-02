@@ -355,11 +355,42 @@ function saveDrafts(drafts) {
   console.log(`\n✅ Drafts saved to ${config.draftsFile}`);
 }
 
+// Get topic from queue or fallback to random
+function getTopicFromQueue() {
+  const queueFile = path.join(__dirname, '../public/data/topics-queue.json');
+
+  // Check if queue file exists
+  if (fs.existsSync(queueFile)) {
+    try {
+      const queue = JSON.parse(fs.readFileSync(queueFile, 'utf8'));
+
+      if (queue.topics && queue.topics.length > 0) {
+        // Get the first (highest scored) topic
+        const topicData = queue.topics[0];
+
+        // Remove it from the queue
+        queue.topics.shift();
+        fs.writeFileSync(queueFile, JSON.stringify(queue, null, 2));
+
+        console.log(`📋 Using topic from queue (${queue.topics.length} remaining)`);
+        console.log(`   Source: ${topicData.source}`);
+        return topicData.topic;
+      }
+    } catch (e) {
+      console.warn('⚠️  Could not read topics queue, using random topic');
+    }
+  }
+
+  // Fallback to random topic
+  console.log('📋 Using random topic from predefined list');
+  return config.topics[Math.floor(Math.random() * config.topics.length)];
+}
+
 // Main function
 async function main() {
   try {
-    // Get topic from command line or pick random
-    const topic = process.argv[2] || config.topics[Math.floor(Math.random() * config.topics.length)];
+    // Get topic from command line, queue, or pick random
+    const topic = process.argv[2] || getTopicFromQueue();
 
     console.log(`\n📝 Generating article about: "${topic}"\n`);
 
