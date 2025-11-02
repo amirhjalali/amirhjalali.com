@@ -88,6 +88,13 @@ export default function AdminDashboard() {
     return filtered
   }, [drafts, searchQuery, sortBy])
 
+  // Sorted published articles (by date, most recent first)
+  const sortedPublishedArticles = useMemo(() => {
+    return [...publishedArticles].sort((a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    )
+  }, [publishedArticles])
+
   const handlePublish = async (draftId: string) => {
     setActionLoading(draftId)
     try {
@@ -582,7 +589,7 @@ export default function AdminDashboard() {
           <div>
             <h2 className="text-2xl font-semibold mb-4">Published Articles ({publishedArticles.length})</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {publishedArticles.map((article) => (
+              {sortedPublishedArticles.map((article) => (
                 <motion.div
                   key={article.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -590,8 +597,15 @@ export default function AdminDashboard() {
                   className="glass p-4 rounded-xl border border-border hover:border-ai-teal/50 transition-all"
                 >
                   <h3 className="font-semibold mb-2 truncate">{article.title}</h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                  <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
                     {article.excerpt}
+                  </p>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Published: {new Date(article.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
                   </p>
                   <div className="flex gap-2">
                     <button
