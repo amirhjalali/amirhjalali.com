@@ -4,7 +4,13 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { getArticleById, getDraftArticleById, initializeDefaultArticles, initializeDrafts } from '@/lib/articles'
+import {
+  getArticleById,
+  getDraftArticleById,
+  initializeDefaultArticles,
+  initializeDrafts,
+  type Article
+} from '@/lib/articles'
 import SocialShare from '@/components/SocialShare'
 
 // Helper to add basePath to image URLs at render time
@@ -15,9 +21,15 @@ const getImageUrl = (url: string | undefined) => {
   return url.startsWith('/') ? `${basePath}${url}` : url
 }
 
-export default function ThoughtPageClient({ id }: { id: string }) {
-  const [article, setArticle] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+interface ThoughtPageClientProps {
+  id: string
+  initialArticle: Article | null
+}
+
+export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageClientProps) {
+  const [article, setArticle] = useState<Article | null>(initialArticle)
+  const [loading, setLoading] = useState(!initialArticle)
+  const hasInitialArticle = Boolean(initialArticle)
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -26,22 +38,19 @@ export default function ThoughtPageClient({ id }: { id: string }) {
       await initializeDrafts()
 
       // Try to load as published article first, then as draft
-      let loadedArticle = getArticleById(id)
-      if (!loadedArticle) {
-        loadedArticle = getDraftArticleById(id)
+      let loadedArticle = getArticleById(id) || getDraftArticleById(id)
+
+      if (loadedArticle) {
+        setArticle(loadedArticle)
+      } else if (!hasInitialArticle) {
+        setArticle(null)
       }
 
-      if (!loadedArticle) {
-        setLoading(false)
-        return
-      }
-
-      setArticle(loadedArticle)
       setLoading(false)
     }
 
     loadArticle()
-  }, [id])
+  }, [id, hasInitialArticle])
 
   if (loading) {
     return (
@@ -55,7 +64,7 @@ export default function ThoughtPageClient({ id }: { id: string }) {
     notFound()
   }
 
-  const isDraft = article.status === 'draft'
+  const isDraft = article?.status === 'draft'
 
   return (
     <div className="min-h-screen relative">

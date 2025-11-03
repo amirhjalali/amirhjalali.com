@@ -1,0 +1,45 @@
+{
+  "topics": [
+    {
+      "topic": "Visopsys: OS maintained by a single developer since 1997",
+      "originalTitle": "Visopsys: OS maintained by a single developer since 1997",
+      "source": "Hacker News",
+      "url": "https://visopsys.org/",
+      "score": 481,
+      "fetchedAt": "2025-11-02T20:08:33.686Z"
+    },
+    {
+      "topic": "How I use every Claude Code feature",
+      "originalTitle": "How I use every Claude Code feature",
+      "source": "Hacker News",
+      "url": "https://blog.sshh.io/p/how-i-use-every-claude-code-feature",
+      "score": 474,
+      "fetchedAt": "2025-11-02T20:08:33.686Z"
+    },
+    {
+      "topic": "Claude Code can debug low-level cryptography",
+      "originalTitle": "Claude Code can debug low-level cryptography",
+      "source": "Hacker News",
+      "url": "https://words.filippo.io/claude-debugging/",
+      "score": 469,
+      "fetchedAt": "2025-11-02T20:08:33.686Z"
+    },
+    {
+      "topic": "URLs are state containers",
+      "originalTitle": "URLs are state containers",
+      "source": "Hacker News",
+      "url": "https://alfy.blog/2025/10/31/your-url-is-your-state.html",
+      "score": 306,
+      "fetchedAt": "2025-11-02T20:08:33.686Z"
+    },
+    {
+      "topic": "Tongyi DeepResearch – open-source 30B MoE Model that rivals OpenAI DeepResearch",
+      "originalTitle": "Tongyi DeepResearch – open-source 30B MoE Model that rivals OpenAI DeepResearch",
+      "source": "Hacker News",
+      "url": "https://tongyi-agent.github.io/blog/introducing-tongyi-deep-research/",
+      "score": 229,
+      "fetchedAt": "2025-11-02T20:08:33.686Z"
+    }
+  ],
+  "lastUpdated": "2025-11-02T20:08:33.840Z"
+}
