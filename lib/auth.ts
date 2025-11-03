@@ -5,18 +5,49 @@
 
 // These will be set at build time from environment variables
 const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin'
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'changeme'
+const ADMIN_PASSWORD_HASH = process.env.NEXT_PUBLIC_ADMIN_PASSWORD_HASH || ''
+const ADMIN_PASSWORD_FALLBACK = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || ''
 
 export interface AuthUser {
   username: string
   role: string
 }
 
+async function sha256(input: string): Promise<string> {
+  const cryptoObj = globalThis.crypto
+  if (!cryptoObj?.subtle) {
+    throw new Error('Web Crypto API is unavailable')
+  }
+
+  const encoder = new TextEncoder()
+  const data = encoder.encode(input)
+  const hashBuffer = await cryptoObj.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+}
+
 /**
  * Verify admin credentials (client-side)
  */
-export function verifyCredentials(username: string, password: string): boolean {
-  return username === ADMIN_USERNAME && password === ADMIN_PASSWORD
+export async function verifyCredentials(username: string, password: string): Promise<boolean> {
+  if (!username || !password) return false
+  if (username !== ADMIN_USERNAME) return false
+
+  if (ADMIN_PASSWORD_HASH) {
+    try {
+      const hashedInput = await sha256(password)
+      return hashedInput === ADMIN_PASSWORD_HASH
+    } catch (error) {
+      console.error('Error hashing password for verification:', error)
+      return false
+    }
+  }
+
+  if (ADMIN_PASSWORD_FALLBACK) {
+    return password === ADMIN_PASSWORD_FALLBACK
+  }
+
+  return false
 }
 
 /**

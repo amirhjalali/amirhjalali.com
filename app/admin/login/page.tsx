@@ -21,8 +21,7 @@ export default function AdminLoginPage() {
     const { verifyCredentials, createSession } = await import('@/lib/auth')
 
     try {
-      // Verify credentials
-      const isValid = verifyCredentials(username, password)
+      const isValid = await verifyCredentials(username, password)
 
       if (!isValid) {
         setError('Invalid username or password')

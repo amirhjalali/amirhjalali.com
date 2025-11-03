@@ -4,14 +4,20 @@ import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { getArticleById, getDraftArticleById, initializeDefaultArticles, initializeDrafts } from '@/lib/articles'
+import {
+  getArticleById,
+  getDraftArticleById,
+  initializeDefaultArticles,
+  initializeDrafts,
+  type Article
+} from '@/lib/articles'
 import ThoughtPageClient from './thoughts/[id]/ThoughtPageClient'
 
 export default function NotFound() {
   const pathname = usePathname()
   const router = useRouter()
   const [checking, setChecking] = useState(true)
-  const [articleId, setArticleId] = useState<string | null>(null)
+  const [article, setArticle] = useState<Article | null>(null)
 
   useEffect(() => {
     const checkForArticle = async () => {
@@ -25,10 +31,10 @@ export default function NotFound() {
         await initializeDrafts()
 
         // Check if article exists in localStorage
-        const article = getArticleById(id) || getDraftArticleById(id)
+        const found = getArticleById(id) || getDraftArticleById(id)
 
-        if (article) {
-          setArticleId(id)
+        if (found) {
+          setArticle(found)
           setChecking(false)
           return
         }
@@ -41,8 +47,8 @@ export default function NotFound() {
   }, [pathname])
 
   // If we found an article, render it
-  if (articleId) {
-    return <ThoughtPageClient id={articleId} />
+  if (article) {
+    return <ThoughtPageClient id={article.id} initialArticle={article} />
   }
 
   // If still checking, show loading

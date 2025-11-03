@@ -1,130 +1,8 @@
-// Article management utilities using localStorage
-// In a production app, this would use a database
-
-export interface Article {
-  id: string
-  title: string
-  content: string
-  excerpt: string
-  tags: string[]
-  imageUrl?: string
-  aiGenerated: boolean
-  author: string
-  publishedAt: string
-  readTime: string
-  metadata?: {
-    style?: string
-    length?: string
-    wordCount?: number
-  }
-}
-
-const ARTICLES_KEY = 'portfolio_articles'
-
-// Get all articles from localStorage
-export function getArticles(): Article[] {
-  if (typeof window === 'undefined') return []
-  
-  try {
-    const stored = localStorage.getItem(ARTICLES_KEY)
-    return stored ? JSON.parse(stored) : []
-  } catch (error) {
-    console.error('Error loading articles:', error)
-    return []
-  }
-}
-
-// Save an article to localStorage
-export function saveArticle(article: Omit<Article, 'id' | 'publishedAt' | 'readTime'>): Article {
-  const articles = getArticles()
-  
-  const newArticle: Article = {
-    ...article,
-    id: Date.now().toString(),
-    publishedAt: new Date().toISOString(),
-    readTime: `${Math.ceil((article.content.split(' ').length || 0) / 200)} min read`
-  }
-  
-  articles.unshift(newArticle) // Add to beginning
-  
-  try {
-    localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
-    return newArticle
-  } catch (error) {
-    console.error('Error saving article:', error)
-    throw new Error('Failed to save article')
-  }
-}
-
-// Get a single article by ID
-export function getArticleById(id: string): Article | null {
-  const articles = getArticles()
-  return articles.find(article => article.id === id) || null
-}
-
-// Delete an article
-export function deleteArticle(id: string): boolean {
-  const articles = getArticles()
-  const filtered = articles.filter(article => article.id !== id)
-  
-  try {
-    localStorage.setItem(ARTICLES_KEY, JSON.stringify(filtered))
-    return true
-  } catch (error) {
-    console.error('Error deleting article:', error)
-    return false
-  }
-}
-
-// Update an article
-export function updateArticle(id: string, updates: Partial<Article>): Article | null {
-  const articles = getArticles()
-  const index = articles.findIndex(article => article.id === id)
-  
-  if (index === -1) return null
-  
-  articles[index] = { ...articles[index], ...updates }
-  
-  try {
-    localStorage.setItem(ARTICLES_KEY, JSON.stringify(articles))
-    return articles[index]
-  } catch (error) {
-    console.error('Error updating article:', error)
-    return null
-  }
-}
-
-// Search articles by title or content
-export function searchArticles(query: string): Article[] {
-  const articles = getArticles()
-  const lowercaseQuery = query.toLowerCase()
-  
-  return articles.filter(article => 
-    article.title.toLowerCase().includes(lowercaseQuery) ||
-    article.content.toLowerCase().includes(lowercaseQuery) ||
-    article.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery))
-  )
-}
-
-// Get articles by tag
-export function getArticlesByTag(tag: string): Article[] {
-  const articles = getArticles()
-  return articles.filter(article => 
-    article.tags.some(t => t.toLowerCase() === tag.toLowerCase())
-  )
-}
-
-// Initialize with default articles if none exist
-export function initializeDefaultArticles() {
-  const articles = getArticles()
-  
-  if (articles.length === 0) {
-    // Add the thoughts/blog posts as default articles - matching live site exactly (10 posts)
-    const defaultArticles = [
-      {
-        title: 'THE EDGE OF VIBE CODING',
-        excerpt: 'A few months back, I wrote about the promise of vibe coding. Now, 2.5 months into practicing it daily, I still believe the nature of programming has shifted. But I\'m also seeing the current limits more clearly.',
-        content: `# THE EDGE OF VIBE CODING
+export const baseArticles = [
+{
+  title: 'THE EDGE OF VIBE CODING',
+  excerpt: 'A few months back, I wrote about the promise of vibe coding. Now, 2.5 months into practicing it daily, I still believe the nature of programming has shifted. But I\'m also seeing the current limits more clearly.',
+  content: `# THE EDGE OF VIBE CODING
 
 A few months back, I wrote about the promise of vibe coding. Now, 2.5 months into practicing it daily, I still believe the nature of programming has shifted. But I'm also seeing the current limits more clearly.
 
@@ -133,15 +11,15 @@ The biggest friction point comes when a project needs to interact with external 
 Right now, the best move is to delay database integration. In the early stages, the data model needs to stay flexible. File-based formats like JSON work better and are easier for the LLM to navigate. Once you involve a real database, errors become more frequent and the process becomes much harder to manage.
 
 Keep it local as long as possible. That's where vibe coding still flows.`,
-        tags: ['Vibe Coding', 'AI Programming', 'Development'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
-      },
-      {
-        title: '4O image generation',
-        excerpt: 'Open AI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is multimodal-native and non-diffusion-based.',
-        content: `# 4O image generation
+  tags: ['Vibe Coding', 'AI Programming', 'Development'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
+},
+{
+  title: '4O image generation',
+  excerpt: 'Open AI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is multimodal-native and non-diffusion-based.',
+  content: `# 4O image generation
 
 Open AI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is:
 
@@ -156,52 +34,47 @@ This has led to a giant step up in usability of this model. The long prompts of 
 <img src="/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg" alt="A short story" class="gallery-image" />
 <img src="/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.jpg" alt="Of immortality" class="gallery-image" />
 </div>`,
-        tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
-      },
-      {
-        title: 'THE ERA OF VIBE CODING',
-        excerpt: 'Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.',
-        content: `# THE ERA OF VIBE CODING
+  tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.jpg',
+},
+{
+  title: 'THE ERA OF VIBE CODING',
+  excerpt: 'Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.',
+  content: `# THE ERA OF VIBE CODING
 
 Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMS, without actually writing any of the code yourself.
 
 As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
 
-<div class="article-videos">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/h2EJXKpv6zs" title="Vibe Coding in Action - Building Apps with AI" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7QcW8Bdy5eM" title="AI-Assisted Development Workflow" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-</div>
-
 As of current, a technical background and systems thinking is still helpful to guide the development process. Nonetheless the difference between what it meant to be a programmer 2 years ago till today is quite whiplash inducing.
 
 Vibe Coding in 2025 will do to software what MidJourney has done for image generation since 2023. Meaning there will be a massive amount of output, but getting to a final shippable product will still required tenacity and reliance on traditional skills.`,
-        tags: ['Vibe Coding', 'LLMs', 'Programming Paradigm'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
-      },
-      {
-        title: 'DeepSEEK',
-        excerpt: 'DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces.',
-        content: `# DeepSEEK
+  tags: ['Vibe Coding', 'LLMs', 'Programming Paradigm'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/TheEraOfVibeCoding.jpg',
+},
+{
+  title: 'DeepSEEK',
+  excerpt: 'DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces.',
+  content: `# DeepSEEK
 
 DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces. Unlike many large-scale models that require massive computational resources, DeepSeek has managed to develop a model on par with OpenAI's leading systems at a fraction of the cost. This efficiency makes high-performance AI more accessible, opening doors for businesses, researchers, and developers who previously faced prohibitive expenses when integrating advanced AI into their work.
 
 By dramatically lowering the cost of AI inference and training, DeepSeek-R1 could drive widespread adoption across industries, from healthcare and finance to education and creative fields. Companies that once relied on expensive proprietary models may now have access to open-source alternatives without compromising on quality. This shift not only democratizes AI but also increases competition, pushing the industry toward more sustainable and cost-effective innovation. If this trend continues, AI deployment could become significantly cheaper, leading to a future where high-quality AI assistance is a standard tool rather than a luxury reserved for the largest tech companies.
 
 The immediate takeaway is that many use cases that were not deemed viable just recently, are immediately much more feasible.`,
-        tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
-      },
-      {
-        title: 'REASONING MODELS',
-        excerpt: 'Chain of Thought (CoT) prompting has already proven to be a powerful method for improving the reasoning capabilities of large language models by breaking down complex problems into intermediate logical steps.',
-        content: `# REASONING MODELS
+  tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
+},
+{
+  title: 'REASONING MODELS',
+  excerpt: 'Chain of Thought (CoT) prompting has already proven to be a powerful method for improving the reasoning capabilities of large language models by breaking down complex problems into intermediate logical steps.',
+  content: `# REASONING MODELS
 
 Chain of Thought (CoT) prompting has already proven to be a powerful method for improving the reasoning capabilities of large language models (LLMs) by breaking down complex problems into intermediate logical steps. This approach not only enhances accuracy but also makes AI decision-making more transparent and interpretable.
 
@@ -210,45 +83,45 @@ OpenAI's latest research on Learning to Reason with LLMs builds on this idea, de
 By integrating reasoning models with CoT, we move toward AI systems that don't just generate responses but actively "think" through challenges in a structured way. This has major implications for fields that require rigorous logical processing, such as mathematics, scientific research, law, and medical diagnostics. More importantly, these techniques reduce hallucinations, improve reliability, and offer insights into how AI reaches its conclusions, making AI systems more trustworthy and effective for complex tasks.
 
 The concept of Test-Time Compute (TTC) allows AI more processing time to refine reasoning during inference, optimizing processing depth rather than relying solely on model size.`,
-        tags: ['Reasoning Models', 'Chain of Thought', 'AI Reliability'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
-      },
-      {
-        title: 'CHAIN OF THOUGHT',
-        excerpt: 'Chain of Thought (CoT) is a prompting technique that guides language models to solve complex problems by breaking them down into intermediate reasoning steps.',
-        content: `# CHAIN OF THOUGHT
+  tags: ['Reasoning Models', 'Chain of Thought', 'AI Reliability'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
+},
+{
+  title: 'CHAIN OF THOUGHT',
+  excerpt: 'Chain of Thought (CoT) is a prompting technique that guides language models to solve complex problems by breaking them down into intermediate reasoning steps.',
+  content: `# CHAIN OF THOUGHT
 
 Chain of Thought (CoT) is a prompting technique that guides language models to solve complex problems by breaking them down into intermediate reasoning steps. This approach improves AI accuracy by providing structured logical deduction and makes AI decision-making more transparent and interpretable.
 
 The technique allows models to process complex queries more effectively and can help smaller models outperform larger ones through better reasoning. Rather than jumping directly to conclusions, CoT prompting encourages the AI to show its work, much like a student solving a math problem step by step.
 
 This pedagogical approach to AI interaction represents a shift toward more collaborative and understandable AI systems, where the reasoning process becomes as important as the final answer.`,
-        tags: ['Chain of Thought', 'Problem Solving', 'AI Transparency'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
-      },
-      {
-        title: 'LLAMA3 and the era of abundant ai',
-        excerpt: 'The release of Meta\'s LLAMA3 represents a potential democratization of AI intelligence, dramatically lowering computational costs and increasing accessibility.',
-        content: `# LLAMA3 and the era of abundant ai
+  tags: ['Chain of Thought', 'Problem Solving', 'AI Transparency'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
+},
+{
+  title: 'LLAMA3 and the era of abundant ai',
+  excerpt: 'The release of Meta\'s LLAMA3 represents a potential democratization of AI intelligence, dramatically lowering computational costs and increasing accessibility.',
+  content: `# LLAMA3 and the era of abundant ai
 
 The release of Meta's LLAMA3 represents a potential democratization of AI intelligence, dramatically lowering computational costs and increasing accessibility of high-performance AI. This shift presents both tremendous opportunities and significant risks for society.
 
 The accessibility of advanced AI technology could either leverage the decency in humanity, empowering creativity, education, and problem-solving across all sectors, or magnify the evil capacity of our species through misuse and malicious applications.
 
 As we enter this era of abundant artificial intelligence, the question becomes not whether we can build these systems, but whether we can build them responsibly and distribute their benefits equitably. The hope is that increased access to intelligence might contribute to increased wisdom in how we use it.`,
-        tags: ['LLAMA3', 'AI Accessibility', 'Societal Impact'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
-      },
-      {
-        title: 'THE NEXT GREAT DATA CROP',
-        excerpt: 'Exploring personal data value and AI training quality concerns, including bot-generated content diluting data quality and economic models.',
-        content: `# The Next Great Data Crop
+  tags: ['LLAMA3', 'AI Accessibility', 'Societal Impact'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
+},
+{
+  title: 'THE NEXT GREAT DATA CROP',
+  excerpt: 'Exploring personal data value and AI training quality concerns, including bot-generated content diluting data quality and economic models.',
+  content: `# The Next Great Data Crop
 
 The **next great data crop** focuses on personal data value and AI training quality in an era of increasing data scarcity.
 
@@ -312,15 +185,15 @@ The data landscape is evolving toward:
 4. **Sustainable Practices**: Long-term data ecosystem health
 
 *The next gold rush isn't for more data—it's for better data.*`,
-        tags: ['Data Quality', 'AI Training', 'Economic Models'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
-      },
-      {
-        title: 'Are we our IDEAS?',
-        excerpt: 'A philosophical exploration of identity, creativity, and the relationship between our thoughts and our sense of self.',
-        content: `# Are We Our Ideas?
+  tags: ['Data Quality', 'AI Training', 'Economic Models'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
+},
+{
+  title: 'Are we our IDEAS?',
+  excerpt: 'A philosophical exploration of identity, creativity, and the relationship between our thoughts and our sense of self.',
+  content: `# Are We Our Ideas?
 
 This **philosophical exploration** delves into the fundamental question of identity: are we defined by our ideas?
 
@@ -400,15 +273,15 @@ Perhaps the answer lies not in resolution but in the questioning itself:
 4. **Stay Open**: Remain curious about self and others
 
 *The question "Are we our ideas?" may be more important than any answer we could give.*`,
-        tags: ['Philosophy', 'Identity', 'Creativity'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
-      },
-      {
-        title: 'Synthetic Data vs \'Real\' DATA',
-        excerpt: 'Comparing synthetic and real data in AI training, exploring quality, authenticity, and the implications for model performance.',
-        content: `# Synthetic Data vs 'Real' Data
+  tags: ['Philosophy', 'Identity', 'Creativity'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
+},
+{
+  title: 'Synthetic Data vs "Real" DATA',
+  excerpt: 'Comparing synthetic and real data in AI training, exploring quality, authenticity, and the implications for model performance.',
+  content: `# Synthetic Data vs 'Real' Data
 
 The debate between **synthetic and real data** in AI training raises fundamental questions about quality, authenticity, and model performance.
 
@@ -510,61 +383,15 @@ Choosing between synthetic and real data requires considering:
 5. **Regulatory Environment**: Compliance and audit requirements
 
 *The future of AI training isn't about choosing synthetic or real data—it's about combining them intelligently.*`,
-        tags: ['Synthetic Data', 'AI Training', 'Data Strategy'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
-      }
-    ]
-    
-- **Social interactions** through digital platforms
-- **Information consumption** through algorithms
-- **Work and creativity** in virtual environments
-- **Entertainment** in simulated worlds
-
-## The Brain's Interpretation
-
-Neuroscience tells us that all experience is fundamentally the brain's interpretation of electrical signals:
-
-### Sensory Processing
-- Light waves become vision
-- Sound waves become hearing
-- Chemical compounds become taste and smell
-- Pressure becomes touch
-
-### Memory and Meaning
-- Past experiences shape present perception
-- Context influences interpretation
-- Emotions color our understanding of reality
-
-## AI and Simulated Experience
-
-As artificial intelligence becomes more sophisticated, we face new questions:
-
-- **Virtual Reality**: Immersive experiences that feel completely real
-- **AI Companions**: Relationships with non-human entities
-- **Generated Content**: Art, music, and writing created by machines
-- **Augmented Reality**: Digital overlays on physical reality
-
-## Living in Multiple Realities
-
-Perhaps the question isn't what is "real" but rather:
-
-1. **Which realities matter?** What experiences contribute to our growth and happiness?
-2. **How do we maintain agency?** How do we choose which realities to engage with?
-3. **What defines authentic experience?** Is it the source or the impact on our consciousness?
-4. **How do we stay grounded?** What anchors us when everything can be simulated?
-
-*In a world where reality is increasingly constructed, perhaps the most real thing is our capacity to choose what to pay attention to.*`,
-        tags: ['Philosophy', 'Reality', 'Consciousness', 'AI'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
-      },
-      {
-        title: 'The AI revolution is upon us. So why is everyone so glum?',
-        excerpt: 'Exploring the disconnect between AI\'s transformative potential and widespread pessimism about technological progress.',
-        content: `# The AI revolution is upon us. So why is everyone so glum?
+  tags: ['Synthetic Data', 'AI Training', 'Data Strategy'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/f879650ab2636bc07463162dfcc68d5b.jpg',
+},
+{
+  title: 'The AI revolution is upon us. So why is everyone so glum?',
+  excerpt: 'Exploring the disconnect between AI\'s transformative potential and widespread pessimism about technological progress.',
+  content: `# The AI revolution is upon us. So why is everyone so glum?
 
 **An examination of the paradox between unprecedented technological advancement and societal pessimism.**
 
@@ -652,118 +479,15 @@ We can choose to focus on:
 - **Curiosity and engagement** → Better outcomes, shared benefits
 
 *The AI revolution is upon us. Whether we're glum about it is up to us.*`,
-        tags: ['AI Revolution', 'Technology', 'Society', 'Optimism'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/1bb76e5ef6679ef24c4951efaf1e0e4f.jpg',
-      },
-      {
-        title: 'We are what we pretend to be',
-        excerpt: 'A reflection on identity, authenticity, and the power of conscious choice in shaping who we become.',
-        content: `# We are what we pretend to be
-
-**So we must be careful about what we pretend to be.**
-
-> *"We are what we pretend to be, so we must be careful about what we pretend to be."*
-> 
-> — Kurt Vonnegut
-
-## The Power of Pretending
-
-This seemingly simple observation contains profound wisdom about human nature and personal development. When we "pretend" to be something, we often become it.
-
-## Identity as Performance
-
-### Daily Choices
-Every day, we choose how to present ourselves:
-- **Professional identity**: The competent expert at work
-- **Social roles**: The caring friend, the supportive family member  
-- **Digital personas**: Our carefully curated online selves
-- **Internal narrative**: How we speak to ourselves
-
-### The Feedback Loop
-Our performances shape our reality:
-1. **We act** according to a chosen identity
-2. **Others respond** to our performance
-3. **We internalize** their responses
-4. **Our self-concept evolves** based on these interactions
-
-## The Authenticity Paradox
-
-### What is "Real"?
-- Is our "authentic self" the unfiltered, unthinking version?
-- Or is it the consciously chosen, intentionally crafted version?
-- Perhaps authenticity is about **conscious choice** rather than spontaneous expression
-
-### Constructive Pretending
-Some forms of "pretending" are deeply beneficial:
-- **Confidence before competence**: Acting confident until you become confident
-- **Kindness as practice**: Choosing kindness until it becomes natural
-- **Growth mindset**: Believing in your ability to improve
-- **Professional development**: Growing into roles through practice
-
-## Modern Applications
-
-### Digital Identity
-In our online world, this principle is more relevant than ever:
-- **Social media personas**: The curated self we share
-- **Professional networks**: How we present our expertise
-- **Avatar worlds**: Digital representations of who we want to be
-
-### AI and Identity
-As we interact more with AI systems:
-- **Prompt engineering**: How we describe ourselves to AI affects our self-perception
-- **AI assistance**: The capabilities we access shape our sense of possibility
-- **Virtual collaboration**: Working alongside AI changes our professional identity
-
-## The Responsibility
-
-### Conscious Curation
-If we become what we pretend to be, then we have a responsibility to:
-- **Choose wisely** what we practice being
-- **Model positively** for those who observe us
-- **Grow intentionally** rather than accidentally
-- **Align actions** with our deepest values
-
-### Individual Impact
-Our "pretending" affects:
-- **Personal growth**: The direction of our own development
-- **Relationships**: How others learn to interact with us
-- **Communities**: The culture we help create
-- **Future generations**: The example we set
-
-### Collective Responsibility
-On a societal level:
-- **Cultural norms** emerge from collective "pretending"
-- **Professional standards** develop through shared performance
-- **Social progress** happens when we pretend a better world is possible
-
-## Living Intentionally
-
-### Daily Practice
-- **Morning intention**: Who do you choose to be today?
-- **Moment-to-moment awareness**: Is this action aligned with who you want to become?
-- **Evening reflection**: Did today's "pretending" move you toward your goals?
-
-### Long-term Vision
-- **Values clarification**: What qualities do you want to embody?
-- **Identity evolution**: How do you want to grow?
-- **Legacy consideration**: What example do you want to leave?
-
-## The Creative Act of Self
-
-Perhaps our greatest creative act is the conscious construction of our identity. We are all, in a sense, works of art in progress.
-
-*We are what we pretend to be. So let's pretend to be something wonderful.*`,
-        tags: ['Identity', 'Personal Growth', 'Philosophy', 'Authenticity'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
-      },
-      {
-        title: 'Education',
-        excerpt: 'Exploring the transformation of learning in the age of AI and digital technologies.',
-        content: `# Education
+  tags: ['AI Revolution', 'Technology', 'Society', 'Optimism'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
+},
+{
+  title: 'Education',
+  excerpt: 'Exploring the transformation of learning in the age of AI and digital technologies.',
+  content: `# Education
 
 **Rethinking learning for the age of artificial intelligence.**
 
@@ -879,15 +603,15 @@ In a rapidly changing world:
 Education must prepare students not just for the jobs that exist today, but for a world where the only constant is change.
 
 *The goal of education is not to create walking encyclopedias, but to develop thinking, creative, adaptable human beings who can thrive alongside artificial intelligence.*`,
-        tags: ['Education', 'AI', 'Learning', 'Future of Work'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
-      },
-      {
-        title: 'Art',
-        excerpt: 'The evolving relationship between human creativity and artificial intelligence in artistic expression.',
-        content: `# Art
+  tags: ['Education', 'AI', 'Learning', 'Future of Work'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
+},
+{
+  title: 'Art',
+  excerpt: 'The evolving relationship between human creativity and artificial intelligence in artistic expression.',
+  content: `# Art
 
 **Human creativity in the age of artificial intelligence.**
 
@@ -1007,15 +731,15 @@ The relationship between human creativity and AI is not competitive but collabor
 Art will continue to evolve as humans and AI learn to create together. The question isn't whether AI will replace human artists, but how human creativity will expand when augmented by artificial intelligence.
 
 *Art is the human soul speaking through whatever medium is available. AI is simply the newest brush in our creative toolkit.*`,
-        tags: ['Art', 'Creativity', 'AI', 'Human Expression'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/7f2ffb1cdd6559e882d41dd8d646a852.jpg',
-      },
-      {
-        title: 'Information',
-        excerpt: 'Navigating the challenges and opportunities of information abundance in the digital age.',
-        content: `# Information
+  tags: ['Art', 'Creativity', 'AI', 'Human Expression'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
+},
+{
+  title: 'Information',
+  excerpt: 'Navigating the challenges and opportunities of information abundance in the digital age.',
+  content: `# Information
 
 **Making sense of abundance in the age of infinite data.**
 
@@ -1162,59 +886,39 @@ With great access comes great responsibility:
 - **Preserving knowledge**: Contributing to the preservation of valuable information
 
 *Information is the raw material of wisdom. In an age of infinite information, our challenge is not access but transformation—turning data into understanding, and understanding into wise action.*`,
-        tags: ['Information', 'Digital Literacy', 'AI', 'Knowledge Management'],
-        author: 'Amir Jalali',
-        aiGenerated: false,
-        imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
-      }
-    ]
-    
-    // Map articles with estimated publication dates (in chronological order)
-    const articlesWithDates = [
-      // Latest: The Edge of Vibe Coding (most recent - December 2024)
-      { ...defaultArticles[0], publishedAt: '2024-12-15T10:00:00.000Z', readTime: '3 min read' },
-      // 4O Image Generation (November 2024)
-      { ...defaultArticles[1], publishedAt: '2024-11-20T10:00:00.000Z', readTime: '4 min read' },
-      // The ERA of VIBE CODING (October 2024)
-      { ...defaultArticles[2], publishedAt: '2024-10-15T10:00:00.000Z', readTime: '5 min read' },
-      // DeepSEEK (September 2024)
-      { ...defaultArticles[3], publishedAt: '2024-09-10T10:00:00.000Z', readTime: '3 min read' },
-      // REASONING MODELS (August 2024)
-      { ...defaultArticles[4], publishedAt: '2024-08-25T10:00:00.000Z', readTime: '4 min read' },
-      // CHAIN OF THOUGHT (August 2024)
-      { ...defaultArticles[5], publishedAt: '2024-08-05T10:00:00.000Z', readTime: '3 min read' },
-      // LLAMA3 and the era of abundant ai (July 2024)
-      { ...defaultArticles[6], publishedAt: '2024-07-15T10:00:00.000Z', readTime: '5 min read' },
-      // THE NEXT GREAT DATA CROP (June 2024)
-      { ...defaultArticles[7], publishedAt: '2024-06-20T10:00:00.000Z', readTime: '4 min read' },
-      // Are we our IDEAS? (May 2024)
-      { ...defaultArticles[8], publishedAt: '2024-05-10T10:00:00.000Z', readTime: '6 min read' },
-      // Synthetic Data vs 'Real' DATA (April 2024)
-      { ...defaultArticles[9], publishedAt: '2024-04-15T10:00:00.000Z', readTime: '5 min read' },
-      // What is real? How do you define "real"? (March 2024)
-      { ...defaultArticles[10], publishedAt: '2024-03-20T10:00:00.000Z', readTime: '4 min read' },
-      // The AI revolution is upon us. So why is everyone so glum? (February 2024)
-      { ...defaultArticles[11], publishedAt: '2024-02-25T10:00:00.000Z', readTime: '7 min read' },
-      // We are what we pretend to be (February 2024)
-      { ...defaultArticles[12], publishedAt: '2024-02-10T10:00:00.000Z', readTime: '3 min read' },
-      // Education (January 2024)
-      { ...defaultArticles[13], publishedAt: '2024-01-20T10:00:00.000Z', readTime: '8 min read' },
-      // Art (January 2024)
-      { ...defaultArticles[14], publishedAt: '2024-01-05T10:00:00.000Z', readTime: '6 min read' },
-      // Information (oldest - December 2023)
-      { ...defaultArticles[15], publishedAt: '2023-12-15T10:00:00.000Z', readTime: '9 min read' },
-    ]
-    
-    // Create articles with consistent IDs
-    const articlesToSave = articlesWithDates.map((article, index) => ({
-      ...article,
-      id: `article-${index + 1}` // Consistent IDs that won't change
-    }))
-    
-    try {
-      localStorage.setItem(ARTICLES_KEY, JSON.stringify(articlesToSave))
-    } catch (error) {
-      console.error('Error saving articles:', error)
-    }
-  }
+  tags: ['Information', 'Digital Literacy', 'AI', 'Knowledge Management'],
+  author: 'Amir Jalali',
+  aiGenerated: false,
+  imageUrl: '/images/thoughts/7f2ffb1cdd6559e882d41dd8d646a852.jpg',
 }
+];
+
+const articleMeta = [
+  { index: 0, publishedAt: '2025-01-15T10:00:00.000Z', readTime: '3 min read' },
+  { index: 1, publishedAt: '2025-01-10T10:00:00.000Z', readTime: '4 min read' },
+  { index: 2, publishedAt: '2025-01-05T10:00:00.000Z', readTime: '5 min read' },
+  { index: 3, publishedAt: '2024-12-20T10:00:00.000Z', readTime: '3 min read' },
+  { index: 4, publishedAt: '2024-12-15T10:00:00.000Z', readTime: '4 min read' },
+  { index: 5, publishedAt: '2024-11-25T10:00:00.000Z', readTime: '3 min read' },
+  { index: 6, publishedAt: '2024-10-15T10:00:00.000Z', readTime: '5 min read' },
+  { index: 7, publishedAt: '2024-09-20T10:00:00.000Z', readTime: '4 min read' },
+  { index: 8, publishedAt: '2024-08-10T10:00:00.000Z', readTime: '6 min read' },
+  { index: 9, publishedAt: '2024-07-15T10:00:00.000Z', readTime: '5 min read' },
+  { index: 10, publishedAt: '2024-06-20T10:00:00.000Z', readTime: '7 min read' },
+  { index: 11, publishedAt: '2024-05-25T10:00:00.000Z', readTime: '8 min read' },
+  { index: 12, publishedAt: '2024-04-20T10:00:00.000Z', readTime: '6 min read' },
+  { index: 13, publishedAt: '2024-03-15T10:00:00.000Z', readTime: '9 min read' },
+];
+
+export const articlesWithDates = articleMeta.map(({ index, publishedAt, readTime }) => ({
+  ...baseArticles[index],
+  publishedAt,
+  readTime,
+}));
+
+export const publishedArticles = [...articlesWithDates].reverse().map((article, index) => ({
+  ...article,
+  id: `article-${index + 1}`,
+}));
+
+export default publishedArticles;
