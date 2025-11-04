@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import LazyImage from '@/components/LazyImage'
 import type { Article } from '@/lib/articles'
-import type { TrendingTopic } from '@/lib/server/topics'
 
 const getImageUrl = (url: string | undefined) => {
   if (!url) return undefined
@@ -30,10 +29,9 @@ const cardVariants = {
 
 interface ThoughtsPageClientProps {
   articles: Article[]
-  topics?: TrendingTopic[]
 }
 
-export default function ThoughtsPageClient({ articles, topics = [] }: ThoughtsPageClientProps) {
+export default function ThoughtsPageClient({ articles }: ThoughtsPageClientProps) {
   const sortedArticles = useMemo(
     () =>
       [...articles].sort(
@@ -41,8 +39,6 @@ export default function ThoughtsPageClient({ articles, topics = [] }: ThoughtsPa
       ),
     [articles]
   )
-
-  const [featuredArticle, ...remainingArticles] = sortedArticles
 
   return (
     <div className="min-h-screen relative">
@@ -63,111 +59,13 @@ export default function ThoughtsPageClient({ articles, topics = [] }: ThoughtsPa
           </p>
         </motion.div>
 
-        {topics.length > 0 && (
-          <motion.section
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
-          >
-            <div className="glass border border-border/80 rounded-3xl p-6 md:p-8 backdrop-blur">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                <div>
-                  <p className="text-sm text-muted-foreground uppercase tracking-[0.3em]">
-                    Today&apos;s Signals
-                  </p>
-                  <h2 className="text-2xl md:text-3xl font-semibold mt-2">
-                    Headlines shaping the AI landscape right now
-                  </h2>
-                </div>
-                <span className="text-xs text-muted-foreground">
-                  Sourced from industry feeds &nbsp;•&nbsp; Updated daily
-                </span>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {topics.slice(0, 6).map((topic) => (
-                  <a
-                    key={`${topic.topic}-${topic.url}`}
-                    href={topic.url ?? '#'}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group relative overflow-hidden rounded-2xl border border-border/60 bg-background/60 p-4 hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-colors"
-                  >
-                    <div className="flex items-center justify-between text-xs text-muted-foreground uppercase tracking-wide">
-                      <span>{topic.source ?? 'Trend'}</span>
-                      {typeof topic.score === 'number' && (
-                        <span className="font-mono text-ai-teal dark:text-ai-green">
-                          {topic.score}
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-2 text-base font-medium leading-6 group-hover:text-gradient transition-colors">
-                      {topic.topic || topic.originalTitle}
-                    </p>
-                    {topic.fetchedAt && (
-                      <p className="mt-3 text-xs text-muted-foreground">
-                        {new Date(topic.fetchedAt).toLocaleString(undefined, {
-                          month: 'short',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </p>
-                    )}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </motion.section>
-        )}
-
-        {featuredArticle && (
-          <motion.section
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
-          >
-            <Link href={`/thoughts/${featuredArticle.id}`} className="group block">
-              <div className="relative overflow-hidden rounded-[32px] border border-border/70 hover:border-ai-teal/40 dark:hover:border-ai-green/40 transition-all">
-                <div className="relative h-[420px] md:h-[480px] lg:h-[520px]">
-                  {featuredArticle.imageUrl && (
-                    <LazyImage
-                      src={getImageUrl(featuredArticle.imageUrl) || ''}
-                      alt={featuredArticle.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      wrapperClassName="w-full h-full"
-                      aspectRatio="wide"
-                      placeholder="skeleton"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                </div>
-                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-white/70 uppercase tracking-[0.3em] mb-6">
-                    <span>Feature</span>
-                    <span>•</span>
-                    <span>{new Date(featuredArticle.publishedAt).toLocaleDateString()}</span>
-                    <span>•</span>
-                    <span>{featuredArticle.readTime}</span>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-space font-semibold text-white leading-tight mb-4 max-w-3xl">
-                    {featuredArticle.title}
-                  </h2>
-                  <p className="text-base md:text-lg text-white/80 max-w-2xl">
-                    {featuredArticle.excerpt}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </motion.section>
-        )}
-
         <motion.div
           variants={gridVariants}
           initial="hidden"
           animate="show"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {remainingArticles.map((article) => (
+          {sortedArticles.map((article) => (
             <motion.div
               key={article.id}
               variants={cardVariants}
