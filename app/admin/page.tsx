@@ -27,7 +27,6 @@ import {
   Edit,
   Copy,
   Search,
-  Filter,
   Upload,
   CheckSquare,
   Square

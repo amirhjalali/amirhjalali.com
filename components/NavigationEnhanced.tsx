@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import {
   Sheet,
@@ -11,31 +11,8 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
-} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import {
-  Home,
-  FolderOpen,
-  FileText,
-  Brain,
-  Cpu,
-  FileUser,
-  BookOpen,
-  Mail,
-  Menu,
-  ChevronDown,
-  X,
-  Zap,
-  Code,
-  Palette,
-} from 'lucide-react'
+import { FolderOpen, Brain, FileUser, Mail, Menu } from 'lucide-react'
 import { ThemeToggle } from '@/components/ThemeToggle'
 
 const navItems = [

@@ -44,7 +44,7 @@ export default function NewsletterSignup({
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(_values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     
     try {
@@ -64,7 +64,7 @@ export default function NewsletterSignup({
         form.reset()
         setIsSuccess(false)
       }, 3000)
-    } catch (error) {
+    } catch {
       // Newsletter signup error
       setIsSubmitting(false)
     }

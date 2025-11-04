@@ -43,7 +43,7 @@ export default function VoiceRecorder({
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       stream.getTracks().forEach(track => track.stop())
       setPermissionGranted(true)
-    } catch (error) {
+    } catch {
       setPermissionGranted(false)
     }
   }

@@ -2,10 +2,8 @@
 
 import Link from 'next/link'
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
-import { useEffect, useState } from 'react'
-import { Sparkles, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
-import { RippleButton } from '@/components/ui/ripple-button'
-import { MagneticWrapper } from '@/components/ui/magnetic-wrapper'
+import { useEffect } from 'react'
+import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 
 const NameDisplay = () => {
   return (
@@ -40,7 +38,6 @@ const FloatingOrb = ({ delay = 0 }: { delay?: number }) => {
 }
 
 export default function HeroEnhanced() {
-  const [particlesLoaded, setParticlesLoaded] = useState(false)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
@@ -54,8 +51,6 @@ export default function HeroEnhanced() {
   })
 
   useEffect(() => {
-    setParticlesLoaded(true)
-
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)

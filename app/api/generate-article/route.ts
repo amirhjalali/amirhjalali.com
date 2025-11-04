@@ -5,10 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
  * This keeps the OpenAI API key secure and never exposed to the client
  */
 
-interface GenerationProgress {
-  step: string;
-}
-
 // Topics for article generation
 const TOPICS = [
   'AI and creativity',

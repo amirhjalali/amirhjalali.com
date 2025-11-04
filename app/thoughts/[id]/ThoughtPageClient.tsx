@@ -38,7 +38,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
       await initializeDrafts()
 
       // Try to load as published article first, then as draft
-      let loadedArticle = getArticleById(id) || getDraftArticleById(id)
+      const loadedArticle = getArticleById(id) || getDraftArticleById(id)
 
       if (loadedArticle) {
         setArticle(loadedArticle)

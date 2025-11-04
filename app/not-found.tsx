@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
@@ -15,7 +15,6 @@ import ThoughtPageClient from './thoughts/[id]/ThoughtPageClient'
 
 export default function NotFound() {
   const pathname = usePathname()
-  const router = useRouter()
   const [checking, setChecking] = useState(true)
   const [article, setArticle] = useState<Article | null>(null)
 

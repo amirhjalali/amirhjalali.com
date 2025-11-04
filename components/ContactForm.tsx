@@ -90,7 +90,7 @@ export default function ContactForm() {
         form.reset()
         setIsSuccess(false)
       }, 3000)
-    } catch (error) {
+    } catch {
       // Form submission error
       setIsSubmitting(false)
     }
