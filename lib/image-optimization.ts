@@ -18,7 +18,6 @@ export const getOptimizedImageUrl = (
     format,
     width,
     height,
-    lazy = true,
   } = options;
 
   const params = new URLSearchParams();

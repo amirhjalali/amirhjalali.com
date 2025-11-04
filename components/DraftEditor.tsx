@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Save, X, Eye, Download, Upload, Copy, BarChart3, Undo, Redo } from 'lucide-react'
+import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo } from 'lucide-react'
 import { type Article, updateDraftArticle } from '@/lib/articles'
 
 interface DraftEditorProps {
@@ -19,102 +19,51 @@ export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps
   const [historyIndex, setHistoryIndex] = useState(0)
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
 
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd/Ctrl + S to save
-      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
-        e.preventDefault()
-        if (hasChanges) handleSave(false)
-      }
-      // Cmd/Ctrl + Z to undo
-      if ((e.metaKey || e.ctrlKey) && e.key === 'z' && !e.shiftKey) {
-        e.preventDefault()
-        handleUndo()
-      }
-      // Cmd/Ctrl + Shift + Z to redo
-      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'z') {
-        e.preventDefault()
-        handleRedo()
-      }
-      // Escape to close
-      if (e.key === 'Escape') {
-        if (!hasChanges || confirm('You have unsaved changes. Close anyway?')) {
-          onClose()
-        }
-      }
-    }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [hasChanges, historyIndex])
-
-  // Track changes
-  useEffect(() => {
-    const changed = JSON.stringify(editedDraft) !== JSON.stringify(draft)
-    setHasChanges(changed)
-
-    // Auto-save after 2 seconds of inactivity
-    if (changed && autoSaveTimer) {
-      clearTimeout(autoSaveTimer)
-    }
-
-    if (changed) {
-      const timer = setTimeout(() => {
-        handleSave(true)
-      }, 2000)
-      setAutoSaveTimer(timer)
-    }
-
-    return () => {
-      if (autoSaveTimer) clearTimeout(autoSaveTimer)
-    }
-  }, [editedDraft])
-
-  // Calculate statistics
-  const stats = {
-    wordCount: editedDraft.content.trim().split(/\s+/).length,
-    charCount: editedDraft.content.length,
-    charCountNoSpaces: editedDraft.content.replace(/\s/g, '').length,
-    readTime: `${Math.ceil(editedDraft.content.trim().split(/\s+/).length / 200)} min read`
-  }
-
-  const handleSave = (isAutoSave = false) => {
+  const handleSave = useCallback((isAutoSave = false) => {
     updateDraftArticle(editedDraft.id, editedDraft)
     setHasChanges(false)
     if (!isAutoSave) {
       onSave()
     }
-  }
+  }, [editedDraft, onSave])
 
-  const handleUndo = () => {
-    if (historyIndex > 0) {
-      const newIndex = historyIndex - 1
-      setHistoryIndex(newIndex)
-      setEditedDraft(history[newIndex])
-    }
-  }
+  const handleUndo = useCallback(() => {
+    setHistoryIndex((prevIndex) => {
+      if (prevIndex > 0) {
+        const newIndex = prevIndex - 1
+        setEditedDraft(history[newIndex])
+        return newIndex
+      }
+      return prevIndex
+    })
+  }, [history])
 
-  const handleRedo = () => {
-    if (historyIndex < history.length - 1) {
-      const newIndex = historyIndex + 1
-      setHistoryIndex(newIndex)
-      setEditedDraft(history[newIndex])
-    }
-  }
+  const handleRedo = useCallback(() => {
+    setHistoryIndex((prevIndex) => {
+      if (prevIndex < history.length - 1) {
+        const newIndex = prevIndex + 1
+        setEditedDraft(history[newIndex])
+        return newIndex
+      }
+      return prevIndex
+    })
+  }, [history])
 
-  const addToHistory = (newDraft: Article) => {
-    const newHistory = history.slice(0, historyIndex + 1)
-    newHistory.push(newDraft)
-    setHistory(newHistory)
-    setHistoryIndex(newHistory.length - 1)
-  }
+  const addToHistory = useCallback((newDraft: Article) => {
+    setHistory((prevHistory) => {
+      const nextHistory = prevHistory.slice(0, historyIndex + 1)
+      nextHistory.push(newDraft)
+      return nextHistory
+    })
+    setHistoryIndex((prevIndex) => prevIndex + 1)
+  }, [historyIndex])
 
-  const handleFieldChange = (field: keyof Article, value: any) => {
+  const handleFieldChange = useCallback((field: keyof Article, value: any) => {
     const newDraft = { ...editedDraft, [field]: value }
     setEditedDraft(newDraft)
     addToHistory(newDraft)
-  }
+  }, [editedDraft, addToHistory])
 
   const handleTagAdd = (tag: string) => {
     if (tag.trim() && !editedDraft.tags.includes(tag.trim())) {
@@ -156,6 +105,58 @@ ${editedDraft.content}`
       }
       reader.readAsDataURL(file)
     }
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault()
+        if (hasChanges) handleSave(false)
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault()
+        handleUndo()
+      }
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'z') {
+        e.preventDefault()
+        handleRedo()
+      }
+      if (e.key === 'Escape') {
+        if (!hasChanges || confirm('You have unsaved changes. Close anyway?')) {
+          onClose()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [hasChanges, handleSave, handleUndo, handleRedo, onClose])
+
+  useEffect(() => {
+    const changed = JSON.stringify(editedDraft) !== JSON.stringify(draft)
+    setHasChanges(changed)
+
+    if (changed && autoSaveTimer) {
+      clearTimeout(autoSaveTimer)
+    }
+
+    if (changed) {
+      const timer = setTimeout(() => {
+        handleSave(true)
+      }, 2000)
+      setAutoSaveTimer(timer)
+    }
+
+    return () => {
+      if (autoSaveTimer) clearTimeout(autoSaveTimer)
+    }
+  }, [editedDraft, autoSaveTimer, draft, handleSave])
+
+  const stats = {
+    wordCount: editedDraft.content.trim().split(/\s+/).length,
+    charCount: editedDraft.content.length,
+    charCountNoSpaces: editedDraft.content.replace(/\s/g, '').length,
+    readTime: `${Math.ceil(editedDraft.content.trim().split(/\s+/).length / 200)} min read`
   }
 
   return (

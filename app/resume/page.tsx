@@ -343,7 +343,7 @@ export default function ResumePage() {
               {/* Timeline line */}
               <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-ai-green via-ai-blue to-transparent"></div>
               
-              {filteredExperience.map((exp, index) => (
+              {filteredExperience.map((exp, _index) => (
                 <motion.div
                   key={exp.id}
                   variants={item}

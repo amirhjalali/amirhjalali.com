@@ -96,7 +96,7 @@ Format the response as a JSON object with:
 
   try {
     return JSON.parse(data.choices[0].message.content);
-  } catch (error) {
+  } catch {
     throw new Error('Failed to parse article content from API response');
   }
 }

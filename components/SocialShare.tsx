@@ -16,7 +16,7 @@ interface SocialShareProps {
 export default function SocialShare({
   url,
   title,
-  description = '',
+  description: _description = '',
   className = ''
 }: SocialShareProps) {
   const [copied, setCopied] = useState(false)
@@ -51,8 +51,8 @@ export default function SocialShare({
       await navigator.clipboard.writeText(shareUrl)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      console.error('Failed to copy:', err)
+    } catch (error) {
+      console.error('Failed to copy:', error)
     }
   }
 

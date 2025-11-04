@@ -32,7 +32,7 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
           },
           body: JSON.stringify({})
         });
-      } catch (fetchError: any) {
+      } catch {
         // Network error or fetch failed
         throw new Error(
           'API route not available.\n\n' +
@@ -95,12 +95,9 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
       let result;
       try {
         result = await response.json();
-      } catch (parseError) {
+      } catch {
         throw new Error('Invalid response from server. API routes may not be available on this deployment.');
       }
-
-      // Calculate read time
-      const readTime = `${Math.ceil(result.wordCount / 200)} min read`;
 
       // Save as draft
       setProgress('Saving draft...');
