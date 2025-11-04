@@ -51,6 +51,19 @@ const config = {
   ]
 };
 
+function normalizeTopic(topic) {
+  return topic ? topic.toLowerCase().trim() : '';
+}
+
+function getRandomTopic(usedTopics = new Set()) {
+  const available = config.topics.filter(
+    (topic) => !usedTopics.has(normalizeTopic(topic))
+  );
+
+  const pool = available.length > 0 ? available : config.topics;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
 // Helper function to make API requests
 function makeRequest(options, postData) {
   return new Promise((resolve, reject) => {
@@ -356,7 +369,7 @@ function saveDrafts(drafts) {
 }
 
 // Get topic from queue or fallback to random
-function getTopicFromQueue() {
+function getTopicFromQueue(usedTopics = new Set()) {
   const queueFile = path.join(__dirname, '../public/data/topics-queue.json');
 
   // Check if queue file exists
@@ -365,16 +378,26 @@ function getTopicFromQueue() {
       const queue = JSON.parse(fs.readFileSync(queueFile, 'utf8'));
 
       if (queue.topics && queue.topics.length > 0) {
-        // Get the first (highest scored) topic
-        const topicData = queue.topics[0];
+        while (queue.topics.length > 0) {
+          const topicData = queue.topics.shift();
+          const normalized = normalizeTopic(topicData.topic);
 
-        // Remove it from the queue
-        queue.topics.shift();
+          if (normalized && usedTopics.has(normalized)) {
+            console.log(
+              `⚠️  Skipping queued topic "${topicData.topic}" (already drafted)`
+            );
+            continue;
+          }
+
+          fs.writeFileSync(queueFile, JSON.stringify(queue, null, 2));
+
+          console.log(`📋 Using topic from queue (${queue.topics.length} remaining)`);
+          console.log(`   Source: ${topicData.source}`);
+          return topicData.topic;
+        }
+
+        // All queued topics were duplicates; persist the emptied queue
         fs.writeFileSync(queueFile, JSON.stringify(queue, null, 2));
-
-        console.log(`📋 Using topic from queue (${queue.topics.length} remaining)`);
-        console.log(`   Source: ${topicData.source}`);
-        return topicData.topic;
       }
     } catch (e) {
       console.warn('⚠️  Could not read topics queue, using random topic');
@@ -382,15 +405,31 @@ function getTopicFromQueue() {
   }
 
   // Fallback to random topic
+  const topic = getRandomTopic(usedTopics);
   console.log('📋 Using random topic from predefined list');
-  return config.topics[Math.floor(Math.random() * config.topics.length)];
+  return topic;
 }
 
 // Main function
 async function main() {
   try {
-    // Get topic from command line, queue, or pick random
-    const topic = process.argv[2] || getTopicFromQueue();
+    const drafts = loadDrafts();
+    const usedTopics = new Set(
+      drafts
+        .map((draft) => normalizeTopic(draft.metadata?.topic || draft.title))
+        .filter(Boolean)
+    );
+
+    let topic = process.argv[2];
+    if (!topic) {
+      topic = getTopicFromQueue(usedTopics);
+      if (!topic) {
+        console.error('❌ No topics available to generate.');
+        return;
+      }
+    }
+
+    usedTopics.add(normalizeTopic(topic));
 
     console.log(`\n📝 Generating article about: "${topic}"\n`);
 
@@ -456,8 +495,6 @@ async function main() {
     console.log(`\nContent Preview:\n${article.content.substring(0, 300)}...\n`);
     console.log('='.repeat(80));
 
-    // Load existing drafts
-    const drafts = loadDrafts();
     console.log(`\nExisting drafts: ${drafts.length}`);
 
     // Check for duplicates before adding
