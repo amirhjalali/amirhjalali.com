@@ -12,8 +12,8 @@ interface ThoughtPageParams {
   id: string
 }
 
-export default async function ThoughtPage({ params }: { params: ThoughtPageParams }) {
-  const { id } = params
+export default async function ThoughtPage({ params }: { params: Promise<ThoughtPageParams> }) {
+  const { id } = await params
   const article = await getPublishedArticleById(id)
 
   if (!article) {
