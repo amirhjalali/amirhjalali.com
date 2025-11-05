@@ -55,6 +55,7 @@ jobs:
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          NEXT_PUBLIC_ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
           NEXT_PUBLIC_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           NEXT_PUBLIC_BASE_PATH: /amirhjalali.com
           # Note: OPENAI_API_KEY intentionally NOT included here
