@@ -32,6 +32,7 @@ import {
   Square
 } from 'lucide-react'
 import DraftEditor from '@/components/DraftEditor'
+import PublishSync from '@/components/PublishSync'
 
 export default function AdminDashboard() {
   const { user, loading, logout } = useAuth(true)
@@ -243,6 +244,9 @@ export default function AdminDashboard() {
             Logout
           </button>
         </div>
+
+        {/* Publish Sync Warning */}
+        <PublishSync />
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
