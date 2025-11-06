@@ -1,8 +1,8 @@
 export const baseArticles = [
 {
-  title: 'THE EDGE OF VIBE CODING',
+  title: 'The Edge of Vibe Coding',
   excerpt: 'A few months back, I wrote about the promise of vibe coding. Now, 2.5 months into practicing it daily, I still believe the nature of programming has shifted. But I\'m also seeing the current limits more clearly.',
-  content: `# THE EDGE OF VIBE CODING
+  content: `# The Edge of Vibe Coding
 
 A few months back, I wrote about the promise of vibe coding. Now, 2.5 months into practicing it daily, I still believe the nature of programming has shifted. But I'm also seeing the current limits more clearly.
 
@@ -17,9 +17,9 @@ Keep it local as long as possible. That's where vibe coding still flows.`,
   imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
 },
 {
-  title: '4O image generation',
+  title: 'GPT-4o Image Generation',
   excerpt: 'Open AI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is multimodal-native and non-diffusion-based.',
-  content: `# 4O image generation
+  content: `# GPT-4o Image Generation
 
 Open AI recently released their 4o image generation model. GPT-4o image model differs from previous diffusion models in that it is:
 
@@ -40,9 +40,9 @@ This has led to a giant step up in usability of this model. The long prompts of 
   imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.jpg',
 },
 {
-  title: 'THE ERA OF VIBE CODING',
+  title: 'The Era of Vibe Coding',
   excerpt: 'Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.',
-  content: `# THE ERA OF VIBE CODING
+  content: `# The Era of Vibe Coding
 
 Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMS, without actually writing any of the code yourself.
 
@@ -57,9 +57,9 @@ Vibe Coding in 2025 will do to software what MidJourney has done for image gener
   imageUrl: '/images/thoughts/TheEraOfVibeCoding.jpg',
 },
 {
-  title: 'DeepSEEK',
+  title: 'DeepSeek',
   excerpt: 'DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces.',
-  content: `# DeepSEEK
+  content: `# DeepSeek
 
 DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces. Unlike many large-scale models that require massive computational resources, DeepSeek has managed to develop a model on par with OpenAI's leading systems at a fraction of the cost. This efficiency makes high-performance AI more accessible, opening doors for businesses, researchers, and developers who previously faced prohibitive expenses when integrating advanced AI into their work.
 
@@ -72,9 +72,9 @@ The immediate takeaway is that many use cases that were not deemed viable just r
   imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
 },
 {
-  title: 'REASONING MODELS',
+  title: 'Reasoning Models',
   excerpt: 'Chain of Thought (CoT) prompting has already proven to be a powerful method for improving the reasoning capabilities of large language models by breaking down complex problems into intermediate logical steps.',
-  content: `# REASONING MODELS
+  content: `# Reasoning Models
 
 Chain of Thought (CoT) prompting has already proven to be a powerful method for improving the reasoning capabilities of large language models (LLMs) by breaking down complex problems into intermediate logical steps. This approach not only enhances accuracy but also makes AI decision-making more transparent and interpretable.
 
@@ -89,9 +89,9 @@ The concept of Test-Time Compute (TTC) allows AI more processing time to refine 
   imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
 },
 {
-  title: 'CHAIN OF THOUGHT',
+  title: 'Chain of Thought',
   excerpt: 'Chain of Thought (CoT) is a prompting technique that guides language models to solve complex problems by breaking them down into intermediate reasoning steps.',
-  content: `# CHAIN OF THOUGHT
+  content: `# Chain of Thought
 
 Chain of Thought (CoT) is a prompting technique that guides language models to solve complex problems by breaking them down into intermediate reasoning steps. This approach improves AI accuracy by providing structured logical deduction and makes AI decision-making more transparent and interpretable.
 
@@ -104,11 +104,11 @@ This pedagogical approach to AI interaction represents a shift toward more colla
   imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
 },
 {
-  title: 'LLAMA3 and the era of abundant ai',
-  excerpt: 'The release of Meta\'s LLAMA3 represents a potential democratization of AI intelligence, dramatically lowering computational costs and increasing accessibility.',
-  content: `# LLAMA3 and the era of abundant ai
+  title: 'LLaMA 3 and the Era of Abundant AI',
+  excerpt: 'The release of Meta\'s LLaMA 3 represents a potential democratization of AI intelligence, dramatically lowering computational costs and increasing accessibility.',
+  content: `# LLaMA 3 and the Era of Abundant AI
 
-The release of Meta's LLAMA3 represents a potential democratization of AI intelligence, dramatically lowering computational costs and increasing accessibility of high-performance AI. This shift presents both tremendous opportunities and significant risks for society.
+The release of Meta's LLaMA 3 represents a potential democratization of AI intelligence, dramatically lowering computational costs and increasing accessibility of high-performance AI. This shift presents both tremendous opportunities and significant risks for society.
 
 The accessibility of advanced AI technology could either leverage the decency in humanity, empowering creativity, education, and problem-solving across all sectors, or magnify the evil capacity of our species through misuse and malicious applications.
 
@@ -119,7 +119,7 @@ As we enter this era of abundant artificial intelligence, the question becomes n
   imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
 },
 {
-  title: 'THE NEXT GREAT DATA CROP',
+  title: 'The Next Great Data Crop',
   excerpt: 'Exploring personal data value and AI training quality concerns, including bot-generated content diluting data quality and economic models.',
   content: `# The Next Great Data Crop
 
@@ -191,7 +191,7 @@ The data landscape is evolving toward:
   imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
 },
 {
-  title: 'Are we our IDEAS?',
+  title: 'Are We Our Ideas?',
   excerpt: 'A philosophical exploration of identity, creativity, and the relationship between our thoughts and our sense of self.',
   content: `# Are We Our Ideas?
 
@@ -279,9 +279,9 @@ Perhaps the answer lies not in resolution but in the questioning itself:
   imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
 },
 {
-  title: 'Synthetic Data vs "Real" DATA',
+  title: 'Synthetic Data vs Real Data',
   excerpt: 'Comparing synthetic and real data in AI training, exploring quality, authenticity, and the implications for model performance.',
-  content: `# Synthetic Data vs 'Real' Data
+  content: `# Synthetic Data vs Real Data
 
 The debate between **synthetic and real data** in AI training raises fundamental questions about quality, authenticity, and model performance.
 
