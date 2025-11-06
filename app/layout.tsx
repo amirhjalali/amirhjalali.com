@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     template: '%s | Amir H. Jalali'
   },
-  manifest: '/manifest.webmanifest',
+  manifest: '/amirhjalali.com/manifest.json',
   description: 'Generative AI consultant with 14 years experience in Data Warehousing, Business Intelligence, and AI Strategy. Currently CTO at AVENU AI. Specializing in LLMs, prompt engineering, and AI-driven solutions.',
   keywords: [
     'Amir Jalali',
@@ -91,10 +91,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
-        <meta name="theme-color" content="#00FF88" />
+        <link rel="manifest" href="/amirhjalali.com/manifest.json" />
+        <link rel="icon" href="/amirhjalali.com/favicon.ico" />
+        <link rel="apple-touch-icon" href="/amirhjalali.com/icon-192.png" />
+        <meta name="theme-color" content="#00CED1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
