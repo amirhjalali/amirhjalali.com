@@ -40,13 +40,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
-    url: 'https://amirhjalali.com',
+    url: 'https://amirhjalali.github.io/amirhjalali.com',
     siteName: 'Amir H. Jalali',
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: 'https://amirhjalali.com/og-image.png',
+        url: 'https://amirhjalali.github.io/amirhjalali.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
-    images: ['https://amirhjalali.com/og-image.png'],
+    images: ['https://amirhjalali.github.io/amirhjalali.com/og-image.png'],
     creator: '@amirhjalali',
     site: '@amirhjalali',
   },
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   alternates: {
-    canonical: 'https://amirhjalali.com',
+    canonical: 'https://amirhjalali.github.io/amirhjalali.com',
   },
 }
 
