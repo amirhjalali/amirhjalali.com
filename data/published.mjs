@@ -44,7 +44,7 @@ This has led to a giant step up in usability of this model. The long prompts of 
   excerpt: 'Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.',
   content: `# The Era of Vibe Coding
 
-Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMS, without actually writing any of the code yourself.
+Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself.
 
 As the videos below demonstrate, this is not something that is just for a junior programmer. Many seasoned programmers are moving over to this paradigm as the efficiency gains are just incomparable to writing code by themselves.
 
