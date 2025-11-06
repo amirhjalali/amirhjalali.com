@@ -12,7 +12,7 @@ Right now, the best move is to delay database integration. In the early stages, 
 
 Keep it local as long as possible. That's where vibe coding still flows.`,
   tags: ['Vibe Coding', 'AI Programming', 'Development'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
 },
@@ -35,7 +35,7 @@ This has led to a giant step up in usability of this model. The long prompts of 
 <img src="/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.jpg" alt="Of immortality" class="gallery-image" />
 </div>`,
   tags: ['OpenAI', 'Image Generation', 'GPT-4o', 'Multimodal AI'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.jpg',
 },
@@ -52,7 +52,7 @@ As of current, a technical background and systems thinking is still helpful to g
 
 Vibe Coding in 2025 will do to software what MidJourney has done for image generation since 2023. Meaning there will be a massive amount of output, but getting to a final shippable product will still required tenacity and reliance on traditional skills.`,
   tags: ['Vibe Coding', 'LLMs', 'Programming Paradigm'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/TheEraOfVibeCoding.jpg',
 },
@@ -67,7 +67,7 @@ By dramatically lowering the cost of AI inference and training, DeepSeek-R1 coul
 
 The immediate takeaway is that many use cases that were not deemed viable just recently, are immediately much more feasible.`,
   tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
 },
@@ -84,7 +84,7 @@ By integrating reasoning models with CoT, we move toward AI systems that don't j
 
 The concept of Test-Time Compute (TTC) allows AI more processing time to refine reasoning during inference, optimizing processing depth rather than relying solely on model size.`,
   tags: ['Reasoning Models', 'Chain of Thought', 'AI Reliability'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
 },
@@ -99,7 +99,7 @@ The technique allows models to process complex queries more effectively and can 
 
 This pedagogical approach to AI interaction represents a shift toward more collaborative and understandable AI systems, where the reasoning process becomes as important as the final answer.`,
   tags: ['Chain of Thought', 'Problem Solving', 'AI Transparency'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
 },
@@ -114,7 +114,7 @@ The accessibility of advanced AI technology could either leverage the decency in
 
 As we enter this era of abundant artificial intelligence, the question becomes not whether we can build these systems, but whether we can build them responsibly and distribute their benefits equitably. The hope is that increased access to intelligence might contribute to increased wisdom in how we use it.`,
   tags: ['LLAMA3', 'AI Accessibility', 'Societal Impact'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
 },
@@ -186,7 +186,7 @@ The data landscape is evolving toward:
 
 *The next gold rush isn't for more data—it's for better data.*`,
   tags: ['Data Quality', 'AI Training', 'Economic Models'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
 },
@@ -274,7 +274,7 @@ Perhaps the answer lies not in resolution but in the questioning itself:
 
 *The question "Are we our ideas?" may be more important than any answer we could give.*`,
   tags: ['Philosophy', 'Identity', 'Creativity'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
 },
@@ -384,7 +384,7 @@ Choosing between synthetic and real data requires considering:
 
 *The future of AI training isn't about choosing synthetic or real data—it's about combining them intelligently.*`,
   tags: ['Synthetic Data', 'AI Training', 'Data Strategy'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/f879650ab2636bc07463162dfcc68d5b.jpg',
 },
@@ -480,7 +480,7 @@ We can choose to focus on:
 
 *The AI revolution is upon us. Whether we're glum about it is up to us.*`,
   tags: ['AI Revolution', 'Technology', 'Society', 'Optimism'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
 },
@@ -604,7 +604,7 @@ Education must prepare students not just for the jobs that exist today, but for 
 
 *The goal of education is not to create walking encyclopedias, but to develop thinking, creative, adaptable human beings who can thrive alongside artificial intelligence.*`,
   tags: ['Education', 'AI', 'Learning', 'Future of Work'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
 },
@@ -732,7 +732,7 @@ Art will continue to evolve as humans and AI learn to create together. The quest
 
 *Art is the human soul speaking through whatever medium is available. AI is simply the newest brush in our creative toolkit.*`,
   tags: ['Art', 'Creativity', 'AI', 'Human Expression'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
 },
@@ -887,7 +887,7 @@ With great access comes great responsibility:
 
 *Information is the raw material of wisdom. In an age of infinite information, our challenge is not access but transformation—turning data into understanding, and understanding into wise action.*`,
   tags: ['Information', 'Digital Literacy', 'AI', 'Knowledge Management'],
-  author: 'Amir Jalali',
+  author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/7f2ffb1cdd6559e882d41dd8d646a852.jpg',
 }
