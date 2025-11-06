@@ -11,7 +11,7 @@ The biggest friction point comes when a project needs to interact with external 
 Right now, the best move is to delay database integration. In the early stages, the data model needs to stay flexible. File-based formats like JSON work better and are easier for the LLM to navigate. Once you involve a real database, errors become more frequent and the process becomes much harder to manage.
 
 Keep it local as long as possible. That's where vibe coding still flows.`,
-  tags: ['Vibe Coding', 'AI Programming', 'Development'],
+  tags: ['Vibe Coding', 'AI', 'Programming', 'LLMs', 'Software Development'],
   author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
@@ -51,7 +51,7 @@ As the videos below demonstrate, this is not something that is just for a junior
 As of current, a technical background and systems thinking is still helpful to guide the development process. Nonetheless the difference between what it meant to be a programmer 2 years ago till today is quite whiplash inducing.
 
 Vibe Coding in 2025 will do to software what MidJourney has done for image generation since 2023. Meaning there will be a massive amount of output, but getting to a final shippable product will still required tenacity and reliance on traditional skills.`,
-  tags: ['Vibe Coding', 'LLMs', 'Programming Paradigm'],
+  tags: ['Vibe Coding', 'AI', 'Programming', 'LLMs', 'Software Development'],
   author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/TheEraOfVibeCoding.jpg',
@@ -66,7 +66,7 @@ DeepSeek-R1 represents a major breakthrough in AI development, not just for its 
 By dramatically lowering the cost of AI inference and training, DeepSeek-R1 could drive widespread adoption across industries, from healthcare and finance to education and creative fields. Companies that once relied on expensive proprietary models may now have access to open-source alternatives without compromising on quality. This shift not only democratizes AI but also increases competition, pushing the industry toward more sustainable and cost-effective innovation. If this trend continues, AI deployment could become significantly cheaper, leading to a future where high-quality AI assistance is a standard tool rather than a luxury reserved for the largest tech companies.
 
 The immediate takeaway is that many use cases that were not deemed viable just recently, are immediately much more feasible.`,
-  tags: ['DeepSEEK', 'Cost Reduction', 'AI Democratization'],
+  tags: ['DeepSeek', 'AI', 'Cost Reduction', 'Open Source', 'AI Democratization'],
   author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
@@ -98,7 +98,7 @@ Chain of Thought (CoT) is a prompting technique that guides language models to s
 The technique allows models to process complex queries more effectively and can help smaller models outperform larger ones through better reasoning. Rather than jumping directly to conclusions, CoT prompting encourages the AI to show its work, much like a student solving a math problem step by step.
 
 This pedagogical approach to AI interaction represents a shift toward more collaborative and understandable AI systems, where the reasoning process becomes as important as the final answer.`,
-  tags: ['Chain of Thought', 'Problem Solving', 'AI Transparency'],
+  tags: ['Chain of Thought', 'AI', 'LLMs', 'Reasoning', 'Prompt Engineering'],
   author: 'Amir H. Jalali',
   aiGenerated: false,
   imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
