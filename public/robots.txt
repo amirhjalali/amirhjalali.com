@@ -1,11 +1,11 @@
-# Robots.txt for amirhjalali.com
-# Allow all crawlers
+# robots.txt for amirhjalali.com
 
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://amirhjalali.com/sitemap.xml
+# Sitemaps
+Sitemap: https://amirhjalali.github.io/amirhjalali.com/sitemap.xml
 
-# Crawl-delay (optional - be respectful to crawlers)
-Crawl-delay: 1
+# Disallow admin areas
+Disallow: /admin
+Disallow: /api
