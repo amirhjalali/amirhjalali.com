@@ -8,14 +8,6 @@ const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin'
 const ADMIN_PASSWORD_HASH = process.env.NEXT_PUBLIC_ADMIN_PASSWORD_HASH || ''
 const ADMIN_PASSWORD_FALLBACK = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || ''
 
-// Debug logging (remove in production)
-console.log('Auth Debug:', {
-  username: ADMIN_USERNAME,
-  hasHash: !!ADMIN_PASSWORD_HASH,
-  hashLength: ADMIN_PASSWORD_HASH?.length,
-  hasFallback: !!ADMIN_PASSWORD_FALLBACK,
-})
-
 export interface AuthUser {
   username: string
   role: string
@@ -38,26 +30,12 @@ async function sha256(input: string): Promise<string> {
  * Verify admin credentials (client-side)
  */
 export async function verifyCredentials(username: string, password: string): Promise<boolean> {
-  console.log('Verify credentials called:', { username, passwordLength: password?.length })
-
-  if (!username || !password) {
-    console.log('Missing username or password')
-    return false
-  }
-
-  if (username !== ADMIN_USERNAME) {
-    console.log('Username mismatch:', { provided: username, expected: ADMIN_USERNAME })
-    return false
-  }
+  if (!username || !password) return false
+  if (username !== ADMIN_USERNAME) return false
 
   if (ADMIN_PASSWORD_HASH) {
     try {
       const hashedInput = await sha256(password)
-      console.log('Hash comparison:', {
-        inputHash: hashedInput,
-        expectedHash: ADMIN_PASSWORD_HASH,
-        match: hashedInput === ADMIN_PASSWORD_HASH
-      })
       return hashedInput === ADMIN_PASSWORD_HASH
     } catch (error) {
       console.error('Error hashing password for verification:', error)
@@ -66,13 +44,9 @@ export async function verifyCredentials(username: string, password: string): Pro
   }
 
   if (ADMIN_PASSWORD_FALLBACK) {
-    console.log('Using fallback password comparison')
-    const match = password === ADMIN_PASSWORD_FALLBACK
-    console.log('Fallback match:', match)
-    return match
+    return password === ADMIN_PASSWORD_FALLBACK
   }
 
-  console.log('No password hash or fallback configured')
   return false
 }
 
