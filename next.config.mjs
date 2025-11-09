@@ -1,14 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // DEPLOYMENT CHOICE:
-  //
-  // GitHub Pages (current): Static export, no API routes, button won't work
-  output: 'export',
-  basePath: '/amirhjalali.com',
-  //
-  // Vercel (recommended): Server-side API routes, button works securely
-  // To switch to Vercel: comment out the two lines above and deploy to Vercel
-  // basePath: '',
+  // VPS Deployment with Coolify
+  // Full Next.js features enabled including API routes
 
   poweredByHeader: false,
   reactStrictMode: true,
