@@ -1,6 +1,86 @@
 {
   "topics": [
     {
+      "topic": "Study identifies weaknesses in how AI systems are evaluated",
+      "originalTitle": "Study identifies weaknesses in how AI systems are evaluated",
+      "source": "Hacker News",
+      "url": "https://www.oii.ox.ac.uk/news-events/study-identifies-weaknesses-in-how-ai-systems-are-evaluated/",
+      "score": 380,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "Marko – A declarative, HTML‑based language",
+      "originalTitle": "Marko – A declarative, HTML‑based language",
+      "source": "Hacker News",
+      "url": "https://markojs.com/",
+      "score": 245,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "Largest cargo sailboat completes first Atlantic crossing",
+      "originalTitle": "Largest cargo sailboat completes first Atlantic crossing",
+      "source": "Hacker News",
+      "url": "https://www.marineinsight.com/shipping-news/worlds-largest-cargo-sailboat-completes-historic-first-atlantic-crossing/",
+      "score": 229,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "Cloudflare scrubs Aisuru botnet from top domains list",
+      "originalTitle": "Cloudflare scrubs Aisuru botnet from top domains list",
+      "source": "Hacker News",
+      "url": "https://krebsonsecurity.com/2025/11/cloudflare-scrubs-aisuru-botnet-from-top-domains-list/",
+      "score": 175,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "Control structures in programming languages: from goto to algebraic effects",
+      "originalTitle": "Control structures in programming languages: from goto to algebraic effects",
+      "source": "Hacker News",
+      "url": "http://xavierleroy.org/control-structures/",
+      "score": 171,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "Tabloid: The Clickbait Headline Programming Language",
+      "originalTitle": "Tabloid: The Clickbait Headline Programming Language",
+      "source": "Hacker News",
+      "url": "https://tabloid.vercel.app/",
+      "score": 151,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "An Algebraic Language for the Manipulation of Symbolic Expressions",
+      "originalTitle": "An Algebraic Language for the Manipulation of Symbolic Expressions (1958) [pdf]",
+      "source": "Hacker News",
+      "url": "https://softwarepreservation.computerhistory.org/LISP/MIT/AIM-001.pdf",
+      "score": 137,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "Reverse engineering Codex CLI to get GPT-5-Codex-Mini to draw me a pelican",
+      "originalTitle": "Reverse engineering Codex CLI to get GPT-5-Codex-Mini to draw me a pelican",
+      "source": "Hacker News",
+      "url": "https://simonwillison.net/2025/Nov/9/gpt-5-codex-mini/",
+      "score": 69,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "How Airbus Took Off",
+      "originalTitle": "How Airbus Took Off",
+      "source": "Hacker News",
+      "url": "https://worksinprogress.co/issue/how-airbus-took-off/",
+      "score": 65,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
+      "topic": "Syntax and Semantics of Programming Languages",
+      "originalTitle": "Syntax and Semantics of Programming Languages (1995)",
+      "source": "Hacker News",
+      "url": "https://homepage.cs.uiowa.edu/~slonnegr/plf/Book/",
+      "score": 20,
+      "fetchedAt": "2025-11-09T06:04:10.160Z"
+    },
+    {
       "topic": "Visopsys: OS maintained by a single developer since 1997",
       "originalTitle": "Visopsys: OS maintained by a single developer since 1997",
       "source": "Hacker News",
@@ -41,5 +121,5 @@
       "fetchedAt": "2025-11-02T20:08:33.686Z"
     }
   ],
-  "lastUpdated": "2025-11-02T20:08:33.840Z"
+  "lastUpdated": "2025-11-09T06:04:10.238Z"
 }
