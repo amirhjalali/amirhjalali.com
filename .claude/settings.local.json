@@ -122,7 +122,11 @@
       "Bash(jq:*)",
       "Bash(git checkout:*)",
       "Bash(chmod:*)",
-      "Bash(node scripts/fetch-trending-topics.js:*)"
+      "Bash(node scripts/fetch-trending-topics.js:*)",
+      "Bash(node scripts/sync-to-mjs.js:*)",
+      "Bash(echo $OPENAI_API_KEY)",
+      "Bash(node scripts/generate-article-static.js:*)",
+      "Bash(gh workflow run:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
