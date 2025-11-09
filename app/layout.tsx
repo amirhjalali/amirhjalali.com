@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     template: '%s | Amir H. Jalali'
   },
-  manifest: '/amirhjalali.com/manifest.json',
+  manifest: '/manifest.json',
   description: 'Generative AI consultant with 14 years experience in Data Warehousing, Business Intelligence, and AI Strategy. Currently CTO at AVENU AI. Specializing in LLMs, prompt engineering, and AI-driven solutions.',
   keywords: [
     'Amir Jalali',
@@ -40,13 +40,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
-    url: 'https://amirhjalali.github.io/amirhjalali.com',
+    url: 'https://gaboojabrothers.cloud',
     siteName: 'Amir H. Jalali',
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: 'https://amirhjalali.github.io/amirhjalali.com/og-image.png',
+        url: 'https://gaboojabrothers.cloud/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
-    images: ['https://amirhjalali.github.io/amirhjalali.com/og-image.png'],
+    images: ['https://gaboojabrothers.cloud/og-image.png'],
     creator: '@amirhjalali',
     site: '@amirhjalali',
   },
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   alternates: {
-    canonical: 'https://amirhjalali.github.io/amirhjalali.com',
+    canonical: 'https://gaboojabrothers.cloud',
   },
 }
 
@@ -91,14 +91,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/amirhjalali.com/manifest.json" />
-        <link rel="icon" href="/amirhjalali.com/favicon.ico" />
-        <link rel="apple-touch-icon" href="/amirhjalali.com/icon-192.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
         <meta name="theme-color" content="#00CED1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="min-h-screen font-inter antialiased">
+      <body className="min-h-screen font-lato antialiased">
         <ThemeProvider defaultTheme="dark">
           <GoogleAnalytics />
           <StructuredData />
