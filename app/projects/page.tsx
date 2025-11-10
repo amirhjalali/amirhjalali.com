@@ -31,7 +31,7 @@ const projects = [
     progress: 70,
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
-    image: getImageUrl('/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg'),
+    image: getImageUrl('/images/projects/47a93f37b854c4a561ed76f6a027e73d.webp'),
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ const projects = [
     status: 'Live' as const,
     progress: 90,
     link: 'https://avenu.ai/',
-    image: getImageUrl('/images/projects/avenu-ai.jpg'),
+    image: getImageUrl('/images/projects/avenu-ai.webp'),
   },
   {
     id: 3,
@@ -53,7 +53,7 @@ const projects = [
     status: 'Live' as const,
     progress: 85,
     link: 'https://www.getplaiced.com/',
-    image: getImageUrl('/images/projects/plaiced-optimized.jpg'),
+    image: getImageUrl('/images/projects/plaiced-optimized.webp'),
   },
   {
     id: 4,
@@ -64,7 +64,7 @@ const projects = [
     status: 'Live' as const,
     progress: 80,
     link: 'https://www.argumend.org/',
-    image: getImageUrl('/images/projects/argumend.jpg'),
+    image: getImageUrl('/images/projects/argumend.webp'),
   },
   {
     id: 5,
@@ -75,7 +75,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: 'https://www.campalborz.org/',
-    image: getImageUrl('/images/projects/697708edbb82e14a4a127560ef91f02e.jpg'),
+    image: getImageUrl('/images/projects/697708edbb82e14a4a127560ef91f02e.webp'),
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ const projects = [
     status: 'Live' as const,
     progress: 95,
     link: '/',
-    image: getImageUrl('/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg'),
+    image: getImageUrl('/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.webp'),
   },
 ]
 

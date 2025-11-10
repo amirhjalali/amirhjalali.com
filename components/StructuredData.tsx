@@ -12,7 +12,7 @@ export default function StructuredData() {
         "jobTitle": "AI Consultant & Data Engineering Expert",
         "description": "Generative AI consultant with 14 years experience in Data Warehousing, Business Intelligence, and AI Strategy. Currently CTO at AVENU AI.",
         "url": "https://amirhjalali.com",
-        "image": "https://amirhjalali.com/og-image.png",
+        "image": "https://amirhjalali.com/og-image.webp",
         "sameAs": [
           "https://linkedin.com/in/amirhjalali",
           "https://twitter.com/amirhjalali",
@@ -59,7 +59,7 @@ export default function StructuredData() {
         "@id": "https://amirhjalali.com/#organization",
         "name": "Amir H. Jalali Consulting",
         "url": "https://amirhjalali.com",
-        "logo": "https://amirhjalali.com/og-image.png",
+        "logo": "https://amirhjalali.com/og-image.webp",
         "founder": {
           "@id": "https://amirhjalali.com/#person"
         },

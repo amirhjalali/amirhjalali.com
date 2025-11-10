@@ -8,7 +8,7 @@ export const generateSEOMetadata = (
   image?: string
 ): Metadata => {
   const baseUrl = 'https://amirhjalali.com';
-  const defaultImage = '/images/og-image.jpg';
+  const defaultImage = '/images/og-image.webp';
   
   return {
     title,
@@ -68,7 +68,7 @@ export const generatePersonSchema = () => {
   return generateStructuredData('Person', {
     name: 'Amir H. Jalali',
     url: 'https://amirhjalali.com',
-    image: 'https://amirhjalali.com/images/profile.jpg',
+    image: 'https://amirhjalali.com/images/profile.webp',
     jobTitle: 'Software Developer',
     sameAs: [
       'https://github.com/amirhjalali',

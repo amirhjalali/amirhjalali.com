@@ -46,11 +46,11 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: 'https://gaboojabrothers.cloud/og-image.png',
+        url: 'https://gaboojabrothers.cloud/og-image.webp',
         width: 1200,
         height: 630,
         alt: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
-        type: 'image/png',
+        type: 'image.webp',
       }
     ],
   },
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
-    images: ['https://gaboojabrothers.cloud/og-image.png'],
+    images: ['https://gaboojabrothers.cloud/og-image.webp'],
     creator: '@amirhjalali',
     site: '@amirhjalali',
   },
@@ -93,7 +93,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icon-192.webp" />
         <meta name="theme-color" content="#00CED1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

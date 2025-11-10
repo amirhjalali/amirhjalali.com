@@ -155,7 +155,7 @@ With great access comes great responsibility:
   tags: ["Information","Digital Literacy","AI","Knowledge Management"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/7f2ffb1cdd6559e882d41dd8d646a852.jpg',
+  imageUrl: '/images/thoughts/7f2ffb1cdd6559e882d41dd8d646a852.webp',
 },
 {
   title: 'Art',
@@ -283,7 +283,7 @@ Art will continue to evolve as humans and AI learn to create together. The quest
   tags: ["Art","Creativity","AI","Human Expression"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.jpg',
+  imageUrl: '/images/thoughts/0e0b53ff910f76d9ae0dd610714526f8.webp',
 },
 {
   title: 'Education',
@@ -407,7 +407,7 @@ Education must prepare students not just for the jobs that exist today, but for 
   tags: ["Education","AI","Learning","Future of Work"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.jpg',
+  imageUrl: '/images/thoughts/1ce1404d710ca9693dae0848c6a902c7.webp',
 },
 {
   title: 'The AI revolution is upon us. So why is everyone so glum?',
@@ -503,7 +503,7 @@ We can choose to focus on:
   tags: ["AI Revolution","Technology","Society","Optimism"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.jpg',
+  imageUrl: '/images/thoughts/144dae3b2051b115fb0666fd5153c509.webp',
 },
 {
   title: 'Synthetic Data vs "Real" DATA',
@@ -613,7 +613,7 @@ Choosing between synthetic and real data requires considering:
   tags: ["Synthetic Data","AI Training","Data Strategy"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/f879650ab2636bc07463162dfcc68d5b.jpg',
+  imageUrl: '/images/thoughts/f879650ab2636bc07463162dfcc68d5b.webp',
 },
 {
   title: 'Are we our IDEAS?',
@@ -701,7 +701,7 @@ Perhaps the answer lies not in resolution but in the questioning itself:
   tags: ["Philosophy","Identity","Creativity"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.jpg',
+  imageUrl: '/images/thoughts/3b6f928513916a5117c99c4a8408aec1.webp',
 },
 {
   title: 'THE NEXT GREAT DATA CROP',
@@ -773,7 +773,7 @@ The data landscape is evolving toward:
   tags: ["Data Quality","AI Training","Economic Models"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.jpg',
+  imageUrl: '/images/thoughts/aaa58ccf777376f0c314629c6bab53df.webp',
 },
 {
   title: 'LLAMA3 and the era of abundant ai',
@@ -788,7 +788,7 @@ As we enter this era of abundant artificial intelligence, the question becomes n
   tags: ["LLAMA3","AI Accessibility","Societal Impact"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg',
+  imageUrl: '/images/thoughts/8aad15df78b35b18407b13491f2fb679.webp',
 },
 {
   title: 'CHAIN OF THOUGHT',
@@ -803,7 +803,7 @@ This pedagogical approach to AI interaction represents a shift toward more colla
   tags: ["Chain of Thought","Problem Solving","AI Transparency"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg',
+  imageUrl: '/images/thoughts/7264b5e3b125e813672005946c3c5aaa.webp',
 },
 {
   title: 'REASONING MODELS',
@@ -820,7 +820,7 @@ The concept of Test-Time Compute (TTC) allows AI more processing time to refine 
   tags: ["Reasoning Models","Chain of Thought","AI Reliability"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.jpg',
+  imageUrl: '/images/thoughts/2be8b86373c179455ea2e2c9a24ee0d8.webp',
 },
 {
   title: 'DeepSEEK',
@@ -835,7 +835,7 @@ The immediate takeaway is that many use cases that were not deemed viable just r
   tags: ["DeepSEEK","Cost Reduction","AI Democratization"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.jpg',
+  imageUrl: '/images/thoughts/05eff1ae41fa152d2508f92f91da1645.webp',
 },
 {
   title: 'THE ERA OF VIBE CODING',
@@ -852,7 +852,7 @@ Vibe Coding in 2025 will do to software what MidJourney has done for image gener
   tags: ["Vibe Coding","LLMs","Programming Paradigm"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/TheEraOfVibeCoding.jpg',
+  imageUrl: '/images/thoughts/TheEraOfVibeCoding.webp',
 },
 {
   title: '4O image generation',
@@ -868,14 +868,14 @@ Open AI recently released their 4o image generation model. GPT-4o image model di
 This has led to a giant step up in usability of this model. The long prompts of Midjourney days are gone and we can now collaborate more closely with the model for our desired outputs.
 
 <div class="article-gallery">
-<img src="/images/thoughts/7264b5e3b125e813672005946c3c5aaa.jpg" alt="A eye" class="gallery-image" />
-<img src="/images/thoughts/8aad15df78b35b18407b13491f2fb679.jpg" alt="A short story" class="gallery-image" />
-<img src="/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.jpg" alt="Of immortality" class="gallery-image" />
+<img src="/images/thoughts/7264b5e3b125e813672005946c3c5aaa.webp" alt="A eye" class="gallery-image" />
+<img src="/images/thoughts/8aad15df78b35b18407b13491f2fb679.webp" alt="A short story" class="gallery-image" />
+<img src="/images/thoughts/af1f40ed256ca9b8452ce17e43c971b6.webp" alt="Of immortality" class="gallery-image" />
 </div>`,
   tags: ["OpenAI","Image Generation","GPT-4o","Multimodal AI"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.jpg',
+  imageUrl: '/images/thoughts/a267fb5d7beaaee2699b9f919c23d74c.webp',
 },
 {
   title: 'THE EDGE OF VIBE CODING',
@@ -892,7 +892,7 @@ Keep it local as long as possible. That's where vibe coding still flows.`,
   tags: ["Vibe Coding","AI Programming","Development"],
   author: 'Amir Jalali',
   aiGenerated: false,
-  imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.jpg',
+  imageUrl: '/images/thoughts/6b601f2d7cb379805aedd07a0e277481.webp',
 },
 {
   title: 'Unlocking the Code: A Friendly Dive into Programming Paradigms',
@@ -935,7 +935,7 @@ In the end, programming paradigms offer us a delightful array of options to tack
   tags: ["programming","paradigms","OOP","functional programming","software development"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762105212314.png',
+  imageUrl: '/images/thoughts/ai-1762105212314.webp',
 },
 {
   title: 'Mastering the Art of Debugging: Strategies for Every Developer',
@@ -964,7 +964,7 @@ Debugging is an essential skill for any developer, and like any craft, it takes 
   tags: ["debugging","programming","software development","coding tips","technology"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762105641172.png',
+  imageUrl: '/images/thoughts/ai-1762105641172.webp',
 },
 {
   title: 'Visopsys: The Underdog OS That Stood the Test of Time',
@@ -1039,7 +1039,7 @@ Using every feature of Claude Code has revolutionized the way I approach program
   tags: ["AI","Claude Code","Coding","Programming","Tech Tools"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762333808393.png',
+  imageUrl: '/images/thoughts/ai-1762333808393.webp',
 },
 {
   title: 'Unraveling the Code: How Claude Can Debug Low-Level Cryptography',
@@ -1081,7 +1081,7 @@ Isn’t that a goal worth pursuing?
   tags: ["AI","Claude Code","Cryptography","Debugging","Technology"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762420186936.png',
+  imageUrl: '/images/thoughts/ai-1762420186936.webp',
 },
 {
   title: 'Why URLs are the Unsung Heroes of State Management',
@@ -1126,7 +1126,7 @@ So, the next time you’re on the internet, remember: every URL you encounter ho
   tags: ["URLs","web development","state management","user experience","technology"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762506601430.png',
+  imageUrl: '/images/thoughts/ai-1762506601430.webp',
 },
 {
   title: 'Unpacking Tongyi DeepResearch: The Open-Source Giant Challenging AI Norms',
@@ -1166,7 +1166,7 @@ With Tongyi DeepResearch, we have a glimpse into a future where AI is not just t
   tags: ["AI","Open Source","Tongyi DeepResearch","Machine Learning","Technology Trends"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762592894874.png',
+  imageUrl: '/images/thoughts/ai-1762592894874.webp',
 },
 {
   title: 'Unleashing Creativity: The World of AI Videos',
@@ -1206,7 +1206,7 @@ In the end, AI videos aren’t just about convenience—they’re about creativi
   tags: ["AI","video creation","technology","ethics","creativity"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762656975384.png',
+  imageUrl: '/images/thoughts/ai-1762656975384.webp',
 },
 {
   title: 'AI and Creativity: Is It the GPS for Our Imagination?',
@@ -1241,7 +1241,7 @@ So next time you sit down to create, think of AI as your trusty navigation syste
   tags: ["AI","Creativity","Technology","Imagination","Art"],
   author: 'Amir H. Jalali',
   aiGenerated: true,
-  imageUrl: '/images/thoughts/ai-1762657535708.png',
+  imageUrl: '/images/thoughts/ai-1762657535708.webp',
 }
 ];
 
