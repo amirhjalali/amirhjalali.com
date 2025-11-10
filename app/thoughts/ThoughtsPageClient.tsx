@@ -8,7 +8,9 @@ import type { Article } from '@/lib/articles'
 
 const getImageUrl = (url: string | undefined) => {
   if (!url) return undefined
-  const basePath = '/amirhjalali.com'
+  // For Coolify VPS deployment, no basePath needed (deployed at root domain)
+  // For GitHub Pages, set NEXT_PUBLIC_BASE_PATH in environment
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
   return url.startsWith('/') ? `${basePath}${url}` : url
 }
 

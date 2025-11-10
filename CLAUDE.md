@@ -4,65 +4,112 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a personal portfolio website (amirhjalali.com) exported from Google Sites. The repository contains static HTML files with embedded Google Sites functionality and associated image assets.
+This is a modern personal portfolio website for Amir H. Jalali, built with Next.js 15, TypeScript, and Tailwind CSS. The site features AI-generated articles, project showcases, and professional experience highlights.
+
+**Live Site:** https://gaboojabrothers.cloud (deployed on Coolify VPS)
 
 ## Project Structure
 
 ```
 amirhjalali.com/
-├── HOME.html           # Main landing page
-├── PROJECTS.html       # Projects portfolio page
-├── AI TOOLS.html       # AI tools showcase page
-├── RESOURCES.html      # Resources page
-├── RESUME.html         # Resume/CV page
-├── THOUGHTS.html       # Blog/thoughts page
-├── HOME/               # Images for home page
-├── PROJECTS/           # Images for projects page
-├── AI TOOLS/           # Images for AI tools page
-├── THOUGHTS/           # Images for thoughts page
-└── package.json        # Auto-commit configuration
+├── app/                      # Next.js App Router
+│   ├── page.tsx             # Homepage with animated hero
+│   ├── projects/            # Projects showcase
+│   ├── thoughts/            # Blog articles
+│   │   └── [id]/           # Dynamic article pages
+│   ├── resume/             # Interactive resume
+│   ├── contact/            # Contact form
+│   ├── admin/              # Admin panel for articles
+│   └── api/                # API routes
+│       └── generate-article/ # AI article generation endpoint
+├── components/              # React components
+│   ├── ui/                 # Reusable UI components (shadcn/ui)
+│   ├── HeroEnhanced.tsx   # Homepage hero section
+│   └── NavigationEnhanced.tsx
+├── lib/                    # Utilities and helpers
+│   ├── articles.ts        # Article management
+│   └── utils/             # Helper functions
+├── public/                # Static assets
+│   ├── data/              # JSON data files
+│   │   ├── published.json # Published articles
+│   │   └── drafts.json    # Draft articles
+│   └── images/            # Image assets
+├── scripts/               # Build and automation scripts
+│   └── generate-article-static.js  # AI article generator
+└── .github/workflows/     # GitHub Actions
+    ├── ai-article-generator.yml    # Daily AI content generation
+    └── fetch-trending-topics.yml   # Topic queue updater
 ```
 
 ## Development Commands
 
-### Auto-commit Watcher
+### Local Development
 ```bash
-npm run auto-commit
+npm run dev              # Start development server (with Turbopack)
+npm run build            # Build for production
+npm run start            # Start production server
+npm run lint             # Run ESLint
+npm run type-check       # TypeScript type checking
 ```
-This watches for changes in HTML, CSS, JS, MD, and TXT files and automatically commits them to git with a timestamped message. Uses a 2-second delay before committing.
 
-### Installing Dependencies
+### Content Management
 ```bash
-npm install
+npm run generate:published    # Generate published articles JSON
 ```
-This will install nodemon (the only dependency) for the auto-commit functionality.
 
 ## Key Technical Details
 
-1. **Static HTML Export**: All HTML files are exported from Google Sites and contain:
-   - Embedded Google Sites JavaScript and styling
-   - Large file sizes (1.4-2MB each) due to inline content
-   - Google-specific metadata and configuration
+1. **Next.js App Router**: Using Next.js 15 with full SSR/API route support (NOT static export)
 
-2. **No Build Process**: This is a static website with no build pipeline, bundling, or compilation steps.
+2. **Deployment**: Coolify VPS at gaboojabrothers.cloud
+   - Full Next.js features enabled (API routes, ISR, SSR)
+   - Auto-deployment on push to main branch
+   - Environment variables stored in Coolify
 
-3. **No Testing Framework**: No tests are configured for this project.
+3. **AI Features**:
+   - Server-side API route for article generation (`/api/generate-article`)
+   - GitHub Actions workflow for automated daily article generation
+   - Uses OpenAI GPT-4o-mini and DALL-E 3
+   - Admin panel at `/admin` for managing drafts and publishing
 
-4. **Auto-commit Setup**: The repository uses nodemon to automatically commit changes, useful for continuous deployment or backup purposes.
+4. **Tech Stack**:
+   - Framework: Next.js 15.4.1
+   - Language: TypeScript
+   - Styling: Tailwind CSS
+   - Animations: Framer Motion
+   - UI: Radix UI (shadcn/ui)
+
+5. **Environment Variables**:
+   - `OPENAI_API_KEY` - Required for AI article generation
+   - `ANTHROPIC_API_KEY` - Alternative AI provider
+   - `NEXT_PUBLIC_ADMIN_USERNAME` - Admin panel username
+   - `NEXT_PUBLIC_ADMIN_PASSWORD_HASH` - Admin panel password hash
 
 ## Working with the Codebase
 
-- When modifying HTML files, be aware they contain Google Sites-specific code that may break if significantly altered
-- Image assets are organized in directories matching their corresponding HTML pages
-- The auto-commit watcher will track changes to HTML, CSS, JS, MD, and TXT files
-- There is no local development server; files can be opened directly in a browser
+- Articles are stored in `public/data/published.json` and `public/data/drafts.json`
+- Images are in `public/images/` organized by section (projects, thoughts, etc.)
+- The admin panel (`/admin`) allows managing article drafts and publishing
+- AI-generated articles are created via API route or GitHub Actions workflow
+- All pages use Next.js App Router with server components where possible
+
+## Deployment (Coolify VPS)
+
+The site is deployed to a Hostinger VPS using Coolify:
+1. Push to main branch triggers auto-deployment
+2. Coolify pulls latest code, runs `npm install && npm run build`
+3. Starts server with `npm run start` on port 3000
+4. SSL handled automatically via Let's Encrypt
+5. Domain: gaboojabrothers.cloud
+
+**Note**: GitHub Pages deployment is DISABLED (workflow file renamed to .disabled) because we need full Next.js features including API routes for AI generation.
 
 ## Git Workflow
 
-The repository uses an auto-commit system. When making changes:
-1. The auto-commit watcher will automatically stage and commit changes
-2. Manual commits can still be made when the watcher is not running
-3. The main branch is used for all development
+Standard git workflow:
+1. Make changes on feature branches or main branch
+2. Commit with descriptive messages
+3. Push to main branch for automatic deployment via Coolify
 
 ## Important Rules
 
