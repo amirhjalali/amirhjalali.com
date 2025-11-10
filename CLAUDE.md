@@ -104,6 +104,15 @@ The site is deployed to a Hostinger VPS using Coolify:
 
 **Note**: GitHub Pages deployment is DISABLED (workflow file renamed to .disabled) because we need full Next.js features including API routes for AI generation.
 
+## Advanced Automation (Optional)
+
+For enhanced article generation and workflow automation, see:
+- **[N8N_SETUP.md](N8N_SETUP.md)** - Guide to installing n8n workflow automation and PostgreSQL database on Coolify
+- Enables visual workflow builder for article generation
+- Provides database-backed article storage (replacing JSON files)
+- Advanced scheduling, webhooks, and integrations with 400+ services
+- Topic queue management and generation analytics
+
 ## Git Workflow
 
 Standard git workflow:
