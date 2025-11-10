@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button'
 
 // Helper to add basePath to image URLs
 const getImageUrl = (url: string) => {
-  const basePath = process.env.NODE_ENV === 'production' ? '/amirhjalali.com' : ''
+  // For Coolify VPS deployment, no basePath needed (deployed at root domain)
+  // For GitHub Pages, set NEXT_PUBLIC_BASE_PATH in environment
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
   return url.startsWith('/') ? `${basePath}${url}` : url
 }
 

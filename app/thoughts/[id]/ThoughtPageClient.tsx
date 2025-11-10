@@ -16,8 +16,9 @@ import SocialShare from '@/components/SocialShare'
 // Helper to add basePath to image URLs at render time
 const getImageUrl = (url: string | undefined) => {
   if (!url) return undefined
-  // Add basePath for GitHub Pages deployment
-  const basePath = '/amirhjalali.com'
+  // For Coolify VPS deployment, no basePath needed (deployed at root domain)
+  // For GitHub Pages, set NEXT_PUBLIC_BASE_PATH in environment
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
   return url.startsWith('/') ? `${basePath}${url}` : url
 }
 
@@ -213,7 +214,8 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
             dangerouslySetInnerHTML={{
               __html: (() => {
                 // Inline images need the basePath added at render time
-                const basePath = '/amirhjalali.com'
+                // For Coolify VPS deployment, no basePath needed (deployed at root domain)
+                const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
                 return article.content
                   .replace(/\n/g, '<br/>')
                   .replace(/## (.*)/g, '<h2>$1</h2>')
