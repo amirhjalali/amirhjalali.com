@@ -33,11 +33,12 @@ async function ensureUniqueSlug(baseSlug: string, excludeId?: string): Promise<s
 // GET /api/articles/[id] - Get single article
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const article = await prisma.article.findUnique({
-      where: { id: params.id }
+      where: { id }
     })
 
     if (!article) {
@@ -60,9 +61,10 @@ export async function GET(
 // PATCH /api/articles/[id] - Update article
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
 
     // If title is being updated, regenerate slug
@@ -70,7 +72,7 @@ export async function PATCH(
 
     if (body.title) {
       const baseSlug = slugify(body.title)
-      updateData.slug = await ensureUniqueSlug(baseSlug, params.id)
+      updateData.slug = await ensureUniqueSlug(baseSlug, id)
     }
 
     // Recalculate read time if content changed
@@ -79,7 +81,7 @@ export async function PATCH(
     }
 
     const article = await prisma.article.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
     })
 
@@ -104,11 +106,12 @@ export async function PATCH(
 // DELETE /api/articles/[id] - Delete article
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await prisma.article.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({ success: true, message: 'Article deleted' })

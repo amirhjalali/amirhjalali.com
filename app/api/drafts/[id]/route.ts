@@ -4,11 +4,12 @@ import { prisma } from '@/lib/db'
 // GET /api/drafts/[id] - Get single draft
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const draft = await prisma.draft.findUnique({
-      where: { id: params.id }
+      where: { id }
     })
 
     if (!draft) {
@@ -31,13 +32,14 @@ export async function GET(
 // PATCH /api/drafts/[id] - Update draft
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
 
     const draft = await prisma.draft.update({
-      where: { id: params.id },
+      where: { id },
       data: body,
     })
 
@@ -62,11 +64,12 @@ export async function PATCH(
 // DELETE /api/drafts/[id] - Delete draft
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await prisma.draft.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({ success: true, message: 'Draft deleted' })

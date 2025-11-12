@@ -4,18 +4,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
-import {
-  getDraftArticles,
-  publishDraftArticle,
-  deleteDraftArticle,
-  initializeDrafts,
-  duplicateDraftArticle,
-  bulkDeleteDrafts,
-  bulkPublishDrafts,
-  getArticles,
-  unpublishArticle,
-  type Article
-} from '@/lib/articles'
+import { apiClient, type Article, type Draft } from '@/lib/api-client'
 import {
   FileText,
   Eye,
@@ -36,10 +25,10 @@ import PublishSync from '@/components/PublishSync'
 
 export default function AdminDashboard() {
   const { user, loading, logout } = useAuth(true)
-  const [drafts, setDrafts] = useState<Article[]>([])
+  const [drafts, setDrafts] = useState<Draft[]>([])
   const [publishedArticles, setPublishedArticles] = useState<Article[]>([])
-  const [selectedDraft, setSelectedDraft] = useState<Article | null>(null)
-  const [editingDraft, setEditingDraft] = useState<Article | null>(null)
+  const [selectedDraft, setSelectedDraft] = useState<Draft | null>(null)
+  const [editingDraft, setEditingDraft] = useState<Draft | null>(null)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -51,9 +40,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!loading && user) {
-      initializeDrafts().then(() => {
-        loadData()
-      })
+      loadData()
     }
   }, [loading, user])
 
@@ -66,23 +53,31 @@ export default function AdminDashboard() {
     return () => clearTimeout(timer)
   }, [searchInput])
 
-  const loadData = () => {
-    setDrafts(getDraftArticles())
-    setPublishedArticles(getArticles())
+  const loadData = async () => {
+    try {
+      const [fetchedDrafts, fetchedArticles] = await Promise.all([
+        apiClient.getDrafts(),
+        apiClient.getArticles()
+      ])
+      setDrafts(fetchedDrafts)
+      setPublishedArticles(fetchedArticles)
+    } catch (error) {
+      console.error('Error loading data:', error)
+    }
   }
 
   // Filtered and sorted drafts
   const filteredDrafts = useMemo(() => {
     let filtered = drafts.filter(draft =>
       draft.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      draft.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (draft.excerpt || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       draft.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
     )
 
     if (sortBy === 'title') {
       filtered.sort((a, b) => a.title.localeCompare(b.title))
     } else {
-      filtered.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+      filtered.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
     }
 
     return filtered
@@ -98,13 +93,12 @@ export default function AdminDashboard() {
   const handlePublish = async (draftId: string) => {
     setActionLoading(draftId)
     try {
-      const published = publishDraftArticle(draftId)
-      if (published) {
-        loadData()
-        setSelectedDraft(null)
-      }
+      await apiClient.publishDraft(draftId)
+      await loadData()
+      setSelectedDraft(null)
     } catch (error) {
       console.error('Error publishing draft:', error)
+      alert('Failed to publish draft. Please try again.')
     } finally {
       setActionLoading(null)
     }
@@ -117,49 +111,63 @@ export default function AdminDashboard() {
 
     setActionLoading(draftId)
     try {
-      const deleted = deleteDraftArticle(draftId)
-      if (deleted) {
-        loadData()
-        if (selectedDraft?.id === draftId) {
-          setSelectedDraft(null)
-        }
+      await apiClient.deleteDraft(draftId)
+      await loadData()
+      if (selectedDraft?.id === draftId) {
+        setSelectedDraft(null)
       }
     } catch (error) {
       console.error('Error deleting draft:', error)
+      alert('Failed to delete draft. Please try again.')
     } finally {
       setActionLoading(null)
     }
   }
 
-  const handleDuplicate = (draftId: string) => {
+  const handleDuplicate = async (draftId: string) => {
     setActionLoading(draftId)
     try {
-      const duplicated = duplicateDraftArticle(draftId)
-      if (duplicated) {
-        loadData()
-        setSelectedDraft(duplicated)
-      }
+      const draft = await apiClient.getDraft(draftId)
+      const duplicated = await apiClient.createDraft({
+        ...draft,
+        title: `${draft.title} (Copy)`,
+      })
+      await loadData()
+      setSelectedDraft(duplicated)
+    } catch (error) {
+      console.error('Error duplicating draft:', error)
+      alert('Failed to duplicate draft. Please try again.')
     } finally {
       setActionLoading(null)
     }
   }
 
-  const handleBulkDelete = () => {
+  const handleBulkDelete = async () => {
     if (selectedIds.size === 0) return
     if (!confirm(`Delete ${selectedIds.size} drafts? This cannot be undone.`)) return
 
-    bulkDeleteDrafts(Array.from(selectedIds))
-    setSelectedIds(new Set())
-    loadData()
+    try {
+      await apiClient.bulkDeleteDrafts(Array.from(selectedIds))
+      setSelectedIds(new Set())
+      await loadData()
+    } catch (error) {
+      console.error('Error bulk deleting drafts:', error)
+      alert('Failed to delete some drafts. Please try again.')
+    }
   }
 
-  const handleBulkPublish = () => {
+  const handleBulkPublish = async () => {
     if (selectedIds.size === 0) return
     if (!confirm(`Publish ${selectedIds.size} drafts?`)) return
 
-    bulkPublishDrafts(Array.from(selectedIds))
-    setSelectedIds(new Set())
-    loadData()
+    try {
+      await apiClient.bulkPublishDrafts(Array.from(selectedIds))
+      setSelectedIds(new Set())
+      await loadData()
+    } catch (error) {
+      console.error('Error bulk publishing drafts:', error)
+      alert('Failed to publish some drafts. Please try again.')
+    }
   }
 
   const toggleSelection = (id: string) => {
@@ -200,11 +208,16 @@ export default function AdminDashboard() {
     reader.readAsText(file)
   }
 
-  const handleUnpublish = (articleId: string) => {
-    if (!confirm('Move this article back to drafts?')) return
+  const handleUnpublish = async (articleId: string) => {
+    if (!confirm('Unpublish this article?')) return
 
-    unpublishArticle(articleId)
-    loadData()
+    try {
+      await apiClient.publishArticle(articleId, false)
+      await loadData()
+    } catch (error) {
+      console.error('Error unpublishing article:', error)
+      alert('Failed to unpublish article. Please try again.')
+    }
   }
 
   if (loading) {
@@ -337,8 +350,7 @@ export default function AdminDashboard() {
               onClick={async () => {
                 setRefreshing(true)
                 try {
-                  await initializeDrafts(true)
-                  loadData()
+                  await loadData()
                 } finally {
                   setRefreshing(false)
                 }
@@ -460,7 +472,9 @@ export default function AdminDashboard() {
                               {draft.content.trim().split(/\s+/).length} words
                             </span>
                             <span className="text-xs text-muted-foreground">•</span>
-                            <span className="text-xs text-muted-foreground">{draft.readTime}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {Math.ceil(draft.content.trim().split(/\s+/).length / 200)} min read
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -636,12 +650,12 @@ export default function AdminDashboard() {
         {editingDraft && (
           <DraftEditor
             draft={editingDraft}
-            onSave={() => {
-              loadData()
+            onSave={async () => {
+              await loadData()
               setEditingDraft(null)
               // Update selectedDraft if it was being edited
               if (selectedDraft?.id === editingDraft.id) {
-                setSelectedDraft(getDraftArticles().find(d => d.id === editingDraft.id) || null)
+                setSelectedDraft(drafts.find(d => d.id === editingDraft.id) || null)
               }
             }}
             onClose={() => setEditingDraft(null)}

@@ -31,12 +31,13 @@ async function ensureUniqueSlug(baseSlug: string): Promise<string> {
 // POST /api/drafts/[id]/publish - Publish draft as article
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     // Get draft
     const draft = await prisma.draft.findUnique({
-      where: { id: params.id }
+      where: { id }
     })
 
     if (!draft) {
@@ -69,7 +70,7 @@ export async function POST(
 
     // Delete draft after publishing
     await prisma.draft.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({

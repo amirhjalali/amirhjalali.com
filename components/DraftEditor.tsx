@@ -3,30 +3,43 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo } from 'lucide-react'
-import { type Article, updateDraftArticle } from '@/lib/articles'
+import { apiClient, type Draft } from '@/lib/api-client'
 
 interface DraftEditorProps {
-  draft: Article
+  draft: Draft
   onSave: () => void
   onClose: () => void
 }
 
 export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps) {
-  const [editedDraft, setEditedDraft] = useState<Article>(draft)
+  const [editedDraft, setEditedDraft] = useState<Draft>(draft)
   const [hasChanges, setHasChanges] = useState(false)
   const [showStats, setShowStats] = useState(false)
-  const [history, setHistory] = useState<Article[]>([draft])
+  const [history, setHistory] = useState<Draft[]>([draft])
   const [historyIndex, setHistoryIndex] = useState(0)
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
 
 
-  const handleSave = useCallback((isAutoSave = false) => {
-    updateDraftArticle(editedDraft.id, editedDraft)
-    setHasChanges(false)
-    if (!isAutoSave) {
-      onSave()
+  const handleSave = useCallback(async (isAutoSave = false) => {
+    if (isSaving) return
+
+    setIsSaving(true)
+    try {
+      await apiClient.updateDraft(editedDraft.id, editedDraft)
+      setHasChanges(false)
+      if (!isAutoSave) {
+        onSave()
+      }
+    } catch (error) {
+      console.error('Error saving draft:', error)
+      if (!isAutoSave) {
+        alert('Failed to save draft. Please try again.')
+      }
+    } finally {
+      setIsSaving(false)
     }
-  }, [editedDraft, onSave])
+  }, [editedDraft, onSave, isSaving])
 
   const handleUndo = useCallback(() => {
     setHistoryIndex((prevIndex) => {
@@ -50,7 +63,7 @@ export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps
     })
   }, [history])
 
-  const addToHistory = useCallback((newDraft: Article) => {
+  const addToHistory = useCallback((newDraft: Draft) => {
     setHistory((prevHistory) => {
       const nextHistory = prevHistory.slice(0, historyIndex + 1)
       nextHistory.push(newDraft)
@@ -59,7 +72,7 @@ export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps
     setHistoryIndex((prevIndex) => prevIndex + 1)
   }, [historyIndex])
 
-  const handleFieldChange = useCallback((field: keyof Article, value: any) => {
+  const handleFieldChange = useCallback((field: keyof Draft, value: any) => {
     const newDraft = { ...editedDraft, [field]: value }
     setEditedDraft(newDraft)
     addToHistory(newDraft)
@@ -78,10 +91,9 @@ export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps
   const handleExport = () => {
     const markdown = `# ${editedDraft.title}
 
-${editedDraft.excerpt}
+${editedDraft.excerpt || ''}
 
 Tags: ${editedDraft.tags.join(', ')}
-Author: ${editedDraft.author}
 
 ---
 
@@ -274,12 +286,12 @@ ${editedDraft.content}`
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium">Excerpt</label>
-              <span className={`text-xs ${editedDraft.excerpt.length > 200 ? 'text-red-500' : 'text-muted-foreground'}`}>
-                {editedDraft.excerpt.length}/200
+              <span className={`text-xs ${(editedDraft.excerpt?.length || 0) > 200 ? 'text-red-500' : 'text-muted-foreground'}`}>
+                {editedDraft.excerpt?.length || 0}/200
               </span>
             </div>
             <textarea
-              value={editedDraft.excerpt}
+              value={editedDraft.excerpt || ''}
               onChange={(e) => handleFieldChange('excerpt', e.target.value)}
               maxLength={250}
               className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal resize-none"
@@ -381,17 +393,6 @@ ${editedDraft.content}`
                   e.currentTarget.value = ''
                 }
               }}
-            />
-          </div>
-
-          {/* Author */}
-          <div>
-            <label className="block text-sm font-medium mb-2">Author</label>
-            <input
-              type="text"
-              value={editedDraft.author}
-              onChange={(e) => handleFieldChange('author', e.target.value)}
-              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal"
             />
           </div>
 

@@ -13,15 +13,16 @@ async function getNextVersionNumber(articleId: string): Promise<number> {
 // POST /api/articles/[id]/publish - Publish or unpublish article
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const shouldPublish = body.publish !== false // Default to publish
 
     // Get current article state
     const article = await prisma.article.findUnique({
-      where: { id: params.id }
+      where: { id }
     })
 
     if (!article) {
@@ -33,11 +34,11 @@ export async function POST(
 
     // Create version snapshot if publishing
     if (shouldPublish && !article.published) {
-      const versionNumber = await getNextVersionNumber(article.id)
+      const versionNumber = await getNextVersionNumber(id)
 
       await prisma.articleVersion.create({
         data: {
-          articleId: article.id,
+          articleId: id,
           title: article.title,
           content: article.content,
           excerpt: article.excerpt,
@@ -49,7 +50,7 @@ export async function POST(
 
     // Update article status
     const updated = await prisma.article.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         published: shouldPublish,
         publishedAt: shouldPublish ? (article.publishedAt || new Date()) : null,
