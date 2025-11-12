@@ -29,8 +29,8 @@ const config = {
   draftsFile: path.join(__dirname, '..', 'public', 'data', 'drafts.json'),
 
   // Article generation settings
-  style: 'casual',
-  targetLength: 'medium', // short (300-500), medium (600-800), long (1000-1500)
+  style: 'pragmatic-authoritative',
+  targetLength: 'flexible', // 450-750 words, naturally determined by content
   topics: [
     'AI and creativity',
     'Future of work with AI',
@@ -95,22 +95,56 @@ function makeRequest(options, postData) {
 async function generateWithOpenAI(topic) {
   console.log('Generating article with OpenAI...');
 
-  const prompt = `Write a thoughtful, engaging article about "${topic}".
+  const prompt = `Write a tech article about "${topic}" in the style of amirhjalali.com/thoughts.
 
-Requirements:
-- Length: 600-800 words
-- Tone: Casual and conversational, like a personal blog post
-- Structure: Include 2-3 main sections with headers (use ## for markdown headers)
-- Style: Share personal insights and observations
-- Include practical examples or analogies
-- End with a thought-provoking conclusion
+VOICE & TONE:
+- Pragmatic, lightly opinionated, authoritative
+- Mix first-person observations with third-person analysis as needed
+- Direct and specific - avoid generic marketing language
+- Write like you're documenting real developments, not performing enthusiasm
+
+BANNED PHRASES (never use these):
+- "In today's fast-paced…" / "In the digital age…"
+- "Discover how…" / "Explore the world of…" / "Unlock the power of…"
+- "Revolutionize" / "Unleash" / "Transform"
+- "Hey there" / "fellow tech enthusiasts"
+- Question-bait endings like "So what do you think?" / "What are your thoughts?"
+- Forced analogies like "It's like…" or "Imagine if…"
+
+STRUCTURE:
+- Length: 450-750 words (be concise; let content determine actual length)
+- Let structure emerge naturally based on topic type:
+  * Brief observations: 2-3 sections, direct
+  * Industry analysis: News + implications + takeaway
+  * Technical deep-dive: Progressive explanation with specifics
+  * Field reports: What's happening + what it means
+- Use ## headers (Title Case or ALL CAPS for impact)
+- Short paragraphs (1-4 sentences each)
+- ONE bullet list maximum (only if it genuinely clarifies)
+- Optional pull-quote (> block) if there's a genuine insight worth highlighting
+- Links: 0-2 maximum, only if essential
+
+CONTENT APPROACH:
+- Start directly with the core observation or thesis
+- Include specific technical details, not just high-level observations
+- Acknowledge limitations and current edges ("as of current...")
+- End with a forward-looking insight or direct takeaway, NOT a question
+- If discussing personal experience, make it concrete and specific
+- Focus on "what this means" not just "what this is"
+
+EXAMPLES OF THE TARGET STYLE:
+"Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself."
+
+"The biggest friction point comes when a project needs to interact with external data. Whether it's a database or API calls, progress slows down significantly."
+
+"DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces."
 
 Format the response as a JSON object with:
 {
-  "title": "Article title (engaging and clickable)",
-  "content": "Full article content in markdown format with headers",
-  "excerpt": "Brief 2-sentence summary (100-150 chars)",
-  "tags": ["array", "of", "relevant", "tags"]
+  "title": "Direct, descriptive title (declarative, no clickbait, no emojis)",
+  "content": "Full article in markdown format with natural section structure",
+  "excerpt": "1-2 concrete sentences capturing core insight (120-160 chars)",
+  "tags": ["specific", "relevant", "technical", "tags"]
 }`;
 
   const options = {
@@ -127,10 +161,10 @@ Format the response as a JSON object with:
   const postData = {
     model: 'gpt-4o-mini',
     messages: [
-      { role: 'system', content: 'You are a thoughtful tech blogger who writes engaging, insightful articles about AI and technology.' },
+      { role: 'system', content: 'You are a technical writer documenting developments in AI and technology. Write with authority and pragmatism, avoiding generic marketing language and forced enthusiasm. Focus on concrete observations and specific insights.' },
       { role: 'user', content: prompt }
     ],
-    temperature: 0.8,
+    temperature: 0.7,
     response_format: { type: "json_object" }
   };
 
@@ -163,16 +197,81 @@ async function downloadImage(url, filepath) {
   });
 }
 
-// Generate image using DALL-E 3
-async function generateImageWithDALLE(title, topic) {
+// Generate image using DALL-E 3 (two-step process)
+async function generateImageWithDALLE(articleData) {
   if (!config.openaiKey) {
     console.log('⚠️  OpenAI API key not found, skipping image generation');
     return '';
   }
 
-  console.log('🎨 Generating featured image with DALL-E 3...');
+  console.log('🎨 Step 1: Deriving image brief from article...');
 
-  const imagePrompt = `Create an artistic, modern featured image for a tech blog article titled "${title}" about ${topic}. Style: abstract, contemporary, tech-focused, visually striking. Use vibrant colors and geometric shapes.`;
+  // Step 1: Generate image brief from article content
+  const briefPrompt = `Derive a hero image concept from this article that matches the visual style on amirhjalali.com/thoughts.
+
+ARTICLE CONTENT:
+Title: ${articleData.title}
+Excerpt: ${articleData.excerpt}
+Content: ${articleData.content.substring(0, 500)}...
+
+VISUAL STYLE REQUIREMENTS:
+- Abstract, tech-adjacent aesthetic
+- Clean negative space with geometric structure
+- May include subtle human/organic elements contrasted with technical forms
+- Banner-readable composition (1792×1024)
+- NO text, NO people faces, NO logos, NO obvious tech clichés
+- Pull visual metaphors directly from the article's thesis and key concepts
+
+Return ONLY a JSON object with:
+{
+  "image_title": "Short internal name tied to article thesis",
+  "motifs": ["3-5 visual elements from the article concepts"],
+  "composition": "One-sentence layout description with focal tension",
+  "palette": ["1-3 accent colors + neutrals; restrained, not garish"],
+  "texture": "Visual treatment (e.g., subtle grain, soft glow, wireframe overlay)",
+  "avoid": ["Specific elements to exclude based on clichés"],
+  "image_prompt": "Complete DALL-E prompt using above elements, emphasizing abstract geometric forms with subtle organic contrast. Specify: no text, no faces, no logos. Use vivid style with restrained palette and strong negative space.",
+  "alt_text": "Accessible description tied to article thesis (≤140 chars)"
+}`;
+
+  const briefOptions = {
+    hostname: 'api.openai.com',
+    port: 443,
+    path: '/v1/chat/completions',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${config.openaiKey}`
+    }
+  };
+
+  const briefPostData = {
+    model: 'gpt-4o-mini',
+    messages: [
+      { role: 'system', content: 'You are an expert at translating technical article concepts into abstract visual compositions. Focus on extracting core metaphors and creating coherent image briefs.' },
+      { role: 'user', content: briefPrompt }
+    ],
+    temperature: 0.7,
+    response_format: { type: "json_object" }
+  };
+
+  let imageBrief;
+  try {
+    const briefResponse = await makeRequest(briefOptions, briefPostData);
+    imageBrief = JSON.parse(briefResponse.choices[0].message.content);
+    console.log('✅ Image brief generated');
+    console.log(`   Motifs: ${imageBrief.motifs?.join(', ')}`);
+    console.log(`   Palette: ${imageBrief.palette?.join(', ')}`);
+  } catch (error) {
+    console.warn('⚠️  Image brief generation failed:', error.message);
+    // Fallback to simple prompt
+    const imagePrompt = `Abstract geometric composition representing "${articleData.title}". Tech-focused, modern aesthetic with clean negative space. No text, no faces, no logos. Vivid style with restrained palette.`;
+    imageBrief = { image_prompt: imagePrompt };
+  }
+
+  console.log('🎨 Step 2: Generating image with DALL-E 3...');
+
+  const imagePrompt = imageBrief.image_prompt;
 
   const options = {
     hostname: 'api.openai.com',
@@ -224,22 +323,56 @@ async function generateImageWithDALLE(title, topic) {
 async function generateWithAnthropic(topic) {
   console.log('Generating article with Claude...');
 
-  const prompt = `Write a thoughtful, engaging article about "${topic}".
+  const prompt = `Write a tech article about "${topic}" in the style of amirhjalali.com/thoughts.
 
-Requirements:
-- Length: 600-800 words
-- Tone: Casual and conversational, like a personal blog post
-- Structure: Include 2-3 main sections with headers (use ## for markdown headers)
-- Style: Share personal insights and observations
-- Include practical examples or analogies
-- End with a thought-provoking conclusion
+VOICE & TONE:
+- Pragmatic, lightly opinionated, authoritative
+- Mix first-person observations with third-person analysis as needed
+- Direct and specific - avoid generic marketing language
+- Write like you're documenting real developments, not performing enthusiasm
+
+BANNED PHRASES (never use these):
+- "In today's fast-paced…" / "In the digital age…"
+- "Discover how…" / "Explore the world of…" / "Unlock the power of…"
+- "Revolutionize" / "Unleash" / "Transform"
+- "Hey there" / "fellow tech enthusiasts"
+- Question-bait endings like "So what do you think?" / "What are your thoughts?"
+- Forced analogies like "It's like…" or "Imagine if…"
+
+STRUCTURE:
+- Length: 450-750 words (be concise; let content determine actual length)
+- Let structure emerge naturally based on topic type:
+  * Brief observations: 2-3 sections, direct
+  * Industry analysis: News + implications + takeaway
+  * Technical deep-dive: Progressive explanation with specifics
+  * Field reports: What's happening + what it means
+- Use ## headers (Title Case or ALL CAPS for impact)
+- Short paragraphs (1-4 sentences each)
+- ONE bullet list maximum (only if it genuinely clarifies)
+- Optional pull-quote (> block) if there's a genuine insight worth highlighting
+- Links: 0-2 maximum, only if essential
+
+CONTENT APPROACH:
+- Start directly with the core observation or thesis
+- Include specific technical details, not just high-level observations
+- Acknowledge limitations and current edges ("as of current...")
+- End with a forward-looking insight or direct takeaway, NOT a question
+- If discussing personal experience, make it concrete and specific
+- Focus on "what this means" not just "what this is"
+
+EXAMPLES OF THE TARGET STYLE:
+"Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself."
+
+"The biggest friction point comes when a project needs to interact with external data. Whether it's a database or API calls, progress slows down significantly."
+
+"DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces."
 
 Format the response as a JSON object with:
 {
-  "title": "Article title (engaging and clickable)",
-  "content": "Full article content in markdown format with headers",
-  "excerpt": "Brief 2-sentence summary (100-150 chars)",
-  "tags": ["array", "of", "relevant", "tags"]
+  "title": "Direct, descriptive title (declarative, no clickbait, no emojis)",
+  "content": "Full article in markdown format with natural section structure",
+  "excerpt": "1-2 concrete sentences capturing core insight (120-160 chars)",
+  "tags": ["specific", "relevant", "technical", "tags"]
 }
 
 Return ONLY the JSON object, no other text.`;
@@ -449,8 +582,8 @@ async function main() {
       modelUsed = 'gpt-4o-mini';
     }
 
-    // Generate featured image with DALL-E 3
-    const imageUrl = await generateImageWithDALLE(articleData.title, topic);
+    // Generate featured image with DALL-E 3 (two-step process based on article content)
+    const imageUrl = await generateImageWithDALLE(articleData);
 
     // Calculate metadata
     const wordCount = articleData.content.trim().split(/\s+/).length;
