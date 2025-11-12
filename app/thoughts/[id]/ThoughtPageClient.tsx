@@ -240,7 +240,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
           <div className="text-center">
             <h3 className="text-xl font-bold mb-4">Enjoyed this article?</h3>
             <p className="text-muted-foreground mb-6">
-              Explore more insights or create your own AI-powered articles.
+              Want to discuss more? Get in touch or read more of my thoughts.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -250,10 +250,10 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
                 Read More Thoughts
               </Link>
               <Link
-                href="/generate"
+                href="/contact"
                 className="px-6 py-3 glass border border-border rounded-full hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-all"
               >
-                Generate New Article
+                Get in Touch
               </Link>
             </div>
           </div>
