@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 /**
  * Server-side API route for generating articles
@@ -146,14 +147,24 @@ export async function POST(request: NextRequest) {
     // Calculate word count
     const wordCount = articleData.content.trim().split(/\s+/).length;
 
+    // Save directly to database as draft
+    const draft = await prisma.draft.create({
+      data: {
+        title: articleData.title,
+        content: articleData.content,
+        excerpt: articleData.excerpt,
+        tags: articleData.tags || ['AI', 'Technology'],
+        imageUrl: imageBase64,
+        aiGenerated: true,
+      }
+    });
+
     return NextResponse.json({
-      title: articleData.title,
-      content: articleData.content,
-      excerpt: articleData.excerpt,
-      tags: articleData.tags || ['AI', 'Technology'],
-      imageUrl: imageBase64,
+      success: true,
+      draft,
       topic,
-      wordCount
+      wordCount,
+      message: 'Article generated and saved as draft'
     });
 
   } catch (error: any) {
