@@ -19,6 +19,7 @@ function generateUniqueId(prefix: 'article' | 'draft' = 'article'): string {
 export interface Article {
   id: string
   title: string
+  slug?: string  // URL-friendly version of title
   content: string
   excerpt: string
   tags: string[]

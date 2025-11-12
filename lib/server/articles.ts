@@ -1,17 +1,72 @@
-import { publishedArticles } from '@/data/published.mjs'
+import { prisma } from '@/lib/db'
 import type { Article } from '@/lib/articles'
 
-const articlesById = new Map<string, Article>(
-  publishedArticles.map((article) => [article.id, article as Article])
-)
-
 export async function getPublishedArticles(): Promise<Article[]> {
-  return [...publishedArticles]
-    .map((article) => ({ ...article }))
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+  const articles = await prisma.article.findMany({
+    where: { published: true },
+    orderBy: { publishedAt: 'desc' },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      excerpt: true,
+      content: true,
+      author: true,
+      tags: true,
+      imageUrl: true,
+      readTime: true,
+      aiGenerated: true,
+      publishedAt: true,
+    }
+  })
+
+  // Format to match Article type
+  return articles.map(article => ({
+    ...article,
+    publishedAt: article.publishedAt?.toISOString() || new Date().toISOString(),
+  })) as Article[]
 }
 
 export async function getPublishedArticleById(id: string): Promise<Article | null> {
-  const match = articlesById.get(id)
-  return match ? { ...match } : null
+  const article = await prisma.article.findFirst({
+    where: {
+      OR: [
+        { id },
+        { slug: id }
+      ],
+      published: true
+    }
+  })
+
+  if (!article) return null
+
+  return {
+    ...article,
+    publishedAt: article.publishedAt?.toISOString() || new Date().toISOString(),
+  } as Article
+}
+
+export async function getPublishedArticleBySlug(slug: string): Promise<Article | null> {
+  const article = await prisma.article.findUnique({
+    where: { slug, published: true }
+  })
+
+  if (!article) return null
+
+  return {
+    ...article,
+    publishedAt: article.publishedAt?.toISOString() || new Date().toISOString(),
+  } as Article
+}
+
+export async function getDrafts() {
+  return await prisma.draft.findMany({
+    orderBy: { updatedAt: 'desc' }
+  })
+}
+
+export async function getDraftById(id: string) {
+  return await prisma.draft.findUnique({
+    where: { id }
+  })
 }
