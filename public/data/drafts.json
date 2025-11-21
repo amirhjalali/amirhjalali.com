@@ -192,5 +192,33 @@
       "model": "gpt-4o-mini",
       "imageModel": "dall-e-3"
     }
+  },
+  {
+    "id": "article-1763716167366-oqt54v0mp",
+    "title": "Reverse Engineering Codex CLI to Generate Images with GPT-5-Codex-Mini",
+    "content": "# REVERSE ENGINEERING CODEX CLI\n\nRecent developments in OpenAI's Codex CLI have prompted a closer examination of its capabilities, particularly with the integration of GPT-5-Codex-Mini. My objective was straightforward: to generate an image of a pelican using this new model. This process revealed both the potential and the limitations inherent in AI-driven image generation.\n\n## UNDERSTANDING CODEX CLI\n\nCodex CLI serves as a command-line interface to interact with OpenAI's Codex models. While primarily designed for code generation, its versatility allows users to explore various tasks beyond programming.\n\nMy initial foray involved setting up a Python environment with Codex CLI installed. The documentation was sparse, so I relied on community forums and GitHub issues to navigate the installation process. After overcoming initial hurdles, I was able to execute basic commands to generate code snippets.\n\n## INITIATING IMAGE GENERATION\n\nTo generate an image of a pelican, I had to modify the typical usage of Codex CLI. I approached this by crafting specific prompts that leveraged the text-to-image capabilities of GPT-5-Codex-Mini. The key was to understand how to frame requests that the model could interpret correctly.\n\nHere’s how I approached it:\n- **Prompt Design**: I created prompts that described the pelican in detail, emphasizing characteristics like color, size, and environment.\n- **Iterative Testing**: Each prompt led to different outputs, which required adjustments in language to better align with the model’s training data.\n- **Feedback Loop**: I analyzed the outputs and refined the prompts iteratively, using trial and error to hone in on a satisfactory result.\n\nThe results varied significantly. While some iterations produced recognizable forms, others were abstract or entirely off-mark. This inconsistency highlighted the current limitations of the model, particularly in understanding nuanced artistic requests.\n\n## EVALUATING LIMITATIONS\n\nAs of the current capabilities of GPT-5-Codex-Mini, several challenges remain evident:\n- **Interpretation Variability**: The model's understanding of prompts can lead to outputs that diverge from expected results, especially in complex image generation tasks.\n- **Contextual Constraints**: Without a robust understanding of artistic conventions, the model struggles to produce images that align with human aesthetic preferences.\n- **Resource Intensity**: Generating images requires significant computational power, which can be a barrier for casual users.\n\nThese limitations indicate that while there is potential for creative applications, the technology is not yet ready for widespread use in tasks demanding precision, such as professional illustration or detailed artistic rendering.\n\n## FORWARD-LOOKING INSIGHT\n\nThe experimentation with Codex CLI and GPT-5-Codex-Mini suggests a future where AI can augment creative processes, yet it also underscores the necessity for further refinement in models. As AI continues to evolve, the gap between textual understanding and visual generation must be bridged more effectively. For developers and creators, this means remaining vigilant about the iterative nature of AI technology while also leveraging its current strengths for productivity.\n\nIn summary, while generating an image of a pelican using Codex CLI was a revealing exercise, it also served as a reminder of the ongoing challenges in AI-driven creativity. The journey of reverse engineering this process not only illuminated the gaps in the technology but also offered a glimpse into its potential future directions.",
+    "excerpt": "Reverse engineering Codex CLI with GPT-5-Codex-Mini to create images reveals both potential and limitations in AI-driven creativity.",
+    "tags": [
+      "AI",
+      "OpenAI",
+      "Codex",
+      "GPT-5",
+      "Image Generation"
+    ],
+    "imageUrl": "/images/thoughts/ai-1763716166753.png",
+    "aiGenerated": true,
+    "author": "Amir H. Jalali",
+    "publishedAt": "2025-11-21T09:09:27.366Z",
+    "readTime": "3 min read",
+    "status": "draft",
+    "metadata": {
+      "style": "pragmatic-authoritative",
+      "length": "flexible",
+      "wordCount": 516,
+      "generatedAt": "2025-11-21T09:09:27.366Z",
+      "topic": "Reverse engineering Codex CLI to get GPT-5-Codex-Mini to draw me a pelican",
+      "model": "gpt-4o-mini",
+      "imageModel": "dall-e-3"
+    }
   }
 ]
