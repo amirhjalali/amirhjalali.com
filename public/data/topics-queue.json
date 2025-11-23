@@ -1,6 +1,38 @@
 {
   "topics": [
     {
+      "topic": "Show HN: Forty.News – Daily news, but on a 40-year delay",
+      "originalTitle": "Show HN: Forty.News – Daily news, but on a 40-year delay",
+      "source": "Hacker News",
+      "url": "https://forty.news",
+      "score": 331,
+      "fetchedAt": "2025-11-23T06:09:58.003Z"
+    },
+    {
+      "topic": "A Reverse Engineer's Anatomy of the macOS Boot Chain and Security Architecture",
+      "originalTitle": "A Reverse Engineer's Anatomy of the macOS Boot Chain and Security Architecture",
+      "source": "Hacker News",
+      "url": "https://stack.int.mov/a-reverse-engineers-anatomy-of-the-macos-boot-chain-security-architecture/",
+      "score": 139,
+      "fetchedAt": "2025-11-23T06:09:58.003Z"
+    },
+    {
+      "topic": "Show HN: I built a wizard to turn ideas into AI coding agent-ready specs",
+      "originalTitle": "Show HN: I built a wizard to turn ideas into AI coding agent-ready specs",
+      "source": "Hacker News",
+      "url": "https://vibescaffold.dev/",
+      "score": 91,
+      "fetchedAt": "2025-11-23T06:09:58.003Z"
+    },
+    {
+      "topic": "An Economy of AI Agents",
+      "originalTitle": "An Economy of AI Agents",
+      "source": "Hacker News",
+      "url": "https://arxiv.org/abs/2509.01063",
+      "score": 88,
+      "fetchedAt": "2025-11-23T06:09:58.003Z"
+    },
+    {
       "topic": "Study identifies weaknesses in how AI systems are evaluated",
       "originalTitle": "Study identifies weaknesses in how AI systems are evaluated",
       "source": "Hacker News",
@@ -121,5 +153,5 @@
       "fetchedAt": "2025-11-02T20:08:33.686Z"
     }
   ],
-  "lastUpdated": "2025-11-09T06:04:10.238Z"
+  "lastUpdated": "2025-11-23T06:09:58.155Z"
 }
