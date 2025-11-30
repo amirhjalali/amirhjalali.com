@@ -1,6 +1,46 @@
 {
   "topics": [
     {
+      "topic": "Leak confirms OpenAI is preparing ads on ChatGPT for public roll out",
+      "originalTitle": "Leak confirms OpenAI is preparing ads on ChatGPT for public roll out",
+      "source": "Hacker News",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/leak-confirms-openai-is-preparing-ads-on-chatgpt-for-public-roll-out/",
+      "score": 690,
+      "fetchedAt": "2025-11-30T06:10:27.638Z"
+    },
+    {
+      "topic": "Anthony Bourdain's Lost Li.st's",
+      "originalTitle": "Anthony Bourdain's Lost Li.st's",
+      "source": "Hacker News",
+      "url": "https://bourdain.greg.technology/",
+      "score": 302,
+      "fetchedAt": "2025-11-30T06:10:27.638Z"
+    },
+    {
+      "topic": "A new myth appeared during the presidential campaign of Andrew Jackson",
+      "originalTitle": "A new myth appeared during the presidential campaign of Andrew Jackson",
+      "source": "Hacker News",
+      "url": "https://www.historynewsnetwork.org/article/self-made",
+      "score": 130,
+      "fetchedAt": "2025-11-30T06:10:27.638Z"
+    },
+    {
+      "topic": "Student perceptions of AI coding assistants in learning",
+      "originalTitle": "Student perceptions of AI coding assistants in learning",
+      "source": "Hacker News",
+      "url": "https://arxiv.org/abs/2507.22900",
+      "score": 121,
+      "fetchedAt": "2025-11-30T06:10:27.638Z"
+    },
+    {
+      "topic": "Matrix Core Programming on AMD CDNA Architecture",
+      "originalTitle": "Matrix Core Programming on AMD CDNA Architecture",
+      "source": "Hacker News",
+      "url": "https://rocm.blogs.amd.com/software-tools-optimization/matrix-cores-cdna/README.html",
+      "score": 13,
+      "fetchedAt": "2025-11-30T06:10:27.638Z"
+    },
+    {
       "topic": "Show HN: Forty.News – Daily news, but on a 40-year delay",
       "originalTitle": "Show HN: Forty.News – Daily news, but on a 40-year delay",
       "source": "Hacker News",
@@ -153,5 +193,5 @@
       "fetchedAt": "2025-11-02T20:08:33.686Z"
     }
   ],
-  "lastUpdated": "2025-11-23T06:09:58.155Z"
+  "lastUpdated": "2025-11-30T06:10:27.843Z"
 }
