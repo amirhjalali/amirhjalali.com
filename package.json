@@ -15,7 +15,7 @@
     "generate:published": "node scripts/generate-published-json.mjs",
     "test": "echo \"No tests configured\"",
     "prepare": "echo \"Preparing project...\"",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate || echo 'Skipping Prisma generation - DATABASE_URL not set'"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
