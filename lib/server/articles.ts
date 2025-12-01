@@ -21,10 +21,10 @@ export async function getPublishedArticles(): Promise<Article[]> {
   })
 
   // Format to match Article type
-  return articles.map(article => ({
+  return articles.map((article): Article => ({
     ...article,
     publishedAt: article.publishedAt?.toISOString() || new Date().toISOString(),
-  })) as Article[]
+  }))
 }
 
 export async function getPublishedArticleById(id: string): Promise<Article | null> {
