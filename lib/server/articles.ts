@@ -21,7 +21,7 @@ export async function getPublishedArticles(): Promise<Article[]> {
   })
 
   // Format to match Article type
-  return articles.map((article): Article => ({
+  return articles.map((article: any): Article => ({
     ...article,
     publishedAt: article.publishedAt?.toISOString() || new Date().toISOString(),
   }))

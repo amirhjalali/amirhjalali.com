@@ -4,8 +4,14 @@ import { getPublishedArticleById, getPublishedArticles } from '@/lib/server/arti
 
 // Generate static params for all article IDs
 export async function generateStaticParams() {
-  const articles = await getPublishedArticles()
-  return articles.map((article) => ({ id: article.id }))
+  try {
+    const articles = await getPublishedArticles()
+    return articles.map((article) => ({ id: article.id }))
+  } catch (error) {
+    // Return empty array if database is not available (e.g., during local build)
+    console.warn('Could not fetch articles for static generation:', error)
+    return []
+  }
 }
 
 interface ThoughtPageParams {
