@@ -3,6 +3,11 @@ import { prisma } from '@/lib/db'
 
 // GET /api/drafts - List all drafts
 export async function GET(_request: NextRequest) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const drafts = await prisma.draft.findMany({
       orderBy: { updatedAt: 'desc' },
@@ -18,8 +23,15 @@ export async function GET(_request: NextRequest) {
   }
 }
 
+import { getSession } from '@/app/actions/auth'
+
 // POST /api/drafts - Create new draft
 export async function POST(request: NextRequest) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const body = await request.json()
 
