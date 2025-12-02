@@ -31,7 +31,7 @@ export default function Home() {
         </motion.div>
 
         {/* Ghost Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full mb-24">
           <Link href="/projects" className="block h-full">
             <GhostCard
               title="Selected Works"
@@ -48,22 +48,45 @@ export default function Home() {
               className="h-full"
             />
           </Link>
-          <Link href="/resume" className="block h-full">
-            <GhostCard
-              title="Resume"
-              description="Professional experience, skills, and background."
-              delay={0.6}
-              className="h-full"
-            />
-          </Link>
         </div>
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 1 }}
+          className="text-center max-w-2xl mx-auto mb-24"
+        >
+          <h2 className="font-serif text-3xl md:text-4xl font-light mb-6 text-[#EAEAEA]">
+            Let's Build Something Amazing
+          </h2>
+          <p className="font-mono text-sm text-[#888888] mb-8 leading-relaxed">
+            I'm always exploring new ideas and open to working on innovative AI projects.
+            Whether you're looking for technical expertise, strategic guidance, or investment opportunities,
+            let's collaborate to create the future.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="mailto:amir.h.jalali@gmail.com"
+              className="px-8 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:bg-white transition-colors"
+            >
+              Get in Touch
+            </a>
+            <Link
+              href="/resume"
+              className="px-8 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 hover:border-white/20 transition-all"
+            >
+              View Resume
+            </Link>
+          </div>
+        </motion.div>
 
         {/* Minimalist Footer/Nav */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-12 left-0 right-0 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
+          className="flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
         >
           <a href="https://github.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
             GitHub
