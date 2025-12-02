@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { getSession } from '@/app/actions/auth';
 
 /**
  * Server-side API route for generating articles
@@ -119,6 +120,11 @@ async function downloadImageAsBase64(url: string): Promise<string> {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     // Get API key from environment (server-side only, never exposed to client)
     const apiKey = process.env.OPENAI_API_KEY;
