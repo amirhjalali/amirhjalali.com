@@ -2,8 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Printer, Download } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Printer, Download, Mail } from 'lucide-react'
 import Spotlight from '@/components/Spotlight'
 import './print.css'
 
@@ -297,21 +296,20 @@ export default function ResumePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
+            <button
               onClick={() => window.print()}
-              className="px-6 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print"
+              className="px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center gap-2 no-print"
             >
               <Printer className="w-4 h-4" />
               Print Resume
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={downloadPDF}
-              variant="outline"
-              className="px-6 py-3 border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print hover:bg-white/5"
+              className="px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center gap-2 no-print"
             >
               <Download className="w-4 h-4" />
               Download PDF
-            </Button>
+            </button>
 
             {/* Filter buttons */}
             <div className="flex gap-2">
@@ -319,9 +317,9 @@ export default function ResumePage() {
                 <button
                   key={type}
                   onClick={() => setSelectedType(type as any)}
-                  className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest transition-all ${selectedType === type
-                      ? 'bg-white/20 text-white'
-                      : 'text-[#888888] hover:text-[#EAEAEA] hover:bg-white/10'
+                  className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest transition-all border border-transparent ${selectedType === type
+                    ? 'bg-white/10 text-white border-white/10'
+                    : 'text-[#888888] hover:text-[#EAEAEA] hover:bg-white/5'
                     }`}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -341,7 +339,7 @@ export default function ResumePage() {
               className="relative"
             >
               {/* Timeline line */}
-              <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10"></div>
+              <div className="absolute left-8 top-0 bottom-0 w-px bg-white/5"></div>
 
               {filteredExperience.map((exp, _index) => (
                 <motion.div
@@ -350,46 +348,44 @@ export default function ResumePage() {
                   className="relative pl-20 pb-12"
                 >
                   {/* Timeline dot */}
-                  <div className={`absolute left-6 w-4 h-4 rounded-full border-2 ${exp.type === 'work'
-                      ? 'bg-[#EAEAEA] border-white/50'
-                      : 'bg-[#888888] border-white/30'
-                    }`}>
-                    <div className="absolute inset-0 rounded-full animate-ping opacity-30 bg-current"></div>
-                  </div>
+                  <div className={`absolute left-[29px] top-2 w-1.5 h-1.5 rounded-full ${exp.type === 'work'
+                    ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]'
+                    : 'bg-[#888888]'
+                    }`} />
 
                   {/* Content */}
-                  <div className="glass p-6 rounded-2xl border border-white/10 hover:bg-white/5 transition-all backdrop-blur-md">
-                    <div className="flex flex-wrap justify-between items-start mb-3">
-                      <h3 className="text-xl font-serif font-light text-[#EAEAEA]">{exp.title}</h3>
+                  <div className="glass p-8 rounded-xl border border-white/10 hover:bg-white/5 transition-all backdrop-blur-md group">
+                    <div className="flex flex-wrap justify-between items-start mb-4">
+                      <h3 className="text-xl font-serif font-light text-[#EAEAEA] group-hover:text-white transition-colors">{exp.title}</h3>
                       <span className="text-xs font-mono uppercase tracking-widest text-[#888888]">{exp.period}</span>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="text-white font-medium">{exp.company}</span>
-                      <span className="text-[#888888]">•</span>
-                      <span className="text-[#888888]">{exp.location}</span>
+                    <div className="flex flex-wrap gap-2 mb-6 text-sm font-mono text-[#888888]">
+                      <span className="text-white/80">{exp.company}</span>
+                      <span>•</span>
+                      <span>{exp.location}</span>
                     </div>
 
-                    <p className="text-[#EAEAEA]/80 mb-4 leading-relaxed font-light">
+                    <p className="text-[#EAEAEA]/70 mb-6 leading-relaxed font-light">
                       {exp.description}
                     </p>
 
                     {/* Achievements */}
-                    <ul className="space-y-2 mb-4">
+                    <ul className="space-y-3 mb-6">
                       {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-[#EAEAEA]/80 font-light">
-                          <div className="w-1.5 h-1.5 bg-white/50 rounded-full mt-2 flex-shrink-0"></div>
+                        <li key={i} className="flex items-start gap-3 text-sm text-[#EAEAEA]/60 font-light group-hover:text-[#EAEAEA]/80 transition-colors">
+                          <div className="w-1 h-1 bg-white/30 rounded-full mt-2 flex-shrink-0 group-hover:bg-white/60 transition-colors"></div>
                           {achievement}
                         </li>
                       ))}
                     </ul>
 
                     {/* Skills */}
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-2">
                       {exp.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="text-[10px] px-2 py-1 border border-white/10 rounded-md font-mono uppercase tracking-widest text-[#888888]"
+                          className="text-[10px] px-2 py-1 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
                         >
                           {skill}
                         </span>
@@ -409,19 +405,19 @@ export default function ResumePage() {
               transition={{ delay: 0.4 }}
               className="sticky top-24"
             >
-              <h2 className="text-2xl mb-6 font-serif font-light text-[#EAEAEA]">Technical Skills</h2>
+              <h2 className="text-2xl mb-8 font-serif font-light text-[#EAEAEA]">Technical Skills</h2>
 
               <div className="space-y-6">
                 {Object.entries(skills).map(([category, skillList]) => (
-                  <div key={category} className="glass p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md">
-                    <h3 className="text-sm mb-3 font-mono uppercase tracking-widest text-[#EAEAEA]">
+                  <div key={category} className="glass p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors">
+                    <h3 className="text-xs mb-4 font-mono uppercase tracking-widest text-[#EAEAEA]/80 border-b border-white/5 pb-2">
                       {category}
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {skillList.map((skill) => (
                         <span
                           key={skill}
-                          className="text-[10px] px-3 py-1.5 bg-black/20 hover:bg-black/40 rounded-full transition-colors text-[#888888] hover:text-[#EAEAEA]"
+                          className="text-[10px] px-2 py-1 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] hover:border-white/30 hover:text-[#EAEAEA] transition-all cursor-default"
                         >
                           {skill}
                         </span>
@@ -432,12 +428,13 @@ export default function ResumePage() {
               </div>
 
               {/* Contact CTA */}
-              <div className="mt-8 glass p-6 rounded-xl border border-white/10 text-center bg-white/5 backdrop-blur-md">
-                <h3 className="text-lg mb-3 font-serif font-light text-[#EAEAEA]">Let's Connect</h3>
-                <p className="text-[#888888] mb-4 text-sm font-mono">
+              <div className="mt-12 glass p-8 rounded-xl border border-white/10 text-center bg-white/5 backdrop-blur-md">
+                <h3 className="text-xl mb-4 font-serif font-light text-[#EAEAEA]">Let's Connect</h3>
+                <p className="text-[#888888] mb-6 text-sm font-mono leading-relaxed">
                   Interested in collaboration or have questions about my experience?
                 </p>
-                <a href="/contact" className="block w-full px-4 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:scale-105 transition-transform text-center">
+                <a href="/contact" className="inline-flex items-center gap-2 px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/10 hover:border-white/30 transition-all group">
+                  <Mail className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   Get in Touch
                 </a>
               </div>
