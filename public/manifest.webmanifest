@@ -33,7 +33,11 @@
       "purpose": "any"
     }
   ],
-  "categories": ["business", "developer", "education"],
+  "categories": [
+    "business",
+    "developer",
+    "education"
+  ],
   "lang": "en-US",
   "dir": "ltr",
   "prefer_related_applications": false,
@@ -43,13 +47,12 @@
       "name": "Projects",
       "short_name": "Projects",
       "url": "/projects",
-      "icons": [{"src": "/icon-192.png", "sizes": "192x192"}]
-    },
-    {
-      "name": "Contact",
-      "short_name": "Contact",
-      "url": "/contact",
-      "icons": [{"src": "/icon-192.png", "sizes": "192x192"}]
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

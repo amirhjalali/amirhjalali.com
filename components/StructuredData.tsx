@@ -99,12 +99,6 @@ export default function StructuredData() {
             "position": 4,
             "name": "Resume",
             "item": "https://amirhjalali.com/resume"
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "name": "Contact",
-            "item": "https://amirhjalali.com/contact"
           }
         ]
       }

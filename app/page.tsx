@@ -20,7 +20,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="text-center mb-24"
+          className="text-center mb-12"
         >
           <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-light tracking-tight mb-6 text-[#EAEAEA]">
             Amir H. Jalali
@@ -31,7 +31,7 @@ export default function Home() {
         </motion.div>
 
         {/* Ghost Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
           <Link href="/projects" className="block h-full">
             <GhostCard
               title="Selected Works"
@@ -48,6 +48,14 @@ export default function Home() {
               className="h-full"
             />
           </Link>
+          <Link href="/resume" className="block h-full">
+            <GhostCard
+              title="Resume"
+              description="Professional experience, skills, and background."
+              delay={0.6}
+              className="h-full"
+            />
+          </Link>
         </div>
 
         {/* Minimalist Footer/Nav */}
@@ -57,9 +65,6 @@ export default function Home() {
           transition={{ delay: 1, duration: 1 }}
           className="absolute bottom-12 left-0 right-0 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
         >
-          <Link href="/contact" className="hover:text-[#EAEAEA] transition-colors">
-            Contact
-          </Link>
           <a href="https://github.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
             GitHub
           </a>

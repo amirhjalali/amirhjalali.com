@@ -18,7 +18,7 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/projects', label: 'Projects' },
   { href: '/thoughts', label: 'Thoughts' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/resume', label: 'Resume' },
 ]
 
 export default function NavigationEnhanced() {
