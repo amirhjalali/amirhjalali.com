@@ -232,108 +232,80 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
         </motion.footer>
       </div>
 
-      <style jsx>{`
-        .article-content h1 {
+      <style jsx global>{`
+        .article-content h1, 
+        .article-content h2, 
+        .article-content h3, 
+        .article-content h4 {
           font-family: var(--font-cormorant), serif;
-          font-size: 2.5rem;
-          font-weight: 300;
-          margin: 3rem 0 1.5rem 0;
           color: #EAEAEA;
+          font-weight: 300;
           letter-spacing: -0.02em;
         }
-        .article-content h2 {
-          font-family: var(--font-cormorant), serif;
-          font-size: 2rem;
-          font-weight: 300;
-          margin: 2.5rem 0 1.25rem 0;
-          color: #EAEAEA;
-          letter-spacing: -0.01em;
-        }
-        .article-content h3 {
-          font-family: var(--font-cormorant), serif;
-          font-size: 1.5rem;
-          font-weight: 400;
-          margin: 2rem 0 1rem 0;
-          color: #EAEAEA;
-        }
+        
+        .article-content h1 { font-size: 2.5rem; margin-top: 3rem; margin-bottom: 1.5rem; }
+        .article-content h2 { font-size: 2rem; margin-top: 2.5rem; margin-bottom: 1.25rem; }
+        .article-content h3 { font-size: 1.75rem; margin-top: 2rem; margin-bottom: 1rem; }
+        
         .article-content p {
           font-family: 'Inter', sans-serif;
-          margin-bottom: 1.5rem;
-          line-height: 1.8;
           font-size: 1.125rem;
-          color: #EAEAEA;
+          line-height: 1.8;
+          margin-bottom: 1.5rem;
+          color: rgba(234, 234, 234, 0.9);
           font-weight: 300;
         }
-        .article-content ul, .article-content ol {
+
+        .article-content ul, 
+        .article-content ol {
           margin: 1.5rem 0;
           padding-left: 1.5rem;
-          color: #EAEAEA;
-        }
-        .article-content li {
-          margin: 1rem 0;
-          line-height: 1.8;
+          color: rgba(234, 234, 234, 0.9);
+          font-family: 'Inter', sans-serif;
           font-weight: 300;
         }
+        
+        .article-content li {
+          margin: 0.75rem 0;
+          line-height: 1.7;
+        }
+
         .article-content strong {
           color: #FFFFFF;
-          font-weight: 500;
+          font-weight: 600;
         }
-        .article-content em {
-          color: #EAEAEA;
+
+        .article-content blockquote {
+          border-left: 2px solid rgba(255, 255, 255, 0.2);
+          padding-left: 1.5rem;
+          margin: 2rem 0;
           font-style: italic;
+          color: rgba(234, 234, 234, 0.7);
         }
+
         .article-content code {
-          background: rgba(255, 255, 255, 0.05);
-          padding: 0.125rem 0.25rem;
-          border-radius: 0.25rem;
           font-family: var(--font-jetbrains), monospace;
+          background: rgba(255, 255, 255, 0.1);
+          padding: 0.2em 0.4em;
+          border-radius: 0.25rem;
           font-size: 0.9em;
           color: #EAEAEA;
         }
-        .article-gallery {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1rem;
-          margin: 2rem 0;
-          padding: 1rem;
-          background: rgba(255, 255, 255, 0.03);
-          border-radius: 1rem;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .gallery-image {
-          width: 100%;
-          height: auto;
+
+        .article-content pre {
+          background: rgba(0, 0, 0, 0.5);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 1.5rem;
           border-radius: 0.75rem;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .gallery-image:hover {
-          transform: scale(1.02);
-          box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
-        }
-        .article-videos {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
+          overflow-x: auto;
           margin: 2rem 0;
         }
-        .article-videos iframe {
-          width: 100%;
-          max-width: 560px;
-          height: 315px;
-          border-radius: 1rem;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          margin: 0 auto;
-        }
-        @media (min-width: 768px) {
-          .article-videos {
-            flex-direction: row;
-            justify-content: center;
-          }
-          .article-videos iframe {
-            flex: 1;
-            max-width: calc(50% - 0.75rem);
-          }
+
+        .article-content pre code {
+          background: transparent;
+          padding: 0;
+          color: inherit;
+          font-size: 0.9rem;
         }
       `}</style>
     </div>

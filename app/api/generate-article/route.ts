@@ -121,7 +121,10 @@ async function downloadImageAsBase64(url: string): Promise<string> {
 
 export async function POST(request: NextRequest) {
   const session = await getSession()
-  if (!session) {
+  const authHeader = request.headers.get('authorization');
+  const isCron = process.env.CRON_SECRET && authHeader === `Bearer ${process.env.CRON_SECRET}`;
+
+  if (!session && !isCron) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

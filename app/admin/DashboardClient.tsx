@@ -12,16 +12,16 @@ import {
   Trash2,
   LogOut,
   Loader2,
-  AlertCircle,
   Edit,
   Copy,
   Search,
   Upload,
   CheckSquare,
-  Square
+  Square,
+  Sparkles,
+  Plus
 } from 'lucide-react'
 import DraftEditor from '@/components/DraftEditor'
-import PublishSync from '@/components/PublishSync'
 
 interface DashboardClientProps {
   user: { username: string; role: string }
@@ -33,6 +33,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   const [selectedDraft, setSelectedDraft] = useState<Draft | null>(null)
   const [editingDraft, setEditingDraft] = useState<Draft | null>(null)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
+  const [isGenerating, setIsGenerating] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<'date' | 'title'>('date')
@@ -90,6 +91,20 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
     )
   }, [publishedArticles])
+
+  const handleGenerateArticle = async () => {
+    setIsGenerating(true)
+    try {
+      const draft = await apiClient.generateArticle()
+      await loadData()
+      setSelectedDraft(draft)
+    } catch (error) {
+      console.error('Error generating article:', error)
+      alert('Failed to generate article. Please try again.')
+    } finally {
+      setIsGenerating(false)
+    }
+  }
 
   const handlePublish = async (draftId: string) => {
     setActionLoading(draftId)
@@ -194,17 +209,26 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     if (!file) return
 
     const reader = new FileReader()
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       const content = event.target?.result as string
-      // Parse markdown (simple implementation)
       const lines = content.split('\n')
-      const title = lines[0].replace(/^#\s*/, '')
+      const title = lines[0].replace(/^#\s*/, '') || 'Untitled Import'
       const excerpt = lines[2] || ''
-      const articleContent = lines.slice(4).join('\n')
+      const articleContent = lines.slice(4).join('\n') || content
 
-      // Create draft from imported markdown
-      // This would use saveDraftArticle with parsed data
-      console.log('Import:', { title, excerpt, content: articleContent })
+      try {
+        await apiClient.createDraft({
+          title,
+          excerpt,
+          content: articleContent,
+          tags: ['Imported'],
+          aiGenerated: false
+        })
+        await loadData()
+      } catch (error) {
+        console.error('Error importing draft:', error)
+        alert('Failed to import draft.')
+      }
     }
     reader.readAsText(file)
   }
@@ -221,421 +245,306 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     }
   }
 
-
-
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       {/* Background effects */}
-      <div className="absolute inset-0 mesh-gradient opacity-20" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDYwIDAgTCAwIDAgMCA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuMDMiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
+      <div className="noise-overlay" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/5 via-[#050505] to-[#050505]" />
 
       <div className="relative z-10 px-6 py-12 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
           <div>
-            <h1 className="text-4xl md:text-5xl font-space mb-2">
-              <span className="text-gradient">Admin Dashboard</span>
+            <h1 className="text-4xl font-serif font-light mb-2 text-white">
+              Admin Dashboard
             </h1>
-            <p className="text-muted-foreground">
+            <p className="font-mono text-xs uppercase tracking-widest text-[#888888]">
               Welcome back, {user.username}
             </p>
           </div>
-          <button
-            onClick={logout}
-            className="flex items-center gap-2 px-4 py-2 glass border border-border rounded-xl hover:border-red-500/50 transition-all"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleGenerateArticle}
+              disabled={isGenerating}
+              className="flex items-center gap-2 px-4 py-2 bg-white text-black font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:bg-[#EAEAEA] transition-colors disabled:opacity-50"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4" />
+                  Generate Article
+                </>
+              )}
+            </button>
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-full hover:bg-white/5 transition-colors font-mono text-xs uppercase tracking-widest text-[#888888] hover:text-white"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </button>
+          </div>
         </div>
 
-        {/* Publish Sync Warning */}
-        <PublishSync />
-
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass p-6 rounded-2xl border border-border cursor-pointer"
+            className={`p-6 rounded-xl border transition-all cursor-pointer ${!showPublished ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10 hover:border-white/20'}`}
             onClick={() => setShowPublished(false)}
           >
-            <div className="flex items-center gap-3 mb-2">
-              <FileText className="w-5 h-5 text-ai-teal dark:text-ai-green" />
-              <h3 className="text-sm text-muted-foreground">Drafts</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888]">Drafts</h3>
+              <FileText className="w-4 h-4 text-[#888888]" />
             </div>
-            <p className="text-3xl font-bold">{drafts.length}</p>
+            <p className="text-4xl font-serif font-light">{drafts.length}</p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
-            className="glass p-6 rounded-2xl border border-border cursor-pointer"
+            className={`p-6 rounded-xl border transition-all cursor-pointer ${showPublished ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10 hover:border-white/20'}`}
             onClick={() => setShowPublished(true)}
           >
-            <div className="flex items-center gap-3 mb-2">
-              <CheckCircle className="w-5 h-5 text-ai-teal dark:text-ai-green" />
-              <h3 className="text-sm text-muted-foreground">Published</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888]">Published</h3>
+              <CheckCircle className="w-4 h-4 text-[#888888]" />
             </div>
-            <p className="text-3xl font-bold">{publishedArticles.length}</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="glass p-6 rounded-2xl border border-border md:col-span-2"
-          >
-            <h3 className="text-sm text-muted-foreground mb-2">AI Article Generator</h3>
-            <p className="text-xs text-muted-foreground mb-4">
-              Articles are automatically generated daily at 9 AM UTC via GitHub Actions.
-              New drafts will appear here for review and publishing.
-            </p>
-            <a
-              href="https://github.com/amirhjalali/amirhjalali.com/actions/workflows/ai-article-generator.yml"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-              </svg>
-              Generate Article on GitHub
-            </a>
-            <p className="text-xs text-muted-foreground mt-3 opacity-70">
-              Click to open GitHub Actions and manually trigger article generation, or wait for the automatic daily run.
-            </p>
+            <p className="text-4xl font-serif font-light">{publishedArticles.length}</p>
           </motion.div>
         </div>
 
         {/* Toolbar */}
-        <div className="glass p-4 rounded-2xl border border-border mb-6">
-          <div className="flex flex-col md:flex-row md:flex-wrap items-stretch md:items-center gap-4">
-            {/* Search */}
-            <div className="flex-1 min-w-[200px]">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search drafts..."
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 glass border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm placeholder:text-muted-foreground/50"
-                />
-              </div>
-            </div>
+        <div className="mb-8 flex flex-col md:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#888888]" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-transparent border border-white/10 rounded-lg focus:outline-none focus:border-white/30 text-sm font-mono placeholder:text-[#888888]"
+            />
+          </div>
 
-            {/* Sort */}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'date' | 'title')}
-              className="px-4 py-2 glass border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
-            >
-              <option value="date">Sort by Date</option>
-              <option value="title">Sort by Title</option>
-            </select>
-
-            {/* Refresh Drafts */}
-            <button
-              onClick={async () => {
-                setRefreshing(true)
-                try {
-                  await loadData()
-                } finally {
-                  setRefreshing(false)
-                }
-              }}
-              disabled={refreshing}
-              className="px-4 py-2 glass border border-border rounded-xl hover:border-ai-teal/50 transition-colors text-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {refreshing ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Refreshing...
-                </>
-              ) : (
-                <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                  Refresh Drafts
-                </>
-              )}
-            </button>
-
-            {/* Import */}
-            <label className="px-4 py-2 glass border border-border rounded-xl cursor-pointer hover:border-ai-teal/50 transition-colors text-sm flex items-center gap-2">
-              <Upload className="w-4 h-4" />
-              Import MD
+          <div className="flex gap-2">
+            <label className="px-4 py-2 border border-white/10 rounded-lg cursor-pointer hover:bg-white/5 transition-colors text-xs font-mono uppercase tracking-widest flex items-center gap-2 text-[#888888] hover:text-white">
+              <Upload className="w-3 h-3" />
+              Import
               <input type="file" accept=".md,.markdown" onChange={handleImport} className="hidden" />
             </label>
 
-            {/* Bulk Actions */}
-            {selectedIds.size > 0 && (
-              <>
-                <button
-                  onClick={handleBulkPublish}
-                  className="px-4 py-2 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-2"
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  Publish {selectedIds.size}
-                </button>
-                <button
-                  onClick={handleBulkDelete}
-                  className="px-4 py-2 glass border border-red-500/50 text-red-500 hover:bg-red-500/10 rounded-xl transition-all text-sm flex items-center gap-2"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  Delete {selectedIds.size}
-                </button>
-              </>
-            )}
+            <button
+              onClick={async () => {
+                setRefreshing(true)
+                await loadData()
+                setRefreshing(false)
+              }}
+              disabled={refreshing}
+              className="px-4 py-2 border border-white/10 rounded-lg hover:bg-white/5 transition-colors text-xs font-mono uppercase tracking-widest flex items-center gap-2 text-[#888888] hover:text-white disabled:opacity-50"
+            >
+              <Loader2 className={`w-3 h-3 ${refreshing ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
           </div>
         </div>
 
         {/* Content */}
         {!showPublished ? (
           /* Drafts View */
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left: List of Drafts */}
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-semibold">Drafts ({filteredDrafts.length})</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* List */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="font-serif text-xl font-light">Drafts</h2>
                 {filteredDrafts.length > 0 && (
                   <button
                     onClick={toggleSelectAll}
-                    className="text-sm text-ai-teal dark:text-ai-green hover:underline flex items-center gap-2"
+                    className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white"
                   >
-                    {selectedIds.size === filteredDrafts.length ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4" />}
                     {selectedIds.size === filteredDrafts.length ? 'Deselect All' : 'Select All'}
                   </button>
                 )}
               </div>
 
               {filteredDrafts.length === 0 ? (
-                <div className="glass p-8 rounded-2xl border border-border text-center">
-                  <AlertCircle className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-                  <p className="text-muted-foreground">
-                    {searchQuery ? 'No drafts match your search' : 'No drafts available'}
-                  </p>
+                <div className="p-12 border border-white/10 rounded-xl text-center">
+                  <p className="font-mono text-xs uppercase tracking-widest text-[#888888]">No drafts found</p>
                 </div>
               ) : (
-                <div className="space-y-3">
-                  {filteredDrafts.map((draft) => (
-                    <motion.div
-                      key={draft.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className={`glass p-4 rounded-xl border cursor-pointer transition-all ${selectedDraft?.id === draft.id
-                        ? 'border-ai-teal dark:border-ai-green'
-                        : 'border-border hover:border-ai-teal/50 dark:hover:border-ai-green/50'
-                        }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            toggleSelection(draft.id)
-                          }}
-                          className="mt-1 flex-shrink-0"
-                        >
-                          {selectedIds.has(draft.id) ? (
-                            <CheckSquare className="w-5 h-5 text-ai-teal dark:text-ai-green" />
-                          ) : (
-                            <Square className="w-5 h-5 text-muted-foreground" />
+                filteredDrafts.map((draft) => (
+                  <motion.div
+                    key={draft.id}
+                    layoutId={draft.id}
+                    onClick={() => setSelectedDraft(draft)}
+                    className={`p-4 rounded-xl border cursor-pointer transition-all group ${selectedDraft?.id === draft.id
+                        ? 'bg-white/10 border-white/30'
+                        : 'bg-transparent border-white/10 hover:border-white/20'
+                      }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          toggleSelection(draft.id)
+                        }}
+                        className="mt-1 text-[#888888] hover:text-white transition-colors"
+                      >
+                        {selectedIds.has(draft.id) ? (
+                          <CheckSquare className="w-4 h-4" />
+                        ) : (
+                          <Square className="w-4 h-4" />
+                        )}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-serif text-lg mb-1 truncate group-hover:text-white transition-colors">
+                          {draft.title}
+                        </h3>
+                        <p className="text-sm text-[#888888] line-clamp-2 font-light mb-3">
+                          {draft.excerpt}
+                        </p>
+                        <div className="flex items-center gap-3">
+                          {draft.aiGenerated && (
+                            <span className="px-2 py-0.5 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-[#888888]">
+                              AI
+                            </span>
                           )}
-                        </button>
-
-                        <div className="flex-1 min-w-0" onClick={() => setSelectedDraft(draft)}>
-                          <h3 className="font-semibold mb-1 truncate">{draft.title}</h3>
-                          <p className="text-sm text-muted-foreground line-clamp-2">
-                            {draft.excerpt}
-                          </p>
-                          <div className="flex items-center gap-3 mt-2 flex-wrap">
-                            {draft.aiGenerated && (
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-ai-teal/20 dark:bg-ai-green/20 rounded-full text-xs">
-                                <div className="w-1.5 h-1.5 bg-ai-teal dark:bg-ai-green rounded-full" />
-                                AI Generated
-                              </span>
-                            )}
-                            <span className="text-xs text-muted-foreground">
-                              {draft.content.trim().split(/\s+/).length} words
-                            </span>
-                            <span className="text-xs text-muted-foreground">•</span>
-                            <span className="text-xs text-muted-foreground">
-                              {Math.ceil(draft.content.trim().split(/\s+/).length / 200)} min read
-                            </span>
-                          </div>
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#888888]">
+                            {new Date(draft.updatedAt).toLocaleDateString()}
+                          </span>
                         </div>
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
+                    </div>
+                  </motion.div>
+                ))
               )}
             </div>
 
-            {/* Right: Preview & Actions */}
+            {/* Preview */}
             <div className="lg:sticky lg:top-6 h-fit">
               {selectedDraft ? (
                 <motion.div
-                  key={selectedDraft.id}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="glass p-6 rounded-2xl border border-border"
+                  className="p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm"
                 >
-                  <h2 className="text-2xl font-semibold mb-4">Preview</h2>
-
-                  {/* Article Preview */}
-                  <div className="mb-6">
-                    <h3 className="text-xl font-semibold mb-2">{selectedDraft.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{selectedDraft.excerpt}</p>
-
+                  <div className="mb-8">
+                    <h2 className="font-serif text-3xl font-light mb-4">{selectedDraft.title}</h2>
+                    <p className="text-[#888888] font-light italic mb-6">{selectedDraft.excerpt}</p>
                     {selectedDraft.imageUrl && (
                       <img
                         src={selectedDraft.imageUrl}
                         alt={selectedDraft.title}
-                        className="w-full h-48 object-cover rounded-xl mb-4"
+                        className="w-full h-48 object-cover rounded-lg mb-6 border border-white/10"
                       />
                     )}
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {selectedDraft.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-accent rounded-full text-xs"
-                        >
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {selectedDraft.tags.map(tag => (
+                        <span key={tag} className="px-2 py-1 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-[#888888]">
                           {tag}
                         </span>
                       ))}
                     </div>
-
-                    <div className="prose prose-sm dark:prose-invert max-h-64 overflow-y-auto">
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: selectedDraft.content
-                            .replace(/^# /gm, '<h1>')
-                            .replace(/\n/g, '</h1><p>')
-                            .replace(/^## /gm, '<h2>')
-                            .replace(/^### /gm, '<h3>')
-                        }}
-                      />
-                    </div>
                   </div>
 
-                  {/* Actions */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={() => setEditingDraft(selectedDraft)}
-                      className="flex items-center justify-center gap-2 px-4 py-3 glass border border-border rounded-xl hover:border-ai-teal/50 transition-all"
+                      className="flex items-center justify-center gap-2 px-4 py-3 border border-white/10 rounded-lg hover:bg-white/5 transition-colors font-mono text-xs uppercase tracking-widest"
                     >
-                      <Edit className="w-4 h-4" />
+                      <Edit className="w-3 h-3" />
                       Edit
                     </button>
-
                     <button
                       onClick={() => handleDuplicate(selectedDraft.id)}
-                      disabled={actionLoading === selectedDraft.id}
-                      className="flex items-center justify-center gap-2 px-4 py-3 glass border border-border rounded-xl hover:border-ai-teal/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center justify-center gap-2 px-4 py-3 border border-white/10 rounded-lg hover:bg-white/5 transition-colors font-mono text-xs uppercase tracking-widest"
                     >
-                      {actionLoading === selectedDraft.id ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <Copy className="w-4 h-4" />
-                      )}
-                      Duplicate
+                      <Copy className="w-3 h-3" />
+                      Copy
                     </button>
-
                     <button
                       onClick={() => router.push(`/thoughts/${selectedDraft.id}`)}
-                      className="flex items-center justify-center gap-2 px-4 py-3 glass border border-border rounded-xl hover:border-ai-teal/50 transition-all col-span-2"
+                      className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 border border-white/10 rounded-lg hover:bg-white/5 transition-colors font-mono text-xs uppercase tracking-widest"
                     >
-                      <Eye className="w-4 h-4" />
-                      Full Preview
+                      <Eye className="w-3 h-3" />
+                      Preview
                     </button>
-
                     <button
                       onClick={() => handlePublish(selectedDraft.id)}
-                      disabled={actionLoading === selectedDraft.id}
-                      className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-xl hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed col-span-2"
+                      disabled={!!actionLoading}
+                      className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 bg-white text-black rounded-lg hover:bg-[#EAEAEA] transition-colors font-mono text-xs uppercase tracking-widest font-bold"
                     >
                       {actionLoading === selectedDraft.id ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          Publishing...
-                        </>
+                        <Loader2 className="w-3 h-3 animate-spin" />
                       ) : (
-                        <>
-                          <CheckCircle className="w-4 h-4" />
-                          Publish Article
-                        </>
+                        <CheckCircle className="w-3 h-3" />
                       )}
+                      Publish
                     </button>
-
                     <button
                       onClick={() => handleDelete(selectedDraft.id)}
-                      disabled={actionLoading === selectedDraft.id}
-                      className="flex items-center justify-center gap-2 px-4 py-3 glass border border-red-500/50 rounded-xl hover:bg-red-500/10 transition-all text-red-500 disabled:opacity-50 col-span-2"
+                      className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 border border-red-500/30 text-red-400 rounded-lg hover:bg-red-500/10 transition-colors font-mono text-xs uppercase tracking-widest"
                     >
-                      <Trash2 className="w-4 h-4" />
-                      Delete Draft
+                      <Trash2 className="w-3 h-3" />
+                      Delete
                     </button>
                   </div>
                 </motion.div>
               ) : (
-                <div className="glass p-12 rounded-2xl border border-border text-center">
-                  <Eye className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-                  <p className="text-muted-foreground">
-                    Select a draft to preview and manage
-                  </p>
+                <div className="p-12 border border-white/10 rounded-xl text-center flex flex-col items-center justify-center h-full min-h-[400px]">
+                  <p className="font-mono text-xs uppercase tracking-widest text-[#888888]">Select a draft to preview</p>
                 </div>
               )}
             </div>
           </div>
         ) : (
-          /* Published Articles View */
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Published Articles ({publishedArticles.length})</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {sortedPublishedArticles.map((article) => (
-                <motion.div
-                  key={article.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="glass p-4 rounded-xl border border-border hover:border-ai-teal/50 transition-all"
-                >
-                  <h3 className="font-semibold mb-2 truncate">{article.title}</h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-                    {article.excerpt}
-                  </p>
-                  <p className="text-xs text-muted-foreground mb-3">
-                    Published: {new Date(article.publishedAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric'
-                    })}
-                  </p>
+          /* Published View */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sortedPublishedArticles.map((article) => (
+              <motion.div
+                key={article.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all bg-white/5 backdrop-blur-sm group"
+              >
+                <h3 className="font-serif text-xl mb-2 line-clamp-2 group-hover:text-white transition-colors">
+                  {article.title}
+                </h3>
+                <p className="text-sm text-[#888888] line-clamp-2 font-light mb-4">
+                  {article.excerpt}
+                </p>
+                <div className="flex items-center justify-between mt-auto">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#888888]">
+                    {new Date(article.publishedAt).toLocaleDateString()}
+                  </span>
                   <div className="flex gap-2">
                     <button
                       onClick={() => router.push(`/thoughts/${article.id}`)}
-                      className="flex-1 px-3 py-2 glass border border-border rounded-lg text-sm hover:border-ai-teal/50"
+                      className="p-2 hover:text-white transition-colors text-[#888888]"
                     >
-                      View
+                      <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handleUnpublish(article.id)}
-                      className="px-3 py-2 glass border border-amber-500/50 rounded-lg text-sm hover:bg-amber-500/10 text-amber-500 transition-all"
+                      className="p-2 hover:text-red-400 transition-colors text-[#888888]"
                     >
-                      Unpublish
+                      <LogOut className="w-4 h-4" />
                     </button>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         )}
       </div>
 
-      {/* Draft Editor Modal */}
+      {/* Editor Modal */}
       <AnimatePresence>
         {editingDraft && (
           <DraftEditor
@@ -643,7 +552,6 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
             onSave={async () => {
               await loadData()
               setEditingDraft(null)
-              // Update selectedDraft if it was being edited
               if (selectedDraft?.id === editingDraft.id) {
                 setSelectedDraft(drafts.find(d => d.id === editingDraft.id) || null)
               }
