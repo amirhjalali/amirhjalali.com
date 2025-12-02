@@ -289,7 +289,9 @@ export default function ResumePage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
-            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">datAInnovation</span>
+            <span className="text-white/70">Dat</span>
+            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">AI</span>
+            <span className="text-white/70">nnovation</span>
           </h1>
           <p className="text-lg md:text-xl text-[#888888] font-mono max-w-4xl mx-auto mb-8">
             14+ years of progressive experience in Generative AI, Product Leadership, Data Engineering, and Technology Strategy. Currently building the future of creator-led commerce.
