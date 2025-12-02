@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Printer, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Spotlight from '@/components/Spotlight'
 import './print.css'
 
 const experience = [
@@ -265,9 +266,9 @@ const item = {
 
 export default function ResumePage() {
   const [selectedType, setSelectedType] = useState<'all' | 'work' | 'education'>('all')
-  
-  const filteredExperience = selectedType === 'all' 
-    ? experience 
+
+  const filteredExperience = selectedType === 'all'
+    ? experience
     : experience.filter(exp => exp.type === selectedType)
 
   const downloadPDF = () => {
@@ -276,11 +277,11 @@ export default function ResumePage() {
   }
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       {/* Background effects */}
-      <div className="absolute inset-0 mesh-gradient opacity-20" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDYwIDAgTCAwIDAgMCA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuMDMiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
-      
+      <div className="noise-overlay" />
+      <Spotlight />
+
       <div className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -288,17 +289,17 @@ export default function ResumePage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-6xl font-space mb-6">
+          <h1 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
             <span className="text-gradient">Data. AI. Innovation. Execution.</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-400 max-w-4xl mx-auto mb-8">
-14+ years of progressive experience in Generative AI, Product Leadership, Data Engineering, and Technology Strategy. Currently building the future of creator-led commerce.
+          <p className="text-lg md:text-xl text-[#888888] font-mono max-w-4xl mx-auto mb-8">
+            14+ years of progressive experience in Generative AI, Product Leadership, Data Engineering, and Technology Strategy. Currently building the future of creator-led commerce.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               onClick={() => window.print()}
-              className="px-6 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print"
+              className="px-6 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print"
             >
               <Printer className="w-4 h-4" />
               Print Resume
@@ -306,23 +307,22 @@ export default function ResumePage() {
             <Button
               onClick={downloadPDF}
               variant="outline"
-              className="px-6 py-3 font-semibold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print"
+              className="px-6 py-3 border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:scale-105 transition-transform inline-flex items-center gap-2 no-print hover:bg-white/5"
             >
               <Download className="w-4 h-4" />
               Download PDF
             </Button>
-            
+
             {/* Filter buttons */}
             <div className="flex gap-2">
               {['all', 'work', 'education'].map((type) => (
                 <button
                   key={type}
                   onClick={() => setSelectedType(type as any)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedType === type
-                      ? 'bg-white/20 text-white dark:text-white'
-                      : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest transition-all ${selectedType === type
+                      ? 'bg-white/20 text-white'
+                      : 'text-[#888888] hover:text-[#EAEAEA] hover:bg-white/10'
+                    }`}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}
                 </button>
@@ -341,8 +341,8 @@ export default function ResumePage() {
               className="relative"
             >
               {/* Timeline line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-ai-green via-ai-blue to-transparent"></div>
-              
+              <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10"></div>
+
               {filteredExperience.map((exp, _index) => (
                 <motion.div
                   key={exp.id}
@@ -350,36 +350,35 @@ export default function ResumePage() {
                   className="relative pl-20 pb-12"
                 >
                   {/* Timeline dot */}
-                  <div className={`absolute left-6 w-4 h-4 rounded-full border-2 ${
-                    exp.type === 'work' 
-                      ? 'bg-ai-green border-ai-green/50' 
-                      : 'bg-ai-blue border-ai-blue/50'
-                  }`}>
+                  <div className={`absolute left-6 w-4 h-4 rounded-full border-2 ${exp.type === 'work'
+                      ? 'bg-[#EAEAEA] border-white/50'
+                      : 'bg-[#888888] border-white/30'
+                    }`}>
                     <div className="absolute inset-0 rounded-full animate-ping opacity-30 bg-current"></div>
                   </div>
-                  
+
                   {/* Content */}
-                  <div className="glass p-6 rounded-2xl border border-white/10 hover:border-ai-green/30 transition-all">
+                  <div className="glass p-6 rounded-2xl border border-white/10 hover:bg-white/5 transition-all backdrop-blur-md">
                     <div className="flex flex-wrap justify-between items-start mb-3">
-                      <h3 className="text-xl text-foreground">{exp.title}</h3>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</span>
+                      <h3 className="text-xl font-serif font-light text-[#EAEAEA]">{exp.title}</h3>
+                      <span className="text-xs font-mono uppercase tracking-widest text-[#888888]">{exp.period}</span>
                     </div>
 
                     <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="text-ai-teal dark:text-ai-green font-medium">{exp.company}</span>
-                      <span className="text-gray-600 dark:text-gray-400">•</span>
-                      <span className="text-gray-600 dark:text-gray-400">{exp.location}</span>
+                      <span className="text-white font-medium">{exp.company}</span>
+                      <span className="text-[#888888]">•</span>
+                      <span className="text-[#888888]">{exp.location}</span>
                     </div>
 
-                    <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                    <p className="text-[#EAEAEA]/80 mb-4 leading-relaxed font-light">
                       {exp.description}
                     </p>
-                    
+
                     {/* Achievements */}
                     <ul className="space-y-2 mb-4">
                       {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                          <div className="w-1.5 h-1.5 bg-ai-green rounded-full mt-2 flex-shrink-0"></div>
+                        <li key={i} className="flex items-start gap-2 text-sm text-[#EAEAEA]/80 font-light">
+                          <div className="w-1.5 h-1.5 bg-white/50 rounded-full mt-2 flex-shrink-0"></div>
                           {achievement}
                         </li>
                       ))}
@@ -390,7 +389,7 @@ export default function ResumePage() {
                       {exp.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="text-xs px-2 py-1 bg-white/5 rounded-md text-gray-600 dark:text-gray-400"
+                          className="text-[10px] px-2 py-1 border border-white/10 rounded-md font-mono uppercase tracking-widest text-[#888888]"
                         >
                           {skill}
                         </span>
@@ -401,7 +400,7 @@ export default function ResumePage() {
               ))}
             </motion.div>
           </div>
-          
+
           {/* Skills Sidebar */}
           <div className="lg:col-span-1">
             <motion.div
@@ -410,19 +409,19 @@ export default function ResumePage() {
               transition={{ delay: 0.4 }}
               className="sticky top-24"
             >
-              <h2 className="text-2xl mb-6">Technical Skills</h2>
-              
+              <h2 className="text-2xl mb-6 font-serif font-light text-[#EAEAEA]">Technical Skills</h2>
+
               <div className="space-y-6">
                 {Object.entries(skills).map(([category, skillList]) => (
-                  <div key={category} className="glass p-4 rounded-xl border border-white/10">
-                    <h3 className="text-lg mb-3 text-ai-green">
+                  <div key={category} className="glass p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md">
+                    <h3 className="text-sm mb-3 font-mono uppercase tracking-widest text-[#EAEAEA]">
                       {category}
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {skillList.map((skill) => (
                         <span
                           key={skill}
-                          className="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-full transition-colors"
+                          className="text-[10px] px-3 py-1.5 bg-black/20 hover:bg-black/40 rounded-full transition-colors text-[#888888] hover:text-[#EAEAEA]"
                         >
                           {skill}
                         </span>
@@ -431,14 +430,14 @@ export default function ResumePage() {
                   </div>
                 ))}
               </div>
-              
+
               {/* Contact CTA */}
-              <div className="mt-8 glass p-6 rounded-xl border border-white/10 text-center">
-                <h3 className="text-lg mb-3">Let's Connect</h3>
-                <p className="text-gray-700 dark:text-gray-400 mb-4 text-sm">
+              <div className="mt-8 glass p-6 rounded-xl border border-white/10 text-center bg-white/5 backdrop-blur-md">
+                <h3 className="text-lg mb-3 font-serif font-light text-[#EAEAEA]">Let's Connect</h3>
+                <p className="text-[#888888] mb-4 text-sm font-mono">
                   Interested in collaboration or have questions about my experience?
                 </p>
-                <a href="/contact" className="block w-full px-4 py-3 bg-gradient-to-r from-ai-green to-ai-blue text-black font-semibold rounded-full hover:scale-105 transition-transform text-center">
+                <a href="/contact" className="block w-full px-4 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:scale-105 transition-transform text-center">
                   Get in Touch
                 </a>
               </div>
@@ -449,3 +448,4 @@ export default function ResumePage() {
     </div>
   )
 }
+

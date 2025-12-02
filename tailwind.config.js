@@ -16,38 +16,30 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "rgba(255, 255, 255, 0.08)",
+        input: "rgba(255, 255, 255, 0.05)",
+        ring: "rgba(255, 255, 255, 0.1)",
+        background: "#050505",
+        foreground: "#EAEAEA",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#EAEAEA",
+          foreground: "#050505",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "rgba(255, 255, 255, 0.03)",
+          foreground: "#EAEAEA",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#888888",
+          foreground: "#EAEAEA",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "rgba(255, 255, 255, 0.05)",
+          foreground: "#FFFFFF",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "rgba(255, 255, 255, 0.03)",
+          foreground: "#EAEAEA",
         },
         'ai-green': '#00FF88',
         'ai-blue': '#00D9FF',
@@ -55,7 +47,6 @@ module.exports = {
         'ai-amber': '#FFB800',
         'ai-teal': '#0D9488',
         'ai-cyan': '#0891B2',
-        'dark-bg': 'hsl(var(--dark-bg))',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -63,9 +54,9 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
-        'space': ['Space Grotesk', 'sans-serif'],
-        'lato': ['Lato', 'sans-serif'],
+        serif: ['var(--font-cormorant)', 'serif'],
+        mono: ['var(--font-jetbrains)', 'monospace'],
+        sans: ['Inter', 'sans-serif'],
       },
       animation: {
         'text-morph': 'morph 4s ease-in-out infinite',

@@ -19,11 +19,13 @@ model Article {
   excerpt       String   @db.Text
   content       String   @db.Text // Markdown
 
+
   // Metadata
   author        String   @default("Amir H. Jalali")
   tags          String[] // Array of tags
   imageUrl      String?
   readTime      String
+  metadata      Json?    // Flexible metadata for AI generation details
 
   // Classification
   aiGenerated   Boolean  @default(false)
@@ -69,6 +71,8 @@ model Draft {
   tags        String[]
   imageUrl    String?
   aiGenerated Boolean  @default(false)
+  readTime    String?
+  metadata    Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

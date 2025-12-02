@@ -12,6 +12,7 @@ import {
   type Article
 } from '@/lib/articles'
 import SocialShare from '@/components/SocialShare'
+import Spotlight from '@/components/Spotlight'
 
 // Helper to add basePath to image URLs at render time
 const getImageUrl = (url: string | undefined) => {
@@ -55,8 +56,8 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-ai-green border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#050505]">
+        <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin" />
       </div>
     )
   }
@@ -68,9 +69,10 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
   const isDraft = article?.status === 'draft'
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       {/* Background effects */}
-      <div className="absolute inset-0 mesh-gradient opacity-10" />
+      <div className="noise-overlay" />
+      <Spotlight />
 
       {/* Draft Preview Banner */}
       {isDraft && (
@@ -106,7 +108,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
         >
           <Link
             href="/thoughts"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-colors font-mono text-xs uppercase tracking-widest"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -122,7 +124,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
           transition={{ delay: 0.5 }}
           className="mb-12"
         >
-          <p className="text-xl text-muted-foreground mb-6 leading-relaxed font-light">
+          <p className="text-xl text-[#888888] mb-6 leading-relaxed font-light font-sans">
             {article.excerpt}
           </p>
 
@@ -132,7 +134,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
               {article.tags.map((tag: string) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 bg-accent hover:bg-accent/80 rounded-full text-sm transition-colors"
+                  className="px-3 py-1 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-colors"
                 >
                   {tag}
                 </span>
@@ -158,9 +160,9 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
               <img
                 src={getImageUrl(article.imageUrl)}
                 alt={article.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover opacity-90"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
 
               {/* Image overlay with article title */}
               <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
@@ -169,7 +171,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="text-4xl md:text-5xl lg:text-6xl font-space font-black mb-4 text-white leading-tight"
+                    className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-[#EAEAEA] leading-tight"
                   >
                     {article.title}
                   </motion.h1>
@@ -179,7 +181,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="flex flex-wrap items-center gap-4 text-white/90"
+                    className="flex flex-wrap items-center gap-4 text-[#EAEAEA]/80 font-mono text-xs uppercase tracking-widest"
                   >
                     <span>By {article.author}</span>
                     <span>•</span>
@@ -189,9 +191,9 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
                     {article.aiGenerated && (
                       <>
                         <span>•</span>
-                        <div className="flex items-center gap-2 px-3 py-1 bg-ai-green/20 rounded-full border border-ai-green/30">
-                          <div className="w-2 h-2 bg-ai-green rounded-full animate-pulse" />
-                          <span className="text-xs font-medium text-ai-green">AI Generated</span>
+                        <div className="flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full border border-white/20 backdrop-blur-sm">
+                          <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                          <span className="text-[10px] font-medium text-white">AI Generated</span>
                         </div>
                       </>
                     )}
@@ -210,7 +212,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
           className="prose prose-invert prose-lg max-w-none"
         >
           <div
-            className="article-content text-muted-foreground"
+            className="article-content text-[#EAEAEA]/90"
             dangerouslySetInnerHTML={{
               __html: (() => {
                 // Inline images need the basePath added at render time
@@ -235,23 +237,23 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mt-16 pt-8 border-t border-border"
+          className="mt-16 pt-8 border-t border-white/10"
         >
           <div className="text-center">
-            <h3 className="text-xl font-bold mb-4">Enjoyed this article?</h3>
-            <p className="text-muted-foreground mb-6">
+            <h3 className="text-xl font-serif font-light mb-4 text-[#EAEAEA]">Enjoyed this article?</h3>
+            <p className="text-[#888888] mb-6 font-mono text-sm">
               Want to discuss more? Get in touch or read more of my thoughts.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/thoughts"
-                className="px-6 py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-full hover:scale-105 transition-transform"
+                className="px-6 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white transition-colors"
               >
                 Read More Thoughts
               </Link>
               <Link
                 href="/contact"
-                className="px-6 py-3 glass border border-border rounded-full hover:border-ai-teal/50 dark:hover:border-ai-green/50 transition-all"
+                className="px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 transition-colors"
               >
                 Get in Touch
               </Link>
@@ -262,68 +264,61 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
 
       <style jsx>{`
         .article-content h1 {
-          font-size: 2rem;
-          font-weight: bold;
+          font-family: var(--font-cormorant), serif;
+          font-size: 2.5rem;
+          font-weight: 300;
           margin: 3rem 0 1.5rem 0;
-          background: linear-gradient(to right, #0D9488, #0891B2);
-          background-clip: text;
-          -webkit-background-clip: text;
-          color: transparent;
-        }
-        .dark .article-content h1 {
-          background: linear-gradient(to right, #00FF88, #00D9FF);
-          background-clip: text;
-          -webkit-background-clip: text;
+          color: #EAEAEA;
+          letter-spacing: -0.02em;
         }
         .article-content h2 {
-          font-size: 1.5rem;
-          font-weight: 600;
+          font-family: var(--font-cormorant), serif;
+          font-size: 2rem;
+          font-weight: 300;
           margin: 2.5rem 0 1.25rem 0;
-          color: #1f2937;
-        }
-        .dark .article-content h2 {
-          color: white;
+          color: #EAEAEA;
+          letter-spacing: -0.01em;
         }
         .article-content h3 {
-          font-size: 1.25rem;
-          font-weight: 600;
+          font-family: var(--font-cormorant), serif;
+          font-size: 1.5rem;
+          font-weight: 400;
           margin: 2rem 0 1rem 0;
-          color: #0D9488;
-        }
-        .dark .article-content h3 {
-          color: #00FF88;
+          color: #EAEAEA;
         }
         .article-content p {
+          font-family: 'Inter', sans-serif;
           margin-bottom: 1.5rem;
           line-height: 1.8;
           font-size: 1.125rem;
+          color: #EAEAEA;
+          font-weight: 300;
         }
         .article-content ul, .article-content ol {
           margin: 1.5rem 0;
           padding-left: 1.5rem;
+          color: #EAEAEA;
         }
         .article-content li {
           margin: 1rem 0;
           line-height: 1.8;
+          font-weight: 300;
         }
         .article-content strong {
-          color: #1f2937;
-          font-weight: 600;
-        }
-        .dark .article-content strong {
-          color: white;
+          color: #FFFFFF;
+          font-weight: 500;
         }
         .article-content em {
-          color: #0D9488;
-        }
-        .dark .article-content em {
-          color: #00FF88;
+          color: #EAEAEA;
+          font-style: italic;
         }
         .article-content code {
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.05);
           padding: 0.125rem 0.25rem;
           border-radius: 0.25rem;
-          font-family: monospace;
+          font-family: var(--font-jetbrains), monospace;
+          font-size: 0.9em;
+          color: #EAEAEA;
         }
         .article-gallery {
           display: grid;
@@ -331,20 +326,20 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
           gap: 1rem;
           margin: 2rem 0;
           padding: 1rem;
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(255, 255, 255, 0.03);
           border-radius: 1rem;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .gallery-image {
           width: 100%;
           height: auto;
           border-radius: 0.75rem;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .gallery-image:hover {
-          transform: scale(1.05);
-          box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+          transform: scale(1.02);
+          box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
         }
         .article-videos {
           display: flex;
@@ -357,7 +352,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
           max-width: 560px;
           height: 315px;
           border-radius: 1rem;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           margin: 0 auto;
         }
         @media (min-width: 768px) {

@@ -1,10 +1,24 @@
 import type { Metadata } from 'next'
+import { Cormorant_Garamond, JetBrains_Mono } from 'next/font/google'
 import NavigationEnhanced from '@/components/NavigationEnhanced'
 import SkipNavigation from '@/components/SkipNavigation'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import StructuredData from '@/components/StructuredData'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import './globals.css'
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-cormorant',
+  display: 'swap',
+})
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -15,7 +29,7 @@ export const metadata: Metadata = {
   description: 'Generative AI consultant with 14 years experience in Data Warehousing, Business Intelligence, and AI Strategy. Currently CTO at AVENU AI. Specializing in LLMs, prompt engineering, and AI-driven solutions.',
   keywords: [
     'Amir Jalali',
-    'AI Consultant', 
+    'AI Consultant',
     'Generative AI',
     'Data Engineering',
     'Business Intelligence',
@@ -89,16 +103,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${cormorant.variable} ${jetbrains.variable}`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
-        <meta name="theme-color" content="#00CED1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name="theme-color" content="#050505" />
       </head>
-      <body className="min-h-screen font-lato antialiased">
+      <body className="min-h-screen font-sans antialiased bg-[#050505] text-[#EAEAEA] selection:bg-white selection:text-black">
         <ThemeProvider defaultTheme="dark">
           <GoogleAnalytics />
           <StructuredData />

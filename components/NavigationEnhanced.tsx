@@ -12,16 +12,14 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { FolderOpen, Brain, FileUser, Mail, Menu } from 'lucide-react'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import { Menu } from 'lucide-react'
 
 const navItems = [
-  { href: '/projects', label: 'Projects', icon: FolderOpen },
-  { href: '/thoughts', label: 'Thoughts', icon: Brain },
-  { href: '/resume', label: 'Resume', icon: FileUser },
-  { href: '/contact', label: 'Contact', icon: Mail },
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/thoughts', label: 'Thoughts' },
+  { href: '/contact', label: 'Contact' },
 ]
-
 
 export default function NavigationEnhanced() {
   const pathname = usePathname()
@@ -36,139 +34,96 @@ export default function NavigationEnhanced() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-
   useEffect(() => {
     setMobileOpen(false)
   }, [pathname])
 
+  // Hide navigation on homepage as it has its own
+  if (pathname === '/') return null
+
   return (
-    <>
-      <motion.nav
-        id="navigation"
-        role="navigation"
-        aria-label="Main navigation"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'glass border-b shadow-lg shadow-black/5 dark:shadow-black/5'
-            : 'bg-white/50 dark:bg-dark-bg/50'
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/5'
+        : 'bg-transparent'
         }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo with enhanced hover effect */}
-            <Link href="/" className="flex-shrink-0 group">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative"
-              >
-                <h2 className="text-2xl font-lato relative z-10 uppercase">
-                  <span className="text-gradient">AMIR H. JALALI</span>
-                </h2>
-                <motion.div
-                  className="absolute -inset-2 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-full blur-xl"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </motion.div>
-            </Link>
-            
-            {/* Desktop Navigation with dropdowns */}
-            <div className="hidden lg:block">
-              <div className="flex items-center space-x-1">
-                {/* Regular nav items */}
-                {navItems.map((item) => {
-                  const isActive = pathname === item.href
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="relative px-5 py-2 text-sm font-medium transition-all group"
-                    >
-                      <span className={`relative z-10 flex items-center gap-2 uppercase ${
-                        isActive
-                          ? 'text-ai-teal dark:text-white'
-                          : 'text-gray-600 dark:text-gray-400 group-hover:text-ai-teal dark:group-hover:text-white'
-                      }`}>
-                        {item.label}
-                      </span>
-                      {isActive && (
-                        <motion.div
-                          layoutId="navbar"
-                          className="absolute inset-0 bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 rounded-full"
-                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </Link>
-                  )
-                })}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0 group">
+            <h2 className="text-xl font-serif font-light tracking-tight text-[#EAEAEA]">
+              Amir H. Jalali
+            </h2>
+          </Link>
 
-                {/* Theme Toggle */}
-                <ThemeToggle />
-              </div>
-            </div>
-
-
-            {/* Mobile menu trigger with Sheet */}
-            <div className="lg:hidden flex items-center gap-2">
-              <ThemeToggle />
-              <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-                <SheetTrigger asChild>
-                  <Button 
-                    variant="ghost"
-                    size="icon"
-                    className="text-gray-600 dark:text-gray-400 hover:text-ai-teal dark:hover:text-white"
-                    aria-label="Open navigation menu"
-                    aria-expanded={mobileOpen}
+          {/* Desktop Navigation */}
+          <div className="hidden lg:block">
+            <div className="flex items-center space-x-8">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`text-xs font-mono uppercase tracking-widest transition-colors ${isActive
+                      ? 'text-white'
+                      : 'text-[#888888] hover:text-[#EAEAEA]'
+                      }`}
                   >
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l border-border bg-background">
-                  <SheetHeader>
-                    <SheetTitle className="text-2xl font-lato uppercase">
-                      <span className="text-gradient">AMIR H. JALALI</span>
-                    </SheetTitle>
-                  </SheetHeader>
-                  
-                  <div className="mt-8 flex flex-col gap-2">
-                    {navItems.map((item) => {
-                      const isActive = pathname === item.href
-                      const Icon = item.icon
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all uppercase ${
-                            isActive
-                              ? 'bg-gradient-to-r from-ai-teal/20 to-ai-cyan/20 dark:from-ai-green/20 dark:to-ai-blue/20 text-ai-teal dark:text-white'
-                              : 'text-gray-600 dark:text-gray-400 hover:text-ai-teal dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
-                          }`}
-                        >
-                          <Icon className="h-5 w-5" />
-                          {item.label}
-                        </Link>
-                      )
-                    })}
-                  </div>
-                </SheetContent>
-              </Sheet>
+                    {item.label}
+                  </Link>
+                )
+              })}
+              {/* Theme Toggle - Hidden for now as we are enforcing Dark Mode */}
+              {/* <ThemeToggle /> */}
             </div>
           </div>
-        </div>
-      </motion.nav>
 
-    </>
+          {/* Mobile menu trigger */}
+          <div className="lg:hidden flex items-center gap-2">
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-[#EAEAEA] hover:bg-white/5"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] border-l border-white/10 bg-[#050505] text-[#EAEAEA]">
+                <SheetHeader>
+                  <SheetTitle className="text-xl font-serif font-light text-left text-[#EAEAEA]">
+                    Menu
+                  </SheetTitle>
+                </SheetHeader>
+
+                <div className="mt-8 flex flex-col gap-6">
+                  {navItems.map((item) => {
+                    const isActive = pathname === item.href
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`text-sm font-mono uppercase tracking-widest transition-colors ${isActive
+                          ? 'text-white'
+                          : 'text-[#888888] hover:text-[#EAEAEA]'
+                          }`}
+                      >
+                        {item.label}
+                      </Link>
+                    )
+                  })}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </div>
+    </motion.nav>
   )
 }

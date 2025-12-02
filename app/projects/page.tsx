@@ -5,6 +5,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import ProjectSkeleton from '@/components/ProjectSkeleton'
 import { Button } from '@/components/ui/button'
+import Spotlight from '@/components/Spotlight'
 
 // Helper to add basePath to image URLs
 const getImageUrl = (url: string) => {
@@ -93,12 +94,11 @@ const projects = [
 export default function ProjectsPage() {
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       {/* Enhanced background effects */}
-      <div className="absolute inset-0 mesh-gradient opacity-30" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDYwIDAgTCAwIDAgMCA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
-      
-      
+      <div className="noise-overlay" />
+      <Spotlight />
+
       <div className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -106,11 +106,11 @@ export default function ProjectsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-space mb-6">
-            <span className="text-gradient">Projects</span>
+          <h1 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
+            Projects
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            Exploring the intersection of AI, technology, and innovation through impactful projects
+          <p className="text-xl font-mono text-[#888888] max-w-3xl mx-auto">
+            Exploring the intersection of AI, technology, and innovation.
           </p>
         </motion.div>
 
@@ -133,22 +133,22 @@ export default function ProjectsPage() {
           transition={{ delay: 0.8 }}
           className="text-center mt-20"
         >
-          <div className="glass border border-border rounded-2xl p-8 md:p-12 max-w-4xl mx-auto">
-            <h3 className="text-3xl mb-4">
-              <span className="text-gradient">Let's Build Something Amazing</span>
+          <div className="glass border border-white/10 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto bg-white/5 backdrop-blur-md">
+            <h3 className="text-3xl mb-4 font-serif font-light text-[#EAEAEA]">
+              Let's Build Something Amazing
             </h3>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-lg">
-              I'm always exploring new ideas and open to working on innovative AI projects. 
+            <p className="text-[#888888] mb-8 max-w-2xl mx-auto text-lg font-mono">
+              I'm always exploring new ideas and open to working on innovative AI projects.
               Whether you're looking for technical expertise, strategic guidance, or investment opportunities,
               let's collaborate to create the future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white hover:scale-105 transition-transform">
+              <Button asChild size="lg" className="bg-[#EAEAEA] text-[#050505] hover:bg-white transition-colors font-mono uppercase tracking-widest">
                 <Link href="/contact">
                   Get in Touch
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="border-white/10 text-[#EAEAEA] hover:bg-white/5 font-mono uppercase tracking-widest">
                 <Link href="/resume">
                   View Resume
                 </Link>
