@@ -2,9 +2,6 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ExternalLink, Mail, TrendingUp, Clock, Zap } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import LazyImage from '@/components/LazyImage'
 
 interface Project {
@@ -25,132 +22,78 @@ interface ProjectCardProps {
   index: number
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0 }
+}
+
 export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const getStatusConfig = (status: string) => {
-    switch (status) {
-      case 'Live':
-        return { bg: 'bg-emerald-500/20', text: 'text-emerald-400', icon: Zap }
-      case 'In Development':
-        return { bg: 'bg-ai-blue/20', text: 'text-ai-blue', icon: TrendingUp }
-      case 'Research':
-        return { bg: 'bg-purple-500/20', text: 'text-purple-400', icon: Clock }
-      default:
-        return { bg: 'bg-muted/20', text: 'text-muted-foreground', icon: Clock }
-    }
-  }
-
-  const statusConfig = getStatusConfig(project.status)
-  const StatusIcon = statusConfig.icon
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      variants={cardVariants}
+      initial="hidden"
+      animate="show"
       transition={{ delay: index * 0.1 }}
-      className="group h-full"
+      whileHover={{ y: -4 }}
+      className="group relative h-full"
     >
-      <motion.div
-        whileHover={{ 
-          y: -5,
-          transition: { type: "spring", stiffness: 300, damping: 30 }
-        }}
-        className="relative h-full"
-      >
-        <div className="relative h-full min-h-[500px] glass border border-border hover:border-ai-teal/30 dark:hover:border-ai-green/30 rounded-2xl p-6 transition-all duration-300 overflow-hidden flex flex-col">
-          {/* Subtle background gradient on hover */}
-          <div className="absolute inset-0 bg-gradient-to-br from-ai-teal/3 via-transparent to-ai-cyan/3 dark:from-ai-green/3 dark:via-transparent dark:to-ai-blue/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <Link href={project.link} target="_blank" className="block h-full">
+        <div className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/5 transition-all duration-500 h-full flex flex-col backdrop-blur-md">
 
-          {/* Project Image */}
-          <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden rounded-t-2xl">
+          <div className="relative h-48 overflow-hidden border-b border-white/5">
             <LazyImage
               src={project.image}
-              alt={`${project.title} - ${project.description}`}
-              className="w-full h-full object-cover"
+              alt={project.title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
               wrapperClassName="w-full h-full"
               aspectRatio="wide"
-              placeholder="blur"
+              placeholder="skeleton"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+
+            {/* Status Badge Overlay */}
+            <div className="absolute top-3 left-3 flex items-center gap-2 px-2 py-1 bg-black/50 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-white backdrop-blur-sm">
+              <div className={`w-1.5 h-1.5 rounded-full ${project.status === 'Live' ? 'bg-emerald-400' :
+                  project.status === 'In Development' ? 'bg-blue-400' : 'bg-purple-400'
+                }`} />
+              {project.status}
+            </div>
           </div>
 
-          {/* Header with status */}
-          <div className="relative z-10 mb-6">
-            <Badge className={`${statusConfig.bg} ${statusConfig.text} border-0`}>
-              <StatusIcon className="w-3 h-3 mr-1" />
-              {project.status}
-            </Badge>
-          </div>
-          
-          {/* Title with gradient effect on hover */}
-          <motion.h3 
-            className="text-2xl font-bold mb-4 relative z-10"
-            whileHover={{ scale: 1.02 }}
-          >
-            <span className="group-hover:text-gradient transition-all duration-300">
+          <div className="p-6 flex flex-col flex-grow">
+            <div className="flex justify-between items-start mb-3 text-[10px] font-mono uppercase tracking-widest text-[#888888]">
+              <span>Project</span>
+              <span>{project.progress}% Complete</span>
+            </div>
+
+            <h3 className="text-xl mb-3 font-serif font-light text-[#EAEAEA] group-hover:text-white transition-colors duration-300 line-clamp-2">
               {project.title}
-            </span>
-          </motion.h3>
-          
-          {/* Description */}
-          <p className="text-muted-foreground mb-6 leading-relaxed relative z-10 line-clamp-3 flex-grow">
-            {project.description}
-          </p>
-          
-          {/* Tags with hover effects */}
-          <div className="flex flex-wrap gap-2 mb-6 relative z-10">
-            {project.tags.slice(0, 3).map((tag, tagIndex) => (
-              <motion.span
-                key={tag}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 + tagIndex * 0.1 }}
-                whileHover={{ scale: 1.05, y: -2 }}
-                className="text-xs px-3 py-1.5 bg-accent hover:bg-accent/80 rounded-full transition-all cursor-pointer"
-              >
-                {tag}
-              </motion.span>
-            ))}
-            {project.tags.length > 3 && (
-              <span className="text-xs px-3 py-1.5 bg-muted/20 rounded-full text-muted-foreground">
-                +{project.tags.length - 3} more
+            </h3>
+
+            <p className="text-[#888888] text-sm line-clamp-3 mb-4 flex-grow font-sans font-light">
+              {project.description}
+            </p>
+
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[10px] px-2 py-1 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-[#888888]">
+              <span>View Project</span>
+              <span className="text-[#EAEAEA] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                →
               </span>
-            )}
-          </div>
-          
-          {/* Action buttons */}
-          <div className="flex flex-col gap-3 relative z-10 mt-auto">
-            <Button 
-              asChild
-              className="group/btn bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-medium hover:scale-105 transition-transform"
-            >
-              <Link
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {project.status === 'Live' ? 'View Project' : 'Learn More'}
-                <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-            
-            {project.contact && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                asChild
-              >
-                <a href={`mailto:${project.contact}`}>
-                  <Mail className="w-4 h-4 mr-2" />
-                  Investment Opportunities
-                </a>
-              </Button>
-            )}
+            </div>
           </div>
         </div>
-
-        {/* Subtle glow effect */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-ai-teal/10 to-ai-cyan/10 dark:from-ai-green/10 dark:to-ai-blue/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-lg -z-10" />
-      </motion.div>
+      </Link>
     </motion.div>
   )
 }

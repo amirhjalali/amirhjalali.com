@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { saveDraftArticle } from '@/lib/articles';
+import { apiClient } from '@/lib/api-client';
 
 export default function ArticleGenerator({ onArticleGenerated }: { onArticleGenerated?: () => void }) {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -18,106 +18,13 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
     setProgress('Initializing...');
 
     try {
-      // Call server-side API route (keeps API key secure)
       setProgress('Generating article content...');
 
-      let response;
-      try {
-        // Get basePath from Next.js config (for GitHub Pages deployment)
-        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-        response = await fetch(`${basePath}/api/generate-article`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({})
-        });
-      } catch {
-        // Network error or fetch failed
-        throw new Error(
-          'API route not available.\n\n' +
-          'This site is deployed on GitHub Pages (static only).\n\n' +
-          'To generate articles:\n' +
-          '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
-          '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
-          'For instant generation, deploy to Vercel.\n' +
-          'See DEPLOYMENT_CHOICE.md for details.'
-        );
-      }
-
-      // Check if we got HTML instead of JSON (static export doesn't have API routes)
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('text/html')) {
-        throw new Error(
-          'API route not available.\n\n' +
-          'This site is deployed on GitHub Pages (static only).\n\n' +
-          'To generate articles:\n' +
-          '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
-          '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
-          'For instant generation, deploy to Vercel.\n' +
-          'See DEPLOYMENT_CHOICE.md for details.'
-        );
-      }
-
-      if (!response.ok) {
-        // Handle 405 (Method Not Allowed) - API route exists but static export can't handle it
-        if (response.status === 405) {
-          throw new Error(
-            'API route not available.\n\n' +
-            'This site is deployed on GitHub Pages (static only).\n\n' +
-            'To generate articles:\n' +
-            '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
-            '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
-            'For instant generation, deploy to Vercel.\n' +
-            'See DEPLOYMENT_CHOICE.md for details.'
-          );
-        }
-
-        // Handle 404 - API route not found
-        if (response.status === 404) {
-          throw new Error(
-            'API route not available.\n\n' +
-            'This site is deployed on GitHub Pages (static only).\n\n' +
-            'To generate articles:\n' +
-            '• GitHub Actions (automatic daily at 9 AM UTC)\n' +
-            '• Manual: GitHub → Actions → "Generate AI Article"\n\n' +
-            'For instant generation, deploy to Vercel.\n' +
-            'See DEPLOYMENT_CHOICE.md for details.'
-          );
-        }
-
-        // Other server errors
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Server error: ${response.status}`);
-      }
-
-      setProgress('Processing results...');
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        throw new Error('Invalid response from server. API routes may not be available on this deployment.');
-      }
-
-      // Save as draft
-      setProgress('Saving draft...');
-      saveDraftArticle({
-        title: result.title,
-        content: result.content,
-        excerpt: result.excerpt,
-        tags: result.tags,
-        imageUrl: result.imageUrl,
-        aiGenerated: true,
-        author: 'Amir H. Jalali',
-        metadata: {
-          style: 'casual',
-          length: 'medium',
-          wordCount: result.wordCount
-        }
-      });
+      // Use apiClient which handles the API call and error parsing
+      const draft = await apiClient.generateArticle();
 
       setSuccess(true);
-      setProgress(`✅ Article created: "${result.title}"`);
+      setProgress(`✅ Article created: "${draft.title}"`);
 
       // Notify parent component
       setTimeout(() => {
@@ -145,8 +52,8 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
           font-medium text-white
           transition-all duration-300
           ${isGenerating
-            ? 'bg-purple-400 cursor-not-allowed'
-            : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:shadow-lg hover:scale-105'
+            ? 'bg-ai-teal/50 cursor-not-allowed'
+            : 'bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue hover:shadow-lg hover:scale-105'
           }
         `}
         whileTap={!isGenerating ? { scale: 0.95 } : {}}
@@ -163,14 +70,13 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         {/* Animated gradient background when generating */}
         {isGenerating && (
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400"
+            className="absolute inset-0 bg-gradient-to-r from-ai-teal via-ai-cyan to-ai-teal opacity-50"
             animate={{ x: ['-100%', '100%'] }}
             transition={{
               duration: 1.5,
               repeat: Infinity,
               ease: 'linear',
             }}
-            style={{ opacity: 0.5 }}
           />
         )}
       </motion.button>
@@ -180,9 +86,9 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg"
+          className="p-3 bg-ai-teal/10 border border-ai-teal/20 rounded-lg"
         >
-          <p className="text-sm text-blue-800 dark:text-blue-200">{progress}</p>
+          <p className="text-sm text-ai-teal dark:text-ai-green">{progress}</p>
         </motion.div>
       )}
 
@@ -202,12 +108,12 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
       )}
 
       {/* Instructions */}
-      <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
-        <p className="font-semibold">AI Article Generation</p>
+      <div className="text-sm text-muted-foreground space-y-2">
+        <p className="font-semibold text-foreground">AI Article Generation</p>
         <p className="text-xs opacity-70">
           Click the button above to generate a new article instantly using GPT-4o-mini and DALL-E 3.
           Articles are saved as drafts for review before publishing.
-          <span className="text-green-600 dark:text-green-400 font-medium"> 🔒 API key secured server-side</span>
+          <span className="text-ai-teal dark:text-ai-green font-medium"> 🔒 API key secured server-side</span>
         </p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/db'
 import { Article as PrismaArticle } from '@prisma/client'
-import { Article } from '@/lib/articles'
+import { Article } from '@/lib/types'
 
 // Helper to transform Prisma Article to App Article
 function transformArticle(pArticle: PrismaArticle): Article {

@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import LazyImage from '@/components/LazyImage'
-import type { Article } from '@/lib/articles'
+import type { Article } from '@/lib/types'
 import Spotlight from '@/components/Spotlight'
 
 const getImageUrl = (url: string | undefined) => {

@@ -3,14 +3,8 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import {
-  getArticleById,
-  getDraftArticleById,
-  initializeDefaultArticles,
-  initializeDrafts,
-  type Article
-} from '@/lib/articles'
+import { useState } from 'react'
+import { Article } from '@/lib/types'
 import SocialShare from '@/components/SocialShare'
 import Spotlight from '@/components/Spotlight'
 
@@ -29,38 +23,14 @@ interface ThoughtPageClientProps {
 }
 
 export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageClientProps) {
-  const [article, setArticle] = useState<Article | null>(initialArticle)
-  const [loading, setLoading] = useState(!initialArticle)
-  const hasInitialArticle = Boolean(initialArticle)
+  const [article] = useState<Article | null>(initialArticle)
 
-  useEffect(() => {
-    const loadArticle = async () => {
-      // Initialize default articles and drafts if needed
-      initializeDefaultArticles()
-      await initializeDrafts()
-
-      // Try to load as published article first, then as draft
-      const loadedArticle = getArticleById(id) || getDraftArticleById(id)
-
-      if (loadedArticle) {
-        setArticle(loadedArticle)
-      } else if (!hasInitialArticle) {
-        setArticle(null)
-      }
-
-      setLoading(false)
-    }
-
-    loadArticle()
-  }, [id, hasInitialArticle])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#050505]">
-        <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin" />
-      </div>
-    )
+  if (!article) {
+    notFound()
+    return null // Ensure we don't render anything else
   }
+
+
 
   if (!article) {
     notFound()

@@ -1,65 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import {
-  getArticleById,
-  getDraftArticleById,
-  initializeDefaultArticles,
-  initializeDrafts,
-  type Article
-} from '@/lib/articles'
-import ThoughtPageClient from './thoughts/[id]/ThoughtPageClient'
 
 export default function NotFound() {
-  const pathname = usePathname()
-  const [checking, setChecking] = useState(true)
-  const [article, setArticle] = useState<Article | null>(null)
-
-  useEffect(() => {
-    const checkForArticle = async () => {
-      // Check if this is a thoughts route
-      const match = pathname?.match(/\/thoughts\/([^\/]+)/)
-      if (match) {
-        const id = match[1]
-
-        // Initialize articles
-        initializeDefaultArticles()
-        await initializeDrafts()
-
-        // Check if article exists in localStorage
-        const found = getArticleById(id) || getDraftArticleById(id)
-
-        if (found) {
-          setArticle(found)
-          setChecking(false)
-          return
-        }
-      }
-
-      setChecking(false)
-    }
-
-    checkForArticle()
-  }, [pathname])
-
-  // If we found an article, render it
-  if (article) {
-    return <ThoughtPageClient id={article.id} initialArticle={article} />
-  }
-
-  // If still checking, show loading
-  if (checking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-ai-green border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
-  }
-
-  // Otherwise show 404
   return (
     <div className="min-h-screen relative flex items-center justify-center">
       {/* Background effects */}

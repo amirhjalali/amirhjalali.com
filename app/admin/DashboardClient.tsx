@@ -275,7 +275,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
             onClick={() => setShowPublished(true)}
           >
             <div className="flex items-center gap-3 mb-2">
-              <CheckCircle className="w-5 h-5 text-green-500" />
+              <CheckCircle className="w-5 h-5 text-ai-teal dark:text-ai-green" />
               <h3 className="text-sm text-muted-foreground">Published</h3>
             </div>
             <p className="text-3xl font-bold">{publishedArticles.length}</p>
@@ -296,7 +296,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
               href="https://github.com/amirhjalali/amirhjalali.com/actions/workflows/ai-article-generator.yml"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
@@ -321,7 +321,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                   placeholder="Search drafts..."
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
+                  className="w-full pl-10 pr-4 py-2 glass border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm placeholder:text-muted-foreground/50"
                 />
               </div>
             </div>
@@ -330,7 +330,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'date' | 'title')}
-              className="px-4 py-2 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
+              className="px-4 py-2 glass border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
             >
               <option value="date">Sort by Date</option>
               <option value="title">Sort by Title</option>
@@ -376,14 +376,14 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
               <>
                 <button
                   onClick={handleBulkPublish}
-                  className="px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors text-sm flex items-center gap-2"
+                  className="px-4 py-2 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-2"
                 >
                   <CheckCircle className="w-4 h-4" />
                   Publish {selectedIds.size}
                 </button>
                 <button
                   onClick={handleBulkDelete}
-                  className="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors text-sm flex items-center gap-2"
+                  className="px-4 py-2 glass border border-red-500/50 text-red-500 hover:bg-red-500/10 rounded-xl transition-all text-sm flex items-center gap-2"
                 >
                   <Trash2 className="w-4 h-4" />
                   Delete {selectedIds.size}
@@ -623,7 +623,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                     </button>
                     <button
                       onClick={() => handleUnpublish(article.id)}
-                      className="px-3 py-2 glass border border-yellow-500/50 rounded-lg text-sm hover:bg-yellow-500/10 text-yellow-500"
+                      className="px-3 py-2 glass border border-amber-500/50 rounded-lg text-sm hover:bg-amber-500/10 text-amber-500 transition-all"
                     >
                       Unpublish
                     </button>

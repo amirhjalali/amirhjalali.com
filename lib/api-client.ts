@@ -3,34 +3,8 @@
  * Replaces localStorage with database-backed API calls
  */
 
-export interface Article {
-  id: string
-  title: string
-  slug?: string
-  content: string
-  excerpt: string
-  tags: string[]
-  imageUrl?: string
-  aiGenerated: boolean
-  author: string
-  publishedAt: string
-  readTime: string
-  published?: boolean
-  createdAt?: string
-  updatedAt?: string
-}
-
-export interface Draft {
-  id: string
-  title: string
-  content: string
-  excerpt?: string
-  tags: string[]
-  imageUrl?: string
-  aiGenerated: boolean
-  createdAt: string
-  updatedAt: string
-}
+export type { Article, Draft } from '@/lib/types'
+import { Article, Draft } from '@/lib/types'
 
 class APIClient {
   private baseUrl = '/api'
