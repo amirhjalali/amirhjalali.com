@@ -35,28 +35,17 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="flex flex-col items-center gap-8 font-mono text-xs uppercase tracking-widest text-[#888888]"
+          className="absolute bottom-12 left-0 right-0 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
         >
-          <div className="flex gap-12">
-            <Link href="/projects" className="hover:text-[#EAEAEA] transition-colors">
-              Works
-            </Link>
-            <Link href="/thoughts" className="hover:text-[#EAEAEA] transition-colors">
-              Thoughts
-            </Link>
-            <Link href="/resume" className="hover:text-[#EAEAEA] transition-colors">
-              Resume
-            </Link>
-          </div>
-
-          <div className="flex gap-12 opacity-50">
-            <a href="https://github.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
-              GitHub
-            </a>
-            <a href="https://linkedin.com/in/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
-              LinkedIn
-            </a>
-          </div>
+          <Link href="/projects" className="hover:text-[#EAEAEA] transition-colors">
+            Works
+          </Link>
+          <Link href="/thoughts" className="hover:text-[#EAEAEA] transition-colors">
+            Thoughts
+          </Link>
+          <Link href="/resume" className="hover:text-[#EAEAEA] transition-colors">
+            Contact
+          </Link>
         </motion.div>
 
       </div>
