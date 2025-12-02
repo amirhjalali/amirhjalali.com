@@ -30,70 +30,33 @@ export default function Home() {
           </p>
         </motion.div>
 
-        {/* Ghost Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full mb-24">
-          <Link href="/projects" className="block h-full">
-            <GhostCard
-              title="Selected Works"
-              description="Generative AI pipelines and LLM architecture."
-              delay={0.2}
-              className="h-full"
-            />
-          </Link>
-          <Link href="/thoughts" className="block h-full">
-            <GhostCard
-              title="Signal & Noise"
-              description="Essays on the future of data engineering."
-              delay={0.4}
-              className="h-full"
-            />
-          </Link>
-        </div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 1 }}
-          className="text-center max-w-2xl mx-auto mb-24"
-        >
-          <h2 className="font-serif text-3xl md:text-4xl font-light mb-6 text-[#EAEAEA]">
-            Let's Build Something Amazing
-          </h2>
-          <p className="font-mono text-sm text-[#888888] mb-8 leading-relaxed">
-            I'm always exploring new ideas and open to working on innovative AI projects.
-            Whether you're looking for technical expertise, strategic guidance, or investment opportunities,
-            let's collaborate to create the future.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="mailto:amir.h.jalali@gmail.com"
-              className="px-8 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:bg-white transition-colors"
-            >
-              Get in Touch
-            </a>
-            <Link
-              href="/resume"
-              className="px-8 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 hover:border-white/20 transition-all"
-            >
-              View Resume
-            </Link>
-          </div>
-        </motion.div>
-
-        {/* Minimalist Footer/Nav */}
+        {/* Minimalist Nav */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
+          transition={{ delay: 0.5, duration: 1 }}
+          className="flex flex-col items-center gap-8 font-mono text-xs uppercase tracking-widest text-[#888888]"
         >
-          <a href="https://github.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
-            GitHub
-          </a>
-          <a href="https://linkedin.com/in/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
-            LinkedIn
-          </a>
+          <div className="flex gap-12">
+            <Link href="/projects" className="hover:text-[#EAEAEA] transition-colors">
+              Works
+            </Link>
+            <Link href="/thoughts" className="hover:text-[#EAEAEA] transition-colors">
+              Thoughts
+            </Link>
+            <Link href="/resume" className="hover:text-[#EAEAEA] transition-colors">
+              Resume
+            </Link>
+          </div>
+
+          <div className="flex gap-12 opacity-50">
+            <a href="https://github.com/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
+              GitHub
+            </a>
+            <a href="https://linkedin.com/in/amirhjalali" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAEAEA] transition-colors">
+              LinkedIn
+            </a>
+          </div>
         </motion.div>
 
       </div>
