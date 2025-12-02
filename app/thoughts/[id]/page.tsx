@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation'
 import ThoughtPageClient from './ThoughtPageClient'
-import { publishedArticles } from '@/data/published.mjs'
+import { getArticle, getAllArticleIds } from '@/lib/data'
 
 // Generate static params for all article IDs
 export async function generateStaticParams() {
-  return publishedArticles.map((article) => ({ id: article.id }))
+  const articles = await getAllArticleIds()
+  return articles.map((article) => ({ id: article.id }))
 }
 
 interface ThoughtPageParams {
@@ -13,7 +14,7 @@ interface ThoughtPageParams {
 
 export default async function ThoughtPage({ params }: { params: Promise<ThoughtPageParams> }) {
   const { id } = await params
-  const article = publishedArticles.find(a => a.id === id)
+  const article = await getArticle(id)
 
   if (!article) {
     notFound()

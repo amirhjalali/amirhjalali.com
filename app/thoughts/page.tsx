@@ -1,6 +1,7 @@
-import { publishedArticles } from '@/data/published.mjs'
+import { getPublishedArticles } from '@/lib/data'
 import ThoughtsPageClient from './ThoughtsPageClient'
 
 export default async function ThoughtsPage() {
-  return <ThoughtsPageClient articles={publishedArticles} />
+  const articles = await getPublishedArticles()
+  return <ThoughtsPageClient articles={articles} />
 }
