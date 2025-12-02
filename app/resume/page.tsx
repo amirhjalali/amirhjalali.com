@@ -270,10 +270,7 @@ export default function ResumePage() {
     ? experience
     : experience.filter(exp => exp.type === selectedType)
 
-  const downloadPDF = () => {
-    // Link to the actual resume PDF from original website
-    window.open('https://drive.google.com/file/d/your-resume-id/view', '_blank')
-  }
+
 
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
@@ -305,13 +302,14 @@ export default function ResumePage() {
               <Printer className="w-4 h-4" />
               Print Resume
             </button>
-            <button
-              onClick={downloadPDF}
+            <a
+              href="/AmirJalaliResume_04-01-2025.pdf"
+              download="AmirJalaliResume_04-01-2025.pdf"
               className="px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center gap-2 no-print"
             >
               <Download className="w-4 h-4" />
               Download PDF
-            </button>
+            </a>
 
             {/* Filter buttons */}
             <div className="flex gap-2">
