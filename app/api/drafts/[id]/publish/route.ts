@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
+import { getSession } from '@/app/actions/auth'
 
 function slugify(text: string): string {
   return text
@@ -33,6 +35,11 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
     // Get draft
@@ -72,6 +79,9 @@ export async function POST(
     await prisma.draft.delete({
       where: { id }
     })
+
+    revalidatePath('/thoughts')
+    revalidatePath(`/thoughts/${article.slug}`)
 
     return NextResponse.json({
       success: true,

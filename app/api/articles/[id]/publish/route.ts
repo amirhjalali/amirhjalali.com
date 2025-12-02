@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
+import { getSession } from '@/app/actions/auth'
 
 async function getNextVersionNumber(articleId: string): Promise<number> {
   const lastVersion = await prisma.articleVersion.findFirst({
@@ -15,6 +17,11 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
     const body = await request.json()
@@ -56,6 +63,12 @@ export async function POST(
         publishedAt: shouldPublish ? (article.publishedAt || new Date()) : null,
       }
     })
+
+    revalidatePath('/thoughts')
+    revalidatePath(`/thoughts/${updated.id}`)
+    if (updated.slug) {
+      revalidatePath(`/thoughts/${updated.slug}`)
+    }
 
     return NextResponse.json({
       success: true,
