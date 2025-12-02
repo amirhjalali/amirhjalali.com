@@ -32,18 +32,20 @@ export default function Home() {
 
         {/* Ghost Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
-          <Link href="/projects" className="block">
+          <Link href="/projects" className="block h-full">
             <GhostCard
               title="Selected Works"
               description="Generative AI pipelines and LLM architecture."
               delay={0.2}
+              className="h-full"
             />
           </Link>
-          <Link href="/thoughts" className="block">
+          <Link href="/thoughts" className="block h-full">
             <GhostCard
               title="Signal & Noise"
               description="Essays on the future of data engineering."
               delay={0.4}
+              className="h-full"
             />
           </Link>
         </div>
