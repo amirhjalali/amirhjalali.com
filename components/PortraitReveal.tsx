@@ -30,9 +30,9 @@ export default function PortraitReveal() {
             {/* Base Layer - The "Ghost" */}
             {/* Always visible but very faint, fading out towards top-left */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-[0.08] mix-blend-screen grayscale contrast-125">
+                <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-[0.08] grayscale contrast-125">
                     <img
-                        src="/AmirPortraitWebsite.jpg"
+                        src="/AmirPortraitWebsite.png"
                         alt=""
                         className="w-full h-auto"
                         style={{
@@ -54,7 +54,7 @@ export default function PortraitReveal() {
             >
                 <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-40 grayscale contrast-125">
                     <img
-                        src="/AmirPortraitWebsite.jpg"
+                        src="/AmirPortraitWebsite.png"
                         alt="Amir H. Jalali"
                         className="w-full h-auto"
                         style={{
