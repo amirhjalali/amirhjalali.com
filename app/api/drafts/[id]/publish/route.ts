@@ -58,6 +58,10 @@ export async function POST(
     const baseSlug = slugify(draft.title)
     const uniqueSlug = await ensureUniqueSlug(baseSlug)
 
+    // Check for scheduled date
+    const metadata = draft.metadata as any || {}
+    const scheduledDate = metadata.scheduledPublishDate ? new Date(metadata.scheduledPublishDate) : new Date()
+
     // Create article from draft
     const article = await prisma.article.create({
       data: {
@@ -71,7 +75,8 @@ export async function POST(
         author: 'Amir H. Jalali',
         aiGenerated: draft.aiGenerated,
         published: true,
-        publishedAt: new Date(),
+        publishedAt: scheduledDate,
+        metadata: metadata // Preserve metadata including AI settings
       }
     })
 

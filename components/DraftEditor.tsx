@@ -2,44 +2,99 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo } from 'lucide-react'
-import { apiClient, type Draft } from '@/lib/api-client'
+import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo, Sparkles, Image as ImageIcon, Calendar, Clock } from 'lucide-react'
+import { apiClient, type Draft, type Article } from '@/lib/api-client'
+import GenerationSettingsModal from './GenerationSettingsModal'
+import { AIMetadata } from '@/lib/types'
 
 interface DraftEditorProps {
-  draft: Draft
+  draft: Draft | Article
+  type?: 'draft' | 'article'
   onSave: () => void
   onClose: () => void
 }
 
-export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps) {
-  const [editedDraft, setEditedDraft] = useState<Draft>(draft)
+export default function DraftEditor({ draft, type = 'draft', onSave, onClose }: DraftEditorProps) {
+  const [editedDraft, setEditedDraft] = useState<Draft | Article>(draft)
   const [hasChanges, setHasChanges] = useState(false)
   const [showStats, setShowStats] = useState(false)
-  const [history, setHistory] = useState<Draft[]>([draft])
+  const [history, setHistory] = useState<(Draft | Article)[]>([draft])
   const [historyIndex, setHistoryIndex] = useState(0)
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
   const [isSaving, setIsSaving] = useState(false)
 
+  // New state for modals and scheduling
+  const [showRegenContentModal, setShowRegenContentModal] = useState(false)
+  const [showRegenImageModal, setShowRegenImageModal] = useState(false)
+  const [isRegenerating, setIsRegenerating] = useState(false)
+  const [showSchedule, setShowSchedule] = useState(false)
+  const [scheduledDate, setScheduledDate] = useState<string>(
+    (draft.metadata as any)?.scheduledPublishDate || ''
+  )
 
   const handleSave = useCallback(async (isAutoSave = false) => {
     if (isSaving) return
 
     setIsSaving(true)
     try {
-      await apiClient.updateDraft(editedDraft.id, editedDraft)
+      // Include scheduled date in metadata if set
+      const metadata = {
+        ...(editedDraft.metadata || {}),
+        scheduledPublishDate: scheduledDate || undefined
+      }
+
+      const itemToSave = {
+        ...editedDraft,
+        metadata
+      }
+
+      if (type === 'article') {
+        await apiClient.updateArticle(itemToSave.id, itemToSave as Article)
+      } else {
+        await apiClient.updateDraft(itemToSave.id, itemToSave as Draft)
+      }
+
       setHasChanges(false)
       if (!isAutoSave) {
         onSave()
       }
     } catch (error) {
-      console.error('Error saving draft:', error)
+      console.error('Error saving:', error)
       if (!isAutoSave) {
-        alert('Failed to save draft. Please try again.')
+        alert('Failed to save. Please try again.')
       }
     } finally {
       setIsSaving(false)
     }
-  }, [editedDraft, onSave, isSaving])
+  }, [editedDraft, onSave, isSaving, scheduledDate, type])
+
+  const handleRegenerateContent = async (settings: AIMetadata) => {
+    setIsRegenerating(true)
+    try {
+      const updatedDraft = await apiClient.regenerateContent(editedDraft.id, settings)
+      setEditedDraft(updatedDraft)
+      addToHistory(updatedDraft)
+      setHasChanges(true)
+    } catch (error) {
+      console.error('Error regenerating content:', error)
+      alert('Failed to regenerate content.')
+    } finally {
+      setIsRegenerating(false)
+    }
+  }
+
+  const handleRegenerateImage = async (settings: AIMetadata) => {
+    setIsRegenerating(true)
+    try {
+      const { imageUrl } = await apiClient.regenerateImage(editedDraft.id, settings)
+      handleFieldChange('imageUrl', imageUrl)
+    } catch (error) {
+      console.error('Error regenerating image:', error)
+      alert('Failed to regenerate image.')
+    } finally {
+      setIsRegenerating(false)
+    }
+  }
 
   const handleUndo = useCallback(() => {
     setHistoryIndex((prevIndex) => {
@@ -63,7 +118,7 @@ export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps
     })
   }, [history])
 
-  const addToHistory = useCallback((newDraft: Draft) => {
+  const addToHistory = useCallback((newDraft: Draft | Article) => {
     setHistory((prevHistory) => {
       const nextHistory = prevHistory.slice(0, historyIndex + 1)
       nextHistory.push(newDraft)
@@ -72,10 +127,10 @@ export default function DraftEditor({ draft, onSave, onClose }: DraftEditorProps
     setHistoryIndex((prevIndex) => prevIndex + 1)
   }, [historyIndex])
 
-  const handleFieldChange = useCallback((field: keyof Draft, value: any) => {
+  const handleFieldChange = useCallback((field: keyof (Draft | Article), value: any) => {
     const newDraft = { ...editedDraft, [field]: value }
-    setEditedDraft(newDraft)
-    addToHistory(newDraft)
+    setEditedDraft(newDraft as Draft | Article)
+    addToHistory(newDraft as Draft | Article)
   }, [editedDraft, addToHistory])
 
   const handleTagAdd = (tag: string) => {
@@ -198,6 +253,23 @@ ${editedDraft.content}`
             </span>
           </div>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowRegenContentModal(true)}
+              className="px-3 py-2 glass border border-border rounded-lg hover:border-ai-teal/50 text-xs font-mono uppercase tracking-widest flex items-center gap-2"
+              title="Regenerate Content"
+            >
+              <Sparkles className="w-3 h-3" />
+              Regen Text
+            </button>
+            <button
+              onClick={() => setShowRegenImageModal(true)}
+              className="px-3 py-2 glass border border-border rounded-lg hover:border-ai-teal/50 text-xs font-mono uppercase tracking-widest flex items-center gap-2"
+              title="Regenerate Image"
+            >
+              <ImageIcon className="w-3 h-3" />
+              Regen Image
+            </button>
+            <div className="w-px h-6 bg-white/10 mx-2" />
             <button
               onClick={handleUndo}
               disabled={historyIndex === 0}
@@ -434,12 +506,38 @@ Regular paragraph text goes here."
 
         {/* Footer */}
         <div className="p-6 border-t border-border flex items-center justify-between">
-          <button
-            onClick={onClose}
-            className="px-6 py-3 glass border border-border rounded-xl hover:border-red-500/50 transition-colors"
-          >
-            Cancel
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={onClose}
+              className="px-6 py-3 glass border border-border rounded-xl hover:border-red-500/50 transition-colors"
+            >
+              Cancel
+            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowSchedule(!showSchedule)}
+                className={`px-4 py-3 border border-border rounded-xl transition-colors flex items-center gap-2 ${scheduledDate ? 'bg-white/10 text-white' : 'glass hover:bg-white/5'
+                  }`}
+              >
+                <Calendar className="w-4 h-4" />
+                {scheduledDate ? new Date(scheduledDate).toLocaleDateString() : 'Schedule'}
+              </button>
+              {showSchedule && (
+                <div className="absolute bottom-24 left-6 bg-[#050505] border border-white/10 p-4 rounded-xl shadow-xl z-50">
+                  <label className="block text-sm mb-2">Publish Date</label>
+                  <input
+                    type="datetime-local"
+                    value={scheduledDate}
+                    onChange={(e) => {
+                      setScheduledDate(e.target.value)
+                      setHasChanges(true)
+                    }}
+                    className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-white/30"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
           <button
             onClick={() => handleSave(false)}
             disabled={!hasChanges}
@@ -450,6 +548,32 @@ Regular paragraph text goes here."
           </button>
         </div>
       </motion.div>
+
+      {/* Modals */}
+      <GenerationSettingsModal
+        isOpen={showRegenContentModal}
+        onClose={() => setShowRegenContentModal(false)}
+        onGenerate={handleRegenerateContent}
+        mode="text-only"
+        title="Regenerate Content"
+        initialSettings={{
+          topic: editedDraft.metadata?.topic,
+          textModel: editedDraft.metadata?.textModel
+        }}
+      />
+
+      <GenerationSettingsModal
+        isOpen={showRegenImageModal}
+        onClose={() => setShowRegenImageModal(false)}
+        onGenerate={handleRegenerateImage}
+        mode="image-only"
+        title="Regenerate Image"
+        initialSettings={{
+          imageModel: editedDraft.metadata?.imageModel,
+          imageStyle: editedDraft.metadata?.imageStyle,
+          imagePrompt: editedDraft.metadata?.imagePrompt
+        }}
+      />
     </motion.div>
   )
 }

@@ -23,6 +23,9 @@ import {
 } from 'lucide-react'
 import DraftEditor from '@/components/DraftEditor'
 
+import GenerationSettingsModal from '@/components/GenerationSettingsModal'
+import { AIMetadata } from '@/lib/types'
+
 interface DashboardClientProps {
   user: { username: string; role: string }
 }
@@ -32,8 +35,10 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   const [publishedArticles, setPublishedArticles] = useState<Article[]>([])
   const [selectedDraft, setSelectedDraft] = useState<Draft | null>(null)
   const [editingDraft, setEditingDraft] = useState<Draft | null>(null)
+  const [editingArticle, setEditingArticle] = useState<Article | null>(null)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [showGenerationModal, setShowGenerationModal] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<'date' | 'title'>('date')
@@ -92,10 +97,10 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     )
   }, [publishedArticles])
 
-  const handleGenerateArticle = async () => {
+  const handleGenerateArticle = async (settings: AIMetadata) => {
     setIsGenerating(true)
     try {
-      const draft = await apiClient.generateArticle()
+      const draft = await apiClient.generateArticle(settings)
       await loadData()
       setSelectedDraft(draft)
     } catch (error) {
@@ -264,7 +269,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
           </div>
           <div className="flex items-center gap-4">
             <button
-              onClick={handleGenerateArticle}
+              onClick={() => setShowGenerationModal(true)}
               disabled={isGenerating}
               className="flex items-center gap-2 px-4 py-2 bg-white text-black font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:bg-[#EAEAEA] transition-colors disabled:opacity-50"
             >
@@ -384,8 +389,8 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                     layoutId={draft.id}
                     onClick={() => setSelectedDraft(draft)}
                     className={`p-4 rounded-xl border cursor-pointer transition-all group ${selectedDraft?.id === draft.id
-                        ? 'bg-white/10 border-white/30'
-                        : 'bg-transparent border-white/10 hover:border-white/20'
+                      ? 'bg-white/10 border-white/30'
+                      : 'bg-transparent border-white/10 hover:border-white/20'
                       }`}
                   >
                     <div className="flex items-start gap-4">
@@ -525,14 +530,23 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                   </span>
                   <div className="flex gap-2">
                     <button
+                      onClick={() => setEditingArticle(article)}
+                      className="p-2 hover:text-white transition-colors text-[#888888]"
+                      title="Edit"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button
                       onClick={() => router.push(`/thoughts/${article.id}`)}
                       className="p-2 hover:text-white transition-colors text-[#888888]"
+                      title="View"
                     >
                       <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handleUnpublish(article.id)}
                       className="p-2 hover:text-red-400 transition-colors text-[#888888]"
+                      title="Unpublish"
                     >
                       <LogOut className="w-4 h-4" />
                     </button>
@@ -549,6 +563,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
         {editingDraft && (
           <DraftEditor
             draft={editingDraft}
+            type="draft"
             onSave={async () => {
               await loadData()
               setEditingDraft(null)
@@ -559,7 +574,25 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
             onClose={() => setEditingDraft(null)}
           />
         )}
+        {editingArticle && (
+          <DraftEditor
+            draft={editingArticle}
+            type="article"
+            onSave={async () => {
+              await loadData()
+              setEditingArticle(null)
+            }}
+            onClose={() => setEditingArticle(null)}
+          />
+        )}
       </AnimatePresence>
+
+      {/* Generation Settings Modal */}
+      <GenerationSettingsModal
+        isOpen={showGenerationModal}
+        onClose={() => setShowGenerationModal(false)}
+        onGenerate={handleGenerateArticle}
+      />
     </div>
   )
 }

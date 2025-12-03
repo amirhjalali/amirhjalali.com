@@ -124,11 +124,12 @@ class APIClient {
   }
 
   // AI Generation
-  async generateArticle(customTopic?: string): Promise<Draft> {
+  // AI Generation
+  async generateArticle(options?: import('@/lib/types').AIMetadata): Promise<Draft> {
     const response = await fetch(`${this.baseUrl}/generate-article`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ customTopic }),
+      body: JSON.stringify(options || {}),
     })
     if (!response.ok) {
       const error = await response.json()
@@ -136,6 +137,33 @@ class APIClient {
     }
     const result = await response.json()
     return result.draft
+  }
+
+  async regenerateContent(id: string, options: import('@/lib/types').AIMetadata): Promise<Draft> {
+    const response = await fetch(`${this.baseUrl}/regenerate-content`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, ...options }),
+    })
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.error || 'Failed to regenerate content')
+    }
+    const result = await response.json()
+    return result.draft
+  }
+
+  async regenerateImage(id: string, options: import('@/lib/types').AIMetadata): Promise<{ imageUrl: string }> {
+    const response = await fetch(`${this.baseUrl}/regenerate-image`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, ...options }),
+    })
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.error || 'Failed to regenerate image')
+    }
+    return response.json()
   }
 }
 

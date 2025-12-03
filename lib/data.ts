@@ -24,7 +24,12 @@ function transformArticle(pArticle: PrismaArticle): Article {
 export async function getPublishedArticles(): Promise<Article[]> {
     try {
         const articles = await prisma.article.findMany({
-            where: { published: true },
+            where: {
+                published: true,
+                publishedAt: {
+                    lte: new Date()
+                }
+            },
             orderBy: { publishedAt: 'desc' },
         })
         return articles.map(transformArticle)

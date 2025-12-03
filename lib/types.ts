@@ -1,3 +1,12 @@
+export interface AIMetadata {
+    textModel?: string
+    imageModel?: string
+    imageStyle?: string
+    imagePrompt?: string
+    topic?: string
+    [key: string]: any
+}
+
 export interface Article {
     id: string
     title: string
@@ -13,8 +22,8 @@ export interface Article {
     published?: boolean
     createdAt?: string
     updatedAt?: string
-    status?: 'published' | 'draft' // Added for compatibility
-    metadata?: Record<string, any> // Added for compatibility
+    status?: 'published' | 'draft'
+    metadata?: AIMetadata
 }
 
 export interface Draft {
@@ -25,6 +34,8 @@ export interface Draft {
     tags: string[]
     imageUrl?: string
     aiGenerated: boolean
+    readTime?: string
     createdAt: string
     updatedAt: string
+    metadata?: AIMetadata
 }

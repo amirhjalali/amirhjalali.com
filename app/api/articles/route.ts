@@ -38,7 +38,10 @@ export async function GET(request: NextRequest) {
     const publishedOnly = searchParams.get('published') === 'true'
 
     const articles = await prisma.article.findMany({
-      where: publishedOnly ? { published: true } : undefined,
+      where: publishedOnly ? {
+        published: true,
+        publishedAt: { lte: new Date() }
+      } : undefined,
       orderBy: { publishedAt: 'desc' },
     })
 

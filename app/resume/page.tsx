@@ -420,7 +420,7 @@ export default function ResumePage() {
               transition={{ delay: 0.4 }}
               className="sticky top-24"
             >
-              <h2 className="text-2xl mb-8 font-serif font-light text-[#EAEAEA]">Technical Skills</h2>
+
 
               <div className="space-y-6">
                 {Object.entries(skills).map(([category, skillList]) => (
