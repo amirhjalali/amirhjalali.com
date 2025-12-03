@@ -54,6 +54,7 @@ export default function ThoughtsPageClient({ articles }: ThoughtsPageClientProps
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
+          {/* Page Title */}
           <h1 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
             Thoughts
           </h1>

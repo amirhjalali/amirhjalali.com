@@ -23,7 +23,7 @@ export default function Home() {
           className="text-center mb-12"
         >
           <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-light tracking-tight mb-6 text-[#EAEAEA]">
-            Amir H. Jalali
+            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">A</span>mir H. Jalal<span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">i</span>
           </h1>
           <p className="font-mono text-xs md:text-sm uppercase tracking-[0.2em] text-[#888888]">
             Human Consultant
