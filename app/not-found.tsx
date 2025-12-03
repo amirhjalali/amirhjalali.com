@@ -9,7 +9,7 @@ export default function NotFound() {
     <div className="min-h-[80vh] relative flex flex-col items-center justify-center p-6 overflow-hidden">
       {/* Background effects */}
       <div className="noise-overlay" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-[#050505] to-[#050505]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-[#050505] to-[#050505] pointer-events-none" />
 
       <div className="relative z-10 text-center max-w-lg mx-auto">
         <motion.div

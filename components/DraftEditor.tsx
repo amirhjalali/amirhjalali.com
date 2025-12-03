@@ -532,7 +532,7 @@ Regular paragraph text goes here."
                       setScheduledDate(e.target.value)
                       setHasChanges(true)
                     }}
-                    className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-white/30"
+                    className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-white/30 [color-scheme:dark]"
                   />
                 </div>
               )}
