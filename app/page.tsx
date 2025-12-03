@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import GhostCard from '@/components/GhostCard'
 import Spotlight from '@/components/Spotlight'
+import PortraitReveal from '@/components/PortraitReveal'
 import Link from 'next/link'
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       {/* Background Effects */}
       <div className="noise-overlay" />
       <Spotlight />
+      <PortraitReveal />
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-12">
