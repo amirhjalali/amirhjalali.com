@@ -26,7 +26,7 @@ export default function Home() {
             Amir H. Jalali
           </h1>
           <p className="font-mono text-xs md:text-sm uppercase tracking-[0.2em] text-[#888888]">
-            AI Consultant & Data Engineering Expert
+            Human Consultant
           </p>
         </motion.div>
 

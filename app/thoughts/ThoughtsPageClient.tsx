@@ -57,9 +57,7 @@ export default function ThoughtsPageClient({ articles }: ThoughtsPageClientProps
           <h1 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
             Thoughts
           </h1>
-          <p className="text-xl font-mono text-[#888888] max-w-3xl mx-auto">
-            Insights on AI trends, programming paradigms, and the future of technology
-          </p>
+
         </motion.div>
 
         <motion.div

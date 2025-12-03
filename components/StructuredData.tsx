@@ -9,7 +9,7 @@ export default function StructuredData() {
         "@id": "https://amirhjalali.com/#person",
         "name": "Amir H. Jalali",
         "alternateName": "Amir Jalali",
-        "jobTitle": "AI Consultant & Data Engineering Expert",
+        "jobTitle": "Human Consultant",
         "description": "Generative AI consultant with 14 years experience in Data Warehousing, Business Intelligence, and AI Strategy. Currently CTO at AVENU AI.",
         "url": "https://amirhjalali.com",
         "image": "https://amirhjalali.com/og-image.png",

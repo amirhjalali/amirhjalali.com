@@ -107,11 +107,8 @@ export default function ProjectsPage() {
           className="text-center mb-16"
         >
           <h1 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
-            Projects
+            Work
           </h1>
-          <p className="text-xl font-mono text-[#888888] max-w-3xl mx-auto">
-            Exploring the intersection of AI, technology, and innovation.
-          </p>
         </motion.div>
 
         {/* Projects Grid */}

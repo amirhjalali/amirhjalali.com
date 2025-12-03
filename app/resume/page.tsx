@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Printer, Download, Mail } from 'lucide-react'
+import { Printer, Download, Mail, Github, Linkedin } from 'lucide-react'
 import Spotlight from '@/components/Spotlight'
 import './print.css'
 
@@ -428,15 +428,29 @@ export default function ResumePage() {
               </div>
 
               {/* Contact CTA */}
+              {/* Social Links */}
               <div className="mt-12 glass p-8 rounded-xl border border-white/10 text-center bg-white/5 backdrop-blur-md">
-                <h3 className="text-xl mb-4 font-serif font-light text-[#EAEAEA]">Let's Connect</h3>
-                <p className="text-[#888888] mb-6 text-sm font-mono leading-relaxed">
-                  Interested in collaboration or have questions about my experience?
-                </p>
-                <a href="/contact" className="inline-flex items-center gap-2 px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/10 hover:border-white/30 transition-all group">
-                  <Mail className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  Get in Touch
-                </a>
+                <h3 className="text-xl mb-4 font-serif font-light text-[#EAEAEA]">Connect</h3>
+                <div className="flex justify-center gap-4">
+                  <a
+                    href="https://github.com/amirhjalali"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 border border-white/10 rounded-full text-[#888888] hover:text-[#EAEAEA] hover:bg-white/10 hover:border-white/30 transition-all group"
+                    aria-label="GitHub"
+                  >
+                    <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/amirhjalali"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 border border-white/10 rounded-full text-[#888888] hover:text-[#EAEAEA] hover:bg-white/10 hover:border-white/30 transition-all group"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>

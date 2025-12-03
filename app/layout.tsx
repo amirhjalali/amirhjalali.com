@@ -22,7 +22,7 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
+    default: 'Amir H. Jalali - Human Consultant',
     template: '%s | Amir H. Jalali'
   },
   manifest: '/manifest.json',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   category: 'Technology',
   classification: 'AI Consulting',
   openGraph: {
-    title: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
+    title: 'Amir H. Jalali - Human Consultant',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
     url: 'https://gaboojabrothers.cloud',
     siteName: 'Amir H. Jalali',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
+    title: 'Amir H. Jalali - Human Consultant',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
     images: ['https://gaboojabrothers.cloud/og-image.png'],
     creator: '@amirhjalali',
