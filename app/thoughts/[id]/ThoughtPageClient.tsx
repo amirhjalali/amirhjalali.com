@@ -203,33 +203,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
         </motion.article>
 
         {/* Article Footer */}
-        <motion.footer
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-16 pt-8 border-t border-white/10"
-        >
-          <div className="text-center">
-            <h3 className="text-xl font-serif font-light mb-4 text-[#EAEAEA]">Enjoyed this article?</h3>
-            <p className="text-[#888888] mb-6 font-mono text-sm">
-              Want to discuss more? Get in touch or read more of my thoughts.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/thoughts"
-                className="px-6 py-3 bg-[#EAEAEA] text-[#050505] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white transition-colors"
-              >
-                Read More Thoughts
-              </Link>
-              <Link
-                href="/contact"
-                className="px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 transition-colors"
-              >
-                Get in Touch
-              </Link>
-            </div>
-          </div>
-        </motion.footer>
+
       </div>
 
       <style jsx global>{`
@@ -252,8 +226,8 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
           font-size: 1.125rem;
           line-height: 1.8;
           margin-bottom: 1.5rem;
-          color: rgba(234, 234, 234, 0.9);
-          font-weight: 300;
+          color: rgba(234, 234, 234, 0.8);
+          font-weight: 200;
         }
 
         .article-content ul, 
@@ -272,7 +246,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
 
         .article-content strong {
           color: #FFFFFF;
-          font-weight: 600;
+          font-weight: 400;
         }
 
         .article-content blockquote {
