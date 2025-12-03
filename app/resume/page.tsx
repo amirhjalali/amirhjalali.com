@@ -264,11 +264,8 @@ const item = {
 }
 
 export default function ResumePage() {
-  const [selectedType, setSelectedType] = useState<'all' | 'work' | 'education'>('all')
-
-  const filteredExperience = selectedType === 'all'
-    ? experience
-    : experience.filter(exp => exp.type === selectedType)
+  // Filter logic removed
+  const filteredExperience = experience
 
 
 
@@ -286,20 +283,10 @@ export default function ResumePage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
-            Resume
+            Contact
           </h1>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-
-            <a
-              href="/AmirJalaliResume_04-01-2025.pdf"
-              download="AmirJalaliResume_04-01-2025.pdf"
-              className="px-6 py-3 border border-white/10 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest rounded-full hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center gap-2 no-print"
-            >
-              <Download className="w-4 h-4" />
-              Download PDF
-            </a>
-
             <div className="flex gap-2">
               <a
                 href="https://github.com/amirhjalali"
@@ -319,22 +306,21 @@ export default function ResumePage() {
               >
                 <Linkedin className="w-4 h-4" />
               </a>
-            </div>
-
-            {/* Filter buttons */}
-            <div className="flex gap-2">
-              {['all', 'work', 'education'].map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setSelectedType(type as any)}
-                  className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest transition-all border border-transparent ${selectedType === type
-                    ? 'bg-white/10 text-white border-white/10'
-                    : 'text-[#888888] hover:text-[#EAEAEA] hover:bg-white/5'
-                    }`}
-                >
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </button>
-              ))}
+              <a
+                href="mailto:amirhjalali@gmail.com"
+                className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center"
+                aria-label="Email"
+              >
+                <Mail className="w-4 h-4" />
+              </a>
+              <a
+                href="/AmirJalaliResume_04-01-2025.pdf"
+                download="AmirJalaliResume_04-01-2025.pdf"
+                className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center no-print"
+                aria-label="Download PDF"
+              >
+                <Download className="w-4 h-4" />
+              </a>
             </div>
           </div>
         </motion.div>
