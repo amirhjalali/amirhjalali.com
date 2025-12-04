@@ -263,7 +263,7 @@ const item = {
   show: { opacity: 1, x: 0 }
 }
 
-export default function ResumePage() {
+export default function ContactPage() {
   // Filter logic removed
   const filteredExperience = experience
 

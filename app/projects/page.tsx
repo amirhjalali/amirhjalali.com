@@ -134,7 +134,7 @@ export default function ProjectsPage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-white/10 text-[#EAEAEA] hover:bg-white/5 font-mono uppercase tracking-widest">
-                <Link href="/resume">
+                <Link href="/contact">
                   View Resume
                 </Link>
               </Button>

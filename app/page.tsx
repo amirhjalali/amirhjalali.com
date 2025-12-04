@@ -45,7 +45,7 @@ export default function Home() {
           <Link href="/thoughts" className="hover:text-[#EAEAEA] transition-colors">
             Thoughts
           </Link>
-          <Link href="/resume" className="hover:text-[#EAEAEA] transition-colors">
+          <Link href="/contact" className="hover:text-[#EAEAEA] transition-colors">
             Contact
           </Link>
         </motion.div>
