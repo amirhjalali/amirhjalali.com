@@ -40,11 +40,18 @@ export default function GenerationSettingsModal({
     }
 
     return (
-        <div className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div
+            className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={(e) => {
+                e.stopPropagation()
+                onClose()
+            }}
+        >
             <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className="glass border border-white/10 rounded-2xl w-full max-w-lg overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
             >
                 <div className="p-6 border-b border-white/10 flex items-center justify-between">
                     <h2 className="text-xl font-serif font-light flex items-center gap-2">
