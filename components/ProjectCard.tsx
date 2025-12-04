@@ -10,8 +10,6 @@ interface Project {
   description: string
   longDescription: string
   tags: string[]
-  status: 'Live' | 'In Development' | 'Research' | 'Planning'
-  progress: number
   link: string
   contact?: string
   image: string
@@ -50,20 +48,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               placeholder="skeleton"
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-
-            {/* Status Badge Overlay */}
-            <div className="absolute top-3 left-3 flex items-center gap-2 px-2 py-1 bg-black/50 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-white backdrop-blur-sm">
-              <div className={`w-1.5 h-1.5 rounded-full ${project.status === 'Live' ? 'bg-emerald-400' :
-                  project.status === 'In Development' ? 'bg-blue-400' : 'bg-purple-400'
-                }`} />
-              {project.status}
-            </div>
           </div>
 
           <div className="p-6 flex flex-col flex-grow">
             <div className="flex justify-between items-start mb-3 text-[10px] font-mono uppercase tracking-widest text-[#888888]">
               <span>Project</span>
-              <span>{project.progress}% Complete</span>
             </div>
 
             <h3 className="text-xl mb-3 font-serif font-light text-[#EAEAEA] group-hover:text-white transition-colors duration-300 line-clamp-2">
