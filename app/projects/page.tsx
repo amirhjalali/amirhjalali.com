@@ -30,7 +30,7 @@ const projects = [
     tags: ['E-commerce', 'Social Media', 'Startup', 'Investment'],
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
-    image: getImageUrl('/images/projects/gabooja_noir.png'),
+    image: getImageUrl('/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg'),
   },
   {
     id: 2,
@@ -39,7 +39,7 @@ const projects = [
     longDescription: 'AI recruitment and onboarding platform featuring smart AI recruitment tools designed to significantly reduce time and resources per hire by 230%.',
     tags: ['AI', 'Recruitment', 'HR Tech', 'Automation'],
     link: 'https://avenu.ai/',
-    image: getImageUrl('/images/projects/avenu_noir.png'),
+    image: getImageUrl('/images/projects/avenu-ai.jpg'),
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ const projects = [
     longDescription: 'AI strategy implementation for advertising platform leveraging LLMs and Generative AI for tailored advertisements and improved ROI.',
     tags: ['AI Strategy', 'LLMs', 'Advertising', 'ROI Optimization'],
     link: 'https://www.getplaiced.com/',
-    image: getImageUrl('/images/projects/plaiced_noir.png'),
+    image: getImageUrl('/images/projects/plaiced-optimized.jpg'),
   },
   {
     id: 4,
@@ -57,7 +57,7 @@ const projects = [
     longDescription: 'Platform designed to improve the quality of online discourse by using LLMs to add context and reduce the propagation of false claims.',
     tags: ['LLMs', 'Content Moderation', 'Fact Checking', 'Social Impact'],
     link: 'https://www.argumend.org/',
-    image: getImageUrl('/images/projects/argumend_noir.png'),
+    image: getImageUrl('/images/projects/argumend.jpg'),
   },
   {
     id: 5,
@@ -66,7 +66,7 @@ const projects = [
     longDescription: 'A global community bringing together friends, family, doers and dreamers from around the world to collaborate and innovate.',
     tags: ['Community', 'Global Network', 'Collaboration', 'Innovation'],
     link: 'https://www.campalborz.org/',
-    image: getImageUrl('/images/projects/camp_alborz_noir.png'),
+    image: getImageUrl('/images/projects/697708edbb82e14a4a127560ef91f02e.jpg'),
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ const projects = [
     longDescription: 'A sophisticated portfolio platform built with Next.js, featuring AI-powered content generation, modern animations, and seamless user experience.',
     tags: ['Next.js', 'AI Integration', 'Portfolio', 'Modern Design'],
     link: '/',
-    image: getImageUrl('/images/projects/portfolio_noir.png'),
+    image: getImageUrl('/images/projects/122a7dde94334fc9d7a4bfac0020dcf4.jpg'),
   },
 ]
 
