@@ -70,3 +70,34 @@ export async function getAllArticleIds(): Promise<{ id: string }[]> {
         return []
     }
 }
+
+// Helper to transform Prisma Draft to App Article
+function transformDraft(draft: any): Article {
+    return {
+        id: draft.id,
+        title: draft.title,
+        slug: draft.id, // Drafts don't have slugs, use ID
+        content: draft.content,
+        excerpt: draft.excerpt || '',
+        tags: draft.tags,
+        imageUrl: draft.imageUrl || undefined,
+        aiGenerated: draft.aiGenerated,
+        author: "Amir H. Jalali", // Default author
+        publishedAt: draft.updatedAt.toISOString(), // Use updated time for preview
+        readTime: draft.readTime || '1 min read',
+        status: 'draft',
+        metadata: draft.metadata as any || {},
+    }
+}
+
+export async function getDraft(id: string): Promise<Article | null> {
+    try {
+        const draft = await prisma.draft.findUnique({
+            where: { id },
+        })
+        return draft ? transformDraft(draft) : null
+    } catch (error) {
+        console.error('Error fetching draft:', error)
+        return null
+    }
+}
