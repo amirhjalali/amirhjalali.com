@@ -40,7 +40,8 @@ export async function generateArticleContent(options: AIMetadata): Promise<Artic
         console.warn(`Model ${model} requested but not fully configured. Falling back to OpenAI logic structure but using requested model name if compatible.`);
     }
 
-    const prompt = `Write a thoughtful, engaging article about "${topic}".
+    const additionalInstructions = options.additionalInstructions ? `\nAdditional Instructions:\n${options.additionalInstructions}` : '';
+    const prompt = `Write a thoughtful, engaging article about "${topic}".${additionalInstructions}
 
 Requirements:
 - Length: 600-800 words

@@ -28,6 +28,7 @@ export default function GenerationSettingsModal({
         imageModel: initialSettings.imageModel || 'dall-e-3',
         imageStyle: initialSettings.imageStyle || 'abstract, contemporary, tech-focused, visually striking',
         imagePrompt: initialSettings.imagePrompt || '',
+        additionalInstructions: initialSettings.additionalInstructions || '',
     })
 
     if (!isOpen) return null
@@ -87,6 +88,17 @@ export default function GenerationSettingsModal({
                                     <option value="claude-3-opus">Claude 3 Opus (Coming Soon)</option>
                                     <option value="gemini-pro">Gemini Pro (Coming Soon)</option>
                                 </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm mb-2">Additional Instructions (Optional)</label>
+                                <textarea
+                                    value={settings.additionalInstructions || ''}
+                                    onChange={(e) => setSettings({ ...settings, additionalInstructions: e.target.value })}
+                                    placeholder="e.g. Focus on technical details, use a friendly tone, include code examples..."
+                                    rows={3}
+                                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 resize-none"
+                                />
                             </div>
                         </div>
                     )}

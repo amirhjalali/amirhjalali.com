@@ -200,7 +200,8 @@ ${editedDraft.content}`
   }, [hasChanges, handleSave, handleUndo, handleRedo, onClose])
 
   useEffect(() => {
-    const changed = JSON.stringify(editedDraft) !== JSON.stringify(draft)
+    const changed = JSON.stringify(editedDraft) !== JSON.stringify(draft) ||
+      scheduledDate !== ((draft.metadata as any)?.scheduledPublishDate || '')
     setHasChanges(changed)
 
     if (changed && autoSaveTimer) {
@@ -217,7 +218,7 @@ ${editedDraft.content}`
     return () => {
       if (autoSaveTimer) clearTimeout(autoSaveTimer)
     }
-  }, [editedDraft, autoSaveTimer, draft, handleSave])
+  }, [editedDraft, autoSaveTimer, draft, handleSave, scheduledDate])
 
   const stats = {
     wordCount: editedDraft.content.trim().split(/\s+/).length,
@@ -350,7 +351,7 @@ ${editedDraft.content}`
               value={editedDraft.title}
               onChange={(e) => handleFieldChange('title', e.target.value)}
               maxLength={120}
-              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-lg font-semibold"
+              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 text-lg font-semibold"
             />
           </div>
 
@@ -366,7 +367,7 @@ ${editedDraft.content}`
               value={editedDraft.excerpt || ''}
               onChange={(e) => handleFieldChange('excerpt', e.target.value)}
               maxLength={250}
-              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal resize-none"
+              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 resize-none"
               rows={2}
             />
           </div>
@@ -430,7 +431,7 @@ ${editedDraft.content}`
                       handleFieldChange('imageUrl', e.currentTarget.value)
                     }
                   }}
-                  className="flex-1 px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
+                  className="flex-1 px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 text-sm"
                 />
               </div>
             </div>
@@ -458,7 +459,7 @@ ${editedDraft.content}`
             <input
               type="text"
               placeholder="Add tag and press Enter"
-              className="w-full px-4 py-2 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal text-sm"
+              className="w-full px-4 py-2 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 text-sm"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   handleTagAdd(e.currentTarget.value)
@@ -484,7 +485,7 @@ ${editedDraft.content}`
                 e.target.style.height = 'auto'
                 e.target.style.height = e.target.scrollHeight + 'px'
               }}
-              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ai-teal font-mono text-sm resize-y min-h-[500px]"
+              className="w-full px-4 py-3 bg-background/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 font-mono text-sm resize-y min-h-[500px]"
               rows={25}
               placeholder="# Your Article Title
 
@@ -541,7 +542,7 @@ Regular paragraph text goes here."
           <button
             onClick={() => handleSave(false)}
             disabled={!hasChanges}
-            className="px-6 py-3 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold rounded-xl hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
+            className="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-[#EAEAEA] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <Save className="w-4 h-4" />
             Save Changes
@@ -558,7 +559,8 @@ Regular paragraph text goes here."
         title="Regenerate Content"
         initialSettings={{
           topic: editedDraft.metadata?.topic,
-          textModel: editedDraft.metadata?.textModel
+          textModel: editedDraft.metadata?.textModel,
+          additionalInstructions: editedDraft.metadata?.additionalInstructions
         }}
       />
 
