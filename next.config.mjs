@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   // VPS Deployment with Coolify
   // Full Next.js features enabled including API routes
 
