@@ -1,6 +1,3 @@
-// This is your Prisma schema file
-// Learn more: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,34 +8,23 @@ datasource db {
 }
 
 model Article {
-  id            String   @id @default(cuid())
-
-  // Content
-  title         String
-  slug          String   @unique // URL-friendly version
-  excerpt       String   @db.Text
-  content       String   @db.Text // Markdown
-
-
-  // Metadata
-  author        String   @default("Amir H. Jalali")
-  tags          String[] // Array of tags
-  imageUrl      String?
-  readTime      String
-  metadata      Json?    // Flexible metadata for AI generation details
-
-  // Classification
-  aiGenerated   Boolean  @default(false)
-  published     Boolean  @default(false)
-  featured      Boolean  @default(false)
-
-  // Timestamps
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  publishedAt   DateTime?
-
-  // Relations
-  versions      ArticleVersion[]
+  id          String           @id @default(cuid())
+  title       String
+  slug        String           @unique
+  excerpt     String
+  content     String
+  author      String           @default("Amir H. Jalali")
+  tags        String[]
+  imageUrl    String?
+  readTime    String
+  metadata    Json?
+  aiGenerated Boolean          @default(false)
+  published   Boolean          @default(false)
+  featured    Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  publishedAt DateTime?
+  versions    ArticleVersion[]
 
   @@index([published, publishedAt])
   @@index([slug])
@@ -47,18 +33,14 @@ model Article {
 model ArticleVersion {
   id            String   @id @default(cuid())
   articleId     String
-  article       Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
-
-  // Versioned content
   title         String
-  content       String   @db.Text
-  excerpt       String   @db.Text
-
-  // Version metadata
+  content       String
+  excerpt       String
   versionNumber Int
   createdAt     DateTime @default(now())
   createdBy     String   @default("system")
   changeNote    String?
+  article       Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
 
   @@index([articleId, versionNumber])
 }
@@ -66,8 +48,8 @@ model ArticleVersion {
 model Draft {
   id          String   @id @default(cuid())
   title       String
-  content     String   @db.Text
-  excerpt     String?  @db.Text
+  content     String
+  excerpt     String?
   tags        String[]
   imageUrl    String?
   aiGenerated Boolean  @default(false)
