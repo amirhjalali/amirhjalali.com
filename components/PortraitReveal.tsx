@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { motion, useMotionValue, useMotionTemplate, useSpring } from 'framer-motion'
 
 export default function PortraitReveal() {

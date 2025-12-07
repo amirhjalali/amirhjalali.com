@@ -18,8 +18,7 @@ import {
   Upload,
   CheckSquare,
   Square,
-  Sparkles,
-  Plus
+  Sparkles
 } from 'lucide-react'
 import DraftEditor from '@/components/DraftEditor'
 
@@ -41,7 +40,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   const [showGenerationModal, setShowGenerationModal] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-  const [sortBy, setSortBy] = useState<'date' | 'title'>('date')
+  const [_sortBy, setSortBy] = useState<'date' | 'title'>('date')
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [showPublished, setShowPublished] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -81,14 +80,14 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
       draft.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
     )
 
-    if (sortBy === 'title') {
+    if (_sortBy === 'title') {
       filtered.sort((a, b) => a.title.localeCompare(b.title))
     } else {
       filtered.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
     }
 
     return filtered
-  }, [drafts, searchQuery, sortBy])
+  }, [drafts, searchQuery, _sortBy])
 
   // Sorted published articles (by date, most recent first)
   const sortedPublishedArticles = useMemo(() => {

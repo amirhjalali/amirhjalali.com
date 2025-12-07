@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
 import { Download, Mail, Github, Linkedin } from 'lucide-react'
 import Spotlight from '@/components/Spotlight'
 import './print.css'

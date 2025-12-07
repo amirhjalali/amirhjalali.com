@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import GhostCard from '@/components/GhostCard'
 import Spotlight from '@/components/Spotlight'
 import PortraitReveal from '@/components/PortraitReveal'
 import Link from 'next/link'

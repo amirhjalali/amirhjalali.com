@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo, Sparkles, Image as ImageIcon, Calendar, Clock } from 'lucide-react'
+import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo, Sparkles, Image as ImageIcon, Calendar } from 'lucide-react'
 import { apiClient, type Draft, type Article } from '@/lib/api-client'
 import GenerationSettingsModal from './GenerationSettingsModal'
 import { AIMetadata } from '@/lib/types'
@@ -26,7 +26,7 @@ export default function DraftEditor({ draft, type = 'draft', onSave, onClose }: 
   // New state for modals and scheduling
   const [showRegenContentModal, setShowRegenContentModal] = useState(false)
   const [showRegenImageModal, setShowRegenImageModal] = useState(false)
-  const [isRegenerating, setIsRegenerating] = useState(false)
+  const [_isRegenerating, setIsRegenerating] = useState(false)
   const [showSchedule, setShowSchedule] = useState(false)
   const [scheduledDate, setScheduledDate] = useState<string>(
     (draft.metadata as any)?.scheduledPublishDate || ''
