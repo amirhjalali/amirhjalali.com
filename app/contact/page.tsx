@@ -282,7 +282,7 @@ export default function ContactPage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
-            Contact
+            Bio
           </h1>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
