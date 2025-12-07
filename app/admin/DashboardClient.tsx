@@ -40,7 +40,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   const [showGenerationModal, setShowGenerationModal] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-  const [_sortBy, setSortBy] = useState<'date' | 'title'>('date')
+  const [_sortBy, _setSortBy] = useState<'date' | 'title'>('date')
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [showPublished, setShowPublished] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -162,7 +162,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     }
   }
 
-  const handleBulkDelete = async () => {
+  const _handleBulkDelete = async () => {
     if (selectedIds.size === 0) return
     if (!confirm(`Delete ${selectedIds.size} drafts? This cannot be undone.`)) return
 
@@ -176,7 +176,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     }
   }
 
-  const handleBulkPublish = async () => {
+  const _handleBulkPublish = async () => {
     if (selectedIds.size === 0) return
     if (!confirm(`Publish ${selectedIds.size} drafts?`)) return
 
