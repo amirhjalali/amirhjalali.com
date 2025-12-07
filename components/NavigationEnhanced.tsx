@@ -17,7 +17,7 @@ import { Menu } from 'lucide-react'
 const navItems = [
   { href: '/projects', label: 'Work' },
   { href: '/thoughts', label: 'Thoughts' },
-  { href: '/contact', label: 'Bio' },
+  { href: '/contact', label: 'About' },
 ]
 
 export default function NavigationEnhanced() {
