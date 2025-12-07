@@ -1,9 +1,17 @@
+export interface Reference {
+    type: 'url' | 'text'
+    content: string
+    title?: string
+}
+
 export interface AIMetadata {
     textModel?: string
     imageModel?: string
     imageStyle?: string
     imagePrompt?: string
     topic?: string
+    additionalInstructions?: string
+    references?: Reference[]
     [key: string]: any
 }
 

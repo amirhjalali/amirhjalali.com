@@ -1,4 +1,5 @@
 import { AIMetadata } from '@/lib/types';
+import { generateArticleWithGemini, isGeminiAvailable } from '@/lib/gemini-service';
 
 // Topics for article generation
 const TOPICS = [
@@ -27,18 +28,22 @@ interface ArticleContent {
 }
 
 export async function generateArticleContent(options: AIMetadata): Promise<ArticleContent> {
+    const model = options.textModel || 'gpt-4o-mini';
+
+    // Use Gemini for gemini models or when references are provided
+    if (model.startsWith('gemini') || (options.references?.length && isGeminiAvailable())) {
+        if (!isGeminiAvailable()) {
+            throw new Error('Gemini API key not configured. Set GEMINI_API_KEY in your environment.');
+        }
+        console.log(`Using Gemini for article generation (model: ${model}, references: ${options.references?.length || 0})`);
+        return generateArticleWithGemini(options);
+    }
+
+    // Fall back to OpenAI
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) throw new Error('OpenAI API key not configured');
 
     const topic = options.topic || TOPICS[Math.floor(Math.random() * TOPICS.length)];
-    const model = options.textModel || 'gpt-4o-mini';
-
-    // TODO: Add support for Claude and Gemini when keys are available
-    if (model.startsWith('claude') || model.startsWith('gemini')) {
-        // For now, fallback to OpenAI or throw error
-        // throw new Error(`Model ${model} not yet supported`);
-        console.warn(`Model ${model} requested but not fully configured. Falling back to OpenAI logic structure but using requested model name if compatible.`);
-    }
 
     const additionalInstructions = options.additionalInstructions ? `\nAdditional Instructions:\n${options.additionalInstructions}` : '';
     const prompt = `Write a thoughtful, engaging article about "${topic}".${additionalInstructions}
