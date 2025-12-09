@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { getSession } from '@/app/actions/auth'
 import { NoteType, ProcessStatus } from '@/lib/types'
+import { queueNoteProcessing } from '@/lib/queue/note-queue'
 
 // GET /api/notes - List notes with filters
 export async function GET(request: NextRequest) {
@@ -109,10 +110,24 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    // TODO: Queue for processing if autoProcess is true
-    // This will be implemented in Phase 2 (M2.10)
+    // Auto-process notes by default (can be disabled with autoProcess=false)
+    const autoProcess = body.autoProcess !== false // Default to true
+    const enableAutoProcessing = process.env.ENABLE_AUTO_PROCESSING !== 'false' // Default to true
 
-    return NextResponse.json({ note, jobId: null }, { status: 201 })
+    let jobId: string | null = null
+
+    if (autoProcess && enableAutoProcessing) {
+      try {
+        const job = await queueNoteProcessing(note.id)
+        jobId = job.id as string
+        console.log(`Note ${note.id} queued for automatic processing (Job: ${jobId})`)
+      } catch (error) {
+        console.error(`Failed to queue note ${note.id} for processing:`, error)
+        // Continue without processing - non-critical error
+      }
+    }
+
+    return NextResponse.json({ note, jobId }, { status: 201 })
   } catch (error: any) {
     console.error('POST /api/notes error:', error)
     return NextResponse.json(
