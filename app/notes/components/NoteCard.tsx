@@ -1,10 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { Link as LinkIcon, FileText, Image, Video, Trash2, Clock } from 'lucide-react'
-import type { Note, NoteType } from '@/lib/types'
+import type { Note, NoteType, ProcessStatus } from '@/lib/types'
 import { apiClient } from '@/lib/api-client'
 import { formatDistanceToNow } from 'date-fns'
+import ProcessingIndicator from './ProcessingIndicator'
 
 const typeIcons: Record<NoteType, typeof LinkIcon> = {
   LINK: LinkIcon,
@@ -13,15 +15,10 @@ const typeIcons: Record<NoteType, typeof LinkIcon> = {
   VIDEO: Video,
 }
 
-const statusColors = {
-  PENDING: 'text-yellow-500',
-  PROCESSING: 'text-blue-500',
-  COMPLETED: 'text-green-500',
-  FAILED: 'text-red-500',
-}
-
 export default function NoteCard({ note, onDelete }: { note: Note; onDelete?: () => void }) {
   const Icon = typeIcons[note.type]
+  const [status, setStatus] = useState<ProcessStatus>(note.processStatus)
+  const [jobId, setJobId] = useState<string | null>(null)
 
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this note?')) return
@@ -31,6 +28,16 @@ export default function NoteCard({ note, onDelete }: { note: Note; onDelete?: ()
       onDelete?.()
     } catch (error) {
       alert('Failed to delete note')
+    }
+  }
+
+  const handleRetry = async () => {
+    try {
+      const result = await apiClient.processNote(note.id)
+      setJobId(result.jobId)
+      setStatus('PENDING')
+    } catch (error) {
+      alert('Failed to retry processing')
     }
   }
 
@@ -44,12 +51,16 @@ export default function NoteCard({ note, onDelete }: { note: Note; onDelete?: ()
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-mono ${statusColors[note.processStatus]}`}>
-            {note.processStatus}
-          </span>
+          <ProcessingIndicator
+            status={status}
+            jobId={jobId}
+            onRetry={handleRetry}
+            onStatusChange={setStatus}
+          />
           <button
             onClick={handleDelete}
             className="p-1 hover:bg-red-500/20 rounded-lg transition-colors"
+            disabled={status === 'PROCESSING'}
           >
             <Trash2 className="w-4 h-4 text-red-400" />
           </button>
