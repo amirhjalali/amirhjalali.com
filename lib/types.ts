@@ -47,3 +47,44 @@ export interface Draft {
     updatedAt: string
     metadata?: AIMetadata
 }
+
+// Notes Feature Types
+export type NoteType = 'LINK' | 'TEXT' | 'IMAGE' | 'VIDEO'
+export type ProcessStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
+
+export interface NoteMetadata {
+    domain?: string
+    title?: string
+    description?: string
+    image?: string
+    favicon?: string
+    error?: string
+    [key: string]: any
+}
+
+export interface Note {
+    id: string
+    type: NoteType
+    content: string
+    title?: string | null
+    imageUrl?: string | null
+    videoUrl?: string | null
+    excerpt?: string | null
+    metadata?: NoteMetadata | null
+    tags: string[]
+    topics: string[]
+    processStatus: ProcessStatus
+    processedAt?: string | null
+    summary?: string | null
+    keyInsights: string[]
+    sentiment?: string | null
+    createdAt: string
+    updatedAt: string
+}
+
+export interface NoteArticleRef {
+    id: string
+    noteId: string
+    articleId: string
+    createdAt: string
+}

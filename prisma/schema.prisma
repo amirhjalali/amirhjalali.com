@@ -8,23 +8,24 @@ datasource db {
 }
 
 model Article {
-  id          String           @id @default(cuid())
+  id          String             @id @default(cuid())
   title       String
-  slug        String           @unique
+  slug        String             @unique
   excerpt     String
   content     String
-  author      String           @default("Amir H. Jalali")
+  author      String             @default("Amir H. Jalali")
   tags        String[]
   imageUrl    String?
   readTime    String
   metadata    Json?
-  aiGenerated Boolean          @default(false)
-  published   Boolean          @default(false)
-  featured    Boolean          @default(false)
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  aiGenerated Boolean            @default(false)
+  published   Boolean            @default(false)
+  featured    Boolean            @default(false)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
   publishedAt DateTime?
   versions    ArticleVersion[]
+  noteRefs    NoteArticleRef[]
 
   @@index([published, publishedAt])
   @@index([slug])
@@ -57,4 +58,73 @@ model Draft {
   metadata    Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Notes Feature Models
+enum NoteType {
+  LINK
+  TEXT
+  IMAGE
+  VIDEO
+}
+
+enum ProcessStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model Note {
+  id            String        @id @default(cuid())
+
+  // Core content
+  type          NoteType
+  content       String        // URL for links/media, text for notes
+  title         String?
+
+  // Rich content
+  imageUrl      String?       // Thumbnail or base64 image
+  videoUrl      String?
+  excerpt       String?       // AI-generated summary
+
+  // Metadata
+  metadata      Json?         // URL metadata, video info, etc.
+
+  // Organization
+  tags          String[]
+  topics        String[]      // AI-extracted topics
+
+  // Processing
+  processStatus ProcessStatus @default(PENDING)
+  processedAt   DateTime?
+
+  // AI Analysis
+  summary       String?       // AI-generated summary
+  keyInsights   String[]      // AI-extracted points
+  sentiment     String?       // Positive/Neutral/Negative
+
+  // Relationships
+  articleRefs   NoteArticleRef[]
+
+  // Timestamps
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([processStatus, createdAt])
+  @@index([type, createdAt])
+  @@index([createdAt])
+}
+
+model NoteArticleRef {
+  id        String   @id @default(cuid())
+  noteId    String
+  articleId String
+  note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([noteId, articleId])
+  @@index([noteId])
+  @@index([articleId])
 }
