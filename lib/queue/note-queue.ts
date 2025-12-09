@@ -7,17 +7,17 @@ export interface ProcessNoteJob {
 }
 
 // Queue and worker instances
-let noteQueue: Queue<ProcessNoteJob> | null = null
-let noteWorker: Worker<ProcessNoteJob> | null = null
+let noteQueue: Queue | null = null
+let noteWorker: Worker | null = null
 
 /**
  * Get or create the note processing queue
  */
-export function getNoteQueue(): Queue<ProcessNoteJob> {
+export function getNoteQueue(): Queue {
   if (!noteQueue) {
     const connection = getRedisConnection()
 
-    noteQueue = new Queue<ProcessNoteJob>('note-processing', {
+    noteQueue = new Queue('note-processing', {
       connection,
       defaultJobOptions: {
         attempts: 3,
@@ -95,8 +95,8 @@ export async function getJobStatus(jobId: string) {
  * This should be called in a separate process/service
  */
 export function createNoteWorker(
-  processorFn: (job: Job<ProcessNoteJob>) => Promise<any>
-): Worker<ProcessNoteJob> {
+  processorFn: (job: Job) => Promise<any>
+): Worker {
   if (noteWorker) {
     console.warn('⚠️  Note worker already exists')
     return noteWorker
@@ -104,9 +104,9 @@ export function createNoteWorker(
 
   const connection = getRedisConnection()
 
-  noteWorker = new Worker<ProcessNoteJob>(
+  noteWorker = new Worker(
     'note-processing',
-    async (job: Job<ProcessNoteJob>) => {
+    async (job: Job) => {
       console.log(`🔄 Processing note ${job.data.noteId} (Job: ${job.id})`)
 
       try {

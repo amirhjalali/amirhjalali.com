@@ -134,7 +134,9 @@
       "mcp__linear-server__list_issues",
       "mcp__linear-server__create_issue_label",
       "mcp__linear-server__update_issue",
-      "mcp__linear-server__get_issue"
+      "mcp__linear-server__get_issue",
+      "Bash(sudo chown:*)",
+      "Bash(npm cache clean:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
