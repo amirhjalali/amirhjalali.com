@@ -1,0 +1,48 @@
+import { Inter } from 'next/font/google'
+import Link from 'next/link'
+import { StickyNote } from 'lucide-react'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export default function NotesLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={`${inter.className} bg-[#050505] text-[#EAEAEA] min-h-screen`}>
+        {/* Header */}
+        <header className="border-b border-white/10 bg-black/20 backdrop-blur-md sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <Link href="/notes" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <StickyNote className="w-6 h-6" />
+                <h1 className="text-lg font-mono font-bold">Notes</h1>
+              </Link>
+              <nav className="flex items-center gap-6">
+                <Link
+                  href="/notes"
+                  className="text-xs font-mono uppercase tracking-widest hover:text-white transition-colors"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/"
+                  className="text-xs font-mono uppercase tracking-widest hover:text-white transition-colors"
+                >
+                  Home
+                </Link>
+              </nav>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="max-w-7xl mx-auto px-6 py-8">
+          {children}
+        </main>
+      </body>
+    </html>
+  )
+}
