@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import QuickAdd from './components/QuickAdd'
+import NotesList from './components/NotesList'
 
 export default function NotesPageClient() {
   const [refreshKey, setRefreshKey] = useState(0)
@@ -30,14 +31,12 @@ export default function NotesPageClient() {
         <QuickAdd onNoteAdded={handleNoteAdded} />
       </div>
 
-      {/* Notes List Component - Will be implemented in AMI-11 */}
+      {/* Notes List Component */}
       <div className="glass p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md">
-        <h2 className="text-sm font-mono uppercase tracking-widest text-[#888888] mb-4">
+        <h2 className="text-sm font-mono uppercase tracking-widest text-[#888888] mb-6">
           Your Notes
         </h2>
-        <p className="text-sm text-[#888888]" key={refreshKey}>
-          Notes list component will be added in the next step. (Refresh: {refreshKey})
-        </p>
+        <NotesList refreshKey={refreshKey} />
       </div>
     </div>
   )
