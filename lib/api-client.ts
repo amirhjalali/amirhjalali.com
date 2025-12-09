@@ -3,8 +3,8 @@
  * Replaces localStorage with database-backed API calls
  */
 
-export type { Article, Draft } from '@/lib/types'
-import { Article, Draft } from '@/lib/types'
+export type { Article, Draft, Note, NoteType, ProcessStatus } from '@/lib/types'
+import { Article, Draft, Note, NoteType } from '@/lib/types'
 
 class APIClient {
   private baseUrl = '/api'
@@ -121,6 +121,77 @@ class APIClient {
   async bulkPublishDrafts(ids: string[]): Promise<Article[]> {
     const results = await Promise.all(ids.map(id => this.publishDraft(id)))
     return results
+  }
+
+  // Notes
+  async getNotes(params?: {
+    type?: NoteType
+    tags?: string[]
+    search?: string
+    limit?: number
+    offset?: number
+    sortBy?: string
+    order?: 'asc' | 'desc'
+  }): Promise<{ notes: Note[]; total: number; hasMore: boolean }> {
+    const queryParams = new URLSearchParams()
+
+    if (params?.type) queryParams.set('type', params.type)
+    if (params?.tags?.length) queryParams.set('tags', params.tags.join(','))
+    if (params?.search) queryParams.set('search', params.search)
+    if (params?.limit) queryParams.set('limit', params.limit.toString())
+    if (params?.offset) queryParams.set('offset', params.offset.toString())
+    if (params?.sortBy) queryParams.set('sortBy', params.sortBy)
+    if (params?.order) queryParams.set('order', params.order)
+
+    const url = `${this.baseUrl}/notes${queryParams.toString() ? `?${queryParams}` : ''}`
+    const response = await fetch(url)
+    if (!response.ok) throw new Error('Failed to fetch notes')
+    return response.json()
+  }
+
+  async getNote(id: string): Promise<Note> {
+    const response = await fetch(`${this.baseUrl}/notes/${id}`)
+    if (!response.ok) throw new Error('Failed to fetch note')
+    return response.json()
+  }
+
+  async createNote(data: {
+    type: NoteType
+    content: string
+    title?: string
+    tags?: string[]
+    autoProcess?: boolean
+  }): Promise<{ note: Note; jobId?: string | null }> {
+    const response = await fetch(`${this.baseUrl}/notes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    if (!response.ok) throw new Error('Failed to create note')
+    return response.json()
+  }
+
+  async updateNote(id: string, data: {
+    title?: string
+    tags?: string[]
+    excerpt?: string
+    metadata?: any
+    content?: string
+  }): Promise<Note> {
+    const response = await fetch(`${this.baseUrl}/notes/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    if (!response.ok) throw new Error('Failed to update note')
+    return response.json()
+  }
+
+  async deleteNote(id: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/notes/${id}`, {
+      method: 'DELETE',
+    })
+    if (!response.ok) throw new Error('Failed to delete note')
   }
 
   // AI Generation
