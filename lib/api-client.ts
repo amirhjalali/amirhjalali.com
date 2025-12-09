@@ -194,6 +194,43 @@ class APIClient {
     if (!response.ok) throw new Error('Failed to delete note')
   }
 
+  async processNote(id: string): Promise<{ jobId: string; status: string; message: string }> {
+    const response = await fetch(`${this.baseUrl}/notes/${id}/process`, {
+      method: 'POST',
+    })
+    if (!response.ok) throw new Error('Failed to process note')
+    return response.json()
+  }
+
+  async processBatchNotes(noteIds: string[]): Promise<{
+    jobIds: string[]
+    queued: number
+    skipped: number
+    message: string
+  }> {
+    const response = await fetch(`${this.baseUrl}/notes/process-batch`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ noteIds }),
+    })
+    if (!response.ok) throw new Error('Failed to process batch')
+    return response.json()
+  }
+
+  async getJobStatus(jobId: string): Promise<{
+    jobId: string
+    status: 'pending' | 'processing' | 'completed' | 'failed'
+    progress: number
+    result?: any
+    error?: string
+    attempts: number
+    maxAttempts: number
+  }> {
+    const response = await fetch(`${this.baseUrl}/notes/jobs/${jobId}`)
+    if (!response.ok) throw new Error('Failed to fetch job status')
+    return response.json()
+  }
+
   // AI Generation
   // AI Generation
   async generateArticle(options?: import('@/lib/types').AIMetadata): Promise<Draft> {
