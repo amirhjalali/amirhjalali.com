@@ -19,7 +19,7 @@ export async function login(prevState: any, formData: FormData) {
             maxAge: 60 * 60 * 24, // 1 day
             path: '/',
         })
-        redirect('/admin')
+        redirect('/notes')
     } else {
         return { error: 'Invalid credentials' }
     }
@@ -28,7 +28,7 @@ export async function login(prevState: any, formData: FormData) {
 export async function logout() {
     const cookieStore = await cookies()
     cookieStore.delete('admin_session')
-    redirect('/admin/login')
+    redirect('/notes/login')
 }
 
 export async function getSession() {
