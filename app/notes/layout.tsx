@@ -1,8 +1,19 @@
-import { Inter } from 'next/font/google'
+import { Cormorant_Garamond, JetBrains_Mono } from 'next/font/google'
 import Link from 'next/link'
 import { StickyNote } from 'lucide-react'
 
-const inter = Inter({ subsets: ['latin'] })
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-cormorant',
+  display: 'swap',
+})
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+})
 
 export default function NotesLayout({
   children,
@@ -10,8 +21,8 @@ export default function NotesLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-[#050505] text-[#EAEAEA] min-h-screen`}>
+    <html lang="en" className={`${cormorant.variable} ${jetbrains.variable}`}>
+      <body className="min-h-screen font-sans antialiased bg-[#050505] text-[#EAEAEA] selection:bg-white selection:text-black">
         {/* Header */}
         <header className="border-b border-white/10 bg-black/20 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-6 py-4">
