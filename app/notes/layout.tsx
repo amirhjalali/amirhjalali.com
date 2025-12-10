@@ -23,49 +23,15 @@ export default function NotesLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${jetbrains.variable}`}>
       <body className="min-h-screen font-sans antialiased bg-[#050505] text-[#EAEAEA] selection:bg-white selection:text-black">
-        {/* Header */}
-        <header className="border-b border-white/10 bg-black/20 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <Link href="/notes" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <StickyNote className="w-6 h-6" />
-                <h1 className="text-lg font-mono font-bold">Notes</h1>
-              </Link>
-              <nav className="flex items-center gap-6">
-                <Link
-                  href="/notes"
-                  className="text-xs font-mono uppercase tracking-widest hover:text-white transition-colors"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/work"
-                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
-                >
-                  Work
-                </Link>
-                <Link
-                  href="/thoughts"
-                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
-                >
-                  Thoughts
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/"
-                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
-                >
-                  Home
-                </Link>
-              </nav>
-            </div>
+        {/* Simple Notes Indicator */}
+        <div className="border-b border-white/10 bg-transparent pt-24 pb-4">
+          <div className="max-w-7xl mx-auto px-6">
+            <Link href="/notes" className="flex items-center gap-2 hover:opacity-80 transition-opacity w-fit">
+              <StickyNote className="w-5 h-5" />
+              <h1 className="text-sm font-mono uppercase tracking-widest text-[#888888]">Notes Dashboard</h1>
+            </Link>
           </div>
-        </header>
+        </div>
 
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-6 py-8">
