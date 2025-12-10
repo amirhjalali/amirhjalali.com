@@ -16,12 +16,14 @@ export default function QuickAdd({ onNoteAdded }: { onNoteAdded?: () => void }) 
 
   // Auto-detect type based on content
   useEffect(() => {
-    if (content.startsWith('http://') || content.startsWith('https://')) {
-      setType('LINK')
-    } else if (content.trim()) {
-      setType('TEXT')
+    const isUrl = content.startsWith('http://') || content.startsWith('https://')
+    const newType = isUrl ? 'LINK' : 'TEXT'
+
+    // Only update if type actually changes (prevents unnecessary re-renders)
+    if (newType !== type) {
+      setType(newType)
     }
-  }, [content])
+  }, [content, type])
 
   // Keyboard shortcut: Cmd+K to focus
   useEffect(() => {
