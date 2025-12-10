@@ -136,7 +136,14 @@
       "mcp__linear-server__update_issue",
       "mcp__linear-server__get_issue",
       "Bash(sudo chown:*)",
-      "Bash(npm cache clean:*)"
+      "Bash(npm cache clean:*)",
+      "Bash(redis-cli:*)",
+      "Bash(brew install:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill -9)",
+      "Bash(docker run:*)",
+      "Bash(docker exec:*)",
+      "Bash(node scripts/note-worker.js:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

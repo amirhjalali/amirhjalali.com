@@ -55,8 +55,11 @@ brew services start redis
 # Make sure dependencies are installed
 npm install
 
-# Start the worker
-node scripts/note-worker.js
+# Start the worker (recommended)
+npm run worker
+
+# Or directly:
+npx tsx scripts/note-worker.js
 ```
 
 You should see:
@@ -154,13 +157,17 @@ Create a separate Coolify service for the worker:
 
 ### Redis Setup in Coolify
 
-#### Option A: Use Coolify's Built-in Redis
+#### Option A: Use Coolify's Built-in Redis (Current Setup)
 
 1. In Coolify Dashboard → Services
 2. Create new Service → Redis
-3. Name: `notes-redis`
-4. Copy the connection URL
-5. Add to both main app and worker as `REDIS_URL`
+3. Name: `notes-redis` or similar
+4. Copy the **internal** connection URL (e.g., `redis://default:password@internal-host:6379/0`)
+5. Add to both main app and worker environment variables:
+   ```
+   REDIS_URL=redis://default:s9Ctt33dV71z2g1D9OBBoI9VUIpZkCU565kcMJr252GAHr6GTMUorh4BLt4YN21Z@fgkk0og4kgwsccko8g44k8kc:6379/0
+   ```
+   ⚠️ **Note**: This URL only works within Coolify's internal network, not from local machine
 
 #### Option B: External Redis (Upstash/Redis Cloud)
 

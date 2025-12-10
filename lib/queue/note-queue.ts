@@ -1,4 +1,5 @@
 import { Queue, Worker, Job } from 'bullmq'
+import { Redis } from 'ioredis'
 import { getRedisConnection } from '@/lib/redis'
 
 // Job data types
@@ -15,7 +16,10 @@ let noteWorker: Worker | null = null
  */
 export function getNoteQueue(): Queue {
   if (!noteQueue) {
-    const connection = getRedisConnection()
+    // BullMQ requires a dedicated Redis connection with maxRetriesPerRequest: null
+    const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+      maxRetriesPerRequest: null,
+    })
 
     noteQueue = new Queue('note-processing', {
       connection,
@@ -32,7 +36,6 @@ export function getNoteQueue(): Queue {
         removeOnFail: {
           age: 7 * 24 * 3600, // Keep failed jobs for 7 days
         },
-        timeout: 30000, // 30 second timeout
       },
     })
 
@@ -102,7 +105,12 @@ export function createNoteWorker(
     return noteWorker
   }
 
-  const connection = getRedisConnection()
+  /*
+  * BullMQ requires a dedicated Redis connection with maxRetriesPerRequest: null
+  */
+  const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+    maxRetriesPerRequest: null,
+  })
 
   noteWorker = new Worker(
     'note-processing',

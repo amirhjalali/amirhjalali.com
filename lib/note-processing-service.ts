@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { prisma } from './db'
 import type { Note, NoteType, NoteMetadata } from '@/lib/types'
 import OpenAI from 'openai'
 
