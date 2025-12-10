@@ -28,8 +28,26 @@ export default function NotesLayout({
                   Dashboard
                 </Link>
                 <Link
+                  href="/work"
+                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
+                >
+                  Work
+                </Link>
+                <Link
+                  href="/thoughts"
+                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
+                >
+                  Thoughts
+                </Link>
+                <Link
+                  href="/about"
+                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
+                >
+                  About
+                </Link>
+                <Link
                   href="/"
-                  className="text-xs font-mono uppercase tracking-widest hover:text-white transition-colors"
+                  className="text-xs font-mono uppercase tracking-widest text-[#888888] hover:text-white transition-colors"
                 >
                   Home
                 </Link>

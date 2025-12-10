@@ -151,10 +151,10 @@ export default function HeroEnhanced() {
             transition={{ delay: 1, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
           >
-            <Link href="/projects">
+            <Link href="/work">
               <button className="group relative px-8 py-4 bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue text-white font-semibold text-lg rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-ai-teal/30 dark:hover:shadow-ai-green/30">
                 <span className="flex items-center gap-2">
-                  Explore Projects
+                  Explore Work
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>

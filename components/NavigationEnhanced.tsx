@@ -15,9 +15,9 @@ import { Button } from '@/components/ui/button'
 import { Menu } from 'lucide-react'
 
 const navItems = [
-  { href: '/projects', label: 'Work' },
+  { href: '/work', label: 'Work' },
   { href: '/thoughts', label: 'Thoughts' },
-  { href: '/contact', label: 'About' },
+  { href: '/about', label: 'About' },
 ]
 
 export default function NavigationEnhanced() {
@@ -38,7 +38,8 @@ export default function NavigationEnhanced() {
   }, [pathname])
 
   // Hide navigation on homepage as it has its own
-  if (pathname === '/') return null
+  // Also hide on notes login page
+  if (pathname === '/' || pathname === '/notes/login') return null
 
   return (
     <motion.nav

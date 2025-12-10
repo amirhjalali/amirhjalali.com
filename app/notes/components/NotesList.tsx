@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { apiClient } from '@/lib/api-client'
 import type { Note, NoteType } from '@/lib/types'
 import NoteCard from './NoteCard'
@@ -46,9 +47,9 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
     setPage(0)
   }
 
-  if (isLoading) {
+  if (isLoading && notes.length === 0) {
     return (
-      <div className="space-y-4 min-h-[400px]">
+      <div className="space-y-4">
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
@@ -69,21 +70,19 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
         <div className="flex gap-2">
           <button
             onClick={() => setViewMode('grid')}
-            className={`p-2 rounded-lg transition-all ${
-              viewMode === 'grid'
-                ? 'bg-white/20 text-white'
-                : 'bg-black/20 text-[#888888] hover:bg-white/10'
-            }`}
+            className={`p-2 rounded-lg transition-all ${viewMode === 'grid'
+              ? 'bg-white/20 text-white'
+              : 'bg-black/20 text-[#888888] hover:bg-white/10'
+              }`}
           >
             <Grid3x3 className="w-5 h-5" />
           </button>
           <button
             onClick={() => setViewMode('list')}
-            className={`p-2 rounded-lg transition-all ${
-              viewMode === 'list'
-                ? 'bg-white/20 text-white'
-                : 'bg-black/20 text-[#888888] hover:bg-white/10'
-            }`}
+            className={`p-2 rounded-lg transition-all ${viewMode === 'list'
+              ? 'bg-white/20 text-white'
+              : 'bg-black/20 text-[#888888] hover:bg-white/10'
+              }`}
           >
             <List className="w-5 h-5" />
           </button>
@@ -91,24 +90,36 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
       </div>
 
       {/* Notes Grid/List */}
-      {notes.length === 0 ? (
+      {notes.length === 0 && !isLoading ? (
         <div className="text-center py-12">
           <p className="text-[#888888] font-mono text-sm">
             No notes found. Create your first note above!
           </p>
         </div>
       ) : (
-        <div
+        <motion.div
+          layout
           className={
             viewMode === 'grid'
               ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
               : 'space-y-4'
           }
         >
-          {notes.map((note) => (
-            <NoteCard key={note.id} note={note} onDelete={fetchNotes} />
-          ))}
-        </div>
+          <AnimatePresence mode="popLayout">
+            {notes.map((note) => (
+              <motion.div
+                layout
+                key={note.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+              >
+                <NoteCard note={note} onDelete={fetchNotes} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       )}
 
       {/* Pagination */}
