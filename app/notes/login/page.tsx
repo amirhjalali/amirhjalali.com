@@ -41,6 +41,7 @@ export default function NotesLoginPage() {
 
           {/* Login Form */}
           <form action={formAction} className="space-y-6">
+            <input type="hidden" name="redirectTo" value="/notes" />
             {/* Username Field */}
             <div>
               <label htmlFor="username" className="block text-xs font-mono uppercase tracking-widest mb-2 text-[#888888]">

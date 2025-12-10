@@ -9,6 +9,7 @@ const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin' // Defa
 export async function login(prevState: any, formData: FormData) {
     const username = formData.get('username') as string
     const password = formData.get('password') as string
+    const redirectTo = formData.get('redirectTo') as string || '/admin'
 
     // Simple check for now. In production, use hash verification.
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
@@ -19,7 +20,7 @@ export async function login(prevState: any, formData: FormData) {
             maxAge: 60 * 60 * 24, // 1 day
             path: '/',
         })
-        redirect('/notes')
+        redirect(redirectTo)
     } else {
         return { error: 'Invalid credentials' }
     }
