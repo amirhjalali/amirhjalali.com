@@ -285,7 +285,7 @@ export default function ContactPage() {
           <div className="relative w-32 h-32 mx-auto mb-6">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/20 to-transparent blur-xl opacity-50" />
             <Image
-              src="/AmirPortraitWebsite.jpg"
+              src="/PortraitFeathered2.png"
               alt="Amir H. Jalali"
               fill
               className="object-cover rounded-2xl border border-white/10 shadow-2xl relative z-10"

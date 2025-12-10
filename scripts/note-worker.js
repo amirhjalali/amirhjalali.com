@@ -21,6 +21,7 @@ require('dotenv').config()
 
 const { createNoteWorker } = require('../lib/queue/note-queue')
 const { processNote } = require('../lib/note-processing-service')
+const { prisma } = require('../lib/db')
 
 console.log('='.repeat(60))
 console.log('📝 Note Processing Worker Starting...')
@@ -90,7 +91,8 @@ process.on('SIGINT', async () => {
 
   try {
     await worker.close()
-    console.log('✅ Worker closed successfully')
+    await prisma.$disconnect()
+    console.log('✅ Worker and database connections closed successfully')
     process.exit(0)
   } catch (error) {
     console.error('❌ Error during shutdown:', error)
@@ -103,7 +105,8 @@ process.on('SIGTERM', async () => {
 
   try {
     await worker.close()
-    console.log('✅ Worker closed successfully')
+    await prisma.$disconnect()
+    console.log('✅ Worker and database connections closed successfully')
     process.exit(0)
   } catch (error) {
     console.error('❌ Error during shutdown:', error)

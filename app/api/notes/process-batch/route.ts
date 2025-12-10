@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/app/actions/auth'
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/lib/db'
 import { queueNoteProcessing } from '@/lib/queue/note-queue'
 
 const MAX_BATCH_SIZE = 50
