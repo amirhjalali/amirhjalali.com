@@ -48,6 +48,7 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
   // Initial load only
   useEffect(() => {
     fetchNotes(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // Only run on mount
 
   // Refresh when filters/page change (but don't show full loading state)
