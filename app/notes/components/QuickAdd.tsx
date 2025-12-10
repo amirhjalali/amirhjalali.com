@@ -81,7 +81,9 @@ export default function QuickAdd({ onNoteAdded }: { onNoteAdded?: () => void }) 
       // Notify parent
       onNoteAdded?.()
     } catch (err: any) {
-      setError(err.message || 'Failed to create note')
+      console.error('Error creating note:', err)
+      const errorMessage = err.message || 'Failed to create note'
+      setError(`${errorMessage}${err.cause ? ` (${err.cause})` : ''}`)
     } finally {
       setIsLoading(false)
     }
