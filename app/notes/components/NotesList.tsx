@@ -48,7 +48,7 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
 
   if (isLoading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 min-h-[400px]">
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
