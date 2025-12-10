@@ -11,6 +11,7 @@ import { Grid3x3, List } from 'lucide-react'
 export default function NotesList({ refreshKey }: { refreshKey?: number }) {
   const [notes, setNotes] = useState<Note[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [filters, setFilters] = useState<{
     type?: NoteType
@@ -21,8 +22,13 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
   const [page, setPage] = useState(0)
   const [hasMore, setHasMore] = useState(true)
 
-  const fetchNotes = useCallback(async () => {
-    setIsLoading(true)
+  const fetchNotes = useCallback(async (showLoading = true) => {
+    if (showLoading) {
+      setIsLoading(true)
+    } else {
+      setIsRefreshing(true)
+    }
+
     try {
       const result = await apiClient.getNotes({
         ...filters,
@@ -35,12 +41,32 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
       console.error('Failed to fetch notes:', error)
     } finally {
       setIsLoading(false)
+      setIsRefreshing(false)
     }
   }, [filters, page])
 
+  // Initial load only
   useEffect(() => {
-    fetchNotes()
-  }, [fetchNotes, refreshKey])
+    fetchNotes(true)
+  }, []) // Only run on mount
+
+  // Refresh when filters/page change (but don't show full loading state)
+  useEffect(() => {
+    if (notes.length > 0) {
+      // Add small delay to prevent rapid successive calls
+      const timer = setTimeout(() => {
+        fetchNotes(false)
+      }, 300)
+      return () => clearTimeout(timer)
+    }
+  }, [filters, page, notes.length, fetchNotes])
+
+  // Refresh when a new note is added
+  useEffect(() => {
+    if (refreshKey && refreshKey > 0) {
+      fetchNotes(false)
+    }
+  }, [refreshKey, fetchNotes])
 
   const handleFilterChange = (newFilters: typeof filters) => {
     setFilters(newFilters)
@@ -49,7 +75,7 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
 
   if (isLoading && notes.length === 0) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 min-h-[400px]">
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
@@ -62,6 +88,13 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
 
   return (
     <div className="space-y-6">
+      {/* Refreshing Indicator */}
+      {isRefreshing && (
+        <div className="text-xs font-mono text-[#888888] text-center py-2">
+          Updating...
+        </div>
+      )}
+
       {/* View Mode Toggle & Filters */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
