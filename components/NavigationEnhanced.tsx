@@ -2,17 +2,9 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger
-} from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
-import { Menu } from 'lucide-react'
+import { X } from 'lucide-react'
 
 const navItems = [
   { href: '/work', label: 'Work' },
@@ -83,64 +75,119 @@ export default function NavigationEnhanced() {
             </div>
           </div>
 
-          {/* Mobile menu trigger */}
-          <div className="lg:hidden flex items-center gap-2">
-            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-[#EAEAEA] hover:bg-white/5 transition-all"
-                >
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-[240px] sm:w-[280px] border-l border-white/10 bg-[#050505]/95 backdrop-blur-xl text-[#EAEAEA] p-0"
+          {/* Mobile menu - Minimal Hamburger */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="relative w-10 h-10 flex items-center justify-center text-[#EAEAEA] hover:text-white transition-colors"
+              aria-label="Toggle menu"
+            >
+              <motion.div
+                animate={mobileOpen ? 'open' : 'closed'}
+                className="flex flex-col items-center justify-center"
               >
-                {/* Minimal Header */}
-                <div className="px-6 py-8 border-b border-white/5">
-                  <SheetTitle className="text-sm font-mono uppercase tracking-[0.3em] text-[#888888]">
-                    Menu
-                  </SheetTitle>
-                </div>
-
-                {/* Navigation Links */}
-                <div className="px-6 py-8 flex flex-col gap-8">
-                  {navItems.map((item, index) => {
-                    const isActive = pathname === item.href
-                    return (
-                      <motion.div
-                        key={item.href}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1, duration: 0.3 }}
-                      >
-                        <Link
-                          href={item.href}
-                          className={`block text-2xl font-serif font-light tracking-tight transition-all duration-300 ${
-                            isActive
-                              ? 'text-white'
-                              : 'text-[#888888] hover:text-white hover:translate-x-1'
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
-                      </motion.div>
-                    )
-                  })}
-                </div>
-
-                {/* Footer with subtle branding */}
-                <div className="absolute bottom-0 left-0 right-0 px-6 py-6 border-t border-white/5">
-                  <p className="text-xs font-mono text-[#444444] tracking-wider">
-                    AHJ
-                  </p>
-                </div>
-              </SheetContent>
-            </Sheet>
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: 45, y: 6 }
+                  }}
+                  className="w-5 h-px bg-current mb-1.5"
+                />
+                <motion.span
+                  variants={{
+                    closed: { opacity: 1 },
+                    open: { opacity: 0 }
+                  }}
+                  className="w-5 h-px bg-current mb-1.5"
+                />
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: -45, y: -6 }
+                  }}
+                  className="w-5 h-px bg-current"
+                />
+              </motion.div>
+            </button>
           </div>
+
+          {/* Full-screen Mobile Menu Overlay */}
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 z-40 lg:hidden"
+              >
+                {/* Backdrop */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-[#050505]/98 backdrop-blur-md"
+                  onClick={() => setMobileOpen(false)}
+                />
+
+                {/* Menu Content */}
+                <div className="relative h-full flex flex-col items-center justify-center px-6">
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setMobileOpen(false)}
+                    className="absolute top-6 right-6 p-2 text-[#888888] hover:text-white transition-colors"
+                    aria-label="Close menu"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+
+                  {/* Navigation Links - Centered */}
+                  <nav className="flex flex-col items-center gap-8">
+                    {navItems.map((item, index) => {
+                      const isActive = pathname === item.href
+                      return (
+                        <motion.div
+                          key={item.href}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{
+                            delay: index * 0.1,
+                            duration: 0.4,
+                            ease: [0.22, 1, 0.36, 1]
+                          }}
+                        >
+                          <Link
+                            href={item.href}
+                            onClick={() => setMobileOpen(false)}
+                            className={`block text-4xl sm:text-5xl font-serif font-light tracking-tight transition-all duration-300 ${
+                              isActive
+                                ? 'text-white'
+                                : 'text-[#888888] hover:text-white'
+                            }`}
+                          >
+                            {item.label}
+                          </Link>
+                        </motion.div>
+                      )
+                    })}
+                  </nav>
+
+                  {/* Subtle footer */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="absolute bottom-8"
+                  >
+                    <p className="text-xs font-mono text-[#444444] tracking-[0.3em]">
+                      AHJ
+                    </p>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.nav>
