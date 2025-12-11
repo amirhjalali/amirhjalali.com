@@ -90,34 +90,53 @@ export default function NavigationEnhanced() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-[#EAEAEA] hover:bg-white/5"
+                  className="text-[#EAEAEA] hover:bg-white/5 transition-all"
                 >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] border-l border-white/10 bg-[#050505] text-[#EAEAEA]">
-                <SheetHeader>
-                  <SheetTitle className="text-xl font-serif font-light text-left text-[#EAEAEA]">
+              <SheetContent
+                side="right"
+                className="w-[240px] sm:w-[280px] border-l border-white/10 bg-[#050505]/95 backdrop-blur-xl text-[#EAEAEA] p-0"
+              >
+                {/* Minimal Header */}
+                <div className="px-6 py-8 border-b border-white/5">
+                  <SheetTitle className="text-sm font-mono uppercase tracking-[0.3em] text-[#888888]">
                     Menu
                   </SheetTitle>
-                </SheetHeader>
+                </div>
 
-                <div className="mt-8 flex flex-col gap-6">
-                  {navItems.map((item) => {
+                {/* Navigation Links */}
+                <div className="px-6 py-8 flex flex-col gap-8">
+                  {navItems.map((item, index) => {
                     const isActive = pathname === item.href
                     return (
-                      <Link
+                      <motion.div
                         key={item.href}
-                        href={item.href}
-                        className={`text-sm font-mono uppercase tracking-widest transition-colors ${isActive
-                          ? 'text-white'
-                          : 'text-[#888888] hover:text-[#EAEAEA]'
-                          }`}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1, duration: 0.3 }}
                       >
-                        {item.label}
-                      </Link>
+                        <Link
+                          href={item.href}
+                          className={`block text-2xl font-serif font-light tracking-tight transition-all duration-300 ${
+                            isActive
+                              ? 'text-white'
+                              : 'text-[#888888] hover:text-white hover:translate-x-1'
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                      </motion.div>
                     )
                   })}
+                </div>
+
+                {/* Footer with subtle branding */}
+                <div className="absolute bottom-0 left-0 right-0 px-6 py-6 border-t border-white/5">
+                  <p className="text-xs font-mono text-[#444444] tracking-wider">
+                    AHJ
+                  </p>
                 </div>
               </SheetContent>
             </Sheet>
