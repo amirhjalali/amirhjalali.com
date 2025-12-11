@@ -255,43 +255,55 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
       <div className="noise-overlay" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/5 via-[#050505] to-[#050505]" />
 
-      <div className="relative z-10 px-6 py-12 max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
-          <div>
-            <h1 className="text-4xl font-serif font-light mb-2 text-white">
-              Admin Dashboard
-            </h1>
-            <p className="font-mono text-xs uppercase tracking-widest text-[#888888]">
-              Welcome back, {user.username}
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
+      {/* Fixed Header - Consistent with main site */}
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#050505]/80 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          {/* Logo/Home Link */}
+          <a href="/" className="group">
+            <h2 className="text-xl font-serif font-light tracking-tight text-[#EAEAEA] hover:text-white transition-colors">
+              Amir H. Jalali
+            </h2>
+          </a>
+
+          {/* Actions */}
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setShowGenerationModal(true)}
               disabled={isGenerating}
-              className="flex items-center gap-2 px-4 py-2 bg-white text-black font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:bg-[#EAEAEA] transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isGenerating ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating...
+                  <span className="text-xs font-mono uppercase tracking-wider hidden sm:inline">Generating</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="w-4 h-4" />
-                  Generate Article
+                  <span className="text-xs font-mono uppercase tracking-wider hidden sm:inline">Generate</span>
                 </>
               )}
             </button>
             <button
               onClick={logout}
-              className="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-full hover:bg-white/5 transition-colors font-mono text-xs uppercase tracking-widest text-[#888888] hover:text-white"
+              className="p-2 hover:bg-white/5 rounded-full transition-colors text-[#888888] hover:text-white"
+              title="Logout"
             >
-              <LogOut className="w-4 h-4" />
-              Logout
+              <LogOut className="w-5 h-5" />
             </button>
           </div>
+        </div>
+      </header>
+
+      <div className="relative z-10 px-6 pt-32 pb-16 max-w-7xl mx-auto">
+        {/* Minimal Page Title */}
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl font-serif font-light tracking-tight mb-3">
+            Dashboard
+          </h1>
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#666666]">
+            {user.username}
+          </p>
         </div>
 
         {/* Stats */}
