@@ -38,13 +38,13 @@ export default function Home() {
           transition={{ delay: 0.5, duration: 1 }}
           className="absolute bottom-12 left-0 right-0 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
         >
-          <Link href="/projects" className="hover:text-[#EAEAEA] transition-colors">
+          <Link href="/work" className="hover:text-[#EAEAEA] transition-colors">
             Work
           </Link>
           <Link href="/thoughts" className="hover:text-[#EAEAEA] transition-colors">
             Thoughts
           </Link>
-          <Link href="/contact" className="hover:text-[#EAEAEA] transition-colors">
+          <Link href="/about" className="hover:text-[#EAEAEA] transition-colors">
             About
           </Link>
         </motion.div>
