@@ -9,56 +9,64 @@ import { Article, Draft, Note, NoteType } from '@/lib/types'
 class APIClient {
   private baseUrl = '/api'
 
+  // Default fetch options to include credentials (cookies)
+  private getFetchOptions(options: RequestInit = {}): RequestInit {
+    return {
+      ...options,
+      credentials: 'include', // Always send cookies
+    }
+  }
+
   // Articles
   async getArticles(publishedOnly = false): Promise<Article[]> {
     const url = publishedOnly
       ? `${this.baseUrl}/articles?published=true`
       : `${this.baseUrl}/articles`
 
-    const response = await fetch(url)
+    const response = await fetch(url, this.getFetchOptions())
     if (!response.ok) throw new Error('Failed to fetch articles')
     return response.json()
   }
 
   async getArticle(id: string): Promise<Article> {
-    const response = await fetch(`${this.baseUrl}/articles/${id}`)
+    const response = await fetch(`${this.baseUrl}/articles/${id}`, this.getFetchOptions())
     if (!response.ok) throw new Error('Failed to fetch article')
     return response.json()
   }
 
   async createArticle(data: Partial<Article>): Promise<Article> {
-    const response = await fetch(`${this.baseUrl}/articles`, {
+    const response = await fetch(`${this.baseUrl}/articles`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to create article')
     return response.json()
   }
 
   async updateArticle(id: string, data: Partial<Article>): Promise<Article> {
-    const response = await fetch(`${this.baseUrl}/articles/${id}`, {
+    const response = await fetch(`${this.baseUrl}/articles/${id}`, this.getFetchOptions({
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to update article')
     return response.json()
   }
 
   async deleteArticle(id: string): Promise<void> {
-    const response = await fetch(`${this.baseUrl}/articles/${id}`, {
+    const response = await fetch(`${this.baseUrl}/articles/${id}`, this.getFetchOptions({
       method: 'DELETE',
-    })
+    }))
     if (!response.ok) throw new Error('Failed to delete article')
   }
 
   async publishArticle(id: string, publish = true): Promise<Article> {
-    const response = await fetch(`${this.baseUrl}/articles/${id}/publish`, {
+    const response = await fetch(`${this.baseUrl}/articles/${id}/publish`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ publish }),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to publish/unpublish article')
     const result = await response.json()
     return result.article
@@ -66,48 +74,48 @@ class APIClient {
 
   // Drafts
   async getDrafts(): Promise<Draft[]> {
-    const response = await fetch(`${this.baseUrl}/drafts`)
+    const response = await fetch(`${this.baseUrl}/drafts`, this.getFetchOptions())
     if (!response.ok) throw new Error('Failed to fetch drafts')
     return response.json()
   }
 
   async getDraft(id: string): Promise<Draft> {
-    const response = await fetch(`${this.baseUrl}/drafts/${id}`)
+    const response = await fetch(`${this.baseUrl}/drafts/${id}`, this.getFetchOptions())
     if (!response.ok) throw new Error('Failed to fetch draft')
     return response.json()
   }
 
   async createDraft(data: Partial<Draft>): Promise<Draft> {
-    const response = await fetch(`${this.baseUrl}/drafts`, {
+    const response = await fetch(`${this.baseUrl}/drafts`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to create draft')
     return response.json()
   }
 
   async updateDraft(id: string, data: Partial<Draft>): Promise<Draft> {
-    const response = await fetch(`${this.baseUrl}/drafts/${id}`, {
+    const response = await fetch(`${this.baseUrl}/drafts/${id}`, this.getFetchOptions({
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to update draft')
     return response.json()
   }
 
   async deleteDraft(id: string): Promise<void> {
-    const response = await fetch(`${this.baseUrl}/drafts/${id}`, {
+    const response = await fetch(`${this.baseUrl}/drafts/${id}`, this.getFetchOptions({
       method: 'DELETE',
-    })
+    }))
     if (!response.ok) throw new Error('Failed to delete draft')
   }
 
   async publishDraft(id: string): Promise<Article> {
-    const response = await fetch(`${this.baseUrl}/drafts/${id}/publish`, {
+    const response = await fetch(`${this.baseUrl}/drafts/${id}/publish`, this.getFetchOptions({
       method: 'POST',
-    })
+    }))
     if (!response.ok) throw new Error('Failed to publish draft')
     const result = await response.json()
     return result.article
@@ -144,13 +152,13 @@ class APIClient {
     if (params?.order) queryParams.set('order', params.order)
 
     const url = `${this.baseUrl}/notes${queryParams.toString() ? `?${queryParams}` : ''}`
-    const response = await fetch(url)
+    const response = await fetch(url, this.getFetchOptions())
     if (!response.ok) throw new Error('Failed to fetch notes')
     return response.json()
   }
 
   async getNote(id: string): Promise<Note> {
-    const response = await fetch(`${this.baseUrl}/notes/${id}`)
+    const response = await fetch(`${this.baseUrl}/notes/${id}`, this.getFetchOptions())
     if (!response.ok) throw new Error('Failed to fetch note')
     return response.json()
   }
@@ -162,11 +170,11 @@ class APIClient {
     tags?: string[]
     autoProcess?: boolean
   }): Promise<{ note: Note; jobId?: string | null }> {
-    const response = await fetch(`${this.baseUrl}/notes`, {
+    const response = await fetch(`${this.baseUrl}/notes`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to create note')
     return response.json()
   }
@@ -178,26 +186,26 @@ class APIClient {
     metadata?: any
     content?: string
   }): Promise<Note> {
-    const response = await fetch(`${this.baseUrl}/notes/${id}`, {
+    const response = await fetch(`${this.baseUrl}/notes/${id}`, this.getFetchOptions({
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to update note')
     return response.json()
   }
 
   async deleteNote(id: string): Promise<void> {
-    const response = await fetch(`${this.baseUrl}/notes/${id}`, {
+    const response = await fetch(`${this.baseUrl}/notes/${id}`, this.getFetchOptions({
       method: 'DELETE',
-    })
+    }))
     if (!response.ok) throw new Error('Failed to delete note')
   }
 
   async processNote(id: string): Promise<{ jobId: string; status: string; message: string }> {
-    const response = await fetch(`${this.baseUrl}/notes/${id}/process`, {
+    const response = await fetch(`${this.baseUrl}/notes/${id}/process`, this.getFetchOptions({
       method: 'POST',
-    })
+    }))
     if (!response.ok) throw new Error('Failed to process note')
     return response.json()
   }
@@ -208,11 +216,11 @@ class APIClient {
     skipped: number
     message: string
   }> {
-    const response = await fetch(`${this.baseUrl}/notes/process-batch`, {
+    const response = await fetch(`${this.baseUrl}/notes/process-batch`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ noteIds }),
-    })
+    }))
     if (!response.ok) throw new Error('Failed to process batch')
     return response.json()
   }
@@ -226,7 +234,7 @@ class APIClient {
     attempts: number
     maxAttempts: number
   }> {
-    const response = await fetch(`${this.baseUrl}/notes/jobs/${jobId}`)
+    const response = await fetch(`${this.baseUrl}/notes/jobs/${jobId}`, this.getFetchOptions())
     if (!response.ok) throw new Error('Failed to fetch job status')
     return response.json()
   }
@@ -234,11 +242,11 @@ class APIClient {
   // AI Generation
   // AI Generation
   async generateArticle(options?: import('@/lib/types').AIMetadata): Promise<Draft> {
-    const response = await fetch(`${this.baseUrl}/generate-article`, {
+    const response = await fetch(`${this.baseUrl}/generate-article`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(options || {}),
-    })
+    }))
     if (!response.ok) {
       const error = await response.json()
       throw new Error(error.error || 'Failed to generate article')
@@ -248,11 +256,11 @@ class APIClient {
   }
 
   async regenerateContent(id: string, options: import('@/lib/types').AIMetadata): Promise<Draft> {
-    const response = await fetch(`${this.baseUrl}/regenerate-content`, {
+    const response = await fetch(`${this.baseUrl}/regenerate-content`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, ...options }),
-    })
+    }))
     if (!response.ok) {
       const error = await response.json()
       throw new Error(error.error || 'Failed to regenerate content')
@@ -262,11 +270,11 @@ class APIClient {
   }
 
   async regenerateImage(id: string, options: import('@/lib/types').AIMetadata): Promise<{ imageUrl: string }> {
-    const response = await fetch(`${this.baseUrl}/regenerate-image`, {
+    const response = await fetch(`${this.baseUrl}/regenerate-image`, this.getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, ...options }),
-    })
+    }))
     if (!response.ok) {
       const error = await response.json()
       throw new Error(error.error || 'Failed to regenerate image')
