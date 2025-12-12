@@ -101,11 +101,17 @@ export async function generateImage(title: string, options: AIMetadata): Promise
     if (!apiKey) throw new Error('OpenAI API key not configured');
 
     const topic = options.topic || 'Technology';
-    const style = options.imageStyle || 'abstract, contemporary, tech-focused, visually striking';
+    const style = options.imageStyle || 'minimal, sophisticated, dark monochromatic, subtle gradients, cinematic lighting';
     const customPrompt = options.imagePrompt;
     const model = options.imageModel || 'dall-e-3';
 
-    const imagePrompt = customPrompt || `Create an artistic, modern featured image for a tech blog article titled "${title}" about ${topic}. Style: ${style}. Use vibrant colors and geometric shapes.`;
+    // Refined prompt for high-quality, minimal aesthetic that matches site design
+    const imagePrompt = customPrompt || `Create an elegant, minimalist featured image for a professional tech article about ${topic}.
+Visual style: ${style}.
+Design direction: Ultra-minimal composition with dark background (black or very dark gray), subtle depth through lighting and gradients, sophisticated and professional aesthetic.
+Avoid: bright colors, busy geometric patterns, stock photo look.
+Think: Apple product photography, architectural minimalism, high-end editorial design.
+The image should feel timeless and complement serif typography on a black background.`;
 
     // TODO: Add support for Replicate
     if (model.includes('stable-diffusion') || model.includes('flux')) {
@@ -123,9 +129,9 @@ export async function generateImage(title: string, options: AIMetadata): Promise
             model: 'dall-e-3', // Always use DALL-E 3 for now until Replicate is set up
             prompt: imagePrompt,
             n: 1,
-            size: '1024x1024', // Standard DALL-E 3 size
-            quality: 'standard',
-            style: 'vivid'
+            size: '1792x1024', // Landscape format (16:9-ish) for better featured image proportions
+            quality: 'hd', // Upgrade to HD quality for professional look
+            style: 'natural' // Changed from 'vivid' to 'natural' for more sophisticated, subtle results
         })
     });
 
