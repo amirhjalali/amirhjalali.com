@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { logout } from '@/app/actions/auth'
 import { apiClient, type Article, type Draft } from '@/lib/api-client'
@@ -259,11 +260,11 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#050505]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           {/* Logo/Home Link */}
-          <a href="/" className="group">
+          <Link href="/" className="group">
             <h2 className="text-xl font-serif font-light tracking-tight text-[#EAEAEA] hover:text-white transition-colors">
               Amir H. Jalali
             </h2>
-          </a>
+          </Link>
 
           {/* Actions */}
           <div className="flex items-center gap-3">

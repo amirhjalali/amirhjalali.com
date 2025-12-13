@@ -1,6 +1,5 @@
 import { Queue, Worker, Job } from 'bullmq'
 import { Redis } from 'ioredis'
-import { getRedisConnection } from '@/lib/redis'
 
 // Job data types
 export interface ProcessNoteJob {

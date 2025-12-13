@@ -26,7 +26,7 @@ export default function NoteCard({ note, onDelete }: { note: Note; onDelete?: ()
     try {
       await apiClient.deleteNote(note.id)
       onDelete?.()
-    } catch (error) {
+    } catch (_error) {
       alert('Failed to delete note')
     }
   }
@@ -36,7 +36,7 @@ export default function NoteCard({ note, onDelete }: { note: Note; onDelete?: ()
       const result = await apiClient.processNote(note.id)
       setJobId(result.jobId)
       setStatus('PENDING')
-    } catch (error) {
+    } catch (_error) {
       alert('Failed to retry processing')
     }
   }

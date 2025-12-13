@@ -60,7 +60,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
       })
       setNote(updated)
       setIsEditing(false)
-    } catch (error) {
+    } catch (_error) {
       alert('Failed to update note')
     }
   }
@@ -71,7 +71,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
     try {
       await apiClient.deleteNote(note.id)
       router.push('/notes')
-    } catch (error) {
+    } catch (_error) {
       alert('Failed to delete note')
     }
   }
