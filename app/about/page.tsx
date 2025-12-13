@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { Download, Mail, Github, Linkedin } from 'lucide-react'
 import Spotlight from '@/components/Spotlight'
 import './print.css'
@@ -282,16 +281,6 @@ export default function ContactPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <div className="relative w-32 h-32 mx-auto mb-6">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/20 to-transparent blur-xl opacity-50" />
-            <Image
-              src="/AmirPortraitWebsite.png"
-              alt="Amir H. Jalali"
-              fill
-              className="object-cover rounded-2xl border border-white/10 shadow-2xl relative z-10"
-              priority
-            />
-          </div>
           <h1 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
             About
           </h1>
