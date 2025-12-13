@@ -285,7 +285,7 @@ export default function ContactPage() {
           <div className="relative w-32 h-32 mx-auto mb-6">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/20 to-transparent blur-xl opacity-50" />
             <Image
-              src="/PortraitFeathered2.png"
+              src="/AmirPortraitWebsite.png"
               alt="Amir H. Jalali"
               fill
               className="object-cover rounded-2xl border border-white/10 shadow-2xl relative z-10"
@@ -332,6 +332,33 @@ export default function ContactPage() {
                 <Download className="w-4 h-4" />
               </a>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Bio Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="max-w-4xl mx-auto mb-20"
+        >
+          <div className="glass p-10 md:p-12 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90 mb-6">
+              I'm a product leader and technologist with a passion for building tools that empower creative independence.
+              Currently co-founding <a href="https://gabooja.com" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">Gabooja</a>,
+              where we're reimagining creator-led commerce as a frictionless platform where expression meets enterprise.
+            </p>
+            <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90 mb-6">
+              My journey spans 14+ years across AI strategy, data architecture, and product development. I've led teams at venture-backed
+              startups, architected enterprise data solutions for Fortune 500 companies, and built AI-first products that drive measurable impact.
+              From deploying LLM-powered systems that increased hiring efficiency by 230% to designing scalable platforms processing billions of data points,
+              I thrive at the intersection of innovation and execution.
+            </p>
+            <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90">
+              I believe the future belongs to builders who blend technical depth with creative vision—those who see technology not as an end,
+              but as a medium for human expression and connection. Whether through code, product strategy, or mentorship,
+              I'm committed to crafting experiences that matter.
+            </p>
           </div>
         </motion.div>
 
