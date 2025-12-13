@@ -344,20 +344,19 @@ export default function ContactPage() {
         >
           <div className="glass p-10 md:p-12 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90 mb-6">
-              I'm a product leader and technologist with a passion for building tools that empower creative independence.
-              Currently co-founding <a href="https://gabooja.com" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">Gabooja</a>,
-              where we're reimagining creator-led commerce as a frictionless platform where expression meets enterprise.
+              Amir Jalali has spent his life at the intersection of technology and community building, guided by a simple truth:
+              tools are not ends in themselves, but means to bring people together. Every line of code, every platform, every product
+              is an invitation—a bridge between isolated individuals and the communities they long to belong to.
             </p>
             <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90 mb-6">
-              My journey spans 14+ years across AI strategy, data architecture, and product development. I've led teams at venture-backed
-              startups, architected enterprise data solutions for Fortune 500 companies, and built AI-first products that drive measurable impact.
-              From deploying LLM-powered systems that increased hiring efficiency by 230% to designing scalable platforms processing billions of data points,
-              I thrive at the intersection of innovation and execution.
+              In a world increasingly mediated by screens, he believes technology should amplify human connection, not replace it.
+              Whether building platforms for creators to find their audiences, designing systems that make data speak human truths,
+              or simply sharing knowledge with those who follow, his work asks the same question: <em className="text-white">How do we use what we build to make people feel less alone?</em>
             </p>
             <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90">
-              I believe the future belongs to builders who blend technical depth with creative vision—those who see technology not as an end,
-              but as a medium for human expression and connection. Whether through code, product strategy, or mentorship,
-              I'm committed to crafting experiences that matter.
+              This philosophy shows in everything—from co-founding <a href="https://gabooja.com" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">Gabooja</a>,
+              where expression becomes commerce and community becomes currency, to the quiet work of mentorship and the everyday practice of building with intention.
+              Technology, at its best, is an act of care. It's infrastructure for belonging.
             </p>
           </div>
         </motion.div>
