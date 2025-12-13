@@ -324,32 +324,6 @@ export default function ContactPage() {
           </div>
         </motion.div>
 
-        {/* Bio Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="max-w-4xl mx-auto mb-20"
-        >
-          <div className="glass p-10 md:p-12 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90 mb-6">
-              Amir Jalali has spent his life at the intersection of technology and community building, guided by a simple truth:
-              tools are not ends in themselves, but means to bring people together. Every line of code, every platform, every product
-              is an invitation—a bridge between isolated individuals and the communities they long to belong to.
-            </p>
-            <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90 mb-6">
-              In a world increasingly mediated by screens, he believes technology should amplify human connection, not replace it.
-              Whether building platforms for creators to find their audiences, designing systems that make data speak human truths,
-              or simply sharing knowledge with those who follow, his work asks the same question: <em className="text-white">How do we use what we build to make people feel less alone?</em>
-            </p>
-            <p className="text-lg md:text-xl font-light leading-relaxed text-[#EAEAEA]/90">
-              This philosophy shows in everything—from co-founding <a href="https://gabooja.com" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">Gabooja</a>,
-              where expression becomes commerce and community becomes currency, to the quiet work of mentorship and the everyday practice of building with intention.
-              Technology, at its best, is an act of care. It's infrastructure for belonging.
-            </p>
-          </div>
-        </motion.div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Timeline */}
           <div className="lg:col-span-2">
@@ -359,29 +333,30 @@ export default function ContactPage() {
               animate="show"
               className="relative"
             >
-              {/* Timeline line */}
-              <div className="absolute left-8 top-0 bottom-0 w-px bg-white/5"></div>
+              {/* Timeline line - responsive positioning */}
+              <div className="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-white/5"></div>
 
               {filteredExperience.map((exp, _index) => (
                 <motion.div
                   key={exp.id}
                   variants={item}
-                  className="relative pl-20 pb-12"
+                  className="relative pl-10 md:pl-20 pb-8 md:pb-12"
                 >
-                  {/* Timeline dot */}
-                  <div className={`absolute left-[29px] top-2 w-1.5 h-1.5 rounded-full ${exp.type === 'work'
+                  {/* Timeline dot - responsive positioning */}
+                  <div className={`absolute left-[13px] md:left-[29px] top-2 w-1.5 h-1.5 rounded-full ${exp.type === 'work'
                     ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]'
                     : 'bg-[#888888]'
                     }`} />
 
-                  {/* Content */}
-                  <div className="glass p-8 rounded-xl border border-white/10 hover:bg-white/5 transition-all backdrop-blur-md group">
-                    <div className="flex flex-wrap justify-between items-start mb-4">
-                      <h3 className="text-xl font-serif font-light text-[#EAEAEA] group-hover:text-white transition-colors">{exp.title}</h3>
-                      <span className="text-xs font-mono uppercase tracking-widest text-[#888888]">{exp.period}</span>
+                  {/* Content - responsive padding */}
+                  <div className="glass p-5 md:p-8 rounded-xl border border-white/10 hover:bg-white/5 transition-all backdrop-blur-md group">
+                    {/* Title and period - stack on mobile */}
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-4">
+                      <h3 className="text-lg md:text-xl font-serif font-light text-[#EAEAEA] group-hover:text-white transition-colors">{exp.title}</h3>
+                      <span className="text-xs font-mono uppercase tracking-widest text-[#888888] md:text-right">{exp.period}</span>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-6 text-sm font-mono text-[#888888]">
+                    <div className="flex flex-wrap gap-2 mb-6 text-xs md:text-sm font-mono text-[#888888]">
                       <span className="text-white/80">{exp.company}</span>
                       <span>•</span>
                       <span>{exp.location}</span>
@@ -424,14 +399,14 @@ export default function ContactPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
-              className="sticky top-24"
+              className="lg:sticky lg:top-24"
             >
 
 
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {Object.entries(skills).map(([category, skillList]) => (
-                  <div key={category} className="glass p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors">
-                    <h3 className="text-xs mb-4 font-mono uppercase tracking-widest text-[#EAEAEA]/80 border-b border-white/5 pb-2">
+                  <div key={category} className="glass p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors">
+                    <h3 className="text-xs mb-3 md:mb-4 font-mono uppercase tracking-widest text-[#EAEAEA]/80 border-b border-white/5 pb-2">
                       {category}
                     </h3>
                     <div className="flex flex-wrap gap-2">
