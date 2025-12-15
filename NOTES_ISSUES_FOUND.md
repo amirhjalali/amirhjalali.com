@@ -5,7 +5,7 @@
 ### Issues Identified from Screenshot and Logs
 
 #### 1. "Failed to fetch" Error (HIGH PRIORITY)
-**Status**: Under Investigation
+**Status**: RESOLVED
 **Error**: When submitting the QuickAdd form, users see "Failed to fetch" error
 
 **Evidence**:
@@ -32,7 +32,7 @@
 ---
 
 #### 2. PostgreSQL Connection Errors (HIGH PRIORITY)
-**Status**: Needs Investigation
+**Status**: RESOLVED
 **Error**: `prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }`
 
 **Evidence**:
@@ -53,7 +53,7 @@
 ---
 
 #### 3. Duplicate Prisma Client Files (MEDIUM PRIORITY)
-**Status**: Needs Cleanup
+**Status**: RESOLVED
 **Issue**: Two identical files exporting Prisma client
 
 **Evidence**:
@@ -103,8 +103,9 @@ GET /favicon.ico 500 in 65ms
 ---
 
 #### 6. Redis Connection Monitoring (MEDIUM PRIORITY)
-**Status**: Needs Monitoring
+**Status**: RESOLVED
 **Issue**: No visibility into Redis connection health
+**Resolution**: Added `/api/health/redis` endpoint.
 
 **Recommendations**:
 - Add Redis connection health check endpoint

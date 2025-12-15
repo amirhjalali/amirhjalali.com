@@ -21,6 +21,11 @@ export function middleware(request: NextRequest) {
             return NextResponse.next()
         }
 
+        // Allow API routes to pass through without rewriting to /notes domain folder
+        if (url.pathname.startsWith('/api')) {
+            return NextResponse.next()
+        }
+
         // Rewrite subdomain to /notes/* path
         url.pathname = `/notes${url.pathname}`
         return NextResponse.rewrite(url)

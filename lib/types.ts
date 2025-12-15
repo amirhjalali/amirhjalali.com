@@ -7,6 +7,7 @@ export interface Reference {
 export interface AIMetadata {
     textModel?: string
     imageModel?: string
+    imageResolution?: '1K' | '2K' | '4K'
     imageStyle?: string
     imagePrompt?: string
     topic?: string
@@ -87,4 +88,25 @@ export interface NoteArticleRef {
     noteId: string
     articleId: string
     createdAt: string
+}
+
+// Generation Progress Types
+export type GenerationStep =
+    | 'initializing'
+    | 'generating_title'
+    | 'generating_content'
+    | 'generating_excerpt'
+    | 'generating_tags'
+    | 'generating_image'
+    | 'downloading_image'
+    | 'saving_draft'
+    | 'completed'
+    | 'error'
+
+export interface ProgressEvent {
+    step: GenerationStep
+    progress: number // 0-100
+    message: string
+    estimatedTimeRemaining?: number // seconds
+    error?: string
 }

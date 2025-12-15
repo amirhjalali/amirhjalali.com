@@ -58,6 +58,7 @@ npm run dev
 - [ ] Development server starts successfully
 - [ ] No TypeScript errors in terminal
 - [ ] Can access http://localhost:3000
+- [ ] Redis Health Check returns 200 OK: http://localhost:3000/api/health/redis
 
 #### 2.2 Test Redis Connection
 

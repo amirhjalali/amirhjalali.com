@@ -16,9 +16,11 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient({
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
-// Handle graceful shutdown
-if (typeof window === 'undefined') {
-  process.on('beforeExit', async () => {
-    await prisma.$disconnect()
-  })
+// Handle graceful shutdown - Removed to prevent premature connection closure in workers
+// The worker script handles its own disconnection logic
+if (typeof window === 'undefined' && process.env.NODE_ENV === 'production' && !process.env.IS_WORKER) {
+  // Only add this for production web server, not workers
+  // process.on('beforeExit', async () => {
+  //   await prisma.$disconnect()
+  // })
 }

@@ -17,6 +17,20 @@ class APIClient {
     }
   }
 
+  private async handleResponse<T>(response: Response, defaultErrorMessage: string): Promise<T> {
+    if (!response.ok) {
+      let errorMessage = defaultErrorMessage
+      try {
+        const errorData = await response.json()
+        errorMessage = errorData.error || errorData.message || defaultErrorMessage
+      } catch (e) {
+        errorMessage = `${defaultErrorMessage}: ${response.status} ${response.statusText}`
+      }
+      throw new Error(errorMessage, { cause: response.status })
+    }
+    return response.json()
+  }
+
   // Articles
   async getArticles(publishedOnly = false): Promise<Article[]> {
     const url = publishedOnly
@@ -24,14 +38,12 @@ class APIClient {
       : `${this.baseUrl}/articles`
 
     const response = await fetch(url, this.getFetchOptions())
-    if (!response.ok) throw new Error('Failed to fetch articles')
-    return response.json()
+    return this.handleResponse(response, 'Failed to fetch articles')
   }
 
   async getArticle(id: string): Promise<Article> {
     const response = await fetch(`${this.baseUrl}/articles/${id}`, this.getFetchOptions())
-    if (!response.ok) throw new Error('Failed to fetch article')
-    return response.json()
+    return this.handleResponse(response, 'Failed to fetch article')
   }
 
   async createArticle(data: Partial<Article>): Promise<Article> {
@@ -40,8 +52,7 @@ class APIClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }))
-    if (!response.ok) throw new Error('Failed to create article')
-    return response.json()
+    return this.handleResponse(response, 'Failed to create article')
   }
 
   async updateArticle(id: string, data: Partial<Article>): Promise<Article> {
@@ -50,15 +61,14 @@ class APIClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }))
-    if (!response.ok) throw new Error('Failed to update article')
-    return response.json()
+    return this.handleResponse(response, 'Failed to update article')
   }
 
   async deleteArticle(id: string): Promise<void> {
     const response = await fetch(`${this.baseUrl}/articles/${id}`, this.getFetchOptions({
       method: 'DELETE',
     }))
-    if (!response.ok) throw new Error('Failed to delete article')
+    return this.handleResponse(response, 'Failed to delete article')
   }
 
   async publishArticle(id: string, publish = true): Promise<Article> {
@@ -67,22 +77,19 @@ class APIClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ publish }),
     }))
-    if (!response.ok) throw new Error('Failed to publish/unpublish article')
-    const result = await response.json()
+    const result = await this.handleResponse<{ article: Article }>(response, 'Failed to publish/unpublish article')
     return result.article
   }
 
   // Drafts
   async getDrafts(): Promise<Draft[]> {
     const response = await fetch(`${this.baseUrl}/drafts`, this.getFetchOptions())
-    if (!response.ok) throw new Error('Failed to fetch drafts')
-    return response.json()
+    return this.handleResponse(response, 'Failed to fetch drafts')
   }
 
   async getDraft(id: string): Promise<Draft> {
     const response = await fetch(`${this.baseUrl}/drafts/${id}`, this.getFetchOptions())
-    if (!response.ok) throw new Error('Failed to fetch draft')
-    return response.json()
+    return this.handleResponse(response, 'Failed to fetch draft')
   }
 
   async createDraft(data: Partial<Draft>): Promise<Draft> {
@@ -91,8 +98,7 @@ class APIClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }))
-    if (!response.ok) throw new Error('Failed to create draft')
-    return response.json()
+    return this.handleResponse(response, 'Failed to create draft')
   }
 
   async updateDraft(id: string, data: Partial<Draft>): Promise<Draft> {
@@ -101,23 +107,21 @@ class APIClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }))
-    if (!response.ok) throw new Error('Failed to update draft')
-    return response.json()
+    return this.handleResponse(response, 'Failed to update draft')
   }
 
   async deleteDraft(id: string): Promise<void> {
     const response = await fetch(`${this.baseUrl}/drafts/${id}`, this.getFetchOptions({
       method: 'DELETE',
     }))
-    if (!response.ok) throw new Error('Failed to delete draft')
+    return this.handleResponse(response, 'Failed to delete draft')
   }
 
   async publishDraft(id: string): Promise<Article> {
     const response = await fetch(`${this.baseUrl}/drafts/${id}/publish`, this.getFetchOptions({
       method: 'POST',
     }))
-    if (!response.ok) throw new Error('Failed to publish draft')
-    const result = await response.json()
+    const result = await this.handleResponse<{ article: Article }>(response, 'Failed to publish draft')
     return result.article
   }
 
@@ -153,14 +157,12 @@ class APIClient {
 
     const url = `${this.baseUrl}/notes${queryParams.toString() ? `?${queryParams}` : ''}`
     const response = await fetch(url, this.getFetchOptions())
-    if (!response.ok) throw new Error('Failed to fetch notes')
-    return response.json()
+    return this.handleResponse(response, 'Failed to fetch notes')
   }
 
   async getNote(id: string): Promise<Note> {
     const response = await fetch(`${this.baseUrl}/notes/${id}`, this.getFetchOptions())
-    if (!response.ok) throw new Error('Failed to fetch note')
-    return response.json()
+    return this.handleResponse(response, 'Failed to fetch note')
   }
 
   async createNote(data: {
@@ -168,6 +170,7 @@ class APIClient {
     content: string
     title?: string
     tags?: string[]
+    imageUrl?: string
     autoProcess?: boolean
   }): Promise<{ note: Note; jobId?: string | null }> {
     const response = await fetch(`${this.baseUrl}/notes`, this.getFetchOptions({
@@ -175,8 +178,7 @@ class APIClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }))
-    if (!response.ok) throw new Error('Failed to create note')
-    return response.json()
+    return this.handleResponse(response, 'Failed to create note')
   }
 
   async updateNote(id: string, data: {

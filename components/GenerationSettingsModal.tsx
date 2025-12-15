@@ -24,8 +24,9 @@ export default function GenerationSettingsModal({
 }: GenerationSettingsModalProps) {
     const [settings, setSettings] = useState<AIMetadata>({
         topic: initialSettings.topic || '',
-        textModel: initialSettings.textModel || 'gemini-2.5-flash',
+        textModel: initialSettings.textModel || 'gemini-2.0-flash',
         imageModel: initialSettings.imageModel || 'dall-e-3',
+        imageResolution: initialSettings.imageResolution || '2K',
         imageStyle: initialSettings.imageStyle || 'abstract, contemporary, tech-focused, visually striking',
         imagePrompt: initialSettings.imagePrompt || '',
         additionalInstructions: initialSettings.additionalInstructions || '',
@@ -117,6 +118,7 @@ export default function GenerationSettingsModal({
                                     onChange={(e) => setSettings({ ...settings, textModel: e.target.value })}
                                     className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 appearance-none"
                                 >
+                                    <option value="gemini-2.0-flash">Gemini 2.0 Flash (Fastest - NEW!)</option>
                                     <option value="gemini-2.5-flash">Gemini 2.5 Flash (Fast & Smart)</option>
                                     <option value="gemini-2.5-pro">Gemini 2.5 Pro (Advanced Reasoning)</option>
                                     <option value="gpt-4o-mini">GPT-4o Mini (Fast & Efficient)</option>
@@ -206,11 +208,32 @@ export default function GenerationSettingsModal({
                                     onChange={(e) => setSettings({ ...settings, imageModel: e.target.value })}
                                     className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 appearance-none"
                                 >
+                                    <option value="gemini-3-pro-image-preview">Nano Banana Pro (2K/4K - NEW!)</option>
+                                    <option value="gemini-image">Nano Banana (Fast 1K)</option>
                                     <option value="dall-e-3">DALL-E 3 (Standard)</option>
                                     <option value="stable-diffusion-xl">Stable Diffusion XL (Replicate - Coming Soon)</option>
                                     <option value="flux-pro">Flux Pro (Replicate - Coming Soon)</option>
                                 </select>
                             </div>
+
+                            {/* Resolution selector (only for Gemini models) */}
+                            {settings.imageModel?.startsWith('gemini') && (
+                                <div>
+                                    <label className="block text-sm mb-2">
+                                        Resolution
+                                        <span className="text-xs text-[#888888] ml-2">(Higher = Better quality but slower)</span>
+                                    </label>
+                                    <select
+                                        value={settings.imageResolution || '2K'}
+                                        onChange={(e) => setSettings({ ...settings, imageResolution: e.target.value as '1K' | '2K' | '4K' })}
+                                        className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 appearance-none"
+                                    >
+                                        <option value="1K">1K (1024x1024 - Fast)</option>
+                                        <option value="2K">2K (2048x2048 - Balanced - Recommended)</option>
+                                        <option value="4K">4K (4096x4096 - High Quality)</option>
+                                    </select>
+                                </div>
+                            )}
 
                             <div>
                                 <label className="block text-sm mb-2">Style</label>

@@ -124,7 +124,7 @@ export async function generateArticleWithGemini(
     const topic = options.topic || 'Technology and Innovation';
     const model = options.textModel?.startsWith('gemini')
         ? options.textModel
-        : 'gemini-2.5-flash';
+        : 'gemini-2.0-flash'; // Gemini 2.0 Flash - Released Dec 2024, 2x faster than 1.5 Pro
 
     // Process references if provided
     const referenceContext = await processReferences(options.references || []);

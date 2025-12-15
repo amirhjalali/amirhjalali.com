@@ -144,7 +144,9 @@
       "Bash(docker run:*)",
       "Bash(docker exec:*)",
       "Bash(node scripts/note-worker.js:*)",
-      "Bash(git diff:*)"
+      "Bash(git diff:*)",
+      "WebSearch",
+      "WebFetch(domain:ai.google.dev)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

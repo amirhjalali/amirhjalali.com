@@ -1,5 +1,6 @@
 import { AIMetadata } from '@/lib/types';
 import { generateArticleWithGemini, isGeminiAvailable } from '@/lib/gemini-service';
+import { generateImageWithGemini, isGeminiImageAvailable } from '@/lib/gemini-image-service';
 
 // Topics for article generation
 const TOPICS = [
@@ -97,9 +98,6 @@ Format the response as a JSON object with:
 }
 
 export async function generateImage(title: string, options: AIMetadata): Promise<string> {
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) throw new Error('OpenAI API key not configured');
-
     const topic = options.topic || 'Technology';
     const style = options.imageStyle || 'minimal, sophisticated, dark monochromatic, subtle gradients, cinematic lighting';
     const customPrompt = options.imagePrompt;
@@ -112,6 +110,20 @@ Design direction: Ultra-minimal composition with dark background (black or very 
 Avoid: bright colors, busy geometric patterns, stock photo look.
 Think: Apple product photography, architectural minimalism, high-end editorial design.
 The image should feel timeless and complement serif typography on a black background.`;
+
+    // Route to Gemini for Gemini image models (Nano Banana Pro)
+    if (model.startsWith('gemini')) {
+        if (!isGeminiImageAvailable()) {
+            console.warn('Gemini API key not configured. Falling back to DALL-E 3.');
+        } else {
+            console.log(`Using Gemini for image generation (model: ${model})`);
+            return generateImageWithGemini(imagePrompt, options);
+        }
+    }
+
+    // Fall back to OpenAI DALL-E
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) throw new Error('OpenAI API key not configured');
 
     // TODO: Add support for Replicate
     if (model.includes('stable-diffusion') || model.includes('flux')) {
