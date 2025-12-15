@@ -22,7 +22,7 @@ import {
   Sparkles
 } from 'lucide-react'
 import DraftEditor from '@/components/DraftEditor'
-
+import BulkPublishProgress from '@/components/BulkPublishProgress'
 import GenerationSettingsModal from '@/components/GenerationSettingsModal'
 import { AIMetadata } from '@/lib/types'
 
@@ -45,6 +45,12 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [showPublished, setShowPublished] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [bulkPublishState, setBulkPublishState] = useState<{
+    isPublishing: boolean
+    currentIndex: number
+    total: number
+    results: { id: string; title?: string; success: boolean; error?: string }[]
+  } | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -181,14 +187,66 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     if (selectedIds.size === 0) return
     if (!confirm(`Publish ${selectedIds.size} drafts?`)) return
 
-    try {
-      await apiClient.bulkPublishDrafts(Array.from(selectedIds))
-      setSelectedIds(new Set())
-      await loadData()
-    } catch (error) {
-      console.error('Error bulk publishing drafts:', error)
-      alert('Failed to publish some drafts. Please try again.')
+    const draftIds = Array.from(selectedIds)
+    const total = draftIds.length
+
+    // Initialize progress state
+    setBulkPublishState({
+      isPublishing: true,
+      currentIndex: 0,
+      total,
+      results: [],
+    })
+
+    const results: { id: string; title?: string; success: boolean; error?: string }[] = []
+
+    // Publish drafts sequentially with progress tracking
+    for (let i = 0; i < draftIds.length; i++) {
+      const draftId = draftIds[i]
+      const draft = drafts.find(d => d.id === draftId)
+
+      setBulkPublishState(prev => ({
+        ...prev!,
+        currentIndex: i,
+      }))
+
+      try {
+        await apiClient.publishDraft(draftId)
+        results.push({
+          id: draftId,
+          title: draft?.title,
+          success: true,
+        })
+      } catch (error: any) {
+        results.push({
+          id: draftId,
+          title: draft?.title,
+          success: false,
+          error: error.message || 'Unknown error',
+        })
+      }
+
+      // Update results after each operation
+      setBulkPublishState(prev => ({
+        ...prev!,
+        results: [...results],
+      }))
+
+      // Small delay between operations to prevent rate limiting
+      if (i < draftIds.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 500))
+      }
     }
+
+    // Mark as complete
+    setBulkPublishState(prev => ({
+      ...prev!,
+      isPublishing: false,
+    }))
+
+    // Clear selection and reload data
+    setSelectedIds(new Set())
+    await loadData()
   }
 
   const toggleSelection = (id: string) => {
@@ -389,6 +447,42 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                   </button>
                 )}
               </div>
+
+              {/* Bulk Actions Bar */}
+              {selectedIds.size > 0 && !showPublished && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between mb-4"
+                >
+                  <span className="text-sm font-mono">
+                    {selectedIds.size} draft{selectedIds.size > 1 ? 's' : ''} selected
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={_handleBulkPublish}
+                      className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg transition-all text-sm font-medium flex items-center gap-2"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Publish Selected
+                    </button>
+                    <button
+                      onClick={_handleBulkDelete}
+                      className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg transition-all text-sm font-medium text-red-400 flex items-center gap-2"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Delete Selected
+                    </button>
+                    <button
+                      onClick={() => setSelectedIds(new Set())}
+                      className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all text-sm font-medium"
+                    >
+                      Clear Selection
+                    </button>
+                  </div>
+                </motion.div>
+              )}
 
               {filteredDrafts.length === 0 ? (
                 <div className="p-12 border border-white/10 rounded-xl text-center">
@@ -605,6 +699,18 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
         onClose={() => setShowGenerationModal(false)}
         onGenerate={handleGenerateArticle}
       />
+
+      {/* Bulk Publish Progress Modal */}
+      {bulkPublishState && (
+        <BulkPublishProgress
+          isOpen={true}
+          isPublishing={bulkPublishState.isPublishing}
+          currentIndex={bulkPublishState.currentIndex}
+          total={bulkPublishState.total}
+          results={bulkPublishState.results}
+          onClose={() => setBulkPublishState(null)}
+        />
+      )}
     </div>
   )
 }
