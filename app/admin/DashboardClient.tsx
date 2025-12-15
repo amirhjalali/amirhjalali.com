@@ -24,6 +24,8 @@ import {
 import DraftEditor from '@/components/DraftEditor'
 import BulkPublishProgress from '@/components/BulkPublishProgress'
 import GenerationSettingsModal from '@/components/GenerationSettingsModal'
+import GenerationProgress from '@/components/GenerationProgress'
+import { useGenerationProgress } from '@/hooks/useGenerationProgress'
 import { AIMetadata } from '@/lib/types'
 
 interface DashboardClientProps {
@@ -37,8 +39,20 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   const [editingDraft, setEditingDraft] = useState<Draft | null>(null)
   const [editingArticle, setEditingArticle] = useState<Article | null>(null)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
-  const [isGenerating, setIsGenerating] = useState(false)
   const [showGenerationModal, setShowGenerationModal] = useState(false)
+
+  // Progress tracking for article generation
+  const {
+    isGenerating,
+    progress,
+    currentStep,
+    message,
+    estimatedTimeRemaining,
+    error,
+    result,
+    startGeneration,
+    cancelGeneration,
+  } = useGenerationProgress()
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [_sortBy, _setSortBy] = useState<'date' | 'title'>('date')
@@ -104,18 +118,19 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   }, [publishedArticles])
 
   const handleGenerateArticle = async (settings: AIMetadata) => {
-    setIsGenerating(true)
-    try {
-      const draft = await apiClient.generateArticle(settings)
-      await loadData()
-      setSelectedDraft(draft)
-    } catch (error) {
-      console.error('Error generating article:', error)
-      alert('Failed to generate article. Please try again.')
-    } finally {
-      setIsGenerating(false)
-    }
+    await startGeneration('/api/generate-article?stream=true', settings)
   }
+
+  // Reload data when generation completes successfully
+  useEffect(() => {
+    if (result && !isGenerating && !error) {
+      loadData().then(() => {
+        if (result.draft) {
+          setSelectedDraft(result.draft)
+        }
+      })
+    }
+  }, [result, isGenerating, error])
 
   const handlePublish = async (draftId: string) => {
     setActionLoading(draftId)
@@ -711,6 +726,24 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
           onClose={() => setBulkPublishState(null)}
         />
       )}
+
+      {/* Article Generation Progress Modal */}
+      <GenerationProgress
+        isOpen={isGenerating || !!result || !!error}
+        progress={progress}
+        currentStep={currentStep}
+        message={message}
+        estimatedTimeRemaining={estimatedTimeRemaining}
+        error={error}
+        isGenerating={isGenerating}
+        onCancel={cancelGeneration}
+        onClose={() => {
+          // Reset state when closing
+          if (!isGenerating) {
+            window.location.reload() // Simple reload to clear state
+          }
+        }}
+      />
     </div>
   )
 }
