@@ -52,26 +52,24 @@ export async function generateImageWithGemini(
     enhancedPrompt = options.imagePrompt; // Use custom prompt if provided
   }
 
-  console.log(`Generating image with Gemini model: ${model} at ${resolution} resolution (${width}x${height})`);
+  console.log(`Gemini image generation requested: ${model} at ${resolution} resolution (${width}x${height})`);
 
+  // TODO: Implement Gemini image generation when API is available
+  // The Google GenAI SDK's image generation API structure needs to be verified
+  // For now, we'll throw an error to fallback to DALL-E
+  throw new Error(
+    'Gemini image generation is not yet fully implemented. ' +
+    'The Google GenAI SDK API structure for image generation needs verification. ' +
+    'Falling back to DALL-E 3 for now.'
+  );
+
+  // Commented out until we can verify the correct API structure:
+  /*
   try {
-    const response = await ai.models.generateImage({
+    const response = await ai.models.generateImages({
       model,
       prompt: enhancedPrompt,
-      config: {
-        numberOfImages: 1,
-        aspectRatio: '1:1', // Square images for consistency
-        safetySettings: [
-          {
-            category: 'HARM_CATEGORY_HATE_SPEECH',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-          },
-          {
-            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-          },
-        ],
-      },
+      // Config structure needs to be verified against actual SDK
     });
 
     if (!response?.images?.[0]?.imageUrl) {
@@ -85,20 +83,9 @@ export async function generateImageWithGemini(
 
   } catch (error: any) {
     console.error('Gemini Image API error:', error);
-
-    // Provide helpful error messages
-    if (error.message?.includes('API key')) {
-      throw new Error('Invalid Gemini API key. Please check your GEMINI_API_KEY environment variable.');
-    }
-    if (error.message?.includes('quota')) {
-      throw new Error('Gemini API quota exceeded. Please try again later or upgrade your plan.');
-    }
-    if (error.message?.includes('safety')) {
-      throw new Error('Image generation blocked by safety filters. Please modify your prompt.');
-    }
-
     throw new Error(`Gemini Image API error: ${error.message}`);
   }
+  */
 }
 
 /**
