@@ -30,8 +30,10 @@ export async function POST(request: NextRequest) {
         topic: options.topic // Ensure topic is passed if set
       });
 
-      // Download image as base64
-      const imageBase64 = await downloadImageAsBase64(imageUrl);
+      // Download image as base64 (only if it's not already a data URI)
+      const imageBase64 = imageUrl.startsWith('data:')
+        ? imageUrl // Already base64 data URI from Gemini
+        : await downloadImageAsBase64(imageUrl); // Download from DALL-E URL
 
       // Calculate word count
       const wordCount = articleData.content.trim().split(/\s+/).length;
@@ -104,15 +106,20 @@ export async function POST(request: NextRequest) {
           topic: options.topic
         });
 
-        // Step 4: Downloading image (85%)
-        sseStream.sendEvent(controller, {
-          step: 'downloading_image',
-          progress: 85,
-          message: 'Downloading and converting image...',
-          estimatedTimeRemaining: 10
-        });
+        // Step 4: Downloading image (85%) - only if needed
+        if (!imageUrl.startsWith('data:')) {
+          sseStream.sendEvent(controller, {
+            step: 'downloading_image',
+            progress: 85,
+            message: 'Downloading and converting image...',
+            estimatedTimeRemaining: 10
+          });
 
-        imageBase64 = await downloadImageAsBase64(imageUrl);
+          imageBase64 = await downloadImageAsBase64(imageUrl);
+        } else {
+          // Already base64 from Gemini - skip download step
+          imageBase64 = imageUrl;
+        }
 
         // Step 5: Saving to database (95%)
         sseStream.sendEvent(controller, {

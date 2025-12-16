@@ -117,6 +117,7 @@ The image should feel timeless and complement serif typography on a black backgr
             console.warn('Gemini API key not configured. Falling back to DALL-E 3.');
         } else {
             console.log(`Using Gemini for image generation (model: ${model})`);
+            // Gemini returns base64 data URI directly - no need to download
             return generateImageWithGemini(imagePrompt, options);
         }
     }
@@ -153,6 +154,7 @@ The image should feel timeless and complement serif typography on a black backgr
     }
 
     const data = await response.json();
+    // DALL-E returns temporary URLs that need to be downloaded and converted to base64
     return data.data[0].url;
 }
 

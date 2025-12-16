@@ -4,24 +4,18 @@
  * Supports 1K, 2K, and 4K resolutions
  */
 
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, Modality } from '@google/genai';
 import { AIMetadata } from './types';
-
-/**
- * Resolution configurations for Gemini image generation
- */
-const RESOLUTION_CONFIG = {
-  '1K': { width: 1024, height: 1024 },
-  '2K': { width: 2048, height: 2048 },
-  '4K': { width: 4096, height: 4096 },
-};
 
 /**
  * Generate an image using Gemini's Nano Banana Pro model
  *
+ * Uses the generateContent API with IMAGE response modality
+ * Returns base64-encoded image data
+ *
  * @param prompt - The image generation prompt
  * @param options - Generation options including model, resolution, and style
- * @returns URL of the generated image
+ * @returns Base64 data URI of the generated image
  */
 export async function generateImageWithGemini(
   prompt: string,
@@ -40,8 +34,7 @@ export async function generateImageWithGemini(
     : 'gemini-3-pro-image-preview'; // Nano Banana Pro
 
   // Determine resolution (default to 2K for balanced quality/cost)
-  const resolution = options.imageResolution || '2K';
-  const { width, height } = RESOLUTION_CONFIG[resolution];
+  const imageSize = options.imageResolution || '2K';
 
   // Build enhanced prompt with style guidance
   let enhancedPrompt = prompt;
@@ -52,40 +45,44 @@ export async function generateImageWithGemini(
     enhancedPrompt = options.imagePrompt; // Use custom prompt if provided
   }
 
-  console.log(`Gemini image generation requested: ${model} at ${resolution} resolution (${width}x${height})`);
+  console.log(`Gemini image generation requested: ${model} at ${imageSize} resolution`);
 
-  // TODO: Implement Gemini image generation when API is available
-  // The Google GenAI SDK's image generation API structure needs to be verified
-  // For now, we'll throw an error to fallback to DALL-E
-  throw new Error(
-    'Gemini image generation is not yet fully implemented. ' +
-    'The Google GenAI SDK API structure for image generation needs verification. ' +
-    'Falling back to DALL-E 3 for now.'
-  );
-
-  // Commented out until we can verify the correct API structure:
-  /*
   try {
-    const response = await ai.models.generateImages({
+    // Use generateContent with IMAGE response modality
+    const response = await ai.models.generateContent({
       model,
-      prompt: enhancedPrompt,
-      // Config structure needs to be verified against actual SDK
+      contents: enhancedPrompt,
+      config: {
+        responseModalities: [Modality.IMAGE],
+        imageConfig: {
+          aspectRatio: '16:9', // Landscape format for featured images
+          imageSize, // '1K', '2K', or '4K'
+        },
+      },
     });
 
-    if (!response?.images?.[0]?.imageUrl) {
-      throw new Error('No image URL returned from Gemini');
+    // Extract image from response parts
+    const imagePart = response.candidates?.[0]?.content?.parts?.find(
+      (part: any) => part.inlineData?.mimeType?.startsWith('image/')
+    );
+
+    if (!imagePart?.inlineData?.data) {
+      throw new Error('No image data returned from Gemini');
     }
 
-    const imageUrl = response.images[0].imageUrl;
-    console.log(`Image generated successfully: ${imageUrl.substring(0, 50)}...`);
+    // Return as base64 data URI
+    const mimeType = imagePart.inlineData.mimeType || 'image/png';
+    const base64Data = imagePart.inlineData.data;
+    const dataUri = `data:${mimeType};base64,${base64Data}`;
 
-    return imageUrl;
+    console.log(`Image generated successfully with Gemini (${imageSize})`);
+
+    return dataUri;
 
   } catch (error: any) {
     console.error('Gemini Image API error:', error);
     throw new Error(`Gemini Image API error: ${error.message}`);
   }
-  */
 }
 
 /**

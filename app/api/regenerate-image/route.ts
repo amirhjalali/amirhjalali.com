@@ -34,8 +34,10 @@ export async function POST(request: NextRequest) {
             topic
         });
 
-        // Download image as base64
-        const imageBase64 = await downloadImageAsBase64(imageUrl);
+        // Download image as base64 (only if it's not already a data URI)
+        const imageBase64 = imageUrl.startsWith('data:')
+            ? imageUrl // Already base64 data URI from Gemini
+            : await downloadImageAsBase64(imageUrl); // Download from DALL-E URL
 
         // Update database
         if (draft) {
