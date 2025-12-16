@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo, Sparkles, Image as ImageIcon, Calendar } from 'lucide-react'
 import { apiClient, type Draft, type Article } from '@/lib/api-client'
 import GenerationSettingsModal from './GenerationSettingsModal'
+import GenerationProgress from './GenerationProgress'
+import { useGenerationProgress } from '@/hooks/useGenerationProgress'
 import { AIMetadata } from '@/lib/types'
 
 interface DraftEditorProps {
@@ -31,6 +33,19 @@ export default function DraftEditor({ draft, type = 'draft', onSave, onClose }: 
   const [scheduledDate, setScheduledDate] = useState<string>(
     (draft.metadata as any)?.scheduledPublishDate || ''
   )
+
+  // Progress tracking for image regeneration
+  const {
+    isGenerating: isRegeneratingImage,
+    progress,
+    currentStep,
+    message,
+    estimatedTimeRemaining,
+    error: regenerationError,
+    result: regenerationResult,
+    startGeneration,
+    cancelGeneration,
+  } = useGenerationProgress()
 
   const handleSave = useCallback(async (isAutoSave = false) => {
     if (isSaving) return
@@ -84,17 +99,18 @@ export default function DraftEditor({ draft, type = 'draft', onSave, onClose }: 
   }
 
   const handleRegenerateImage = async (settings: AIMetadata) => {
-    setIsRegenerating(true)
-    try {
-      const { imageUrl } = await apiClient.regenerateImage(editedDraft.id, settings)
-      handleFieldChange('imageUrl', imageUrl)
-    } catch (error) {
-      console.error('Error regenerating image:', error)
-      alert('Failed to regenerate image.')
-    } finally {
-      setIsRegenerating(false)
-    }
+    await startGeneration(`/api/regenerate-image?stream=true`, { id: editedDraft.id, ...settings })
   }
+
+  // Handle image regeneration completion
+  useEffect(() => {
+    if (regenerationResult && !isRegeneratingImage && !regenerationError) {
+      if (regenerationResult.imageUrl) {
+        handleFieldChange('imageUrl', regenerationResult.imageUrl)
+        setHasChanges(true)
+      }
+    }
+  }, [regenerationResult, isRegeneratingImage, regenerationError])
 
   const handleUndo = useCallback(() => {
     setHistoryIndex((prevIndex) => {
@@ -575,6 +591,18 @@ Regular paragraph text goes here."
           imageStyle: editedDraft.metadata?.imageStyle,
           imagePrompt: editedDraft.metadata?.imagePrompt
         }}
+      />
+
+      {/* Progress modal for image regeneration */}
+      <GenerationProgress
+        isOpen={isRegeneratingImage}
+        isGenerating={isRegeneratingImage}
+        progress={progress}
+        currentStep={currentStep}
+        message={message}
+        estimatedTimeRemaining={estimatedTimeRemaining}
+        error={regenerationError}
+        onCancel={cancelGeneration}
       />
     </motion.div>
   )

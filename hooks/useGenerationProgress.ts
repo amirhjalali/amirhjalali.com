@@ -6,9 +6,11 @@ import { ProgressEvent, GenerationStep } from '@/lib/types'
 interface GenerationResult {
   success: boolean
   draft?: any
+  article?: any
   topic?: string
   wordCount?: number
   message?: string
+  imageUrl?: string
   error?: string
 }
 
