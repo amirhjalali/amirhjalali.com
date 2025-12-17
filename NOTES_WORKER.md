@@ -135,25 +135,42 @@ pm2 save
 
 ### Option 2: Separate Worker Service (Recommended)
 
-Create a separate Coolify service for the worker:
+This is the most robust way to deploy the worker. It runs as a separate container that automatically restarts if it crashes.
 
-1. **In Coolify Dashboard**:
-   - Clone your existing application
-   - Name it: `amirhjalali.com-worker`
-   - Use the same repository and branch
+**Step-by-Step Guide:**
 
-2. **Configure Build Settings**:
-   - Build Command: `npm install`
-   - Start Command: `node scripts/note-worker.js`
+1.  **Create New Service**:
+    - Go to your Project in Coolify.
+    - Click **"+ New"** → **"Application"** → **"Private Repository"**.
+    - Select the `amirhjalali.com` repository (same as your main site).
+    - Branch: `main` (or your active branch).
 
-3. **Environment Variables**:
-   Copy all environment variables from main app:
-   - `DATABASE_URL` - Same database as main app
-   - `REDIS_URL` - Same Redis instance
-   - `OPENAI_API_KEY` - OpenAI API key
-   - `NODE_ENV=worker` - Optional identifier
+2.  **Configure The Service**:
+    - **Name**: `amirhjalali-worker` (so you can distinguish it).
+    - **Build Pack**: `Nixpacks` (default) or `Docker`.
+    - **Original Port**: You can leave this blank or set to `3000` (it doesn't serve web traffic, so it doesn't matter).
 
-4. **Deploy** the worker service
+3.  **Set Start Command** (CRITICAL):
+    - In the **Configuration** tab, look for **Start Command**.
+    - Change it to: `npm run worker`
+    - *Note: This tells the container to run the background processor instead of the web server.*
+
+4.  **Environment Variables**:
+    - Go to the **Environment Variables** tab.
+    - You must copy **ALL** variables from your main website application, specifically:
+        - `DATABASE_URL`
+        - `REDIS_URL`
+        - `OPENAI_API_KEY`
+        - `enable_auto_processing=true` (optional)
+
+5.  **Deploy**:
+    - Click **"Deploy"**.
+
+**Verification:**
+- Go to the **Logs** tab of the new worker service.
+- You should see: `✅ Note processing worker started`.
+- Create a new note on your website.
+- Watch the worker logs—it should pick up the job and say `✅ Note processed successfully`.
 
 ### Redis Setup in Coolify
 

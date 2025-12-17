@@ -36,7 +36,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="absolute bottom-12 left-0 right-0 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
+          className="absolute bottom-12 left-0 right-0 z-50 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
         >
           <Link href="/work" className="hover:text-[#EAEAEA] transition-colors">
             Work
