@@ -102,16 +102,6 @@ export default function DraftEditor({ draft, type = 'draft', onSave, onClose }: 
     await startGeneration(`/api/regenerate-image?stream=true`, { id: editedDraft.id, ...settings })
   }
 
-  // Handle image regeneration completion
-  useEffect(() => {
-    if (regenerationResult && !isRegeneratingImage && !regenerationError) {
-      if (regenerationResult.imageUrl) {
-        handleFieldChange('imageUrl', regenerationResult.imageUrl)
-        setHasChanges(true)
-      }
-    }
-  }, [regenerationResult, isRegeneratingImage, regenerationError])
-
   const handleUndo = useCallback(() => {
     setHistoryIndex((prevIndex) => {
       if (prevIndex > 0) {
@@ -148,6 +138,25 @@ export default function DraftEditor({ draft, type = 'draft', onSave, onClose }: 
     setEditedDraft(newDraft as Draft | Article)
     addToHistory(newDraft as Draft | Article)
   }, [editedDraft, addToHistory])
+
+  // Handle image regeneration completion
+  useEffect(() => {
+    if (regenerationResult && !isRegeneratingImage && !regenerationError) {
+      // Update from the returned draft/article if available
+      if (regenerationResult.draft) {
+        setEditedDraft(regenerationResult.draft)
+        addToHistory(regenerationResult.draft)
+        setHasChanges(true)
+      } else if (regenerationResult.article) {
+        setEditedDraft(regenerationResult.article)
+        addToHistory(regenerationResult.article)
+        setHasChanges(true)
+      } else if (regenerationResult.imageUrl) {
+        // Fallback: just update the image URL
+        handleFieldChange('imageUrl', regenerationResult.imageUrl)
+      }
+    }
+  }, [regenerationResult, isRegeneratingImage, regenerationError, handleFieldChange, addToHistory])
 
   const handleTagAdd = (tag: string) => {
     if (tag.trim() && !editedDraft.tags.includes(tag.trim())) {

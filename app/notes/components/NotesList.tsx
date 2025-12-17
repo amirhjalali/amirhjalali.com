@@ -1,14 +1,15 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { apiClient } from '@/lib/api-client'
 import type { Note, NoteType } from '@/lib/types'
 import NoteCard from './NoteCard'
 import NoteFilters from './NoteFilters'
-import { Grid3x3, List } from 'lucide-react'
+import { Grid3x3, List, Loader2 } from 'lucide-react'
 
 export default function NotesList({ refreshKey }: { refreshKey?: number }) {
+  const isMounted = useRef(false)
   const [notes, setNotes] = useState<Note[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -46,21 +47,12 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
   }, [filters, page])
 
   // Initial load only
+  // Unified fetch effect handles both initial load and updates
   useEffect(() => {
-    fetchNotes(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Only run on mount
-
-  // Refresh when filters/page change (but don't show full loading state)
-  useEffect(() => {
-    if (notes.length > 0) {
-      // Add small delay to prevent rapid successive calls
-      const timer = setTimeout(() => {
-        fetchNotes(false)
-      }, 300)
-      return () => clearTimeout(timer)
-    }
-  }, [filters, page, notes.length, fetchNotes])
+    const showLoading = !isMounted.current
+    fetchNotes(showLoading)
+    isMounted.current = true
+  }, [filters, page, fetchNotes])
 
   // Refresh when a new note is added
   useEffect(() => {
@@ -89,19 +81,17 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
 
   return (
     <div className="space-y-6">
-      {/* Refreshing Indicator */}
-      {isRefreshing && (
-        <div className="text-xs font-mono text-[#888888] text-center py-2">
-          Updating...
-        </div>
-      )}
-
       {/* View Mode Toggle & Filters */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <NoteFilters onFilterChange={handleFilterChange} />
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          {isRefreshing && (
+            <div className="mr-2">
+              <Loader2 className="w-4 h-4 text-[#888888] animate-spin" />
+            </div>
+          )}
           <button
             onClick={() => setViewMode('grid')}
             className={`p-2 rounded-lg transition-all ${viewMode === 'grid'

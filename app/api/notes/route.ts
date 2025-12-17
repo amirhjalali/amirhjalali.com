@@ -47,18 +47,44 @@ export async function GET(request: NextRequest) {
     // Get total count
     const total = await prisma.note.count({ where })
 
-    // Get notes
+    // Get notes with optimized selection
     const notes = await prisma.note.findMany({
       where,
       orderBy: { [sortBy]: order },
       take: limit,
       skip: offset,
+      select: {
+        id: true,
+        title: true,
+        excerpt: true,
+        tags: true,
+        type: true,
+        createdAt: true,
+        updatedAt: true,
+        processStatus: true,
+        // Fetch only a substring of content for preview if excerpt is missing
+        // Note: Prisma doesn't support substring in select easily without raw query, 
+        // but we can fetch content and truncate in memory if it's not too huge.
+        // However, since content can be huge, let's just NOT select it and rely on excerpt.
+        // If we really need a preview, we should compute 'excerpt' on save.
+        // For now, let's select a few fields.
+        content: false, // Explicitly exclude
+        imageUrl: false, // Explicitly exclude
+        topics: true, // Keep lightweight arrays
+      }
     })
+
+    // Map to Note type (some optional fields might be missing)
+    const safeNotes = notes.map(note => ({
+      ...note,
+      content: note.excerpt || '', // Fallback to excerpt or empty string for list view
+      imageUrl: undefined,
+    }))
 
     const hasMore = offset + notes.length < total
 
     return NextResponse.json({
-      notes,
+      notes: safeNotes,
       total,
       hasMore
     })
