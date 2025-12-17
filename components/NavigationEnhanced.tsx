@@ -29,18 +29,17 @@ export default function NavigationEnhanced() {
     setMobileOpen(false)
   }, [pathname])
 
-  // Hide navigation on homepage as it has its own
-  // Also hide on notes login page
-  if (pathname === '/' || pathname === '/notes/login') return null
+  // Hide navigation on notes login page only
+  if (pathname === '/notes/login') return null
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.3 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
         ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/5'
-        : 'bg-transparent'
+        : 'bg-[#050505]/40 backdrop-blur-sm'
         }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
