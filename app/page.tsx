@@ -14,14 +14,14 @@ export default function Home() {
       <PortraitReveal />
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-12">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-6">
 
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
           <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-light tracking-tight mb-6 text-[#EAEAEA]">
             <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">A</span>mir H. Jalal<span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">i</span>
@@ -36,7 +36,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="absolute bottom-12 left-0 right-0 z-50 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
+          className="absolute bottom-6 left-0 right-0 z-50 flex justify-center gap-12 font-mono text-xs uppercase tracking-widest text-[#888888]"
         >
           <Link href="/work" className="hover:text-[#EAEAEA] transition-colors">
             Work
