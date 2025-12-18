@@ -99,78 +99,28 @@ Watch the worker logs to see it process the note.
 
 ## Production Deployment (Coolify)
 
-### Option 1: Single Service with Background Worker
+### Deployment Strategy: Single Container (Efficient)
 
-Add a worker process to your existing service:
+We have optimized the setup to run both the web server and the background worker in a single container. This saves resources and simplifies deployment.
 
-1. **Update package.json** with a worker script:
-```json
-{
-  "scripts": {
-    "start": "HOSTNAME=\"0.0.0.0\" node .next/standalone/server.js",
-    "worker": "node scripts/note-worker.js"
-  }
-}
-```
+**How it works:**
+The `start` script now runs `scripts/start-all.sh`, which launches both processes concurrently.
 
-2. **Create Procfile** (optional, for process managers):
-```
-web: npm run start
-worker: npm run worker
-```
+**Deployment Steps:**
 
-3. **Run both processes** using a process manager like PM2:
-```bash
-npm install -g pm2
+1.  **Simply Deploy the Main App**:
+    - Just deploy your `amirhjalali.com` application in Coolify as usual.
+    - No separate worker service is needed.
+    - No custom start command is needed (it uses `npm start` by default).
 
-# Start web server
-pm2 start npm --name "web" -- run start
+2.  **Verify**:
+    - Check the logs of your main application.
+    - You should see both:
+        - `🚀 Starting Worker...`
+        - `🚀 Starting Web Server...`
+    - Create a note and watch it get processed automatically.
 
-# Start worker
-pm2 start npm --name "worker" -- run worker
-
-# Save configuration
-pm2 save
-```
-
-### Option 2: Separate Worker Service (Recommended)
-
-This is the most robust way to deploy the worker. It runs as a separate container that automatically restarts if it crashes.
-
-**Step-by-Step Guide:**
-
-1.  **Create New Service**:
-    - Go to your Project in Coolify.
-    - Click **"+ New"** → **"Application"** → **"Private Repository"**.
-    - Select the `amirhjalali.com` repository (same as your main site).
-    - Branch: `main` (or your active branch).
-
-2.  **Configure The Service**:
-    - **Name**: `amirhjalali-worker` (so you can distinguish it).
-    - **Build Pack**: `Nixpacks` (default) or `Docker`.
-    - **Original Port**: You can leave this blank or set to `3000` (it doesn't serve web traffic, so it doesn't matter).
-
-3.  **Set Start Command** (CRITICAL):
-    - In the **Configuration** tab, look for **Start Command**.
-    - Change it to: `npm run worker`
-    - *Note: This tells the container to run the background processor instead of the web server.*
-
-4.  **Environment Variables**:
-    - Go to the **Environment Variables** tab.
-    - You must copy **ALL** variables from your main website application, specifically:
-        - `DATABASE_URL`
-        - `REDIS_URL`
-        - `OPENAI_API_KEY`
-        - `enable_auto_processing=true` (optional)
-
-5.  **Deploy**:
-    - Click **"Deploy"**.
-
-**Verification:**
-- Go to the **Logs** tab of the new worker service.
-- You should see: `✅ Note processing worker started`.
-- Create a new note on your website.
-- Watch the worker logs—it should pick up the job and say `✅ Note processed successfully`.
+*(The "Separate Worker Service" option is no longer recommended as it consumes unnecessary resources for this scale).*
 
 ### Redis Setup in Coolify
 
