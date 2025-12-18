@@ -68,6 +68,17 @@ export default function NoteCard({ note, onDelete }: { note: Note; onDelete?: ()
       </div>
 
       <Link href={`/notes/${note.id}`} className="block">
+        {note.imageUrl && (
+          <div className="relative w-full aspect-video mb-3 rounded-xl overflow-hidden border border-white/5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={note.imageUrl}
+              alt={note.title || 'Note image'}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
         {note.title && (
           <h3 className="text-base font-medium mb-2 line-clamp-2 hover:text-white transition-colors">
             {note.title}

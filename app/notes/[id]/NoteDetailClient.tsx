@@ -161,7 +161,17 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
           </div>
         </div>
 
-        {/* Title */}
+        {note.imageUrl && (
+          <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 mb-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={note.imageUrl}
+              alt={note.title || 'Note image'}
+              className="w-full h-auto max-h-[500px] object-contain bg-black/50"
+            />
+          </div>
+        )}
+
         {isEditing ? (
           <input
             type="text"

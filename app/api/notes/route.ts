@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
         // If we really need a preview, we should compute 'excerpt' on save.
         // For now, let's select a few fields.
         content: false, // Explicitly exclude
-        imageUrl: false, // Explicitly exclude
+        imageUrl: true,
         topics: true, // Keep lightweight arrays
       }
     })
@@ -78,7 +78,6 @@ export async function GET(request: NextRequest) {
     const safeNotes = notes.map(note => ({
       ...note,
       content: note.excerpt || '', // Fallback to excerpt or empty string for list view
-      imageUrl: undefined,
     }))
 
     const hasMore = offset + notes.length < total
@@ -96,6 +95,8 @@ export async function GET(request: NextRequest) {
     )
   }
 }
+
+import { uploadToR2 } from '@/lib/upload-utils'
 
 // POST /api/notes - Create new note
 export async function POST(request: NextRequest) {
@@ -124,10 +125,34 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    let { imageUrl, content, type } = body
+
+    // Handle Image Uploads to R2
+    try {
+      // 1. Check if imageUrl is a Base64 string
+      if (imageUrl && imageUrl.startsWith('data:image/')) {
+        console.log('🖼️ Uploading imageUrl to R2...')
+        const contentType = imageUrl.substring(5, imageUrl.indexOf(';'))
+        imageUrl = await uploadToR2(imageUrl, `note-image-${Date.now()}`, contentType)
+      }
+
+      // 2. If type is IMAGE and content is Base64, upload it
+      if (type === 'IMAGE' && content.startsWith('data:image/')) {
+        console.log('🖼️ Uploading content (image) to R2...')
+        const contentType = content.substring(5, content.indexOf(';'))
+        content = await uploadToR2(content, `note-content-${Date.now()}`, contentType)
+      }
+    } catch (uploadError) {
+      console.error('❌ Failed to upload image to R2:', uploadError)
+      // We continue even if upload fails, though the image might be broken or huge in DB
+      // Alternatively, we could return an error here.
+    }
+
     const note = await prisma.note.create({
       data: {
-        type: body.type,
-        content: body.content,
+        type: type,
+        content: content,
+        imageUrl: imageUrl || null,
         title: body.title || null,
         tags: body.tags || [],
         topics: [],
