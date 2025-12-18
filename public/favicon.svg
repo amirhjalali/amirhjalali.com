@@ -1,0 +1,16 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background matching site theme -->
+  <rect width="32" height="32" fill="#050505" rx="4"/>
+
+  <!-- Serif 'A' in white with subtle glow effect -->
+  <text
+    x="16"
+    y="24"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="24"
+    font-weight="400"
+    fill="#EAEAEA"
+    text-anchor="middle"
+    style="filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));"
+  >A</text>
+</svg>
