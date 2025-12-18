@@ -14,7 +14,7 @@ export default function Home() {
       <PortraitReveal />
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-6">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pb-6">
 
         {/* Hero Section */}
         <motion.div
