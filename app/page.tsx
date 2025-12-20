@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative overflow-hidden bg-[#050505] text-[#EAEAEA]">
+    <div className="min-h-screen relative overflow-hidden bg-[#050505] text-[#EAEAEA] -mt-20">
       {/* Background Effects */}
       <div className="noise-overlay" />
       <Spotlight />
