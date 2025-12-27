@@ -272,7 +272,7 @@ ${editedDraft.content}`
           <div className="flex items-center gap-4">
             <h2 className="text-2xl font-semibold">Edit Draft</h2>
             {hasChanges && (
-              <span className="text-xs text-yellow-500 animate-pulse">● Unsaved changes</span>
+              <span className="text-xs text-[#888888] animate-pulse">● Unsaved changes</span>
             )}
             <span className="text-xs text-muted-foreground">
               Auto-saves every 2s
@@ -367,7 +367,7 @@ ${editedDraft.content}`
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium">Title</label>
-              <span className={`text-xs ${editedDraft.title.length > 100 ? 'text-red-500' : 'text-muted-foreground'}`}>
+              <span className={`text-xs ${editedDraft.title.length > 100 ? 'text-[#EAEAEA]' : 'text-muted-foreground'}`}>
                 {editedDraft.title.length}/100
               </span>
             </div>
@@ -384,7 +384,7 @@ ${editedDraft.content}`
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium">Excerpt</label>
-              <span className={`text-xs ${(editedDraft.excerpt?.length || 0) > 200 ? 'text-red-500' : 'text-muted-foreground'}`}>
+              <span className={`text-xs ${(editedDraft.excerpt?.length || 0) > 200 ? 'text-[#EAEAEA]' : 'text-muted-foreground'}`}>
                 {editedDraft.excerpt?.length || 0}/200
               </span>
             </div>
@@ -419,7 +419,7 @@ ${editedDraft.content}`
                   </button>
                   <button
                     onClick={() => handleFieldChange('imageUrl', '')}
-                    className="px-4 py-2 bg-red-500/90 text-white rounded-lg hover:bg-red-500"
+                    className="px-4 py-2 bg-white/10 text-[#EAEAEA] rounded-lg hover:bg-white/20 border border-white/20"
                   >
                     <X className="w-4 h-4 inline mr-2" />
                     Remove
@@ -474,7 +474,7 @@ ${editedDraft.content}`
                   {tag}
                   <button
                     onClick={() => handleTagRemove(tag)}
-                    className="hover:text-red-500"
+                    className="hover:text-[#EAEAEA]"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -535,7 +535,7 @@ Regular paragraph text goes here."
           <div className="flex items-center gap-4">
             <button
               onClick={onClose}
-              className="px-6 py-3 glass border border-border rounded-xl hover:border-red-500/50 transition-colors"
+              className="px-6 py-3 glass border border-border rounded-xl hover:border-white/30 transition-colors"
             >
               Cancel
             </button>

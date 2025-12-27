@@ -57,15 +57,15 @@ export default function BulkPublishProgress({
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               {isPublishing && (
-                <Loader2 className="w-5 h-5 text-blue-400 animate-spin" />
+                <Loader2 className="w-5 h-5 text-[#888888] animate-spin" />
               )}
               {isComplete && failCount === 0 && (
-                <CheckCircle2 className="w-5 h-5 text-green-400" />
+                <CheckCircle2 className="w-5 h-5 text-[#EAEAEA]" />
               )}
               {isComplete && failCount > 0 && (
-                <AlertCircle className="w-5 h-5 text-yellow-400" />
+                <AlertCircle className="w-5 h-5 text-[#888888]" />
               )}
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-xl font-serif font-light">
                 {isPublishing
                   ? 'Publishing Drafts'
                   : isComplete && failCount === 0
@@ -87,9 +87,9 @@ export default function BulkPublishProgress({
 
           {/* Progress Bar */}
           <div className="mb-6">
-            <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-1 bg-white/10 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                className="h-full bg-white"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -109,21 +109,23 @@ export default function BulkPublishProgress({
 
           {/* Summary (when complete) */}
           {isComplete && (
-            <div className="mb-4 space-y-2">
-              <div className="flex items-center gap-2 text-sm">
-                <CheckCircle2 className="w-4 h-4 text-green-400" />
-                <span className="text-green-400">
-                  Success: {successCount}
-                </span>
-              </div>
-              {failCount > 0 && (
-                <div className="flex items-center gap-2 text-sm">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span className="text-red-400">
-                    Failed: {failCount}
+            <div className="mb-4 p-4 bg-white/5 rounded-lg border border-white/10">
+              <div className="flex items-center gap-4 text-sm font-mono uppercase tracking-widest">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#EAEAEA]" />
+                  <span className="text-[#EAEAEA]">
+                    Success: {successCount}
                   </span>
                 </div>
-              )}
+                {failCount > 0 && (
+                  <div className="flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-[#888888]" />
+                    <span className="text-[#888888]">
+                      Failed: {failCount}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
@@ -139,23 +141,23 @@ export default function BulkPublishProgress({
                   transition={{ duration: 0.2 }}
                   className={`p-3 rounded-lg border ${
                     result.success
-                      ? 'bg-green-500/10 border-green-500/30'
-                      : 'bg-red-500/10 border-red-500/30'
+                      ? 'bg-white/5 border-white/20'
+                      : 'bg-white/5 border-white/10'
                   }`}
                 >
                   <div className="flex items-start gap-2">
                     {result.success ? (
-                      <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#EAEAEA] mt-0.5 shrink-0" />
                     ) : (
-                      <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
+                      <XCircle className="w-4 h-4 text-[#888888] mt-0.5 shrink-0" />
                     )}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">
+                      <p className="text-sm truncate">
                         Draft #{index + 1}
                         {result.title && `: ${result.title}`}
                       </p>
                       {result.error && (
-                        <p className="text-xs text-red-400 mt-1">{result.error}</p>
+                        <p className="text-xs text-[#888888] mt-1">{result.error}</p>
                       )}
                     </div>
                   </div>
@@ -169,7 +171,7 @@ export default function BulkPublishProgress({
             <div className="flex gap-2">
               <button
                 onClick={onClose}
-                className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg transition-all font-medium"
+                className="flex-1 px-4 py-2 bg-white text-black hover:bg-[#EAEAEA] rounded-lg transition-all font-mono text-xs uppercase tracking-widest"
               >
                 Close
               </button>

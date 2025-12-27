@@ -57,12 +57,12 @@ export default function PublishSync() {
   }
 
   return (
-    <div className="mb-6 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl">
+    <div className="mb-6 p-6 bg-white/5 border border-white/10 rounded-2xl">
       <div className="flex items-start gap-4">
-        <AlertCircle className="w-6 h-6 text-yellow-500 flex-shrink-0 mt-1" />
+        <AlertCircle className="w-6 h-6 text-[#888888] flex-shrink-0 mt-1" />
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-yellow-500 mb-2">
-            ⚠️ Static Site Limitation
+          <h3 className="text-lg font-semibold text-[#EAEAEA] mb-2">
+            Static Site Limitation
           </h3>
           <p className="text-sm text-muted-foreground mb-4">
             Publishing here only saves to your browser's localStorage. For articles to appear on the live site,
@@ -71,7 +71,7 @@ export default function PublishSync() {
           <button
             onClick={syncToRepository}
             disabled={syncing}
-            className="flex items-center gap-2 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg font-medium transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#EAEAEA] text-black rounded-lg font-mono text-xs uppercase tracking-widest transition-colors disabled:opacity-50"
           >
             {syncing ? (
               <>
@@ -90,14 +90,14 @@ export default function PublishSync() {
             <div
               className={`mt-4 p-3 rounded-lg flex items-start gap-3 ${
                 message.type === 'success'
-                  ? 'bg-green-500/10 border border-green-500/30'
-                  : 'bg-red-500/10 border border-red-500/30'
+                  ? 'bg-white/5 border border-white/20'
+                  : 'bg-white/5 border border-white/10'
               }`}
             >
               {message.type === 'success' ? (
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-[#EAEAEA] flex-shrink-0 mt-0.5" />
               ) : (
-                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 text-[#888888] flex-shrink-0 mt-0.5" />
               )}
               <pre className="text-xs whitespace-pre-wrap font-mono">{message.text}</pre>
             </div>

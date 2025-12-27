@@ -49,11 +49,11 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         className={`
           relative overflow-hidden
           px-6 py-3 rounded-xl
-          font-medium text-white
+          font-mono text-xs uppercase tracking-widest
           transition-all duration-300
           ${isGenerating
-            ? 'bg-ai-teal/50 cursor-not-allowed'
-            : 'bg-gradient-to-r from-ai-teal to-ai-cyan dark:from-ai-green dark:to-ai-blue hover:shadow-lg hover:scale-105'
+            ? 'bg-white/20 text-[#888888] cursor-not-allowed'
+            : 'bg-white text-black hover:bg-[#EAEAEA] hover:scale-105'
           }
         `}
         whileTap={!isGenerating ? { scale: 0.95 } : {}}
@@ -67,10 +67,10 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
           </span>
         </div>
 
-        {/* Animated gradient background when generating */}
+        {/* Animated shimmer when generating */}
         {isGenerating && (
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-ai-teal via-ai-cyan to-ai-teal opacity-50"
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
             animate={{ x: ['-100%', '100%'] }}
             transition={{
               duration: 1.5,
@@ -86,9 +86,9 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-3 bg-ai-teal/10 border border-ai-teal/20 rounded-lg"
+          className="p-3 bg-white/5 border border-white/10 rounded-lg"
         >
-          <p className="text-sm text-ai-teal dark:text-ai-green">{progress}</p>
+          <p className="text-sm text-[#EAEAEA]">{progress}</p>
         </motion.div>
       )}
 
@@ -97,12 +97,12 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg flex items-start gap-2"
+          className="p-3 bg-white/5 border border-white/20 rounded-lg flex items-start gap-2"
         >
-          <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+          <AlertCircle className="w-5 h-5 text-[#888888] shrink-0 mt-0.5" />
           <div className="flex-1">
-            <p className="text-sm text-red-800 dark:text-red-200 font-semibold">Generation Failed</p>
-            <pre className="text-xs text-red-700 dark:text-red-300 mt-1 whitespace-pre-wrap font-sans">{error}</pre>
+            <p className="text-sm text-[#EAEAEA] font-semibold">Generation Failed</p>
+            <pre className="text-xs text-[#888888] mt-1 whitespace-pre-wrap font-sans">{error}</pre>
           </div>
         </motion.div>
       )}
@@ -113,7 +113,7 @@ export default function ArticleGenerator({ onArticleGenerated }: { onArticleGene
         <p className="text-xs opacity-70">
           Click the button above to generate a new article instantly using GPT-4o-mini and DALL-E 3.
           Articles are saved as drafts for review before publishing.
-          <span className="text-ai-teal dark:text-ai-green font-medium"> 🔒 API key secured server-side</span>
+          <span className="text-[#EAEAEA] font-medium"> 🔒 API key secured server-side</span>
         </p>
       </div>
     </div>

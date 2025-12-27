@@ -84,36 +84,36 @@ export default function ProcessingIndicator({
         return {
           icon: Clock,
           label: 'Pending',
-          className: 'text-yellow-500 bg-yellow-500/10 border-yellow-500/20',
-          iconClassName: 'text-yellow-500',
+          className: 'text-[#888888] bg-white/5 border-white/10',
+          iconClassName: 'text-[#888888]',
         }
       case 'PROCESSING':
         return {
           icon: Loader2,
           label: 'Processing',
-          className: 'text-blue-500 bg-blue-500/10 border-blue-500/20',
-          iconClassName: 'text-blue-500 animate-spin',
+          className: 'text-[#EAEAEA] bg-white/5 border-white/20',
+          iconClassName: 'text-[#EAEAEA] animate-spin',
         }
       case 'COMPLETED':
         return {
           icon: CheckCircle2,
           label: 'Completed',
-          className: 'text-green-500 bg-green-500/10 border-green-500/20',
-          iconClassName: 'text-green-500',
+          className: 'text-[#EAEAEA] bg-white/10 border-white/20',
+          iconClassName: 'text-[#EAEAEA]',
         }
       case 'FAILED':
         return {
           icon: XCircle,
           label: 'Failed',
-          className: 'text-red-500 bg-red-500/10 border-red-500/20',
-          iconClassName: 'text-red-500',
+          className: 'text-[#888888] bg-white/5 border-white/10',
+          iconClassName: 'text-[#888888]',
         }
       default:
         return {
           icon: Clock,
           label: 'Unknown',
-          className: 'text-gray-500 bg-gray-500/10 border-gray-500/20',
-          iconClassName: 'text-gray-500',
+          className: 'text-[#888888] bg-white/5 border-white/10',
+          iconClassName: 'text-[#888888]',
         }
     }
   }
@@ -140,13 +140,13 @@ export default function ProcessingIndicator({
           className="p-1.5 hover:bg-white/10 rounded-lg transition-colors group"
           title={error || 'Retry processing'}
         >
-          <RefreshCw className="w-3.5 h-3.5 text-red-400 group-hover:rotate-180 transition-transform duration-300" />
+          <RefreshCw className="w-3.5 h-3.5 text-[#888888] group-hover:rotate-180 transition-transform duration-300" />
         </button>
       )}
 
       {error && (
         <span
-          className="text-xs text-red-400 max-w-[200px] truncate"
+          className="text-xs text-[#888888] max-w-[200px] truncate"
           title={error}
         >
           {error}

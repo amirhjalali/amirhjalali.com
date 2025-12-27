@@ -29,10 +29,10 @@ export default function Toast({ message, type, onClose, duration = 3000 }: Toast
   }
 
   const colors = {
-    success: 'bg-green-500/90 text-white',
-    error: 'bg-red-500/90 text-white',
-    warning: 'bg-yellow-500/90 text-white',
-    info: 'bg-blue-500/90 text-white'
+    success: 'bg-white/90 text-black',
+    error: 'bg-[#0a0a0a]/90 text-[#EAEAEA] border border-white/20',
+    warning: 'bg-[#0a0a0a]/90 text-[#EAEAEA] border border-white/10',
+    info: 'bg-[#0a0a0a]/90 text-[#EAEAEA] border border-white/10'
   }
 
   return (

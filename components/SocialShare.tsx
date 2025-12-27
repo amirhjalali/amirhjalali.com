@@ -30,19 +30,19 @@ export default function SocialShare({
       name: 'Twitter',
       icon: Twitter,
       href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`,
-      color: 'hover:bg-blue-500/20 hover:text-blue-400'
+      color: 'hover:bg-white/10 hover:text-[#EAEAEA]'
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-      color: 'hover:bg-blue-600/20 hover:text-blue-500'
+      color: 'hover:bg-white/10 hover:text-[#EAEAEA]'
     },
     {
       name: 'Facebook',
       icon: Facebook,
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-      color: 'hover:bg-blue-700/20 hover:text-blue-600'
+      color: 'hover:bg-white/10 hover:text-[#EAEAEA]'
     }
   ]
 
@@ -96,8 +96,8 @@ export default function SocialShare({
           className={cn(
             'w-9 h-9 rounded-full transition-all',
             copied
-              ? 'bg-green-500/20 text-green-400'
-              : 'hover:bg-gray-500/20 hover:text-gray-400'
+              ? 'bg-white/20 text-[#EAEAEA]'
+              : 'hover:bg-white/10 hover:text-[#EAEAEA]'
           )}
           onClick={copyToClipboard}
           aria-label="Copy link"

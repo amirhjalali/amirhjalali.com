@@ -288,7 +288,7 @@ export default function QuickAdd({ onNoteAdded }: { onNoteAdded?: () => void }) 
                 <button
                   type="button"
                   onClick={() => handleRemoveTag(tag)}
-                  className="hover:text-red-400 transition-colors"
+                  className="hover:text-[#EAEAEA] transition-colors"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -309,12 +309,12 @@ export default function QuickAdd({ onNoteAdded }: { onNoteAdded?: () => void }) 
 
       {/* Status Messages */}
       {error && (
-        <div className="p-4 bg-red-500/5 border border-red-500/20 rounded-xl text-red-400 text-xs font-mono">
+        <div className="p-4 bg-white/5 border border-white/20 rounded-xl text-[#EAEAEA] text-xs font-mono">
           {error}
         </div>
       )}
       {success && (
-        <div className="p-4 bg-green-500/5 border border-green-500/20 rounded-xl text-green-400 text-xs font-mono">
+        <div className="p-4 bg-white/10 border border-white/20 rounded-xl text-[#EAEAEA] text-xs font-mono">
           {success}
         </div>
       )}

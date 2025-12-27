@@ -59,10 +59,10 @@ export default function NoteCard({ note, onDelete }: { note: Note; onDelete?: ()
           />
           <button
             onClick={handleDelete}
-            className="p-1 hover:bg-red-500/20 rounded-lg transition-colors"
+            className="p-1 hover:bg-white/10 rounded-lg transition-colors"
             disabled={status === 'PROCESSING'}
           >
-            <Trash2 className="w-4 h-4 text-red-400" />
+            <Trash2 className="w-4 h-4 text-[#888888] hover:text-[#EAEAEA]" />
           </button>
         </div>
       </div>

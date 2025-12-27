@@ -76,13 +76,13 @@ export default function GenerationProgress({
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               {isGenerating && !hasError && (
-                <Loader2 className="w-5 h-5 text-blue-400 animate-spin" />
+                <Loader2 className="w-5 h-5 text-[#888888] animate-spin" />
               )}
               {isComplete && !hasError && (
-                <CheckCircle2 className="w-5 h-5 text-green-400" />
+                <CheckCircle2 className="w-5 h-5 text-[#EAEAEA]" />
               )}
-              {hasError && <XCircle className="w-5 h-5 text-red-400" />}
-              <h2 className="text-xl font-semibold">
+              {hasError && <XCircle className="w-5 h-5 text-[#888888]" />}
+              <h2 className="text-xl font-serif font-light">
                 {isGenerating
                   ? 'Generating Article'
                   : isComplete
@@ -105,9 +105,9 @@ export default function GenerationProgress({
           {/* Progress Bar */}
           {!hasError && (
             <div className="mb-6">
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-1 bg-white/10 rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                  className="h-full bg-white"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -129,27 +129,27 @@ export default function GenerationProgress({
           {currentStep && !hasError && (
             <div className="mb-4 p-4 bg-white/5 rounded-lg border border-white/10">
               <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="w-4 h-4 text-blue-400" />
-                <span className="text-sm font-medium text-blue-400">
+                <Sparkles className="w-4 h-4 text-[#888888]" />
+                <span className="text-xs font-mono uppercase tracking-widest text-[#EAEAEA]">
                   {stepLabels[currentStep]}
                 </span>
               </div>
-              <p className="text-sm text-[#cccccc]">{message}</p>
+              <p className="text-sm text-[#888888]">{message}</p>
             </div>
           )}
 
           {/* Error Message */}
           {hasError && (
-            <div className="mb-4 p-4 bg-red-500/10 rounded-lg border border-red-500/30">
-              <p className="text-sm text-red-400">{error || message}</p>
+            <div className="mb-4 p-4 bg-white/5 rounded-lg border border-white/20">
+              <p className="text-sm text-[#888888]">{error || message}</p>
             </div>
           )}
 
           {/* Success Message */}
           {isComplete && !hasError && (
-            <div className="mb-4 p-4 bg-green-500/10 rounded-lg border border-green-500/30">
-              <p className="text-sm text-green-400">
-                {message || 'Your article has been generated and saved as a draft!'}
+            <div className="mb-4 p-4 bg-white/5 rounded-lg border border-white/20">
+              <p className="text-sm text-[#EAEAEA]">
+                {message || 'Your article has been generated and saved as a draft.'}
               </p>
             </div>
           )}
@@ -159,7 +159,7 @@ export default function GenerationProgress({
             {isGenerating && !hasError && (
               <button
                 onClick={onCancel}
-                className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium"
+                className="flex-1 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-colors font-mono text-xs uppercase tracking-widest"
               >
                 Cancel
               </button>
@@ -167,7 +167,7 @@ export default function GenerationProgress({
             {!isGenerating && (
               <button
                 onClick={onClose || onCancel}
-                className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg transition-all font-medium"
+                className="flex-1 px-4 py-2 bg-white text-black hover:bg-[#EAEAEA] rounded-lg transition-all font-mono text-xs uppercase tracking-widest"
               >
                 {isComplete ? 'Close' : 'Dismiss'}
               </button>

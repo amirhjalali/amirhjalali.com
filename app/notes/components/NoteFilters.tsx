@@ -101,7 +101,7 @@ export default function NoteFilters({ onFilterChange }: NoteFiltersProps) {
         {hasActiveFilters && (
           <button
             onClick={handleClear}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 hover:bg-red-500/30 transition-all font-mono text-xs uppercase tracking-widest"
+            className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/20 rounded-xl text-[#EAEAEA] hover:bg-white/10 transition-all font-mono text-xs uppercase tracking-widest"
           >
             <X className="w-4 h-4" />
             Clear
