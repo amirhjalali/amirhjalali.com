@@ -33,8 +33,10 @@ export async function generateImageWithGemini(
     ? options.imageModel
     : 'gemini-3-pro-image-preview'; // Nano Banana Pro
 
-  // Determine resolution (default to 2K for balanced quality/cost)
-  const imageSize = options.imageResolution || '2K';
+  // Determine resolution based on model if not explicitly set
+  // gemini-image (Fast) defaults to 1K, gemini-3-pro defaults to 2K
+  const defaultResolution = model === 'gemini-image' ? '1K' : '2K';
+  const imageSize = options.imageResolution || defaultResolution;
 
   // Build enhanced prompt with style guidance
   let enhancedPrompt = prompt;

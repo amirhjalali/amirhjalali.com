@@ -205,7 +205,16 @@ export default function GenerationSettingsModal({
                                 <label className="block text-sm mb-2">Model</label>
                                 <select
                                     value={settings.imageModel}
-                                    onChange={(e) => setSettings({ ...settings, imageModel: e.target.value })}
+                                    onChange={(e) => {
+                                        const newModel = e.target.value
+                                        // Set appropriate default resolution based on model
+                                        const defaultResolution = newModel === 'gemini-image' ? '1K' : '2K'
+                                        setSettings({
+                                            ...settings,
+                                            imageModel: newModel,
+                                            imageResolution: defaultResolution as '1K' | '2K' | '4K'
+                                        })
+                                    }}
                                     className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 appearance-none"
                                 >
                                     <option value="gemini-3-pro-image-preview">Nano Banana Pro (2K/4K - NEW!)</option>
