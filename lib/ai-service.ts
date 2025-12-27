@@ -69,10 +69,11 @@ ${VOICE_GUIDELINES}
 
 Structure:
 - Length: 400-600 words (dense, no filler)
-- Use ## for section headers (2-3 sections max)
-- Introduction: State the core development or shift immediately
-- Body: Analyze implications, provide context on why this matters
-- Conclusion: Forward-looking perspective on where this leads
+- NO section headers (##) - write flowing prose like an essay or editorial
+- Open by stating the core development or shift immediately (no preamble)
+- Develop the analysis through connected paragraphs, not labeled sections
+- Close with forward-looking implications (no "In conclusion" or similar phrases)
+- Use paragraph breaks naturally, not as section dividers
 
 Format as JSON:
 {

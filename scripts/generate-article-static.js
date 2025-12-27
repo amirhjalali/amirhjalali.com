@@ -115,16 +115,12 @@ BANNED PHRASES (never use these):
 
 STRUCTURE:
 - Length: 400-600 words (dense, no filler - let content determine actual length)
-- Let structure emerge naturally based on topic type:
-  * Brief observations: 2-3 sections, direct
-  * Industry analysis: News + implications + takeaway
-  * Technical deep-dive: Progressive explanation with specifics
-  * Field reports: What's happening + what it means
-- Use ## headers (Title Case or ALL CAPS for impact)
-- Short paragraphs (1-4 sentences each)
-- ONE bullet list maximum (only if it genuinely clarifies)
-- Optional pull-quote (> block) if there's a genuine insight worth highlighting
+- NO section headers (##) - write flowing prose like an editorial or essay
+- Short paragraphs (1-4 sentences each), connected through ideas not labels
+- NO bullet lists - integrate information into prose
+- NO pull-quotes (> blocks) - they feel artificial
 - Links: 0-2 maximum, only if essential
+- Let the argument flow naturally through paragraphs, not labeled sections
 
 CONTENT APPROACH:
 - Start directly with the core observation or thesis
@@ -146,7 +142,7 @@ EXAMPLES OF THE TARGET STYLE (from amirhjalali.com/thoughts):
 Format the response as a JSON object with:
 {
   "title": "Direct, descriptive title (declarative, no clickbait, no emojis)",
-  "content": "Full article in markdown format with natural section structure",
+  "content": "Full article as flowing prose paragraphs - NO ## headers, NO bullet lists",
   "excerpt": "1-2 concrete sentences capturing core insight (120-160 chars)",
   "tags": ["specific", "relevant", "technical", "tags"]
 }`;
@@ -345,16 +341,12 @@ BANNED PHRASES (never use these):
 
 STRUCTURE:
 - Length: 400-600 words (dense, no filler - let content determine actual length)
-- Let structure emerge naturally based on topic type:
-  * Brief observations: 2-3 sections, direct
-  * Industry analysis: News + implications + takeaway
-  * Technical deep-dive: Progressive explanation with specifics
-  * Field reports: What's happening + what it means
-- Use ## headers (Title Case or ALL CAPS for impact)
-- Short paragraphs (1-4 sentences each)
-- ONE bullet list maximum (only if it genuinely clarifies)
-- Optional pull-quote (> block) if there's a genuine insight worth highlighting
+- NO section headers (##) - write flowing prose like an editorial or essay
+- Short paragraphs (1-4 sentences each), connected through ideas not labels
+- NO bullet lists - integrate information into prose
+- NO pull-quotes (> blocks) - they feel artificial
 - Links: 0-2 maximum, only if essential
+- Let the argument flow naturally through paragraphs, not labeled sections
 
 CONTENT APPROACH:
 - Start directly with the core observation or thesis
@@ -376,7 +368,7 @@ EXAMPLES OF THE TARGET STYLE (from amirhjalali.com/thoughts):
 Format the response as a JSON object with:
 {
   "title": "Direct, descriptive title (declarative, no clickbait, no emojis)",
-  "content": "Full article in markdown format with natural section structure",
+  "content": "Full article as flowing prose paragraphs - NO ## headers, NO bullet lists",
   "excerpt": "1-2 concrete sentences capturing core insight (120-160 chars)",
   "tags": ["specific", "relevant", "technical", "tags"]
 }
