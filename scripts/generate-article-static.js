@@ -29,25 +29,27 @@ const config = {
   draftsFile: path.join(__dirname, '..', 'public', 'data', 'drafts.json'),
 
   // Article generation settings
-  style: 'pragmatic-authoritative',
-  targetLength: 'flexible', // 450-750 words, naturally determined by content
+  style: 'dense-analytical',
+  targetLength: 'flexible', // 400-600 words, naturally determined by content
   topics: [
-    'AI and creativity',
-    'Future of work with AI',
-    'Ethics in AI development',
-    'AI in education',
-    'Human-AI collaboration',
-    'Machine learning breakthroughs',
-    'AI and society',
-    'Programming paradigms',
-    'Developer productivity',
-    'Tech industry trends',
-    'Synthetic data in AI',
-    'AI safety and alignment',
-    'The evolution of programming languages',
-    'Code review best practices',
-    'Debugging strategies',
-    'Software architecture patterns'
+    'Latest developments in reasoning models',
+    'The economics of AI deployment',
+    'Shifts in programming paradigms with LLMs',
+    'AI model efficiency breakthroughs',
+    'Open source AI and democratization',
+    'Synthetic data implications',
+    'AI and human identity',
+    'Vibe coding and LLM-assisted development',
+    'Emerging AI architectures',
+    'AI evaluation and benchmarking challenges',
+    'Multimodal AI capabilities',
+    'AI infrastructure and cost dynamics',
+    'Chain of thought and interpretability',
+    'Test-time compute innovations',
+    'Enterprise AI adoption patterns',
+    'AI agents and autonomous systems',
+    'The future of coding with AI',
+    'AI talent and skills landscape'
   ]
 };
 
@@ -112,7 +114,7 @@ BANNED PHRASES (never use these):
 - Forced analogies like "It's like…" or "Imagine if…"
 
 STRUCTURE:
-- Length: 450-750 words (be concise; let content determine actual length)
+- Length: 400-600 words (dense, no filler - let content determine actual length)
 - Let structure emerge naturally based on topic type:
   * Brief observations: 2-3 sections, direct
   * Industry analysis: News + implications + takeaway
@@ -132,12 +134,14 @@ CONTENT APPROACH:
 - If discussing personal experience, make it concrete and specific
 - Focus on "what this means" not just "what this is"
 
-EXAMPLES OF THE TARGET STYLE:
-"Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself."
+EXAMPLES OF THE TARGET STYLE (from amirhjalali.com/thoughts):
+"Vibe coding has proven transformative after 2.5 months of daily practice. The paradigm shift is real, though practical limitations emerge when integrating external data systems."
 
-"The biggest friction point comes when a project needs to interact with external data. Whether it's a database or API calls, progress slows down significantly."
+"DeepSeek-R1 achieves performance parity with leading proprietary models while dramatically reducing computational costs. This efficiency breakthrough democratizes AI access across industries."
 
-"DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces."
+"Chain of Thought prompting has demonstrated significant capacity enhancement through intermediate reasoning steps. Test-Time Compute allows systems additional processing depth during inference."
+
+"Contemporary machines increasingly express ideas simultaneously as humans anchor identity to ideation. If ideas can be extracted and articulated by algorithms, their essential originality becomes questionable."
 
 Format the response as a JSON object with:
 {
@@ -340,7 +344,7 @@ BANNED PHRASES (never use these):
 - Forced analogies like "It's like…" or "Imagine if…"
 
 STRUCTURE:
-- Length: 450-750 words (be concise; let content determine actual length)
+- Length: 400-600 words (dense, no filler - let content determine actual length)
 - Let structure emerge naturally based on topic type:
   * Brief observations: 2-3 sections, direct
   * Industry analysis: News + implications + takeaway
@@ -360,12 +364,14 @@ CONTENT APPROACH:
 - If discussing personal experience, make it concrete and specific
 - Focus on "what this means" not just "what this is"
 
-EXAMPLES OF THE TARGET STYLE:
-"Vibe coding is a new paradigm from early 2025 which essentially refers to writing software with the help of LLMs, without actually writing any of the code yourself."
+EXAMPLES OF THE TARGET STYLE (from amirhjalali.com/thoughts):
+"Vibe coding has proven transformative after 2.5 months of daily practice. The paradigm shift is real, though practical limitations emerge when integrating external data systems."
 
-"The biggest friction point comes when a project needs to interact with external data. Whether it's a database or API calls, progress slows down significantly."
+"DeepSeek-R1 achieves performance parity with leading proprietary models while dramatically reducing computational costs. This efficiency breakthrough democratizes AI access across industries."
 
-"DeepSeek-R1 represents a major breakthrough in AI development, not just for its impressive performance but for the significant cost reductions it introduces."
+"Chain of Thought prompting has demonstrated significant capacity enhancement through intermediate reasoning steps. Test-Time Compute allows systems additional processing depth during inference."
+
+"Contemporary machines increasingly express ideas simultaneously as humans anchor identity to ideation. If ideas can be extracted and articulated by algorithms, their essential originality becomes questionable."
 
 Format the response as a JSON object with:
 {

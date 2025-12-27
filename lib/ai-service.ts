@@ -2,24 +2,40 @@ import { AIMetadata } from '@/lib/types';
 import { generateArticleWithGemini, isGeminiAvailable } from '@/lib/gemini-service';
 import { generateImageWithGemini, isGeminiImageAvailable } from '@/lib/gemini-image-service';
 
-// Topics for article generation
+// Topics for article generation - focused on current AI/tech developments
 const TOPICS = [
-    'AI and creativity',
-    'Future of work with AI',
-    'Ethics in AI development',
-    'AI in education',
-    'Human-AI collaboration',
-    'Machine learning breakthroughs',
-    'AI and society',
-    'Programming paradigms',
-    'Developer productivity',
-    'Tech industry trends',
-    'AI coding assistants',
-    'Next.js and React patterns',
-    'TypeScript best practices',
-    'Web performance optimization',
-    'Accessibility in web development'
+    'Latest developments in reasoning models',
+    'The economics of AI deployment',
+    'Shifts in programming paradigms with LLMs',
+    'AI model efficiency breakthroughs',
+    'Open source AI and democratization',
+    'Synthetic data implications',
+    'AI and human identity',
+    'The future of coding with AI assistance',
+    'Emerging AI architectures',
+    'AI evaluation and benchmarking challenges',
+    'Multimodal AI capabilities',
+    'AI infrastructure and cost dynamics',
+    'Chain of thought and interpretability',
+    'The AI talent landscape',
+    'Enterprise AI adoption patterns'
 ];
+
+// Author voice guidelines based on original writing
+const VOICE_GUIDELINES = `
+Voice and Style Guidelines (CRITICAL - follow exactly):
+- Write in a dense, observational style. Every sentence should carry information.
+- Be direct and analytical. Report on phenomena rather than explain basics.
+- Use technical terminology naturally without over-explaining.
+- Explore deeper implications: societal impact, philosophical undertones, what this means for the future.
+- Short paragraphs. No padding or filler content.
+- Balanced perspective: acknowledge both opportunities and concerns.
+- NO clichés, NO forced analogies, NO rhetorical questions to the reader.
+- NO "What do you think?" or similar calls to action.
+- First-person sparingly and only when sharing direct experience.
+- Focus on what's new, what changed, and why it matters.
+- End with forward-looking implications, not generic conclusions.
+`;
 
 interface ArticleContent {
     title: string;
@@ -46,23 +62,24 @@ export async function generateArticleContent(options: AIMetadata): Promise<Artic
 
     const topic = options.topic || TOPICS[Math.floor(Math.random() * TOPICS.length)];
 
-    const additionalInstructions = options.additionalInstructions ? `\nAdditional Instructions:\n${options.additionalInstructions}` : '';
-    const prompt = `Write a thoughtful, engaging article about "${topic}".${additionalInstructions}
+    const additionalInstructions = options.additionalInstructions ? `\nAdditional Context:\n${options.additionalInstructions}` : '';
+    const prompt = `Write an article about "${topic}".${additionalInstructions}
 
-Requirements:
-- Length: 600-800 words
-- Tone: Casual and conversational, like a personal blog post
-- Structure: Include 2-3 main sections with headers (use ## for markdown headers)
-- Style: Share personal insights and observations
-- Include practical examples or analogies
-- End with a thought-provoking conclusion
+${VOICE_GUIDELINES}
 
-Format the response as a JSON object with:
+Structure:
+- Length: 400-600 words (dense, no filler)
+- Use ## for section headers (2-3 sections max)
+- Introduction: State the core development or shift immediately
+- Body: Analyze implications, provide context on why this matters
+- Conclusion: Forward-looking perspective on where this leads
+
+Format as JSON:
 {
-  "title": "Article title (engaging and clickable)",
-  "content": "Full article content in markdown format with headers",
-  "excerpt": "Brief 2-sentence summary (100-150 chars)",
-  "tags": ["array", "of", "relevant", "tags"]
+  "title": "Direct, informative title (no clickbait, no questions)",
+  "content": "Full article in markdown",
+  "excerpt": "One dense sentence capturing the key insight (under 160 chars)",
+  "tags": ["relevant", "technical", "tags"]
 }`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -76,7 +93,15 @@ Format the response as a JSON object with:
             messages: [
                 {
                     role: 'system',
-                    content: 'You are a thoughtful tech blogger who writes engaging, insightful articles about AI and technology.'
+                    content: `You are writing as Amir H. Jalali, a senior AI consultant and CTO with 14+ years in data engineering and AI strategy. Your writing style is:
+- Dense and analytical, not conversational
+- Technical but accessible to informed readers
+- Focused on implications and what matters, not explanations of basics
+- Direct observations, minimal personal pronouns
+- No fluff, no clichés, no rhetorical questions
+- Every sentence carries information
+
+Think of pieces in The Economist or Stratechery - informed analysis, not blog posts.`
                 },
                 {
                     role: 'user',

@@ -70,37 +70,58 @@ async function processReferences(references: Reference[]): Promise<string> {
     return processedRefs.join('\n\n---\n\n');
 }
 
+// Author voice guidelines based on original writing style
+const VOICE_GUIDELINES = `
+Voice and Style Guidelines (CRITICAL - follow exactly):
+You are writing as Amir H. Jalali, a senior AI consultant and CTO with 14+ years in data engineering and AI strategy.
+
+Style:
+- Dense and analytical, not conversational
+- Technical but accessible to informed readers
+- Focused on implications and what matters, not explanations of basics
+- Direct observations, minimal personal pronouns
+- No fluff, no clichés, no rhetorical questions
+- Every sentence carries information
+- Explore deeper implications: societal impact, philosophical undertones
+- Balanced perspective: acknowledge both opportunities and concerns
+- NO "What do you think?" or similar calls to action
+- End with forward-looking implications, not generic conclusions
+
+Think of pieces in The Economist or Stratechery - informed analysis, not blog posts.
+`;
+
 /**
  * Build the prompt for article generation
  */
 function buildPrompt(topic: string, referenceContext: string, additionalInstructions?: string): string {
-    let prompt = `Write a thoughtful, engaging article about "${topic}".`;
+    let prompt = `Write an article about "${topic}".`;
 
     if (referenceContext) {
-        prompt += `\n\nI'm providing you with reference materials below. Please incorporate insights, data, and perspectives from these references into your article. Cite or reference the source material naturally within your writing.\n\n---\n\n${referenceContext}\n\n---\n\n`;
+        prompt += `\n\nReference materials to incorporate (cite naturally within the writing):\n\n---\n\n${referenceContext}\n\n---\n\n`;
     }
 
     if (additionalInstructions) {
-        prompt += `\nAdditional Instructions:\n${additionalInstructions}`;
+        prompt += `\nAdditional Context:\n${additionalInstructions}`;
     }
 
     prompt += `
 
-Requirements:
-- Length: 600-800 words
-- Tone: Casual and conversational, like a personal blog post
-- Structure: Include 2-3 main sections with headers (use ## for markdown headers)
-- Style: Share personal insights and observations
-- Include practical examples or analogies
-- End with a thought-provoking conclusion
-${referenceContext ? '- Naturally integrate information from the provided references' : ''}
+${VOICE_GUIDELINES}
 
-Format the response as a JSON object with:
+Structure:
+- Length: 400-600 words (dense, no filler)
+- Use ## for section headers (2-3 sections max)
+- Introduction: State the core development or shift immediately
+- Body: Analyze implications, provide context on why this matters
+- Conclusion: Forward-looking perspective on where this leads
+${referenceContext ? '- Integrate reference material as supporting evidence' : ''}
+
+Format as JSON:
 {
-  "title": "Article title (engaging and clickable)",
-  "content": "Full article content in markdown format with headers",
-  "excerpt": "Brief 2-sentence summary (100-150 chars)",
-  "tags": ["array", "of", "relevant", "tags"]
+  "title": "Direct, informative title (no clickbait, no questions)",
+  "content": "Full article in markdown",
+  "excerpt": "One dense sentence capturing the key insight (under 160 chars)",
+  "tags": ["relevant", "technical", "tags"]
 }
 
 IMPORTANT: Return ONLY valid JSON, no additional text or markdown code blocks.`;
