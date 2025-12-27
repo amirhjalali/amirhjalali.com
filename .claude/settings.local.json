@@ -146,7 +146,14 @@
       "Bash(node scripts/note-worker.js:*)",
       "Bash(git diff:*)",
       "WebSearch",
-      "WebFetch(domain:ai.google.dev)"
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(if [ -f .env.local ])",
+      "Bash(then grep -E \"OPENAI_API_KEY|GEMINI_API_KEY\" .env.local)",
+      "Bash(else echo \".env.local file not found\")",
+      "Bash(fi)",
+      "Bash(if [ -f .env ])",
+      "Bash(then grep -E \"OPENAI_API_KEY|GEMINI_API_KEY\" .env)",
+      "Bash(else echo \".env file not found\")"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
