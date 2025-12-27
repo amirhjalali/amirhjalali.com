@@ -74,7 +74,7 @@ export default function ContactForm() {
         `Message:\n${values.message}`
       )
 
-      const mailtoLink = `mailto:hello@amirhjalali.com?subject=${subject}&body=${body}`
+      const mailtoLink = `mailto:amirhjalali@gmail.com?subject=${subject}&body=${body}`
 
       // Open email client
       window.location.href = mailtoLink
@@ -110,15 +110,15 @@ export default function ContactForm() {
         className="absolute inset-0 bg-background/95 backdrop-blur-lg z-50 flex items-center justify-center"
       >
         <div className="text-center">
-          <CheckCircle className="w-16 h-16 text-ai-green mx-auto mb-4" />
+          <CheckCircle className="w-16 h-16 text-[#EAEAEA] mx-auto mb-4" />
           <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
           <p className="text-muted-foreground">I'll get back to you soon.</p>
         </div>
       </motion.div>
 
       <div className="flex items-center gap-2 mb-6">
-        <Sparkles className="w-5 h-5 text-ai-green" />
-        <h2 className="text-2xl font-bold">Send a Message</h2>
+        <Sparkles className="w-5 h-5 text-[#888888]" />
+        <h2 className="text-2xl font-serif font-light">Send a Message</h2>
       </div>
       
       <Form {...form}>
@@ -131,10 +131,10 @@ export default function ContactForm() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="Your name" 
-                      className="bg-white/5 border-white/10 focus:border-ai-green/50 transition-colors"
-                      {...field} 
+                    <Input
+                      placeholder="Your name"
+                      className="bg-white/5 border-white/10 focus:border-white/30 transition-colors"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -149,11 +149,11 @@ export default function ContactForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input 
+                    <Input
                       type="email"
-                      placeholder="your@email.com" 
-                      className="bg-white/5 border-white/10 focus:border-ai-green/50 transition-colors"
-                      {...field} 
+                      placeholder="your@email.com"
+                      className="bg-white/5 border-white/10 focus:border-white/30 transition-colors"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -170,7 +170,7 @@ export default function ContactForm() {
                 <FormLabel>Project Type</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="bg-white/5 border-white/10 focus:border-ai-green/50 transition-colors">
+                    <SelectTrigger className="bg-white/5 border-white/10 focus:border-white/30 transition-colors">
                       <SelectValue placeholder="Select a project type" />
                     </SelectTrigger>
                   </FormControl>
@@ -194,10 +194,10 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>Subject</FormLabel>
                 <FormControl>
-                  <Input 
-                    placeholder="What's this about?" 
-                    className="bg-white/5 border-white/10 focus:border-ai-green/50 transition-colors"
-                    {...field} 
+                  <Input
+                    placeholder="What's this about?"
+                    className="bg-white/5 border-white/10 focus:border-white/30 transition-colors"
+                    {...field}
                   />
                 </FormControl>
                 <FormDescription>
@@ -215,9 +215,9 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>Message</FormLabel>
                 <FormControl>
-                  <Textarea 
+                  <Textarea
                     placeholder="Tell me about your project or question..."
-                    className="bg-white/5 border-white/10 focus:border-ai-green/50 transition-colors resize-none min-h-[150px]"
+                    className="bg-white/5 border-white/10 focus:border-white/30 transition-colors resize-none min-h-[150px]"
                     {...field}
                   />
                 </FormControl>
@@ -234,9 +234,9 @@ export default function ContactForm() {
             disabled={isSubmitting}
             className={cn(
               "w-full relative overflow-hidden",
-              "bg-gradient-to-r from-ai-green to-ai-blue text-black",
-              "hover:from-ai-blue hover:to-ai-green",
-              "transition-all duration-300"
+              "bg-white text-black",
+              "hover:bg-[#EAEAEA]",
+              "transition-all duration-300 font-mono uppercase tracking-widest"
             )}
             size="lg"
           >

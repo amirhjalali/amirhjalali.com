@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import ContactForm from '@/components/ContactForm'
 import Spotlight from '@/components/Spotlight'
-import { Mail, MapPin, Calendar } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
 
 export default function ContactPageClient() {
   return (
@@ -63,11 +63,11 @@ export default function ContactPageClient() {
                 <div>
                   <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888] mb-1">Email</h3>
                   <a
-                    href="mailto:hello@amirhjalali.com"
+                    href="mailto:amirhjalali@gmail.com"
                     className="text-[#EAEAEA] hover:text-white transition-colors"
-                    aria-label="Send email to hello@amirhjalali.com"
+                    aria-label="Send email to amirhjalali@gmail.com"
                   >
-                    hello@amirhjalali.com
+                    amirhjalali@gmail.com
                   </a>
                 </div>
               </div>
@@ -78,19 +78,10 @@ export default function ContactPageClient() {
                 </div>
                 <div>
                   <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888] mb-1">Location</h3>
-                  <p className="text-[#EAEAEA]">Toronto, Canada</p>
+                  <p className="text-[#EAEAEA]">Brooklyn, NY</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-5 h-5 text-[#888888]" aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888] mb-1">Availability</h3>
-                  <p className="text-[#EAEAEA]">Open to opportunities</p>
-                </div>
-              </div>
             </div>
 
             {/* Social Links */}

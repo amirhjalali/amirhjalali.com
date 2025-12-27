@@ -127,18 +127,11 @@ export default function ProjectsPage() {
               Whether you're looking for technical expertise, strategic guidance, or investment opportunities,
               let's collaborate to create the future.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-[#EAEAEA] text-[#050505] hover:bg-white transition-colors font-mono uppercase tracking-widest">
-                <Link href="/contact">
-                  Get in Touch
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/10 text-[#EAEAEA] hover:bg-white/5 font-mono uppercase tracking-widest">
-                <Link href="/contact">
-                  View Resume
-                </Link>
-              </Button>
-            </div>
+            <Button asChild size="lg" className="bg-[#EAEAEA] text-[#050505] hover:bg-white transition-colors font-mono uppercase tracking-widest">
+              <Link href="/contact">
+                Get in Touch
+              </Link>
+            </Button>
           </div>
         </motion.div>
       </div>
