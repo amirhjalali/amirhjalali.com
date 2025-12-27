@@ -35,8 +35,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       whileHover={{ y: -4 }}
       className="group relative h-full"
     >
-      <Link href={project.link} target="_blank" className="block h-full">
-        <div className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/5 transition-all duration-500 h-full flex flex-col backdrop-blur-md">
+      <Link
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`View project: ${project.title}`}
+        className="block h-full"
+      >
+        <article className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/5 transition-all duration-500 h-full flex flex-col backdrop-blur-md">
 
           <div className="relative h-48 overflow-hidden border-b border-white/5">
             <LazyImage
@@ -76,12 +82,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
             <div className="flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-[#888888]">
               <span>View Project</span>
-              <span className="text-[#EAEAEA] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-[#EAEAEA] opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
                 →
               </span>
             </div>
           </div>
-        </div>
+        </article>
       </Link>
     </motion.div>
   )

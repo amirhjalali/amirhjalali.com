@@ -1,9 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { prisma } from '@/lib/db';
 import { getSession } from '@/app/actions/auth';
 import { generateArticleContent, generateImage, downloadImageAsBase64 } from '@/lib/ai-service';
 import { AIMetadata } from '@/lib/types';
+import { Draft as PrismaDraft } from '@prisma/client';
 import { createSSEStream } from '@/lib/sse-helper';
+
+// Zod schema for request validation
+const GenerateArticleSchema = z.object({
+  textModel: z.string().optional(),
+  imageModel: z.string().optional(),
+  imageResolution: z.enum(['1K', '2K', '4K']).optional(),
+  imageStyle: z.string().optional(),
+  imagePrompt: z.string().optional(),
+  topic: z.string().optional(),
+  additionalInstructions: z.string().optional(),
+  references: z.array(z.object({
+    type: z.enum(['url', 'text']),
+    content: z.string(),
+    title: z.string().optional(),
+  })).optional(),
+}).passthrough();
+
+// Type for generated article data
+interface GeneratedArticleData {
+  title: string;
+  content: string;
+  excerpt: string;
+  tags?: string[];
+}
 
 export async function POST(request: NextRequest) {
   const session = await getSession()
@@ -15,7 +41,17 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const options: AIMetadata = await request.json().catch(() => ({}));
+    const rawBody = await request.json().catch(() => ({}));
+    const parseResult = GenerateArticleSchema.safeParse(rawBody);
+
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { error: 'Invalid request body', details: parseResult.error.flatten() },
+        { status: 400 }
+      );
+    }
+
+    const options: AIMetadata = parseResult.data;
     const url = new URL(request.url);
     const useStreaming = url.searchParams.get('stream') === 'true';
 
@@ -47,7 +83,7 @@ export async function POST(request: NextRequest) {
           tags: articleData.tags || ['AI', 'Technology'],
           imageUrl: imageBase64,
           aiGenerated: true,
-          metadata: options as any // Store the generation options
+          metadata: options // Store the generation options (typed as AIMetadata)
         }
       });
 
@@ -62,10 +98,10 @@ export async function POST(request: NextRequest) {
 
     // Streaming mode with progress tracking
     const stream = createSSEStream(async (sseStream, controller) => {
-      let articleData: any;
+      let articleData: GeneratedArticleData;
       let imageUrl: string;
       let imageBase64: string;
-      let draft: any;
+      let draft: PrismaDraft;
 
       try {
         // Step 1: Initializing (0%)
@@ -139,7 +175,7 @@ export async function POST(request: NextRequest) {
             tags: articleData.tags || ['AI', 'Technology'],
             imageUrl: imageBase64,
             aiGenerated: true,
-            metadata: options as any
+            metadata: options
           }
         });
 
@@ -166,9 +202,10 @@ export async function POST(request: NextRequest) {
 
         sseStream.sendComplete(controller);
 
-      } catch (error: any) {
+      } catch (error) {
         console.error('Article generation error:', error);
-        sseStream.sendError(controller, error.message || 'Failed to generate article');
+        const message = error instanceof Error ? error.message : 'Failed to generate article';
+        sseStream.sendError(controller, message);
       }
     });
 
@@ -180,10 +217,11 @@ export async function POST(request: NextRequest) {
       },
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Article generation error:', error);
+    const message = error instanceof Error ? error.message : 'Failed to generate article';
     return NextResponse.json(
-      { error: error.message || 'Failed to generate article' },
+      { error: 'Article generation failed', details: process.env.NODE_ENV === 'development' ? message : undefined },
       { status: 500 }
     );
   }

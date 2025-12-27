@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/db'
-import { Article as PrismaArticle } from '@prisma/client'
-import { Article } from '@/lib/types'
+import { Article as PrismaArticle, Draft as PrismaDraft } from '@prisma/client'
+import { Article, AIMetadata } from '@/lib/types'
 
 // Helper to transform Prisma Article to App Article
 function transformArticle(pArticle: PrismaArticle): Article {
@@ -17,7 +17,7 @@ function transformArticle(pArticle: PrismaArticle): Article {
         publishedAt: pArticle.publishedAt ? pArticle.publishedAt.toISOString() : new Date().toISOString(),
         readTime: pArticle.readTime,
         status: pArticle.published ? 'published' : 'draft',
-        metadata: pArticle.metadata as any || {},
+        metadata: (pArticle.metadata as AIMetadata) || {},
     }
 }
 
@@ -72,7 +72,7 @@ export async function getAllArticleIds(): Promise<{ id: string }[]> {
 }
 
 // Helper to transform Prisma Draft to App Article
-function transformDraft(draft: any): Article {
+function transformDraft(draft: PrismaDraft): Article {
     return {
         id: draft.id,
         title: draft.title,
@@ -86,7 +86,7 @@ function transformDraft(draft: any): Article {
         publishedAt: draft.updatedAt.toISOString(), // Use updated time for preview
         readTime: draft.readTime || '1 min read',
         status: 'draft',
-        metadata: draft.metadata as any || {},
+        metadata: (draft.metadata as AIMetadata) || {},
     }
 }
 

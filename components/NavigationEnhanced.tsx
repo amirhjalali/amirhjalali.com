@@ -37,6 +37,8 @@ export default function NavigationEnhanced() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.3 }}
+      role="navigation"
+      aria-label="Main navigation"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
         ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/5'
         : 'bg-[#050505]/40 backdrop-blur-sm'
@@ -60,6 +62,7 @@ export default function NavigationEnhanced() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`text-xs font-mono uppercase tracking-widest transition-colors ${isActive
                       ? 'text-white'
                       : 'text-[#888888] hover:text-[#EAEAEA]'
@@ -79,7 +82,9 @@ export default function NavigationEnhanced() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="relative w-10 h-10 flex items-center justify-center text-[#EAEAEA] hover:text-white transition-colors"
-              aria-label="Toggle menu"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
             >
               <motion.div
                 animate={mobileOpen ? 'open' : 'closed'}
@@ -114,11 +119,15 @@ export default function NavigationEnhanced() {
           <AnimatePresence>
             {mobileOpen && (
               <motion.div
+                id="mobile-menu"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 className="fixed inset-0 z-40 lg:hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile navigation menu"
               >
                 {/* Backdrop */}
                 <motion.div
@@ -159,6 +168,7 @@ export default function NavigationEnhanced() {
                           <Link
                             href={item.href}
                             onClick={() => setMobileOpen(false)}
+                            aria-current={isActive ? 'page' : undefined}
                             className={`block text-4xl sm:text-5xl font-serif font-light tracking-tight transition-all duration-300 ${
                               isActive
                                 ? 'text-white'
