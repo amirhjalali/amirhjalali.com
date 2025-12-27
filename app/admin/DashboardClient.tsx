@@ -477,23 +477,23 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={_handleBulkPublish}
-                      className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg transition-all text-sm font-medium flex items-center gap-2"
+                      className="px-4 py-2 bg-white text-black hover:bg-[#EAEAEA] rounded-lg transition-all font-mono text-xs uppercase tracking-widest font-medium flex items-center gap-2"
                     >
-                      <Upload className="w-4 h-4" />
-                      Publish Selected
+                      <Upload className="w-3 h-3" />
+                      Publish
                     </button>
                     <button
                       onClick={_handleBulkDelete}
-                      className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg transition-all text-sm font-medium text-red-400 flex items-center gap-2"
+                      className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all font-mono text-xs uppercase tracking-widest text-[#888888] hover:text-white flex items-center gap-2"
                     >
-                      <Trash2 className="w-4 h-4" />
-                      Delete Selected
+                      <Trash2 className="w-3 h-3" />
+                      Delete
                     </button>
                     <button
                       onClick={() => setSelectedIds(new Set())}
-                      className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all text-sm font-medium"
+                      className="px-4 py-2 bg-transparent hover:bg-white/5 border border-white/10 rounded-lg transition-all font-mono text-xs uppercase tracking-widest text-[#888888] hover:text-white"
                     >
-                      Clear Selection
+                      Clear
                     </button>
                   </div>
                 </motion.div>
