@@ -115,90 +115,85 @@ export default function NavigationEnhanced() {
             </button>
           </div>
 
-          {/* Full-screen Mobile Menu Overlay */}
-          <AnimatePresence>
-            {mobileOpen && (
-              <motion.div
-                id="mobile-menu"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="fixed inset-0 z-40 lg:hidden"
-                role="dialog"
-                aria-modal="true"
-                aria-label="Mobile navigation menu"
-              >
-                {/* Backdrop */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-[#050505]/98 backdrop-blur-md"
-                  onClick={() => setMobileOpen(false)}
-                />
-
-                {/* Menu Content */}
-                <div className="relative h-full flex flex-col items-center justify-center px-6">
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setMobileOpen(false)}
-                    className="absolute top-6 right-6 p-2 text-[#888888] hover:text-white transition-colors"
-                    aria-label="Close menu"
-                  >
-                    <X className="w-6 h-6" />
-                  </button>
-
-                  {/* Navigation Links - Centered */}
-                  <nav className="flex flex-col items-center gap-8">
-                    {navItems.map((item, index) => {
-                      const isActive = pathname === item.href
-                      return (
-                        <motion.div
-                          key={item.href}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -20 }}
-                          transition={{
-                            delay: index * 0.1,
-                            duration: 0.4,
-                            ease: [0.22, 1, 0.36, 1]
-                          }}
-                        >
-                          <Link
-                            href={item.href}
-                            onClick={() => setMobileOpen(false)}
-                            aria-current={isActive ? 'page' : undefined}
-                            className={`block text-4xl sm:text-5xl font-serif font-light tracking-tight transition-all duration-300 ${
-                              isActive
-                                ? 'text-white'
-                                : 'text-[#888888] hover:text-white'
-                            }`}
-                          >
-                            {item.label}
-                          </Link>
-                        </motion.div>
-                      )
-                    })}
-                  </nav>
-
-                  {/* Subtle footer */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="absolute bottom-8"
-                  >
-                    <p className="text-xs font-mono text-[#444444] tracking-[0.3em]">
-                      AHJ
-                    </p>
-                  </motion.div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
+
+      {/* Full-screen Mobile Menu Overlay - Outside nav content for proper z-index */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+          >
+            {/* Solid Background - fully opaque */}
+            <div className="absolute inset-0 bg-[#050505]" />
+
+            {/* Menu Content */}
+            <div className="relative h-full flex flex-col items-center justify-center px-6">
+              {/* Close Button */}
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="absolute top-6 right-6 p-3 text-[#888888] hover:text-white transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-8 h-8" />
+              </button>
+
+              {/* Navigation Links - Centered */}
+              <nav className="flex flex-col items-center gap-12">
+                {navItems.map((item, index) => {
+                  const isActive = pathname === item.href
+                  return (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{
+                        delay: index * 0.1,
+                        duration: 0.4,
+                        ease: [0.22, 1, 0.36, 1]
+                      }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={`block text-4xl font-serif font-light tracking-tight transition-all duration-300 ${
+                          isActive
+                            ? 'text-white'
+                            : 'text-[#666666] hover:text-white'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  )
+                })}
+              </nav>
+
+              {/* Subtle footer */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="absolute bottom-12"
+              >
+                <p className="text-xs font-mono text-[#333333] tracking-[0.3em]">
+                  AHJ
+                </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }
