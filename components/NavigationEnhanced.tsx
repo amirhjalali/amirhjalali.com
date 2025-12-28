@@ -122,80 +122,62 @@ export default function NavigationEnhanced() {
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* Backdrop */}
+            {/* Backdrop - transparent to keep left side visible */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/60 z-[100] lg:hidden"
+              className="fixed inset-0 bg-black/40 z-[100] lg:hidden"
               onClick={() => setMobileOpen(false)}
             />
 
-            {/* Slide-in Panel */}
+            {/* Compact Slide-in Panel */}
             <motion.div
               id="mobile-menu"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 right-0 bottom-0 w-64 bg-[#050505] border-l border-white/10 z-[101] lg:hidden"
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed top-0 right-0 h-20 bg-[#050505] border-l border-white/10 z-[101] lg:hidden flex items-center"
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation menu"
             >
-              {/* Header with close button */}
-              <div className="flex items-center justify-between px-6 h-20 border-b border-white/5">
-                <span className="text-sm font-serif text-[#EAEAEA]">Menu</span>
-                <button
-                  onClick={() => setMobileOpen(false)}
-                  className="p-2 text-[#888888] hover:text-white transition-colors"
-                  aria-label="Close menu"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Navigation Links */}
-              <nav className="px-6 py-8">
-                <ul className="space-y-6">
-                  {navItems.map((item, index) => {
-                    const isActive = pathname === item.href
-                    return (
-                      <motion.li
-                        key={item.href}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          delay: index * 0.05,
-                          duration: 0.3,
-                          ease: [0.22, 1, 0.36, 1]
-                        }}
+              {/* Navigation Links - right aligned, horizontal */}
+              <nav className="flex items-center gap-6 px-4">
+                {navItems
+                  .filter(item => !pathname.startsWith(item.href))
+                  .map((item, index) => (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: index * 0.05,
+                        duration: 0.2,
+                        ease: [0.22, 1, 0.36, 1]
+                      }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="text-sm font-mono uppercase tracking-wider text-[#888888] hover:text-white transition-colors"
                       >
-                        <Link
-                          href={item.href}
-                          onClick={() => setMobileOpen(false)}
-                          aria-current={isActive ? 'page' : undefined}
-                          className={`block text-lg font-serif font-light transition-colors ${
-                            isActive
-                              ? 'text-white'
-                              : 'text-[#888888] hover:text-white'
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
-                      </motion.li>
-                    )
-                  })}
-                </ul>
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  ))}
               </nav>
 
-              {/* Footer */}
-              <div className="absolute bottom-8 left-6 right-6">
-                <p className="text-xs font-mono text-[#333333] tracking-widest">
-                  Amir H. Jalali
-                </p>
-              </div>
+              {/* Close button */}
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-4 text-[#888888] hover:text-white transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </motion.div>
           </>
         )}
