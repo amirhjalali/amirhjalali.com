@@ -115,8 +115,8 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     return [...publishedArticles]
       .filter(a => a.published) // Only show published articles
       .sort((a, b) => {
-        const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : new Date(a.createdAt).getTime()
-        const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : new Date(b.createdAt).getTime()
+        const dateA = new Date(a.publishedAt || a.createdAt || Date.now()).getTime()
+        const dateB = new Date(b.publishedAt || b.createdAt || Date.now()).getTime()
         return dateB - dateA
       })
   }, [publishedArticles])
