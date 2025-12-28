@@ -110,11 +110,15 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     return filtered
   }, [drafts, searchQuery, _sortBy])
 
-  // Sorted published articles (by date, most recent first)
+  // Sorted published articles (by date, most recent first) - only show actually published ones
   const sortedPublishedArticles = useMemo(() => {
-    return [...publishedArticles].sort((a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    )
+    return [...publishedArticles]
+      .filter(a => a.published) // Only show published articles
+      .sort((a, b) => {
+        const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : new Date(a.createdAt).getTime()
+        const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : new Date(b.createdAt).getTime()
+        return dateB - dateA
+      })
   }, [publishedArticles])
 
   const handleGenerateArticle = async (settings: AIMetadata) => {
@@ -406,7 +410,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
               <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888]">Published</h3>
               <CheckCircle className="w-4 h-4 text-[#888888]" />
             </div>
-            <p className="text-4xl font-serif font-light">{publishedArticles.length}</p>
+            <p className="text-4xl font-serif font-light">{sortedPublishedArticles.length}</p>
           </motion.div>
         </div>
 
@@ -647,7 +651,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                 </p>
                 <div className="flex items-center justify-between mt-auto">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#888888]">
-                    {new Date(article.publishedAt).toLocaleDateString()}
+                    {new Date(article.publishedAt || article.createdAt).toLocaleDateString()}
                   </span>
                   <div className="flex gap-2">
                     <button
