@@ -139,7 +139,7 @@ export default function NavigationEnhanced() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 right-0 h-20 bg-[#050505] border-l border-white/10 z-[101] lg:hidden flex items-center"
+              className="fixed top-0 right-0 h-20 bg-[#050505] z-[101] lg:hidden flex items-center"
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation menu"
