@@ -55,12 +55,46 @@ export async function POST(
       })
     }
 
-    // Update article status
+    // UNPUBLISH: Move article back to drafts
+    if (!shouldPublish) {
+      // Create a draft from the article
+      const draft = await prisma.draft.create({
+        data: {
+          title: article.title,
+          content: article.content,
+          excerpt: article.excerpt,
+          tags: article.tags,
+          imageUrl: article.imageUrl,
+          readTime: article.readTime,
+          author: article.author,
+          aiGenerated: article.aiGenerated,
+        }
+      })
+
+      // Delete the article
+      await prisma.article.delete({
+        where: { id }
+      })
+
+      revalidatePath('/thoughts')
+      revalidatePath(`/thoughts/${id}`)
+      if (article.slug) {
+        revalidatePath(`/thoughts/${article.slug}`)
+      }
+
+      return NextResponse.json({
+        success: true,
+        draft,
+        message: 'Article moved back to drafts',
+      })
+    }
+
+    // PUBLISH: Update article status
     const updated = await prisma.article.update({
       where: { id },
       data: {
-        published: shouldPublish,
-        publishedAt: shouldPublish ? (article.publishedAt || new Date()) : null,
+        published: true,
+        publishedAt: article.publishedAt || new Date(),
       }
     })
 
@@ -73,7 +107,7 @@ export async function POST(
     return NextResponse.json({
       success: true,
       article: updated,
-      message: shouldPublish ? 'Article published' : 'Article unpublished',
+      message: 'Article published',
     })
   } catch (error: any) {
     console.error('POST /api/articles/[id]/publish error:', error)

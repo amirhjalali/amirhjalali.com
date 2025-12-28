@@ -316,11 +316,12 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   }
 
   const handleUnpublish = async (articleId: string) => {
-    if (!confirm('Unpublish this article?')) return
+    if (!confirm('Move this article back to drafts?')) return
 
     try {
       await apiClient.publishArticle(articleId, false)
       await loadData()
+      setShowPublished(false) // Switch to drafts tab to show the moved article
     } catch (error) {
       console.error('Error unpublishing article:', error)
       alert('Failed to unpublish article. Please try again.')
