@@ -652,7 +652,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                 </p>
                 <div className="flex items-center justify-between mt-auto">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#888888]">
-                    {new Date(article.publishedAt || article.createdAt).toLocaleDateString()}
+                    {new Date(article.publishedAt || article.createdAt || Date.now()).toLocaleDateString()}
                   </span>
                   <div className="flex gap-2">
                     <button
