@@ -118,80 +118,86 @@ export default function NavigationEnhanced() {
         </div>
       </div>
 
-      {/* Full-screen Mobile Menu Overlay - Outside nav content for proper z-index */}
+      {/* Right-side Mobile Menu Panel */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] lg:hidden"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation menu"
-          >
-            {/* Solid Background - fully opaque */}
-            <div className="absolute inset-0 bg-[#050505]" />
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/60 z-[100] lg:hidden"
+              onClick={() => setMobileOpen(false)}
+            />
 
-            {/* Menu Content */}
-            <div className="relative h-full flex flex-col items-center justify-center px-6">
-              {/* Close Button */}
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="absolute top-6 right-6 p-3 text-[#888888] hover:text-white transition-colors"
-                aria-label="Close menu"
-              >
-                <X className="w-8 h-8" />
-              </button>
+            {/* Slide-in Panel */}
+            <motion.div
+              id="mobile-menu"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed top-0 right-0 bottom-0 w-64 bg-[#050505] border-l border-white/10 z-[101] lg:hidden"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation menu"
+            >
+              {/* Header with close button */}
+              <div className="flex items-center justify-between px-6 h-20 border-b border-white/5">
+                <span className="text-sm font-serif text-[#EAEAEA]">Menu</span>
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  className="p-2 text-[#888888] hover:text-white transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
-              {/* Navigation Links - Centered */}
-              <nav className="flex flex-col items-center gap-12">
-                {navItems.map((item, index) => {
-                  const isActive = pathname === item.href
-                  return (
-                    <motion.div
-                      key={item.href}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{
-                        delay: index * 0.1,
-                        duration: 0.4,
-                        ease: [0.22, 1, 0.36, 1]
-                      }}
-                    >
-                      <Link
-                        href={item.href}
-                        onClick={() => setMobileOpen(false)}
-                        aria-current={isActive ? 'page' : undefined}
-                        className={`block text-4xl font-serif font-light tracking-tight transition-all duration-300 ${
-                          isActive
-                            ? 'text-white'
-                            : 'text-[#666666] hover:text-white'
-                        }`}
+              {/* Navigation Links */}
+              <nav className="px-6 py-8">
+                <ul className="space-y-6">
+                  {navItems.map((item, index) => {
+                    const isActive = pathname === item.href
+                    return (
+                      <motion.li
+                        key={item.href}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                          delay: index * 0.05,
+                          duration: 0.3,
+                          ease: [0.22, 1, 0.36, 1]
+                        }}
                       >
-                        {item.label}
-                      </Link>
-                    </motion.div>
-                  )
-                })}
+                        <Link
+                          href={item.href}
+                          onClick={() => setMobileOpen(false)}
+                          aria-current={isActive ? 'page' : undefined}
+                          className={`block text-lg font-serif font-light transition-colors ${
+                            isActive
+                              ? 'text-white'
+                              : 'text-[#888888] hover:text-white'
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                      </motion.li>
+                    )
+                  })}
+                </ul>
               </nav>
 
-              {/* Subtle footer */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="absolute bottom-12"
-              >
-                <p className="text-xs font-mono text-[#333333] tracking-[0.3em]">
-                  AHJ
+              {/* Footer */}
+              <div className="absolute bottom-8 left-6 right-6">
+                <p className="text-xs font-mono text-[#333333] tracking-widest">
+                  Amir H. Jalali
                 </p>
-              </motion.div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
