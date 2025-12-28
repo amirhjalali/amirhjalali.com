@@ -35,8 +35,8 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
-  projectType: z.string({
-    required_error: "Please select a project type.",
+  projectType: z.string().min(1, {
+    message: "Please select a project type.",
   }),
   subject: z.string().min(5, {
     message: "Subject must be at least 5 characters.",
@@ -168,7 +168,7 @@ export default function ContactForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Project Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger className="bg-white/5 border-white/10 focus:border-white/30 transition-colors">
                       <SelectValue placeholder="Select a project type" />
