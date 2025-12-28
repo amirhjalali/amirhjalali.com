@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -24,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Loader2, Send, Sparkles, CheckCircle } from 'lucide-react'
+import { Send, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { trackContactFormSubmit } from '@/lib/analytics'
 
@@ -47,9 +46,6 @@ const formSchema = z.object({
 })
 
 export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,60 +58,26 @@ export default function ContactForm() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true)
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`${values.projectType}: ${values.subject}`)
+    const body = encodeURIComponent(
+      `Name: ${values.name}\n` +
+      `Email: ${values.email}\n` +
+      `Project Type: ${values.projectType}\n\n` +
+      `Message:\n${values.message}`
+    )
 
-    try {
-      // Create mailto link with form data
-      const subject = encodeURIComponent(`${values.projectType}: ${values.subject}`)
-      const body = encodeURIComponent(
-        `Name: ${values.name}\n` +
-        `Email: ${values.email}\n` +
-        `Project Type: ${values.projectType}\n\n` +
-        `Message:\n${values.message}`
-      )
+    const mailtoLink = `mailto:amirhjalali@gmail.com?subject=${subject}&body=${body}`
 
-      const mailtoLink = `mailto:amirhjalali@gmail.com?subject=${subject}&body=${body}`
+    // Track form submission
+    trackContactFormSubmit(values)
 
-      // Open email client
-      window.location.href = mailtoLink
-
-      // Track successful form submission
-      trackContactFormSubmit(values)
-
-      setIsSubmitting(false)
-      setIsSuccess(true)
-
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        form.reset()
-        setIsSuccess(false)
-      }, 3000)
-    } catch {
-      // Form submission error
-      setIsSubmitting(false)
-    }
+    // Open email client in new window
+    window.open(mailtoLink, '_blank')
   }
 
   return (
     <div className="glass p-8 rounded-2xl border border-white/10 relative overflow-hidden">
-      {/* Success overlay */}
-      <motion.div
-        initial={false}
-        animate={{
-          opacity: isSuccess ? 1 : 0,
-          scale: isSuccess ? 1 : 0.8,
-          pointerEvents: isSuccess ? 'all' : 'none'
-        }}
-        transition={{ duration: 0.3 }}
-        className="absolute inset-0 bg-background/95 backdrop-blur-lg z-50 flex items-center justify-center"
-      >
-        <div className="text-center">
-          <CheckCircle className="w-16 h-16 text-[#EAEAEA] mx-auto mb-4" />
-          <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-          <p className="text-muted-foreground">I'll get back to you soon.</p>
-        </div>
-      </motion.div>
-
       <div className="flex items-center gap-2 mb-6">
         <Sparkles className="w-5 h-5 text-[#888888]" />
         <h2 className="text-2xl font-serif font-light">Send a Message</h2>
@@ -231,7 +193,6 @@ export default function ContactForm() {
           
           <Button
             type="submit"
-            disabled={isSubmitting}
             className={cn(
               "w-full relative overflow-hidden",
               "bg-white text-black",
@@ -240,18 +201,9 @@ export default function ContactForm() {
             )}
             size="lg"
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Send Message
-              </>
-            )}
-            
+            <Send className="mr-2 h-4 w-4" />
+            Send Message
+
             {/* Animated gradient overlay on hover */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
