@@ -66,7 +66,6 @@ export async function POST(
           tags: article.tags,
           imageUrl: article.imageUrl,
           readTime: article.readTime,
-          author: article.author,
           aiGenerated: article.aiGenerated,
         }
       })
