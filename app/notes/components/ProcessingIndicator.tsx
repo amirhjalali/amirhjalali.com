@@ -8,9 +8,10 @@ import { apiClient } from '@/lib/api-client'
 interface ProcessingIndicatorProps {
   status: ProcessStatus
   jobId?: string | null
-  onRetry?: () => void
+  onRetry?: (e: React.MouseEvent) => void
   onStatusChange?: (status: ProcessStatus) => void
   autoRefresh?: boolean
+  compact?: boolean
 }
 
 export default function ProcessingIndicator({
@@ -19,6 +20,7 @@ export default function ProcessingIndicator({
   onRetry,
   onStatusChange,
   autoRefresh = true,
+  compact = false,
 }: ProcessingIndicatorProps) {
   const [currentStatus, setCurrentStatus] = useState<ProcessStatus>(status)
   const [progress, setProgress] = useState(0)
@@ -94,6 +96,13 @@ export default function ProcessingIndicator({
           className: 'text-[#EAEAEA] bg-white/5 border-white/20',
           iconClassName: 'text-[#EAEAEA] animate-spin',
         }
+      case 'INDEXED':
+        return {
+          icon: CheckCircle2,
+          label: 'Indexed',
+          className: 'text-[#EAEAEA] bg-white/10 border-white/20',
+          iconClassName: 'text-[#EAEAEA]',
+        }
       case 'COMPLETED':
         return {
           icon: CheckCircle2,
@@ -121,6 +130,29 @@ export default function ProcessingIndicator({
   const config = getStatusConfig()
   const Icon = config.icon
 
+  // Compact mode - just show icon
+  if (compact) {
+    // Don't show anything for completed status in compact mode
+    if (currentStatus === 'COMPLETED' || currentStatus === 'INDEXED') {
+      return null
+    }
+
+    return (
+      <div className="inline-flex items-center gap-1">
+        <Icon className={`w-3.5 h-3.5 ${config.iconClassName}`} />
+        {currentStatus === 'FAILED' && onRetry && (
+          <button
+            onClick={onRetry}
+            className="p-0.5 hover:bg-white/10 rounded transition-colors"
+            title={error || 'Retry processing'}
+          >
+            <RefreshCw className="w-3 h-3 text-[#888888]" />
+          </button>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="inline-flex items-center gap-2">
       <div className={`px-3 py-1 rounded-lg text-xs font-mono border ${config.className} flex items-center gap-2`}>
@@ -135,7 +167,7 @@ export default function ProcessingIndicator({
         <button
           onClick={(e) => {
             e.stopPropagation()
-            onRetry()
+            onRetry(e)
           }}
           className="p-1.5 hover:bg-white/10 rounded-lg transition-colors group"
           title={error || 'Retry processing'}

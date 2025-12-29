@@ -50,8 +50,8 @@ export interface Draft {
 }
 
 // Notes Feature Types
-export type NoteType = 'LINK' | 'TEXT' | 'IMAGE' | 'VIDEO'
-export type ProcessStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
+export type NoteType = 'LINK' | 'TEXT' | 'IMAGE' | 'VIDEO' | 'PDF' | 'DOCUMENT'
+export type ProcessStatus = 'PENDING' | 'PROCESSING' | 'INDEXED' | 'COMPLETED' | 'FAILED'
 
 export interface NoteMetadata {
     domain?: string
@@ -59,8 +59,23 @@ export interface NoteMetadata {
     description?: string
     image?: string
     favicon?: string
+    siteName?: string
+    author?: string
+    publishedTime?: string
+    wordCount?: number
+    video?: VideoInfo
     error?: string
     [key: string]: any
+}
+
+export interface VideoInfo {
+    platform: 'youtube' | 'vimeo' | 'twitter' | 'unknown'
+    videoId: string | null
+    embedUrl: string | null
+    thumbnailUrl: string | null
+    title: string | null
+    description: string | null
+    duration: string | null
 }
 
 export interface Note {
@@ -68,19 +83,77 @@ export interface Note {
     type: NoteType
     content: string
     title?: string | null
+
+    // Source info
+    sourceUrl?: string | null
+    sourceType?: string | null
+    domain?: string | null
+    favicon?: string | null
+
+    // Rich content
     imageUrl?: string | null
     videoUrl?: string | null
     excerpt?: string | null
+
+    // Full extracted content
+    fullContent?: string | null
+    contentHash?: string | null
+    wordCount?: number | null
+
+    // Metadata
     metadata?: NoteMetadata | null
+
+    // Organization
     tags: string[]
     topics: string[]
+    notebookId?: string | null
+
+    // Pinned/favorites
+    pinned?: boolean
+    starred?: boolean
+
+    // Processing
     processStatus: ProcessStatus
     processedAt?: string | null
+    processingError?: string | null
+
+    // AI Analysis
     summary?: string | null
     keyInsights: string[]
     sentiment?: string | null
+
+    // Reading estimate
+    readingTime?: number | null
+
     createdAt: string
     updatedAt: string
+}
+
+export interface Notebook {
+    id: string
+    title: string
+    description?: string | null
+    color?: string | null
+    icon?: string | null
+    noteCount: number
+    createdAt: string
+    updatedAt: string
+}
+
+export interface NoteChat {
+    id: string
+    title?: string | null
+    notebookId?: string | null
+    messages: ChatMessage[]
+    messageCount: number
+    status: 'active' | 'archived'
+    createdAt: string
+    updatedAt: string
+}
+
+export interface ChatMessage {
+    role: 'user' | 'assistant' | 'system'
+    content: string
 }
 
 export interface NoteArticleRef {
@@ -88,6 +161,16 @@ export interface NoteArticleRef {
     noteId: string
     articleId: string
     createdAt: string
+}
+
+export interface SearchResult {
+    noteId: string
+    chunkId: string
+    content: string
+    score: number
+    noteTitle: string | null
+    noteType: string
+    note?: Note
 }
 
 // Generation Progress Types
