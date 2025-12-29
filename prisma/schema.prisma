@@ -66,13 +66,38 @@ enum NoteType {
   TEXT
   IMAGE
   VIDEO
+  PDF
+  DOCUMENT
 }
 
 enum ProcessStatus {
   PENDING
   PROCESSING
+  INDEXED     // Content has been chunked and embedded
   COMPLETED
   FAILED
+}
+
+// Notebook for organizing notes into collections
+model Notebook {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  color       String?  // Hex color for UI
+  icon        String?  // Emoji or icon name
+
+  // Stats
+  noteCount   Int      @default(0)
+
+  // Relationships
+  notes       Note[]
+  chats       NoteChat[]
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([updatedAt])
 }
 
 model Note {
@@ -83,10 +108,21 @@ model Note {
   content       String        // URL for links/media, text for notes
   title         String?
 
+  // Source info
+  sourceUrl     String?       // Original URL for links
+  sourceType    String?       // website, youtube, pdf, etc.
+  domain        String?       // Extracted domain for links
+  favicon       String?       // Website favicon
+
   // Rich content
   imageUrl      String?       // Thumbnail or base64 image
   videoUrl      String?
   excerpt       String?       // AI-generated summary
+
+  // Full extracted content (for RAG)
+  fullContent   String?       // Full extracted text content
+  contentHash   String?       // Hash to detect duplicates
+  wordCount     Int?
 
   // Metadata
   metadata      Json?         // URL metadata, video info, etc.
@@ -94,18 +130,29 @@ model Note {
   // Organization
   tags          String[]
   topics        String[]      // AI-extracted topics
+  notebookId    String?
+  notebook      Notebook?     @relation(fields: [notebookId], references: [id], onDelete: SetNull)
+
+  // Pinned/favorites
+  pinned        Boolean       @default(false)
+  starred       Boolean       @default(false)
 
   // Processing
   processStatus ProcessStatus @default(PENDING)
   processedAt   DateTime?
+  processingError String?     // Error message if failed
 
   // AI Analysis
   summary       String?       // AI-generated summary
   keyInsights   String[]      // AI-extracted points
   sentiment     String?       // Positive/Neutral/Negative
 
+  // Reading estimate
+  readingTime   Int?          // Estimated reading time in minutes
+
   // Relationships
   articleRefs   NoteArticleRef[]
+  chunks        NoteChunk[]
 
   // Timestamps
   createdAt     DateTime      @default(now())
@@ -114,6 +161,61 @@ model Note {
   @@index([processStatus, createdAt])
   @@index([type, createdAt])
   @@index([createdAt])
+  @@index([notebookId])
+  @@index([pinned, createdAt])
+  @@index([starred, createdAt])
+  @@index([contentHash])
+}
+
+// Chunks for RAG - breaking content into searchable pieces
+model NoteChunk {
+  id          String   @id @default(cuid())
+  noteId      String
+  note        Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  // Chunk content
+  content     String
+  chunkIndex  Int      // Order within the note
+  startOffset Int?     // Character offset in original content
+  endOffset   Int?
+
+  // Metadata
+  tokenCount  Int?
+  metadata    Json?
+
+  // Embedding
+  embedding   Float[]  // Vector embedding for semantic search
+  embeddingModel String? // Model used for embedding
+
+  createdAt   DateTime @default(now())
+
+  @@index([noteId, chunkIndex])
+}
+
+// Chat sessions for Q&A over notes
+model NoteChat {
+  id          String   @id @default(cuid())
+
+  // Organization
+  title       String?
+  notebookId  String?
+  notebook    Notebook? @relation(fields: [notebookId], references: [id], onDelete: SetNull)
+
+  // Chat history stored as JSON array
+  messages    Json     @default("[]")
+
+  // Stats
+  messageCount Int     @default(0)
+
+  // Status
+  status      String   @default("active") // active, archived
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([notebookId, updatedAt])
+  @@index([updatedAt])
 }
 
 model NoteArticleRef {
