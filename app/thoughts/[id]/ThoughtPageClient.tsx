@@ -9,7 +9,7 @@ import { Article } from '@/lib/types'
 import SocialShare from '@/components/SocialShare'
 import Spotlight from '@/components/Spotlight'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://gaboojabrothers.cloud'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
 
 // Helper to add basePath to image URLs at render time
 const getImageUrl = (url: string | undefined) => {

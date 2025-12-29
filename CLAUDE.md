@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a modern personal portfolio website for Amir H. Jalali, built with Next.js 15, TypeScript, and Tailwind CSS. The site features AI-generated articles, project showcases, and professional experience highlights.
 
-**Live Site:** https://gaboojabrothers.cloud (deployed on Coolify VPS)
+**Live Site:** https://amirhjalali.com (deployed on Coolify VPS)
 
 ## Project Structure
 
@@ -61,7 +61,7 @@ npm run generate:published    # Generate published articles JSON
 
 1. **Next.js App Router**: Using Next.js 15 with full SSR/API route support (NOT static export)
 
-2. **Deployment**: Coolify VPS at gaboojabrothers.cloud
+2. **Deployment**: Coolify VPS at amirhjalali.com
    - Full Next.js features enabled (API routes, ISR, SSR)
    - Auto-deployment on push to main branch
    - Environment variables stored in Coolify
@@ -100,7 +100,7 @@ The site is deployed to a Hostinger VPS using Coolify:
 2. Coolify pulls latest code, runs `npm install && npm run build`
 3. Starts server with `npm run start` on port 3000
 4. SSL handled automatically via Let's Encrypt
-5. Domain: gaboojabrothers.cloud
+5. Domain: amirhjalali.com
 
 **Note**: GitHub Pages deployment is DISABLED (workflow file renamed to .disabled) because we need full Next.js features including API routes for AI generation.
 
