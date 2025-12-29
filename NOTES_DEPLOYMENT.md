@@ -3,7 +3,7 @@
 ## Coolify Subdomain Configuration
 
 ### Prerequisites
-- Existing Coolify deployment at `gaboojabrothers.cloud`
+- Existing Coolify deployment at `amirhjalali.com`
 - DNS access to add subdomain
 - SSL auto-generation enabled (Let's Encrypt)
 
@@ -36,7 +36,7 @@ If DNS is not automatically configured, add:
 **For Hostinger:**
 - Type: `A Record`
 - Host: `notes`
-- Points to: Same IP as `gaboojabrothers.cloud`
+- Points to: Same IP as `amirhjalali.com`
 - TTL: 14400 (or default)
 
 #### 3. Middleware Routing
@@ -78,9 +78,9 @@ For local development with subdomain:
 
 ### Production URLs
 
-- Main site: `https://gaboojabrothers.cloud`
+- Main site: `https://amirhjalali.com`
 - Notes app: `https://notes.amirhjalali.com`
-- Admin panel: `https://gaboojabrothers.cloud/admin`
+- Admin panel: `https://amirhjalali.com/admin`
 
 ### Troubleshooting
 
