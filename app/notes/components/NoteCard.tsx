@@ -40,12 +40,12 @@ const typeLabels: Record<NoteType, string> = {
   DOCUMENT: 'Document',
 }
 
-// Sentiment color mapping (monochrome style)
-const sentimentStyles: Record<string, string> = {
-  positive: 'bg-white/10 text-[#EAEAEA]',
-  negative: 'bg-white/5 text-[#888888]',
-  neutral: 'bg-white/5 text-[#888888]',
-  mixed: 'bg-white/5 text-[#888888]',
+// Sentiment styling and icons
+const sentimentConfig: Record<string, { style: string; icon: string }> = {
+  positive: { style: 'bg-white/10 text-[#EAEAEA] border border-white/20', icon: '↑' },
+  negative: { style: 'bg-white/5 text-[#888888] border border-white/10', icon: '↓' },
+  neutral: { style: 'bg-white/5 text-[#888888] border border-white/10', icon: '→' },
+  mixed: { style: 'bg-white/5 text-[#888888] border border-white/10', icon: '↔' },
 }
 
 interface NoteCardProps {
@@ -133,6 +133,11 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
 
         {/* Status & Actions */}
         <div className="flex items-center gap-2">
+          {note.sentiment && sentimentConfig[note.sentiment] && (
+            <span className={`hidden sm:inline px-1.5 py-0.5 rounded text-[10px] uppercase ${sentimentConfig[note.sentiment].style}`}>
+              {sentimentConfig[note.sentiment].icon}
+            </span>
+          )}
           <ProcessingIndicator
             status={status}
             jobId={jobId}
@@ -302,9 +307,9 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
                 </span>
               )}
             </div>
-            {note.sentiment && (
-              <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase ${sentimentStyles[note.sentiment] || sentimentStyles.neutral}`}>
-                {note.sentiment}
+            {note.sentiment && sentimentConfig[note.sentiment] && (
+              <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase ${sentimentConfig[note.sentiment].style}`}>
+                {sentimentConfig[note.sentiment].icon} {note.sentiment}
               </span>
             )}
           </div>
