@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
-import { Search, Loader2, X, Sparkles, ExternalLink } from 'lucide-react'
+import { Loader2, X, Sparkles, ExternalLink } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import type { SearchResult, Note } from '@/lib/types'
+import type { SearchResult } from '@/lib/types'
 import debounce from 'lodash/debounce'
 
 interface SemanticSearchProps {

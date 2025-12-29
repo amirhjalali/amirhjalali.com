@@ -1,7 +1,7 @@
 import { prisma } from './db'
 import type { Note, NoteType, NoteMetadata } from '@/lib/types'
 import OpenAI from 'openai'
-import { extractContentFromUrl, extractVideoInfo, chunkContent, cleanText, type ExtractedContent } from './content-extraction'
+import { extractContentFromUrl, extractVideoInfo, type ExtractedContent } from './content-extraction'
 import { indexNote as createEmbeddings } from './embedding-service'
 
 // Initialize OpenAI client

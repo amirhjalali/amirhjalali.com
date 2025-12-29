@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/app/actions/auth'
 import { prisma } from '@/lib/db'
-import { getRelevantContext, semanticSearch } from '@/lib/embedding-service'
+import { getRelevantContext } from '@/lib/embedding-service'
 import OpenAI from 'openai'
 
 const openai = new OpenAI({
@@ -48,7 +48,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Get existing messages
-    const existingMessages = (chat.messages as ChatMessage[]) || []
+    const rawMessages = chat.messages
+    const existingMessages = (Array.isArray(rawMessages) ? rawMessages : []) as unknown as ChatMessage[]
 
     // Get relevant context from notes using semantic search
     const { context, sources } = await getRelevantContext(message, {

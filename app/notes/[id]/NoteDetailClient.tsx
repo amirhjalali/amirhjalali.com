@@ -4,19 +4,23 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { apiClient } from '@/lib/api-client'
 import type { Note } from '@/lib/types'
-import { Link as LinkIcon, FileText, Image, Video, ArrowLeft, Trash2, Edit3, Save, X } from 'lucide-react'
+import { Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
+import type { NoteType, ProcessStatus } from '@/lib/types'
 
-const typeIcons = {
+const typeIcons: Record<NoteType, typeof LinkIcon> = {
   LINK: LinkIcon,
   TEXT: FileText,
   IMAGE: Image,
   VIDEO: Video,
+  PDF: FileType2,
+  DOCUMENT: File,
 }
 
-const statusColors = {
+const statusColors: Record<ProcessStatus, string> = {
   PENDING: 'text-[#888888] bg-white/5 border-white/10',
   PROCESSING: 'text-[#EAEAEA] bg-white/5 border-white/20',
+  INDEXED: 'text-[#EAEAEA] bg-white/10 border-white/20',
   COMPLETED: 'text-[#EAEAEA] bg-white/10 border-white/20',
   FAILED: 'text-[#888888] bg-white/5 border-white/10',
 }

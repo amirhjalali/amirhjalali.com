@@ -15,7 +15,6 @@ import {
   Star,
   Pin,
   BookOpen,
-  Globe,
   Play
 } from 'lucide-react'
 import type { Note, NoteType, ProcessStatus } from '@/lib/types'

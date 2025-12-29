@@ -172,11 +172,13 @@ export default function QuickAdd({ onNoteAdded }: { onNoteAdded?: () => void }) 
     }
   }
 
-  const typeLabels = {
+  const typeLabels: Record<NoteType, string> = {
     LINK: 'Link',
     TEXT: 'Text',
     IMAGE: 'Image',
     VIDEO: 'Video',
+    PDF: 'PDF',
+    DOCUMENT: 'Document',
   }
 
   return (

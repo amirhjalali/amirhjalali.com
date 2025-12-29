@@ -3,17 +3,11 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  MessageSquare,
-  Search,
   Plus,
-  FolderOpen,
   Sparkles,
-  ChevronLeft,
-  ChevronRight,
   X,
   LayoutGrid,
-  List,
-  SlidersHorizontal
+  List
 } from 'lucide-react'
 import QuickAdd from './components/QuickAdd'
 import NotesList from './components/NotesList'

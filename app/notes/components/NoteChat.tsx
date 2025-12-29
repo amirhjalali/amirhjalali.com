@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Send, Loader2, MessageSquare, X, Sparkles, BookOpen, ExternalLink } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 
