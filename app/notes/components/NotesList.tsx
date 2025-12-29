@@ -6,14 +6,23 @@ import { apiClient } from '@/lib/api-client'
 import type { Note, NoteType } from '@/lib/types'
 import NoteCard from './NoteCard'
 import NoteFilters from './NoteFilters'
-import { Grid3x3, List, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
-export default function NotesList({ refreshKey }: { refreshKey?: number }) {
+interface NotesListProps {
+  refreshKey?: number
+  viewMode?: 'grid' | 'list'
+}
+
+export default function NotesList({ refreshKey, viewMode: externalViewMode }: NotesListProps) {
   const isMounted = useRef(false)
   const [notes, setNotes] = useState<Note[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const [internalViewMode, setInternalViewMode] = useState<'grid' | 'list'>('grid')
+
+  // Use external viewMode if provided, otherwise use internal state
+  const viewMode = externalViewMode ?? internalViewMode
+  const setViewMode = externalViewMode ? () => {} : setInternalViewMode
   const [filters, setFilters] = useState<{
     type?: NoteType
     search?: string
@@ -81,36 +90,16 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
 
   return (
     <div className="space-y-6">
-      {/* View Mode Toggle & Filters */}
+      {/* Filters */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <NoteFilters onFilterChange={handleFilterChange} />
         </div>
-        <div className="flex items-center gap-2">
-          {isRefreshing && (
-            <div className="mr-2">
-              <Loader2 className="w-4 h-4 text-[#888888] animate-spin" />
-            </div>
-          )}
-          <button
-            onClick={() => setViewMode('grid')}
-            className={`p-2 rounded-lg transition-all ${viewMode === 'grid'
-              ? 'bg-white/20 text-white'
-              : 'bg-black/20 text-[#888888] hover:bg-white/10'
-              }`}
-          >
-            <Grid3x3 className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => setViewMode('list')}
-            className={`p-2 rounded-lg transition-all ${viewMode === 'list'
-              ? 'bg-white/20 text-white'
-              : 'bg-black/20 text-[#888888] hover:bg-white/10'
-              }`}
-          >
-            <List className="w-5 h-5" />
-          </button>
-        </div>
+        {isRefreshing && (
+          <div>
+            <Loader2 className="w-4 h-4 text-[#888888] animate-spin" />
+          </div>
+        )}
       </div>
 
       {/* Notes Grid/List */}
@@ -139,7 +128,7 @@ export default function NotesList({ refreshKey }: { refreshKey?: number }) {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.2 }}
               >
-                <NoteCard note={note} onDelete={fetchNotes} />
+                <NoteCard note={note} onDelete={fetchNotes} compact={viewMode === 'list'} />
               </motion.div>
             ))}
           </AnimatePresence>
