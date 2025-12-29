@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/db'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://gaboojabrothers.cloud'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all published articles from database

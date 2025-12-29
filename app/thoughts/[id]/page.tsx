@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import ThoughtPageClient from './ThoughtPageClient'
 import { getArticle, getAllArticleIds, getDraft } from '@/lib/data'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://gaboojabrothers.cloud'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
 
 // Generate static params for all article IDs
 export async function generateStaticParams() {
