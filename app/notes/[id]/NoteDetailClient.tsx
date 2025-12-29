@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { apiClient } from '@/lib/api-client'
 import type { Note } from '@/lib/types'
-import { Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X } from 'lucide-react'
+import { Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import type { NoteType, ProcessStatus } from '@/lib/types'
 
@@ -30,6 +30,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
   const [note, setNote] = useState<Note | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
+  const [isReprocessing, setIsReprocessing] = useState(false)
   const [editedTitle, setEditedTitle] = useState('')
   const [editedContent, setEditedContent] = useState('')
   const [editedTags, setEditedTags] = useState<string[]>([])
@@ -80,6 +81,31 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
     }
   }
 
+  const handleReprocess = async () => {
+    if (!note) return
+
+    setIsReprocessing(true)
+    try {
+      // Trigger reprocessing via the API
+      const response = await fetch(`/api/notes/${note.id}/process`, {
+        method: 'POST',
+        credentials: 'include',
+      })
+
+      if (!response.ok) {
+        throw new Error('Reprocess failed')
+      }
+
+      // Fetch the updated note
+      const updatedNote = await apiClient.getNote(noteId)
+      setNote(updatedNote)
+    } catch (_error) {
+      alert('Failed to reprocess note')
+    } finally {
+      setIsReprocessing(false)
+    }
+  }
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -127,14 +153,28 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
             {!isEditing ? (
               <>
                 <button
+                  onClick={handleReprocess}
+                  disabled={isReprocessing}
+                  className="p-2 hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+                  title="Reprocess with AI"
+                >
+                  {isReprocessing ? (
+                    <Loader2 className="w-5 h-5 text-[#888888] animate-spin" />
+                  ) : (
+                    <RefreshCw className="w-5 h-5 text-[#888888]" />
+                  )}
+                </button>
+                <button
                   onClick={() => setIsEditing(true)}
                   className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  title="Edit note"
                 >
                   <Edit3 className="w-5 h-5 text-[#888888]" />
                 </button>
                 <button
                   onClick={handleDelete}
                   className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  title="Delete note"
                 >
                   <Trash2 className="w-5 h-5 text-[#888888] hover:text-[#EAEAEA]" />
                 </button>
@@ -282,12 +322,58 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
           </div>
         )}
 
+        {/* Source Info */}
+        {note.type === 'LINK' && (note.domain || note.sourceUrl) && (
+          <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
+            {note.favicon && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={note.favicon}
+                alt=""
+                className="w-5 h-5 rounded"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none'
+                }}
+              />
+            )}
+            <div className="flex-1 min-w-0">
+              {note.domain && (
+                <span className="text-sm text-[#888888]">{note.domain}</span>
+              )}
+            </div>
+            {note.sourceUrl && (
+              <a
+                href={note.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-[#888888] hover:text-[#EAEAEA] hover:bg-white/10 transition-all"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Open Original
+              </a>
+            )}
+          </div>
+        )}
+
         {/* Metadata */}
-        <div className="border-t border-white/10 pt-4 flex items-center gap-6 text-xs text-[#888888] font-mono">
+        <div className="border-t border-white/10 pt-4 flex flex-wrap items-center gap-4 text-xs text-[#888888] font-mono">
+          {note.readingTime && (
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5" />
+              {note.readingTime} min read
+            </span>
+          )}
+          {note.wordCount && (
+            <span>{note.wordCount.toLocaleString()} words</span>
+          )}
+          <span className="hidden sm:inline">•</span>
           <span>Created {formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}</span>
           <span>Updated {formatDistanceToNow(new Date(note.updatedAt), { addSuffix: true })}</span>
           {note.processedAt && (
-            <span>Processed {formatDistanceToNow(new Date(note.processedAt), { addSuffix: true })}</span>
+            <span className="flex items-center gap-1.5">
+              <Brain className="w-3.5 h-3.5" />
+              Processed {formatDistanceToNow(new Date(note.processedAt), { addSuffix: true })}
+            </span>
           )}
         </div>
       </div>
