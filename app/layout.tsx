@@ -54,13 +54,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Amir H. Jalali - Human Consultant',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
-    url: 'https://gaboojabrothers.cloud',
+    url: 'https://amirhjalali.com',
     siteName: 'Amir H. Jalali',
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: 'https://gaboojabrothers.cloud/og-image.png',
+        url: 'https://amirhjalali.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Amir H. Jalali - Human Consultant',
     description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
-    images: ['https://gaboojabrothers.cloud/og-image.png'],
+    images: ['https://amirhjalali.com/og-image.png'],
     creator: '@amirhjalali',
     site: '@amirhjalali',
   },
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   alternates: {
-    canonical: 'https://gaboojabrothers.cloud',
+    canonical: 'https://amirhjalali.com',
   },
 }
 
