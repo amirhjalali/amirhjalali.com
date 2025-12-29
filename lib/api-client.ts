@@ -4,7 +4,7 @@
  */
 
 export type { Article, Draft, Note, NoteType, ProcessStatus } from '@/lib/types'
-import { Article, Draft, Note, NoteType } from '@/lib/types'
+import { Article, Draft, Note, NoteType, ProcessStatus } from '@/lib/types'
 
 class APIClient {
   private baseUrl = '/api'
@@ -138,6 +138,7 @@ class APIClient {
   // Notes
   async getNotes(params?: {
     type?: NoteType
+    status?: ProcessStatus
     tags?: string[]
     search?: string
     limit?: number
@@ -148,6 +149,7 @@ class APIClient {
     const queryParams = new URLSearchParams()
 
     if (params?.type) queryParams.set('type', params.type)
+    if (params?.status) queryParams.set('status', params.status)
     if (params?.tags?.length) queryParams.set('tags', params.tags.join(','))
     if (params?.search) queryParams.set('search', params.search)
     if (params?.limit) queryParams.set('limit', params.limit.toString())

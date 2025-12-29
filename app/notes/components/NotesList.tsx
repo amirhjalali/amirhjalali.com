@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { apiClient } from '@/lib/api-client'
-import type { Note, NoteType } from '@/lib/types'
+import type { Note, NoteType, ProcessStatus } from '@/lib/types'
 import NoteCard from './NoteCard'
 import NoteFilters from './NoteFilters'
 import { Loader2 } from 'lucide-react'
@@ -25,6 +25,7 @@ export default function NotesList({ refreshKey, viewMode: externalViewMode }: No
   const setViewMode = externalViewMode ? () => {} : setInternalViewMode
   const [filters, setFilters] = useState<{
     type?: NoteType
+    status?: ProcessStatus
     search?: string
     sortBy?: string
     order?: 'asc' | 'desc'

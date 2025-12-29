@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { Search, X } from 'lucide-react'
-import type { NoteType } from '@/lib/types'
+import type { NoteType, ProcessStatus } from '@/lib/types'
 
 interface NoteFiltersProps {
   onFilterChange: (filters: {
     type?: NoteType
+    status?: ProcessStatus
     search?: string
     sortBy?: string
     order?: 'asc' | 'desc'
@@ -17,6 +18,7 @@ export default function NoteFilters({ onFilterChange }: NoteFiltersProps) {
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [type, setType] = useState<NoteType | ''>('')
+  const [status, setStatus] = useState<ProcessStatus | ''>('')
   const [sortBy, setSortBy] = useState('createdAt')
   const [order, setOrder] = useState<'asc' | 'desc'>('desc')
 
@@ -32,20 +34,22 @@ export default function NoteFilters({ onFilterChange }: NoteFiltersProps) {
   useEffect(() => {
     onFilterChange({
       type: type || undefined,
+      status: status || undefined,
       search: debouncedSearch || undefined,
       sortBy,
       order,
     })
-  }, [type, debouncedSearch, sortBy, order, onFilterChange])
+  }, [type, status, debouncedSearch, sortBy, order, onFilterChange])
 
   const handleClear = () => {
     setSearch('')
     setType('')
+    setStatus('')
     setSortBy('createdAt')
     setOrder('desc')
   }
 
-  const hasActiveFilters = search || type || sortBy !== 'createdAt' || order !== 'desc'
+  const hasActiveFilters = search || type || status || sortBy !== 'createdAt' || order !== 'desc'
 
   return (
     <div className="space-y-4">
@@ -74,6 +78,22 @@ export default function NoteFilters({ onFilterChange }: NoteFiltersProps) {
           <option value="TEXT">Text</option>
           <option value="IMAGE">Image</option>
           <option value="VIDEO">Video</option>
+          <option value="PDF">PDF</option>
+          <option value="DOCUMENT">Document</option>
+        </select>
+
+        {/* Status Filter */}
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value as ProcessStatus | '')}
+          className="px-4 py-2 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-[#EAEAEA] font-mono text-xs uppercase tracking-widest cursor-pointer"
+        >
+          <option value="">All Status</option>
+          <option value="PENDING">Pending</option>
+          <option value="PROCESSING">Processing</option>
+          <option value="INDEXED">Indexed</option>
+          <option value="COMPLETED">Completed</option>
+          <option value="FAILED">Failed</option>
         </select>
 
         {/* Sort By */}

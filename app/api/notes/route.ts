@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
 
     // Parse query parameters
     const type = searchParams.get('type') as NoteType | null
+    const status = searchParams.get('status') as ProcessStatus | null
     const tags = searchParams.get('tags')?.split(',').filter(Boolean) || []
     const search = searchParams.get('search') || ''
     const limit = parseInt(searchParams.get('limit') || '50', 10)
@@ -28,6 +29,10 @@ export async function GET(request: NextRequest) {
 
     if (type) {
       where.type = type
+    }
+
+    if (status) {
+      where.processStatus = status
     }
 
     if (tags.length > 0) {
