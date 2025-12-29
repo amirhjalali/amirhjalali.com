@@ -1,6 +1,8 @@
 import { prisma } from './db'
 import type { Note, NoteType, NoteMetadata } from '@/lib/types'
 import OpenAI from 'openai'
+import { extractContentFromUrl, extractVideoInfo, chunkContent, cleanText, type ExtractedContent } from './content-extraction'
+import { indexNote as createEmbeddings } from './embedding-service'
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -9,9 +11,13 @@ const openai = new OpenAI({
 
 /**
  * Main orchestrator: Process a note with AI capabilities
+ * Now with improved content extraction and optional indexing for semantic search
  */
-export async function processNote(noteId: string): Promise<Note> {
-  console.log(`🔄 Starting processing for note ${noteId}`)
+export async function processNote(
+  noteId: string,
+  options: { skipIndexing?: boolean } = {}
+): Promise<Note> {
+  const { skipIndexing = false } = options
 
   try {
     // Fetch note from database
@@ -26,38 +32,93 @@ export async function processNote(noteId: string): Promise<Note> {
     // Update status to PROCESSING
     await prisma.note.update({
       where: { id: noteId },
-      data: { processStatus: 'PROCESSING' },
+      data: { processStatus: 'PROCESSING', processingError: null },
     })
 
     // Process based on note type
+    let extractedContent: ExtractedContent | null = null
     let metadata: NoteMetadata | null = null
     let summary: string | null = null
     let keyInsights: string[] = []
     let topics: string[] = []
     let sentiment: string | null = null
     let excerpt: string | null = null
+    let fullContent: string | null = null
+    let wordCount: number | null = null
+    let readingTime: number | null = null
+    let domain: string | null = null
+    let favicon: string | null = null
+    let sourceType: string | null = null
+    let contentHash: string | null = null
 
     try {
-      // Extract URL metadata for LINK type
+      // Extract content for LINK type using improved extraction
       if (note.type === 'LINK') {
-        console.log(`📎 Extracting metadata for URL: ${note.content}`)
-        metadata = await extractUrlMetadata(note.content)
+        extractedContent = await extractContentFromUrl(note.content)
+
+        // Check for video content
+        const videoInfo = extractVideoInfo(note.content)
+
+        if (extractedContent) {
+          fullContent = extractedContent.textContent
+          wordCount = extractedContent.wordCount
+          readingTime = extractedContent.readingTime
+          domain = extractedContent.domain
+          favicon = extractedContent.favicon
+          sourceType = extractedContent.sourceType
+          contentHash = extractedContent.contentHash
+
+          // Build metadata from extracted content
+          metadata = {
+            domain: extractedContent.domain,
+            title: extractedContent.title || undefined,
+            description: extractedContent.excerpt || undefined,
+            image: extractedContent.ogImage || undefined,
+            favicon: extractedContent.favicon || undefined,
+            siteName: extractedContent.siteName || undefined,
+            author: extractedContent.byline || undefined,
+            publishedTime: extractedContent.publishedTime || undefined,
+            wordCount: extractedContent.wordCount,
+            ...extractedContent.metadata,
+          }
+
+          // Use extracted title if note doesn't have one
+          if (!note.title && extractedContent.title) {
+            await prisma.note.update({
+              where: { id: noteId },
+              data: { title: extractedContent.title },
+            })
+          }
+        }
+
+        // Add video info to metadata if applicable
+        if (videoInfo) {
+          metadata = {
+            ...metadata,
+            video: videoInfo as any,
+          }
+        }
+      } else if (note.type === 'TEXT') {
+        // For text notes, the content is already the full content
+        fullContent = note.content
+        wordCount = note.content.split(/\s+/).filter(w => w.length > 0).length
+        readingTime = Math.max(1, Math.ceil(wordCount / 200))
       }
 
+      // Use full extracted content for AI analysis when available
+      const contentForAnalysis = fullContent || note.content
+
       // Generate summary and insights
-      console.log(`🤖 Generating AI summary and insights`)
-      const aiResults = await generateSummaryAndInsights(note.content, note.type)
+      const aiResults = await generateSummaryAndInsights(contentForAnalysis, note.type)
       summary = aiResults.summary
       excerpt = aiResults.excerpt
       keyInsights = aiResults.keyInsights
 
       // Extract topics
-      console.log(`🏷️  Extracting topics`)
-      topics = await extractTopics(note.content)
+      topics = await extractTopics(contentForAnalysis)
 
       // Analyze sentiment
-      console.log(`😊 Analyzing sentiment`)
-      sentiment = await analyzeSentiment(note.content)
+      sentiment = await analyzeSentiment(contentForAnalysis)
 
       // Update note with all processing results
       const updatedNote = await prisma.note.update({
@@ -65,49 +126,67 @@ export async function processNote(noteId: string): Promise<Note> {
         data: {
           processStatus: 'COMPLETED',
           processedAt: new Date(),
+          processingError: null,
           metadata: metadata as any,
           summary,
           excerpt,
           keyInsights,
           topics,
           sentiment,
+          fullContent,
+          wordCount,
+          readingTime,
+          domain,
+          favicon,
+          sourceType,
+          contentHash,
         },
       })
 
-      console.log(`✅ Note ${noteId} processed successfully`)
+      // Index for semantic search (create chunks and embeddings)
+      if (!skipIndexing && fullContent && fullContent.length > 100) {
+        try {
+          await createEmbeddings(noteId)
+        } catch (indexError) {
+          // Don't fail the whole process if indexing fails
+          console.warn(`Indexing failed for note ${noteId}:`, indexError)
+        }
+      }
 
       return updatedNote as unknown as Note
-    } catch (processingError) {
+    } catch (processingError: any) {
       // Partial success: update what we have and mark as completed
-      console.warn(
-        `⚠️  Partial processing failure for note ${noteId}:`,
-        processingError
-      )
+      console.warn(`Partial processing failure for note ${noteId}:`, processingError)
 
       const updatedNote = await prisma.note.update({
         where: { id: noteId },
         data: {
           processStatus: 'COMPLETED',
           processedAt: new Date(),
+          processingError: processingError.message || 'Unknown error',
           metadata: metadata as any,
           summary,
           excerpt: excerpt || undefined,
           keyInsights,
           topics,
           sentiment: sentiment || undefined,
+          fullContent,
+          wordCount,
+          readingTime,
         },
       })
 
       return updatedNote as unknown as Note
     }
-  } catch (error) {
-    console.error(`❌ Failed to process note ${noteId}:`, error)
+  } catch (error: any) {
+    console.error(`Failed to process note ${noteId}:`, error)
 
-    // Mark as failed
+    // Mark as failed with error message
     await prisma.note.update({
       where: { id: noteId },
       data: {
         processStatus: 'FAILED',
+        processingError: error.message || 'Unknown error',
       },
     })
 
