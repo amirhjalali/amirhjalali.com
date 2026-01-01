@@ -306,6 +306,131 @@ interface ApiResponse<T> {
 npm run worker         # Start processing worker
 ```
 
+---
+
+### notes-tester
+**Purpose:** Comprehensive testing of the notes section functionality.
+
+**When to use:** After making changes to notes features or before deployment.
+
+**Capabilities:**
+- Test all notes API endpoints (CRUD, search, chat)
+- Verify content extraction from URLs
+- Test AI processing (summary, topics, sentiment)
+- Validate embeddings and semantic search
+- Test authentication flows
+- Check error handling and edge cases
+
+**Test checklist:**
+- [ ] Create note (TEXT, LINK types)
+- [ ] Read note with all fields populated
+- [ ] Update note metadata
+- [ ] Delete note
+- [ ] List notes with filters (type, status)
+- [ ] Semantic search returns relevant results
+- [ ] Chat API responds contextually
+- [ ] Process note extracts content correctly
+- [ ] Embeddings are generated and stored
+- [ ] Authentication blocks unauthorized access
+
+**Files to test:**
+- `app/api/notes/route.ts` - CRUD operations
+- `app/api/notes/[id]/route.ts` - Single note operations
+- `app/api/notes/[id]/process/route.ts` - Processing trigger
+- `app/api/notes/search/route.ts` - Semantic search
+- `app/api/notes/chat/route.ts` - AI chat
+- `lib/content-extraction.ts` - URL extraction
+- `lib/embedding-service.ts` - Vector embeddings
+- `lib/note-processing-service.ts` - AI processing
+
+**Test commands:**
+```bash
+# Create a note
+curl -X POST http://localhost:3000/api/notes \
+  -H "Content-Type: application/json" \
+  -H "Cookie: admin_session=%7B%22username%22%3A%22admin%22%2C%22role%22%3A%22admin%22%7D" \
+  -d '{"type":"LINK","content":"https://example.com","title":"Test"}'
+
+# Process a note
+curl -X POST http://localhost:3000/api/notes/{id}/process \
+  -H "Cookie: admin_session=%7B%22username%22%3A%22admin%22%2C%22role%22%3A%22admin%22%7D"
+
+# Search notes
+curl -X POST http://localhost:3000/api/notes/search \
+  -H "Content-Type: application/json" \
+  -H "Cookie: admin_session=%7B%22username%22%3A%22admin%22%2C%22role%22%3A%22admin%22%7D" \
+  -d '{"query":"test query"}'
+```
+
+---
+
+### notes-ux-reviewer
+**Purpose:** Review and improve the notes section user experience.
+
+**When to use:** After UI changes or when auditing user experience.
+
+**Capabilities:**
+- Audit visual design consistency
+- Check responsive layouts (mobile, tablet, desktop)
+- Verify interaction patterns (hover, click, focus)
+- Test loading states and animations
+- Validate error message clarity
+- Check dark mode compatibility
+
+**UX checklist:**
+- [ ] Three-column layout works on all screen sizes
+- [ ] Note cards display all metadata clearly
+- [ ] Processing indicators show status accurately
+- [ ] Semantic search has clear feedback
+- [ ] Chat interface is intuitive
+- [ ] Add note modal is accessible
+- [ ] Filters are discoverable and functional
+- [ ] Empty states are helpful
+- [ ] Error messages guide user to resolution
+- [ ] Loading skeletons prevent layout shift
+
+**Components to review:**
+- `app/notes/page.tsx` - Main layout
+- `app/notes/[id]/page.tsx` - Detail view
+- `app/notes/components/NoteCard.tsx` - Card design
+- `app/notes/components/NoteChat.tsx` - Chat interface
+- `app/notes/components/SemanticSearch.tsx` - Search UX
+- `app/notes/components/AddNoteModal.tsx` - Note creation
+- `app/notes/components/ProcessingIndicator.tsx` - Status display
+
+**Design tokens:**
+- Background: `#050505`
+- Text primary: `#EAEAEA`
+- Text secondary: `#888888`
+- Border: `white/10`, `white/20`
+- Interactive: `white/5` hover to `white/10`
+
+---
+
+### integration-tester
+**Purpose:** End-to-end integration testing across features.
+
+**When to use:** Before releases or after major changes.
+
+**Capabilities:**
+- Test complete user flows from start to finish
+- Verify cross-feature interactions
+- Test database consistency
+- Validate API contract compliance
+- Check authentication across all routes
+
+**Integration test flows:**
+1. **Note lifecycle:** Create → Process → Search → Chat → Delete
+2. **Notebook organization:** Create notebook → Add notes → Filter by notebook
+3. **Search flow:** Add multiple notes → Process all → Semantic search → Verify relevance
+4. **Auth flow:** Login → Access protected routes → Logout → Verify blocked
+
+**Files involved:**
+- All API routes in `app/api/notes/`
+- All components in `app/notes/components/`
+- Database models in `prisma/schema.prisma`
+- Auth actions in `app/actions/auth.ts`
+
 ## Project Structure & Module Organization
 The site runs on Next.js App Router with TypeScript. Page roots live in `app/`; each subfolder (for example `app/projects` or `app/thoughts/[id]`) maps to a route and usually exports both layout and page components. Presentation building blocks stay in `components/`, with design atoms under `components/ui`. Reusable logic such as analytics helpers and article metadata sits in `lib/`, while React hooks belong in `hooks/`. Static assets, including SEO metadata and imagery, are stored in `public/`. Automation helpers and onboarding scripts live in `scripts/`, and supporting documentation belongs in `docs/` and `archive/`.
 
