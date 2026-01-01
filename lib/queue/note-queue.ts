@@ -9,9 +9,86 @@ export interface ProcessNoteJob {
 // Queue and worker instances
 let noteQueue: Queue | null = null
 let noteWorker: Worker | null = null
+let redisAvailable: boolean | null = null
+let lastRedisCheck = 0
+const REDIS_CHECK_INTERVAL = 30000 // Check every 30 seconds
+
+/**
+ * Quick check if Redis is available (with caching)
+ */
+async function isRedisAvailable(): Promise<boolean> {
+  const now = Date.now()
+
+  // Return cached result if recent
+  if (redisAvailable !== null && now - lastRedisCheck < REDIS_CHECK_INTERVAL) {
+    return redisAvailable
+  }
+
+  try {
+    const testConnection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+      maxRetriesPerRequest: 1,
+      connectTimeout: 2000,
+      lazyConnect: true,
+    })
+
+    await testConnection.connect()
+    await testConnection.ping()
+    await testConnection.quit()
+
+    redisAvailable = true
+    lastRedisCheck = now
+    return true
+  } catch {
+    redisAvailable = false
+    lastRedisCheck = now
+    return false
+  }
+}
 
 /**
  * Get or create the note processing queue
+ * Throws immediately if Redis is not available
+ */
+export async function getNoteQueueAsync(): Promise<Queue> {
+  // Quick check if Redis is available
+  const available = await isRedisAvailable()
+  if (!available) {
+    throw new Error('Redis is not available')
+  }
+
+  if (!noteQueue) {
+    // BullMQ requires a dedicated Redis connection with maxRetriesPerRequest: null
+    const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+      maxRetriesPerRequest: null,
+    })
+
+    noteQueue = new Queue('note-processing', {
+      connection,
+      defaultJobOptions: {
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 2000, // Start with 2 seconds, then 4s, 8s
+        },
+        removeOnComplete: {
+          age: 24 * 3600, // Keep completed jobs for 24 hours
+          count: 1000, // Keep last 1000 completed jobs
+        },
+        removeOnFail: {
+          age: 7 * 24 * 3600, // Keep failed jobs for 7 days
+        },
+      },
+    })
+
+    console.log('✅ Note processing queue initialized')
+  }
+
+  return noteQueue
+}
+
+/**
+ * Get or create the note processing queue (sync version - may hang if Redis unavailable)
+ * @deprecated Use getNoteQueueAsync instead
  */
 export function getNoteQueue(): Queue {
   if (!noteQueue) {
@@ -46,11 +123,12 @@ export function getNoteQueue(): Queue {
 
 /**
  * Add a note to the processing queue
+ * Now uses async queue getter to fail fast if Redis unavailable
  */
 export async function queueNoteProcessing(
   noteId: string
 ): Promise<Job<ProcessNoteJob>> {
-  const queue = getNoteQueue()
+  const queue = await getNoteQueueAsync()
 
   const job = await queue.add(
     'processNote',
@@ -69,7 +147,7 @@ export async function queueNoteProcessing(
  * Get job status by ID
  */
 export async function getJobStatus(jobId: string) {
-  const queue = getNoteQueue()
+  const queue = await getNoteQueueAsync()
   const job = await queue.getJob(jobId)
 
   if (!job) {
