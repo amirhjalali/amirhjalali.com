@@ -29,6 +29,12 @@ async function isRedisAvailable(): Promise<boolean> {
       maxRetriesPerRequest: 1,
       connectTimeout: 2000,
       lazyConnect: true,
+      enableOfflineQueue: false,
+    })
+
+    // Suppress error events to prevent crashes
+    testConnection.on('error', () => {
+      // Silently ignore - we handle errors via try/catch
     })
 
     await testConnection.connect()
@@ -60,6 +66,12 @@ export async function getNoteQueueAsync(): Promise<Queue> {
     // BullMQ requires a dedicated Redis connection with maxRetriesPerRequest: null
     const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
       maxRetriesPerRequest: null,
+      enableOfflineQueue: false,
+    })
+
+    // Handle connection errors to prevent crashes
+    connection.on('error', (err) => {
+      console.error('Queue Redis connection error:', err.message)
     })
 
     noteQueue = new Queue('note-processing', {
@@ -87,14 +99,20 @@ export async function getNoteQueueAsync(): Promise<Queue> {
 }
 
 /**
- * Get or create the note processing queue (sync version - may hang if Redis unavailable)
- * @deprecated Use getNoteQueueAsync instead
+ * Get or create the note processing queue (sync version)
+ * @deprecated Use getNoteQueueAsync instead - this version may cause issues if Redis unavailable
  */
 export function getNoteQueue(): Queue {
   if (!noteQueue) {
     // BullMQ requires a dedicated Redis connection with maxRetriesPerRequest: null
     const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
       maxRetriesPerRequest: null,
+      enableOfflineQueue: false,
+    })
+
+    // Handle connection errors to prevent crashes
+    connection.on('error', (err) => {
+      console.error('Queue Redis connection error:', err.message)
     })
 
     noteQueue = new Queue('note-processing', {
@@ -187,6 +205,12 @@ export function createNoteWorker(
   */
   const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
     maxRetriesPerRequest: null,
+    enableOfflineQueue: false,
+  })
+
+  // Handle connection errors to prevent crashes
+  connection.on('error', (err) => {
+    console.error('Worker Redis connection error:', err.message)
   })
 
   noteWorker = new Worker(
