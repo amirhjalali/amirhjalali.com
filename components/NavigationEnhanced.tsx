@@ -29,8 +29,8 @@ export default function NavigationEnhanced() {
     setMobileOpen(false)
   }, [pathname])
 
-  // Hide navigation on homepage and notes login page
-  if (pathname === '/' || pathname === '/notes/login') return null
+  // Hide navigation on homepage and all notes pages (notes has its own header)
+  if (pathname === '/' || pathname?.startsWith('/notes')) return null
 
   return (
     <motion.nav
