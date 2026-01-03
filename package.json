@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "rm -rf .next && next build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/",
+    "build": "rm -rf .next/server .next/static .next/standalone .next/BUILD_ID .next/*.json 2>/dev/null; next build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/",
     "start": "sh scripts/start-all.sh",
     "worker": "npx tsx scripts/note-worker.js",
     "lint": "next lint",
