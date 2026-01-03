@@ -1,63 +1,56 @@
-# Session Handoff - January 2, 2026
+# Session Handoff - January 3, 2026
 
 ## Current Status
-**Site is DOWN (503)** - Check Coolify deployment
+**Sites are UP but need redeploy** - Cache invalidation fix pushed
 
 ## What Was Done This Session
 
-### 1. Auth Cookie Fix (Pushed)
-- Fixed cross-subdomain login for `notes.amirhjalali.com`
-- Added `sameSite: 'lax'` to cookies
-- Added optional `COOKIE_DOMAIN` env var support
-- **Action needed**: Set `COOKIE_DOMAIN=.amirhjalali.com` in Coolify for subdomain auth
+### 1. Hydration Fix (Pushed & Deployed)
+- Fixed React Error #418 in notes login page
+- Removed nested `<html>` and `<body>` tags from `app/notes/layout.tsx`
+- Updated `NavigationEnhanced` to hide for all `/notes` routes
 
-### 2. Favicon Fix (Pushed)
-- Deleted old `app/favicon.ico` (25KB sliders icon)
-- Now uses `public/favicon.svg` (serif 'A' on dark background)
-- User reported favicon was reverting on some pages
+### 2. Cache Invalidation Fix (Pushed, Needs Redeploy)
+- **Root cause**: "Failed to find Server Action" errors from stale cached JS
+- Build script now cleans `.next` before building: `rm -rf .next && next build ...`
+- Added `generateBuildId` to create unique IDs per deployment
+- Added `Cache-Control` headers:
+  - HTML pages: `max-age=0, must-revalidate` (always check for updates)
+  - Static assets: `max-age=31536000, immutable` (cached, hashed filenames)
 
-### 3. Domain References (Pushed)
-- Updated `RECOMMENDATIONS.md` - removed gaboojabrothers.cloud references
-- All references now use `amirhjalali.com`
+### 3. Domain Fix (Done in Coolify by user)
+- Added `https://amirhjalali.com` to Coolify domains (was missing non-www)
 
-### 4. OG Image for Link Previews (Pushed)
-- Created new `public/og-image.png` (1200x630)
-- Dark aesthetic with name, "Human Consultant" tagline, domain
-- Old file was corrupted (text file, not image)
+## Current Issues
 
-## Pending Issues
+### Notes API "Failed to fetch" - 10,000+ errors
+- **Not Redis** - Redis logs show it's healthy
+- **Not database** - Worker shows Database URL set
+- **Cause**: Server Action mismatch from deployment cache
+- **Fix**: Redeploy with the new cache invalidation changes
 
-### Site is 503
-- Coolify deployment may have failed
-- Need to check Coolify dashboard and restart if needed
-
-### From Earlier Testing (Notes Section)
-- **API Tests**: 16/16 passed
-- **UX Score**: 6.5/10 - issues with color inconsistencies, alert()/confirm() usage
-- **Accessibility**: 28 critical, 24 major, 14 minor issues
-  - Missing aria-labels on icon buttons
-  - Missing form labels
-  - No live regions for dynamic content
-  - No visible focus indicators
+### After Redeploy Should Be Fixed
+- [ ] Server Action errors should stop
+- [ ] Note creation should work
+- [ ] No more "Failed to fetch" floods
 
 ## Files Modified This Session
-- `app/actions/auth.ts` - Cookie settings
-- `app/favicon.ico` - DELETED
-- `public/og-image.png` - Replaced with proper image
-- `RECOMMENDATIONS.md` - Updated domain references
-- `AGENTS.md` - Added testing agents earlier
-
-## Environment Variables to Set in Coolify
-```
-COOKIE_DOMAIN=.amirhjalali.com  # For cross-subdomain auth
-```
+- `app/notes/layout.tsx` - Removed nested HTML/body tags
+- `components/NavigationEnhanced.tsx` - Hide nav for /notes routes
+- `package.json` - Added `rm -rf .next` to build script
+- `next.config.mjs` - Added generateBuildId and Cache-Control headers
 
 ## Commits Made
-1. `fix: Add sameSite and optional domain support for cross-subdomain auth`
-2. `fix: Remove old favicon.ico and update domain references`
-3. `feat: Add proper OG image for link preview cards`
+1. `fix: Remove nested HTML from notes layout to fix hydration error #418`
+2. `fix: Add clean build and cache invalidation to prevent stale server actions`
 
-## To Verify After Site is Back Up
-1. Favicon shows serif 'A' consistently across all pages
-2. Login works at `https://notes.amirhjalali.com/notes/login`
-3. Link preview cards show new OG image when sharing
+## To Verify After Redeploy
+1. Notes login renders properly (no black screen)
+2. No "Failed to find Server Action" errors in app logs
+3. Note creation works (Capture & Process button)
+4. Console errors should be minimal
+
+## Environment Variables (Verified Working)
+- `REDIS_URL` - Set and connected
+- `DATABASE_URL` - Set
+- `OPENAI_API_KEY` - Set
