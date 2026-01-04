@@ -1,56 +1,67 @@
-# Session Handoff - January 3, 2026
+# Session Handoff - January 4, 2026
 
 ## Current Status
-**Sites are UP but need redeploy** - Cache invalidation fix pushed
+**ALL SYSTEMS WORKING** - Main site and Notes API fully operational
 
-## What Was Done This Session
+## Summary
+- Main site `amirhjalali.com` is **working**
+- Notes page `notes.amirhjalali.com` is **working**
+- Notes API calls are **working** (returns 13 notes successfully)
 
-### 1. Hydration Fix (Pushed & Deployed)
-- Fixed React Error #418 in notes login page
+## What's Working
+- Hydration fix deployed - no more React Error #418
+- Cache invalidation fix deployed - no more "Failed to find Server Action" errors
+- Main site homepage loads correctly
+- Notes page renders and API calls succeed
+- Database connections working properly
+
+## Issues Resolved This Session
+
+### 1. PostgreSQL Password Authentication ✅ (FIXED)
+**Root Cause:** Password mismatch between DATABASE_URL and actual PostgreSQL password
+- POSTGRES_PASSWORD env var only sets password at container creation
+- Database was created with different password than what app was using
+- Fix: Ran `ALTER USER postgres PASSWORD '...'` in database terminal
+- After app restart, all API calls work correctly
+
+### 2. Nixpacks Build Cache Conflict ✅ (FIXED)
+**Root Cause:** Build script tried to delete `.next/cache` which is mounted as Docker volume
+- Error: `rm: cannot remove '.next/cache': Device or resource busy`
+- Fix: Modified build script to delete specific subdirectories instead:
+  ```
+  rm -rf .next/server .next/static .next/standalone .next/BUILD_ID .next/*.json 2>/dev/null
+  ```
+
+## Fixes Applied (All Sessions)
+
+### 1. Hydration Fix ✅
 - Removed nested `<html>` and `<body>` tags from `app/notes/layout.tsx`
 - Updated `NavigationEnhanced` to hide for all `/notes` routes
 
-### 2. Cache Invalidation Fix (Pushed, Needs Redeploy)
-- **Root cause**: "Failed to find Server Action" errors from stale cached JS
-- Build script now cleans `.next` before building: `rm -rf .next && next build ...`
-- Added `generateBuildId` to create unique IDs per deployment
-- Added `Cache-Control` headers:
-  - HTML pages: `max-age=0, must-revalidate` (always check for updates)
-  - Static assets: `max-age=31536000, immutable` (cached, hashed filenames)
+### 2. Cache Invalidation Fix ✅
+- Build script now cleans specific `.next` directories (preserving cache)
+- Added `generateBuildId` for unique build IDs
+- Added `Cache-Control` headers
 
-### 3. Domain Fix (Done in Coolify by user)
-- Added `https://amirhjalali.com` to Coolify domains (was missing non-www)
+### 3. Domain Fix ✅
+- Added `https://amirhjalali.com` to Coolify domains
 
-## Current Issues
+### 4. Database Password Fix ✅
+- Used ALTER USER to sync PostgreSQL password with DATABASE_URL
+- Restarted app container to pick up fixed database connection
 
-### Notes API "Failed to fetch" - 10,000+ errors
-- **Not Redis** - Redis logs show it's healthy
-- **Not database** - Worker shows Database URL set
-- **Cause**: Server Action mismatch from deployment cache
-- **Fix**: Redeploy with the new cache invalidation changes
-
-### After Redeploy Should Be Fixed
-- [ ] Server Action errors should stop
-- [ ] Note creation should work
-- [ ] No more "Failed to fetch" floods
-
-## Files Modified This Session
+## Files Modified
 - `app/notes/layout.tsx` - Removed nested HTML/body tags
 - `components/NavigationEnhanced.tsx` - Hide nav for /notes routes
-- `package.json` - Added `rm -rf .next` to build script
+- `package.json` - Updated build script to preserve Nixpacks cache
 - `next.config.mjs` - Added generateBuildId and Cache-Control headers
-
-## Commits Made
-1. `fix: Remove nested HTML from notes layout to fix hydration error #418`
-2. `fix: Add clean build and cache invalidation to prevent stale server actions`
-
-## To Verify After Redeploy
-1. Notes login renders properly (no black screen)
-2. No "Failed to find Server Action" errors in app logs
-3. Note creation works (Capture & Process button)
-4. Console errors should be minimal
 
 ## Environment Variables (Verified Working)
 - `REDIS_URL` - Set and connected
-- `DATABASE_URL` - Set
+- `DATABASE_URL` - Set and password now matches PostgreSQL
 - `OPENAI_API_KEY` - Set
+
+## Notes for Future Reference
+- PostgreSQL password changes via env var don't take effect on running containers
+- Use `ALTER USER postgres PASSWORD '...'` to change password on live database
+- Nixpacks mounts `.next/cache` as a Docker volume - don't try to delete it
