@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSession } from '@/app/actions/auth'
+import { getSession } from '@/lib/auth'
 import { getJobStatus } from '@/lib/queue/note-queue'
 
 export async function GET(

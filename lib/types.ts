@@ -51,7 +51,7 @@ export interface Draft {
 
 // Notes Feature Types
 export type NoteType = 'LINK' | 'TEXT' | 'IMAGE' | 'VIDEO' | 'PDF' | 'DOCUMENT'
-export type ProcessStatus = 'PENDING' | 'PROCESSING' | 'INDEXED' | 'COMPLETED' | 'FAILED'
+export type ProcessStatus = 'PENDING' | 'PROCESSING' | 'INDEXED' | 'COMPLETED' | 'PARTIAL' | 'FAILED'
 
 export interface NoteMetadata {
     domain?: string

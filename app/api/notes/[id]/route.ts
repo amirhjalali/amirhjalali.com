@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
-import { getSession } from '@/app/actions/auth'
+import { getSession } from '@/lib/auth'
 
 // GET /api/notes/[id] - Get single note by ID
 export async function GET(

@@ -75,6 +75,7 @@ enum ProcessStatus {
   PROCESSING
   INDEXED     // Content has been chunked and embedded
   COMPLETED
+  PARTIAL     // Some processing succeeded but errors occurred
   FAILED
 }
 

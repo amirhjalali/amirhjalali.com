@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSession } from '@/app/actions/auth'
+import { getSession } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { queueNoteProcessing } from '@/lib/queue/note-queue'
 
@@ -62,23 +62,51 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Queue all notes for processing
-    const jobPromises = processableNotes.map((note) => queueNoteProcessing(note.id))
-    const jobs = await Promise.all(jobPromises)
+    // Queue all notes for processing using Promise.allSettled for partial success handling
+    const jobResults = await Promise.allSettled(
+      processableNotes.map(async (note) => ({
+        noteId: note.id,
+        job: await queueNoteProcessing(note.id),
+      }))
+    )
 
-    // Update all note statuses to PENDING
-    await prisma.note.updateMany({
-      where: {
-        id: { in: processableNotes.map((n) => n.id) },
-      },
-      data: { processStatus: 'PENDING' },
-    })
+    // Separate successful and failed jobs
+    const successfulJobs: { noteId: string; jobId: string }[] = []
+    const failedJobs: { noteId: string; error: string }[] = []
+
+    for (const result of jobResults) {
+      if (result.status === 'fulfilled') {
+        successfulJobs.push({
+          noteId: result.value.noteId,
+          jobId: result.value.job.id as string,
+        })
+      } else {
+        // Find the note ID from the original array based on index
+        const index = jobResults.indexOf(result)
+        failedJobs.push({
+          noteId: processableNotes[index].id,
+          error: result.reason?.message || 'Unknown error',
+        })
+      }
+    }
+
+    // Update only successfully queued notes to PENDING
+    if (successfulJobs.length > 0) {
+      await prisma.note.updateMany({
+        where: {
+          id: { in: successfulJobs.map((j) => j.noteId) },
+        },
+        data: { processStatus: 'PENDING' },
+      })
+    }
 
     return NextResponse.json({
-      jobIds: jobs.map((job) => job.id as string),
-      queued: jobs.length,
-      skipped: noteIds.length - jobs.length,
-      message: `${jobs.length} notes queued for processing`,
+      jobIds: successfulJobs.map((j) => j.jobId),
+      queued: successfulJobs.length,
+      failed: failedJobs.length,
+      skipped: noteIds.length - processableNotes.length,
+      failedNotes: failedJobs.length > 0 ? failedJobs : undefined,
+      message: `${successfulJobs.length} notes queued for processing${failedJobs.length > 0 ? `, ${failedJobs.length} failed` : ''}`,
     })
   } catch (error: any) {
     console.error('Failed to queue batch processing:', error)

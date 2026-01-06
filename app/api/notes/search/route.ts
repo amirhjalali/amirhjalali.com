@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSession } from '@/app/actions/auth'
+import { getSession } from '@/lib/auth'
 import { semanticSearch } from '@/lib/embedding-service'
 import { prisma } from '@/lib/db'
 

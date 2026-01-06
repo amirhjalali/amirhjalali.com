@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
-import { getSession } from '@/app/actions/auth'
+import { getSession } from '@/lib/auth'
 import { NoteType, ProcessStatus } from '@/lib/types'
 import { queueNoteProcessing } from '@/lib/queue/note-queue'
 
@@ -131,26 +131,59 @@ export async function POST(request: NextRequest) {
     }
 
     let { imageUrl, content, type } = body
+    let imageUploadError: string | null = null
+
+    // Helper function to upload with retry
+    async function uploadWithRetry(
+      base64Data: string,
+      fileName: string,
+      contentType: string,
+      maxRetries = 3
+    ): Promise<string> {
+      let lastError: Error | null = null
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          return await uploadToR2(base64Data, fileName, contentType)
+        } catch (error: any) {
+          lastError = error
+          console.warn(`Upload attempt ${attempt}/${maxRetries} failed:`, error.message)
+          if (attempt < maxRetries) {
+            // Exponential backoff: 1s, 2s, 4s
+            await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt - 1) * 1000))
+          }
+        }
+      }
+      throw lastError
+    }
 
     // Handle Image Uploads to R2
-    try {
-      // 1. Check if imageUrl is a Base64 string
-      if (imageUrl && imageUrl.startsWith('data:image/')) {
-        console.log('🖼️ Uploading imageUrl to R2...')
-        const contentType = imageUrl.substring(5, imageUrl.indexOf(';'))
-        imageUrl = await uploadToR2(imageUrl, `note-image-${Date.now()}`, contentType)
-      }
-
-      // 2. If type is IMAGE and content is Base64, upload it
-      if (type === 'IMAGE' && content.startsWith('data:image/')) {
+    // 1. If type is IMAGE and content is Base64, this is critical - must succeed
+    if (type === 'IMAGE' && content.startsWith('data:image/')) {
+      try {
         console.log('🖼️ Uploading content (image) to R2...')
         const contentType = content.substring(5, content.indexOf(';'))
-        content = await uploadToR2(content, `note-content-${Date.now()}`, contentType)
+        content = await uploadWithRetry(content, `note-content-${Date.now()}`, contentType)
+      } catch (uploadError: any) {
+        console.error('❌ Failed to upload image content to R2:', uploadError)
+        return NextResponse.json(
+          { error: 'Failed to upload image', details: uploadError.message },
+          { status: 500 }
+        )
       }
-    } catch (uploadError) {
-      console.error('❌ Failed to upload image to R2:', uploadError)
-      // We continue even if upload fails, though the image might be broken or huge in DB
-      // Alternatively, we could return an error here.
+    }
+
+    // 2. Handle optional imageUrl (thumbnail) - non-critical, store error if fails
+    if (imageUrl && imageUrl.startsWith('data:image/')) {
+      try {
+        console.log('🖼️ Uploading imageUrl to R2...')
+        const contentType = imageUrl.substring(5, imageUrl.indexOf(';'))
+        imageUrl = await uploadWithRetry(imageUrl, `note-image-${Date.now()}`, contentType)
+      } catch (uploadError: any) {
+        console.error('❌ Failed to upload thumbnail to R2:', uploadError)
+        // For non-IMAGE types, this is optional - store error and continue
+        imageUploadError = uploadError.message
+        imageUrl = null // Don't store base64 in DB
+      }
     }
 
     const note = await prisma.note.create({
@@ -163,6 +196,8 @@ export async function POST(request: NextRequest) {
         topics: [],
         keyInsights: [],
         processStatus: 'PENDING' as ProcessStatus,
+        // Store upload error in metadata if thumbnail upload failed
+        metadata: imageUploadError ? { imageUploadError } : undefined,
       }
     })
 

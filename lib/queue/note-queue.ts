@@ -99,47 +99,6 @@ export async function getNoteQueueAsync(): Promise<Queue> {
 }
 
 /**
- * Get or create the note processing queue (sync version)
- * @deprecated Use getNoteQueueAsync instead - this version may cause issues if Redis unavailable
- */
-export function getNoteQueue(): Queue {
-  if (!noteQueue) {
-    // BullMQ requires a dedicated Redis connection with maxRetriesPerRequest: null
-    const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
-      maxRetriesPerRequest: null,
-      enableOfflineQueue: false,
-    })
-
-    // Handle connection errors to prevent crashes
-    connection.on('error', (err) => {
-      console.error('Queue Redis connection error:', err.message)
-    })
-
-    noteQueue = new Queue('note-processing', {
-      connection,
-      defaultJobOptions: {
-        attempts: 3,
-        backoff: {
-          type: 'exponential',
-          delay: 2000, // Start with 2 seconds, then 4s, 8s
-        },
-        removeOnComplete: {
-          age: 24 * 3600, // Keep completed jobs for 24 hours
-          count: 1000, // Keep last 1000 completed jobs
-        },
-        removeOnFail: {
-          age: 7 * 24 * 3600, // Keep failed jobs for 7 days
-        },
-      },
-    })
-
-    console.log('✅ Note processing queue initialized')
-  }
-
-  return noteQueue
-}
-
-/**
  * Add a note to the processing queue
  * Now uses async queue getter to fail fast if Redis unavailable
  */

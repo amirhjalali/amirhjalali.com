@@ -23,6 +23,7 @@ const statusColors: Record<ProcessStatus, string> = {
   PROCESSING: 'text-[#EAEAEA] bg-white/5 border-white/20',
   INDEXED: 'text-[#EAEAEA] bg-white/10 border-white/20',
   COMPLETED: 'text-[#EAEAEA] bg-white/10 border-white/20',
+  PARTIAL: 'text-[#EAEAEA] bg-white/5 border-white/15',
   FAILED: 'text-[#888888] bg-white/5 border-white/10',
 }
 

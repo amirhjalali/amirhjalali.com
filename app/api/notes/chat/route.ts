@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSession } from '@/app/actions/auth'
+import { getSession } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { getRelevantContext } from '@/lib/embedding-service'
 import OpenAI from 'openai'

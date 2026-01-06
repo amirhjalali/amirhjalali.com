@@ -214,13 +214,13 @@ export async function processNote(
 
       return updatedNote as unknown as Note
     } catch (processingError: any) {
-      // Partial success: update what we have and mark as completed
+      // Partial success: update what we have and mark as PARTIAL (not COMPLETED)
       console.warn(`Partial processing failure for note ${noteId}:`, processingError)
 
       const updatedNote = await prisma.note.update({
         where: { id: noteId },
         data: {
-          processStatus: 'COMPLETED',
+          processStatus: 'PARTIAL',
           processedAt: new Date(),
           processingError: processingError.message || 'Unknown error',
           metadata: metadata as any,
