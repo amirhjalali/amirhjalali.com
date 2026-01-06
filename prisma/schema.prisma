@@ -150,9 +150,21 @@ model Note {
   // Reading estimate
   readingTime   Int?          // Estimated reading time in minutes
 
+  // Spaced repetition for active recall
+  lastReviewedAt  DateTime?   // When was this note last reviewed
+  nextReviewAt    DateTime?   // When should it be reviewed next
+  reviewCount     Int         @default(0)  // Number of times reviewed
+  easeFactor      Float       @default(2.5) // SM-2 algorithm ease factor
+  interval        Int         @default(0)   // Current interval in days
+
   // Relationships
   articleRefs   NoteArticleRef[]
   chunks        NoteChunk[]
+
+  // Knowledge graph relationships
+  noteTopics    NoteTopic[]   // Topics extracted/assigned to this note
+  linkedTo      NoteLink[]    @relation("LinkedFrom") // Notes this note links to
+  linkedFrom    NoteLink[]    @relation("LinkedTo")   // Notes linking to this note
 
   // Timestamps
   createdAt     DateTime      @default(now())
@@ -165,6 +177,7 @@ model Note {
   @@index([pinned, createdAt])
   @@index([starred, createdAt])
   @@index([contentHash])
+  @@index([nextReviewAt])
 }
 
 // Chunks for RAG - breaking content into searchable pieces
@@ -229,4 +242,93 @@ model NoteArticleRef {
   @@unique([noteId, articleId])
   @@index([noteId])
   @@index([articleId])
+}
+
+// Knowledge Graph: Topic entity for connecting related notes
+model Topic {
+  id          String      @id @default(cuid())
+  name        String      @unique  // Lowercase, normalized topic name
+  displayName String?     // Human-readable display name
+
+  // Stats
+  noteCount   Int         @default(0)  // Number of notes with this topic
+
+  // Topic relationships (for topic clusters)
+  relatedTo   TopicRelation[] @relation("TopicFrom")
+  relatedFrom TopicRelation[] @relation("TopicTo")
+
+  // Notes with this topic
+  noteTopics  NoteTopic[]
+
+  // Timestamps
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([name])
+  @@index([noteCount])
+}
+
+// Many-to-many: Notes to Topics
+model NoteTopic {
+  id        String   @id @default(cuid())
+  noteId    String
+  topicId   String
+  note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  // How strong is the association (1-10)
+  relevance Float    @default(1.0)
+
+  // Was this auto-extracted or manually added?
+  autoExtracted Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  @@unique([noteId, topicId])
+  @@index([noteId])
+  @@index([topicId])
+}
+
+// Topic-to-Topic relationships for knowledge clustering
+model TopicRelation {
+  id            String   @id @default(cuid())
+  fromTopicId   String
+  toTopicId     String
+  fromTopic     Topic    @relation("TopicFrom", fields: [fromTopicId], references: [id], onDelete: Cascade)
+  toTopic       Topic    @relation("TopicTo", fields: [toTopicId], references: [id], onDelete: Cascade)
+
+  // Relationship strength (co-occurrence count or weight)
+  strength      Float    @default(1.0)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([fromTopicId, toTopicId])
+  @@index([fromTopicId])
+  @@index([toTopicId])
+}
+
+// Note-to-Note links for manual connections
+model NoteLink {
+  id          String   @id @default(cuid())
+  fromNoteId  String
+  toNoteId    String
+  fromNote    Note     @relation("LinkedFrom", fields: [fromNoteId], references: [id], onDelete: Cascade)
+  toNote      Note     @relation("LinkedTo", fields: [toNoteId], references: [id], onDelete: Cascade)
+
+  // Link type: related, reference, duplicate, etc.
+  linkType    String   @default("related")
+
+  // Optional description of the link
+  description String?
+
+  // Was this auto-detected or manually created?
+  autoLinked  Boolean  @default(false)
+
+  createdAt   DateTime @default(now())
+
+  @@unique([fromNoteId, toNoteId])
+  @@index([fromNoteId])
+  @@index([toNoteId])
+  @@index([linkType])
 }
