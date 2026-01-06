@@ -238,7 +238,7 @@ export default function QuickAdd({ onNoteAdded }: { onNoteAdded?: () => void }) 
                 <button
                   type="button"
                   onClick={() => setImageUrl(null)}
-                  className="p-1.5 bg-white/10 hover:bg-red-500/20 text-white rounded-full transition-colors"
+                  className="p-1.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>

@@ -620,7 +620,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                     </button>
                     <button
                       onClick={() => handleDelete(selectedDraft.id)}
-                      className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 border border-red-500/30 text-red-400 rounded-lg hover:bg-red-500/10 transition-colors font-mono text-xs uppercase tracking-widest"
+                      className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 border border-white/10 text-[#888888] rounded-lg hover:bg-white/5 hover:text-[#EAEAEA] hover:border-white/20 transition-colors font-mono text-xs uppercase tracking-widest"
                     >
                       <Trash2 className="w-3 h-3" />
                       Delete
@@ -671,7 +671,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                     </button>
                     <button
                       onClick={() => handleUnpublish(article.id)}
-                      className="p-2 hover:text-red-400 transition-colors text-[#888888]"
+                      className="p-2 hover:text-[#EAEAEA] transition-colors text-[#888888]"
                       title="Unpublish"
                     >
                       <LogOut className="w-4 h-4" />

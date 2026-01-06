@@ -35,7 +35,7 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const svgRef = useRef<SVGSVGElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(null)
 
   // Fetch graph data
   const fetchGraphData = useCallback(async () => {

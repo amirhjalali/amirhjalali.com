@@ -281,7 +281,7 @@ ${editedDraft.content}`
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowRegenContentModal(true)}
-              className="px-3 py-2 glass border border-border rounded-lg hover:border-ai-teal/50 text-xs font-mono uppercase tracking-widest flex items-center gap-2"
+              className="px-3 py-2 glass border border-border rounded-lg hover:border-white/30 text-xs font-mono uppercase tracking-widest flex items-center gap-2"
               title="Regenerate Content"
             >
               <Sparkles className="w-3 h-3" />
@@ -289,7 +289,7 @@ ${editedDraft.content}`
             </button>
             <button
               onClick={() => setShowRegenImageModal(true)}
-              className="px-3 py-2 glass border border-border rounded-lg hover:border-ai-teal/50 text-xs font-mono uppercase tracking-widest flex items-center gap-2"
+              className="px-3 py-2 glass border border-border rounded-lg hover:border-white/30 text-xs font-mono uppercase tracking-widest flex items-center gap-2"
               title="Regenerate Image"
             >
               <ImageIcon className="w-3 h-3" />
@@ -299,7 +299,7 @@ ${editedDraft.content}`
             <button
               onClick={handleUndo}
               disabled={historyIndex === 0}
-              className="p-2 glass border border-border rounded-lg hover:border-ai-teal/50 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="p-2 glass border border-border rounded-lg hover:border-white/30 disabled:opacity-30 disabled:cursor-not-allowed"
               title="Undo"
             >
               <Undo className="w-4 h-4" />
@@ -307,28 +307,28 @@ ${editedDraft.content}`
             <button
               onClick={handleRedo}
               disabled={historyIndex === history.length - 1}
-              className="p-2 glass border border-border rounded-lg hover:border-ai-teal/50 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="p-2 glass border border-border rounded-lg hover:border-white/30 disabled:opacity-30 disabled:cursor-not-allowed"
               title="Redo"
             >
               <Redo className="w-4 h-4" />
             </button>
             <button
               onClick={() => setShowStats(!showStats)}
-              className="p-2 glass border border-border rounded-lg hover:border-ai-teal/50"
+              className="p-2 glass border border-border rounded-lg hover:border-white/30"
               title="Statistics"
             >
               <BarChart3 className="w-4 h-4" />
             </button>
             <button
               onClick={handleExport}
-              className="p-2 glass border border-border rounded-lg hover:border-ai-teal/50"
+              className="p-2 glass border border-border rounded-lg hover:border-white/30"
               title="Export as Markdown"
             >
               <Download className="w-4 h-4" />
             </button>
             <button
               onClick={onClose}
-              className="p-2 glass border border-border rounded-lg hover:border-red-500/50"
+              className="p-2 glass border border-border rounded-lg hover:border-white/30"
             >
               <X className="w-4 h-4" />
             </button>
@@ -430,7 +430,7 @@ ${editedDraft.content}`
 
             {/* Image Upload Options */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <label className="flex items-center justify-center px-4 py-3 glass border border-dashed border-border rounded-xl cursor-pointer hover:border-ai-teal/50 transition-colors">
+              <label className="flex items-center justify-center px-4 py-3 glass border border-dashed border-border rounded-xl cursor-pointer hover:border-white/30 transition-colors">
                 <Upload className="w-5 h-5 mr-2" />
                 <span>Upload Image File</span>
                 <input
