@@ -33,17 +33,6 @@ export default function Home() {
             AI Strategy Consultant
           </p>
 
-          {/* Tertiary: Value prop - Readable supporting text using text-body-lg */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 1.2 }}
-            className="text-body-lg max-w-md mx-auto text-center"
-          >
-            Transforming AI ambition into business reality.
-            <br />
-            <span className="text-[#888888]">14 years of making data deliver results.</span>
-          </motion.p>
         </motion.div>
 
         {/* Enhanced Navigation with Scroll Indicator */}
