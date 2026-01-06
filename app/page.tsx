@@ -65,10 +65,6 @@ export default function Home() {
               <span className="text-[#888888] group-hover:text-[#EAEAEA] transition-colors duration-300">About</span>
               <span className="w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
             </Link>
-            <Link href="/contact" className="group flex flex-col items-center gap-2">
-              <span className="text-[#888888] group-hover:text-[#EAEAEA] transition-colors duration-300">Contact</span>
-              <span className="w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
-            </Link>
           </div>
         </motion.div>
 
