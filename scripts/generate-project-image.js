@@ -93,19 +93,20 @@ Photorealistic rendering with abstract elements. Think: if fact-checking was vis
   },
   camp_alborz: {
     name: 'Camp Alborz',
-    prompt: `A stylized screenshot of a Burning Man theme camp community website, displayed at a slight 3D angle floating in a pure black void.
+    prompt: `A stylized screenshot of a cultural community website, displayed at a slight 3D angle floating in a pure black void.
 
-The website has a dark theme with the following elements visible:
-- Hero section showing a stunning night photo of an art installation in the desert - a large geometric sculpture glowing with LED lights against a starry playa sky
-- Camp name "CAMP ALBORZ" in elegant typography
-- Navigation showing: Events, Gallery, Members, Our Story
-- A grid of photos showing: fire spinning performances, art cars, people dancing at sunset, a decorated camp with colorful fabrics and lights, group photos of happy campers in costume
-- Upcoming events section with "Burning Man 2025" and "Regional Burns" listed
-- The vibe is creative, welcoming, artistic - a community of makers and dreamers
+The website has an elegant, warm design with these elements:
+- Hero section featuring a breathtaking photo of the Alborz mountain range at golden hour, with Mount Damavand visible
+- "CAMP ALBORZ" in sophisticated serif typography
+- A Rumi poetry quote visible in elegant script
+- Navigation: Events, Gallery, Community, Our Story
+- Photo grid showing: friends gathering around a sunset campfire, people sharing a Persian feast outdoors, a group hiking in mountains, friends laughing at a chill outdoor party with string lights, cultural celebration with music
+- Warm earth tones - cream, taupe, warm browns
+- The vibe is sophisticated yet welcoming, Persian heritage meets modern community
 
-The screenshot has dark/noir color grading applied - desaturated with deep blacks, but the fire and LED elements retain warm orange/amber glow as accent colors.
+The screenshot has dark/noir color grading applied - the warm earth tones become muted but retain warmth, deep shadows, golden hour light preserved as accent.
 
-Subtle reflection beneath the floating screenshot. Clean, modern web design aesthetic. The image should immediately convey: art, fire, community, desert, creative expression, Burning Man culture.`,
+Subtle reflection beneath. Clean, minimalist web design. The image should convey: cultural community, mountain adventures, friendship, chill gatherings, Persian heritage, warmth and belonging.`,
     filename: 'camp_alborz_noir.png'
   },
   portfolio: {
