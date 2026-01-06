@@ -249,6 +249,41 @@ input[type="text"]::placeholder {
   padding: 16px;
 }
 
+/* Platform badge */
+.platform-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  font-size: 10px;
+  color: #EAEAEA;
+}
+
+.platform-badge svg {
+  flex-shrink: 0;
+}
+
+/* Platform-specific buttons */
+.capture-btn.transcript-btn,
+.capture-btn.thread-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.capture-btn.transcript-btn:hover,
+.capture-btn.thread-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* When there are 4 buttons, adjust grid */
+.capture-options:has(.transcript-btn),
+.capture-options:has(.thread-btn) {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 /* Toast notifications */
 .toast {
   position: fixed;

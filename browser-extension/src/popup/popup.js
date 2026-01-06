@@ -31,8 +31,15 @@ async function init() {
     }
   }
 
-  // Get selected text from content script
+  // Get page info from content script including platform detection
   try {
+    const pageInfo = await chrome.tabs.sendMessage(tab.id, { action: 'getPageInfo' })
+    if (pageInfo) {
+      currentPageInfo = { ...currentPageInfo, ...pageInfo }
+      // Show platform-specific UI
+      updatePlatformUI(pageInfo.platform)
+    }
+
     const response = await chrome.tabs.sendMessage(tab.id, { action: 'getSelection' })
     if (response?.selectedText) {
       selectedText = response.selectedText
@@ -53,6 +60,251 @@ async function init() {
 
   // Setup event listeners
   setupEventListeners()
+}
+
+// Platform icon SVGs (static content, safe for innerHTML)
+const PLATFORM_ICONS = {
+  youtube: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2c-.3-1-1-1.8-2-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.5.6c-1 .3-1.7 1.1-2 2.1C0 8 0 12 0 12s0 4 .5 5.8c.3 1 1 1.8 2 2.1 1.8.6 9.5.6 9.5.6s7.7 0 9.5-.6c1-.3 1.7-1.1 2-2.1.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.5v-7l6.3 3.5-6.3 3.5z"/></svg>',
+  twitter: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+  article: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h10v2H4v-2zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/></svg>',
+  github: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>',
+  podcast: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>',
+  transcript: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h10v2H4v-2zm0 4h16v2H4v-2z"/></svg>',
+  thread: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h4"/></svg>',
+}
+
+// Update UI based on detected platform
+function updatePlatformUI(platform) {
+  if (!platform) return
+
+  const platformBadge = document.createElement('span')
+  platformBadge.className = 'platform-badge'
+
+  // Build badge content based on platform (all static content)
+  let iconHtml = ''
+  let labelText = ''
+
+  switch (platform.name) {
+    case 'youtube':
+      iconHtml = PLATFORM_ICONS.youtube
+      labelText = 'YouTube' + (platform.hasTranscript ? ' (Transcript)' : '')
+      if (platform.hasTranscript) {
+        addTranscriptButton()
+      }
+      break
+
+    case 'twitter':
+      iconHtml = PLATFORM_ICONS.twitter
+      labelText = 'X' + (platform.isThread ? ' (Thread)' : '')
+      if (platform.isThread) {
+        addThreadButton()
+      }
+      break
+
+    case 'medium':
+    case 'substack':
+      iconHtml = PLATFORM_ICONS.article
+      labelText = platform.name.charAt(0).toUpperCase() + platform.name.slice(1)
+      break
+
+    case 'github':
+      iconHtml = PLATFORM_ICONS.github
+      labelText = 'GitHub' + (platform.isIssue ? ' Issue' : platform.isPR ? ' PR' : '')
+      break
+
+    case 'podcast':
+      iconHtml = PLATFORM_ICONS.podcast
+      labelText = 'Podcast'
+      break
+
+    default:
+      return
+  }
+
+  // Create badge with static icon and label
+  const iconSpan = document.createElement('span')
+  iconSpan.innerHTML = iconHtml // Safe: static SVG from PLATFORM_ICONS
+  const labelSpan = document.createElement('span')
+  labelSpan.textContent = labelText // Safe: using textContent
+
+  platformBadge.appendChild(iconSpan)
+  platformBadge.appendChild(labelSpan)
+
+  const header = document.querySelector('.header')
+  const existingBadge = header.querySelector('.platform-badge')
+  if (existingBadge) {
+    existingBadge.remove()
+  }
+  header.appendChild(platformBadge)
+}
+
+// Add transcript button for YouTube videos
+function addTranscriptButton() {
+  const captureOptions = document.querySelector('.capture-options')
+  const transcriptBtn = document.createElement('button')
+  transcriptBtn.className = 'capture-btn transcript-btn'
+  transcriptBtn.id = 'captureTranscript'
+  transcriptBtn.title = 'Save with transcript'
+
+  const iconSpan = document.createElement('span')
+  iconSpan.innerHTML = PLATFORM_ICONS.transcript // Safe: static SVG
+  const textSpan = document.createElement('span')
+  textSpan.textContent = '+ Transcript'
+
+  transcriptBtn.appendChild(iconSpan)
+  transcriptBtn.appendChild(textSpan)
+  transcriptBtn.addEventListener('click', saveWithTranscript)
+  captureOptions.appendChild(transcriptBtn)
+}
+
+// Add thread button for Twitter threads
+function addThreadButton() {
+  const captureOptions = document.querySelector('.capture-options')
+  const threadBtn = document.createElement('button')
+  threadBtn.className = 'capture-btn thread-btn'
+  threadBtn.id = 'captureThread'
+  threadBtn.title = 'Save entire thread'
+
+  const iconSpan = document.createElement('span')
+  iconSpan.innerHTML = PLATFORM_ICONS.thread // Safe: static SVG
+  const textSpan = document.createElement('span')
+  textSpan.textContent = 'Save Thread'
+
+  threadBtn.appendChild(iconSpan)
+  threadBtn.appendChild(textSpan)
+  threadBtn.addEventListener('click', saveTwitterThread)
+  captureOptions.appendChild(threadBtn)
+}
+
+// Save YouTube video with transcript
+async function saveWithTranscript() {
+  if (!currentPageInfo?.url) return
+
+  const btn = document.getElementById('captureTranscript')
+  btn.disabled = true
+  btn.textContent = 'Loading...'
+
+  try {
+    const settings = await chrome.storage.sync.get(['apiUrl', 'authToken'])
+    const apiUrl = settings.apiUrl || API_BASE_URL
+
+    // Note: The backend will fetch the transcript automatically for YouTube URLs
+    const noteData = {
+      content: currentPageInfo.url,
+      type: 'LINK',
+      sourceUrl: currentPageInfo.url,
+      sourceTitle: currentPageInfo.title,
+      tags: elements.tagsInput.value.split(',').map(t => t.trim()).filter(Boolean),
+      metadata: {
+        requestTranscript: true,
+        platform: 'youtube',
+      },
+    }
+
+    const response = await fetch(`${apiUrl}/api/notes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${settings.authToken || ''}`,
+      },
+      body: JSON.stringify(noteData),
+    })
+
+    if (response.ok) {
+      const savedNote = await response.json()
+      await addToRecentSaves(savedNote)
+      showToast('Saved with transcript!')
+      elements.noteContent.value = ''
+      elements.tagsInput.value = ''
+    } else {
+      throw new Error('Failed to save')
+    }
+  } catch (error) {
+    console.error('Save with transcript error:', error)
+    showToast('Failed to save')
+  } finally {
+    btn.disabled = false
+    // Restore button content
+    btn.textContent = ''
+    const iconSpan = document.createElement('span')
+    iconSpan.innerHTML = PLATFORM_ICONS.transcript
+    const textSpan = document.createElement('span')
+    textSpan.textContent = '+ Transcript'
+    btn.appendChild(iconSpan)
+    btn.appendChild(textSpan)
+  }
+}
+
+// Save Twitter thread
+async function saveTwitterThread() {
+  const btn = document.getElementById('captureThread')
+  btn.disabled = true
+  btn.textContent = 'Extracting...'
+
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+    const threadData = await chrome.tabs.sendMessage(tab.id, { action: 'extractTwitterThread' })
+
+    if (!threadData?.thread) {
+      showToast('Could not extract thread')
+      return
+    }
+
+    const settings = await chrome.storage.sync.get(['apiUrl', 'authToken'])
+    const apiUrl = settings.apiUrl || API_BASE_URL
+
+    // Format thread content
+    const threadContent = threadData.thread.tweets
+      .map((t, i) => `${i + 1}. ${t.text}`)
+      .join('\n\n')
+
+    const noteData = {
+      content: currentPageInfo.url,
+      type: 'LINK',
+      sourceUrl: currentPageInfo.url,
+      sourceTitle: `Thread by ${threadData.thread.author}`,
+      fullContent: threadContent,
+      tags: ['twitter-thread', ...elements.tagsInput.value.split(',').map(t => t.trim()).filter(Boolean)],
+      metadata: {
+        platform: 'twitter',
+        isThread: true,
+        tweetCount: threadData.thread.tweetCount,
+        author: threadData.thread.author,
+      },
+    }
+
+    const response = await fetch(`${apiUrl}/api/notes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${settings.authToken || ''}`,
+      },
+      body: JSON.stringify(noteData),
+    })
+
+    if (response.ok) {
+      const savedNote = await response.json()
+      await addToRecentSaves(savedNote)
+      showToast(`Thread saved! (${threadData.thread.tweetCount} tweets)`)
+      elements.noteContent.value = ''
+      elements.tagsInput.value = ''
+    } else {
+      throw new Error('Failed to save')
+    }
+  } catch (error) {
+    console.error('Save thread error:', error)
+    showToast('Failed to save thread')
+  } finally {
+    btn.disabled = false
+    // Restore button content
+    btn.textContent = ''
+    const iconSpan = document.createElement('span')
+    iconSpan.innerHTML = PLATFORM_ICONS.thread
+    const textSpan = document.createElement('span')
+    textSpan.textContent = 'Save Thread'
+    btn.appendChild(iconSpan)
+    btn.appendChild(textSpan)
+  }
 }
 
 // Check API status
