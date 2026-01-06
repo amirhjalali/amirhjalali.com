@@ -7,6 +7,7 @@ import GoogleAnalytics from '@/components/GoogleAnalytics'
 import StructuredData from '@/components/StructuredData'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import CustomCursor from '@/components/CustomCursor'
+import Footer from '@/components/Footer'
 import './globals.css'
 
 // Satoshi - Distinctive sans-serif to replace Inter
@@ -136,6 +137,7 @@ export default function RootLayout({
           <main id="main-content" className="pt-20" role="main">
             {children}
           </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

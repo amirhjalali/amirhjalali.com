@@ -35,7 +35,15 @@ export default function FeaturedProjectCard({ project }: FeaturedProjectCardProp
         aria-label={`View featured project: ${project.title}`}
         className="block"
       >
-        <article className="relative grid md:grid-cols-2 gap-0 border border-white/10 rounded-2xl overflow-hidden bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_40px_rgba(255,255,255,0.03)]">
+        {/* Enhanced featured card with emphasis border and larger presence */}
+        <article className="relative grid md:grid-cols-[1.2fr,1fr] gap-0 card-border-emphasis overflow-hidden bg-white/[0.03] hover:bg-white/[0.05] transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_60px_rgba(255,255,255,0.04)] min-h-[400px] md:min-h-[500px]">
+          {/* Featured Badge */}
+          <div className="absolute top-6 left-6 z-10">
+            <span className="text-micro px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/10">
+              Featured Project
+            </span>
+          </div>
+
           {/* Image Section */}
           <div className="relative aspect-[16/10] md:aspect-auto overflow-hidden">
             <LazyImage
@@ -57,15 +65,12 @@ export default function FeaturedProjectCard({ project }: FeaturedProjectCardProp
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#666666] mb-4 block">
-                Featured Project
-              </span>
-
-              <h2 className="text-3xl md:text-4xl font-serif font-light mb-4 text-[#EAEAEA] group-hover:text-white transition-colors">
+              {/* Title - noticeably larger using text-section-title */}
+              <h2 className="text-section-title mb-4 group-hover:text-white transition-colors">
                 {project.title}
               </h2>
 
-              <p className="text-[#888888] text-lg mb-6 leading-relaxed">
+              <p className="text-body-lg mb-6 leading-relaxed">
                 {project.longDescription}
               </p>
 
@@ -73,15 +78,15 @@ export default function FeaturedProjectCard({ project }: FeaturedProjectCardProp
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] px-3 py-1.5 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
+                    className="text-micro px-3 py-1.5 border border-white/10 rounded-full text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              <div className="flex items-center gap-2 text-[#888888] group-hover:text-white transition-colors">
-                <span className="text-sm font-mono uppercase tracking-widest">View Project</span>
+              <div className="flex items-center gap-2 text-label text-[#888888] group-hover:text-white transition-colors">
+                <span>View Project</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </div>
             </motion.div>

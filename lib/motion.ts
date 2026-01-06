@@ -172,3 +172,32 @@ export const pageTransition = {
     transition: { duration: durations.fast, ease: easings.sharpOut }
   }
 }
+
+/**
+ * Animation Priority System
+ *
+ * Level 1 (Always): Page fade transitions, essential hover feedback
+ * Level 2 (Default): Scroll reveals for main content, card hovers
+ * Level 3 (Optional): Magnetic effects, custom cursor, loading sequence
+ * Level 4 (Reduced Motion): Disable Levels 2-3, keep only Level 1
+ */
+
+// Utility to check user preference for reduced motion
+export const shouldAnimate = {
+  // Check user preference for reduced motion
+  prefersReducedMotion: () =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+}
+
+// Get animation variants based on reduced motion preference
+export const getReducedMotionVariants = (fullVariants: Record<string, unknown>) => {
+  if (typeof window !== 'undefined' && shouldAnimate.prefersReducedMotion()) {
+    // Return minimal fade-only variants for reduced motion
+    return {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.01 } }
+    }
+  }
+  return fullVariants
+}

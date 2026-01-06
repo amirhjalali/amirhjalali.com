@@ -38,15 +38,18 @@ export function ExpandableContent({
 
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-1 mt-3 text-[10px] font-mono uppercase tracking-widest text-[#666666] hover:text-white transition-colors group"
+        className="flex items-center gap-2 mt-4 text-label text-[#666666] hover:text-[#EAEAEA] transition-colors group"
         aria-expanded={isExpanded}
       >
-        {isExpanded ? showLessText : showMoreText}
+        <span className="border-b border-dashed border-current pb-0.5">
+          {isExpanded ? showLessText : showMoreText}
+        </span>
         <motion.div
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
+          className="transition-transform"
         >
-          <ChevronDown className="w-3 h-3 group-hover:translate-y-0.5 transition-transform" />
+          <ChevronDown className="w-3 h-3" />
         </motion.div>
       </button>
     </div>
@@ -91,15 +94,18 @@ export function ExpandableList<T>({
       {hiddenCount > 0 && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-1 mt-3 text-[10px] font-mono uppercase tracking-widest text-[#666666] hover:text-white transition-colors group"
+          className="flex items-center gap-2 mt-4 text-label text-[#666666] hover:text-[#EAEAEA] transition-colors group"
           aria-expanded={isExpanded}
         >
-          {isExpanded ? 'Show less' : `Show ${hiddenCount} more`}
+          <span className="border-b border-dashed border-current pb-0.5">
+            {isExpanded ? 'Show less' : `Show ${hiddenCount} more`}
+          </span>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.2 }}
+            className="transition-transform"
           >
-            <ChevronDown className="w-3 h-3 group-hover:translate-y-0.5 transition-transform" />
+            <ChevronDown className="w-3 h-3" />
           </motion.div>
         </button>
       )}

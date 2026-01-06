@@ -3,11 +3,12 @@
 import { useEffect, useState, useCallback } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { springConfigs } from '@/lib/motion'
+import { shouldUseComplexAnimations } from '@/lib/performance'
 
 export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
-  const [isMobile, setIsMobile] = useState(true)
+  const [shouldRender, setShouldRender] = useState(false)
 
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
@@ -22,9 +23,12 @@ export function CustomCursor() {
   }, [cursorX, cursorY, isVisible])
 
   useEffect(() => {
-    // Check if device is touch-based
+    // Check if device supports custom cursor
+    // Only render on non-touch, high-performance devices
     const checkDevice = () => {
-      setIsMobile(window.matchMedia('(pointer: coarse)').matches)
+      const isMobile = window.matchMedia('(pointer: coarse)').matches
+      const hasPerformance = shouldUseComplexAnimations()
+      setShouldRender(!isMobile && hasPerformance)
     }
 
     checkDevice()
@@ -34,7 +38,7 @@ export function CustomCursor() {
   }, [])
 
   useEffect(() => {
-    if (isMobile) return
+    if (!shouldRender) return
 
     const handleHoverStart = () => setIsHovering(true)
     const handleHoverEnd = () => setIsHovering(false)
@@ -57,10 +61,10 @@ export function CustomCursor() {
         el.removeEventListener('mouseleave', handleHoverEnd)
       })
     }
-  }, [isMobile, moveCursor])
+  }, [shouldRender, moveCursor])
 
-  // Don't render on mobile or touch devices
-  if (isMobile) return null
+  // Don't render on mobile, touch devices, or low-performance devices
+  if (!shouldRender) return null
 
   return (
     <>

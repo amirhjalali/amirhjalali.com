@@ -63,12 +63,19 @@ export default function NavigationEnhanced() {
                     key={item.href}
                     href={item.href}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`text-xs font-mono uppercase tracking-widest transition-colors ${isActive
-                      ? 'text-white'
+                    className={`relative text-label transition-colors py-2 ${isActive
+                      ? 'text-[#EAEAEA]'
                       : 'text-[#888888] hover:text-[#EAEAEA]'
                       }`}
                   >
                     {item.label}
+                    {isActive && (
+                      <motion.div
+                        layoutId="desktop-nav-indicator"
+                        className="absolute -bottom-0.5 left-0 right-0 h-px bg-white/30"
+                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                      />
+                    )}
                   </Link>
                 )
               })}
@@ -127,22 +134,29 @@ export default function NavigationEnhanced() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center lg:hidden"
+            className="fixed inset-0 z-[100] bg-[#050505] flex flex-col lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation menu"
           >
-            {/* Close button */}
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="absolute top-6 right-6 p-2 text-[#888888] hover:text-white transition-colors"
-              aria-label="Close menu"
-            >
-              <X className="w-6 h-6" />
-            </button>
+            {/* Mobile menu header with branding */}
+            <div className="flex items-center justify-between px-6 py-6 border-b border-white/5">
+              <Link href="/" onClick={() => setMobileOpen(false)}>
+                <span className="text-xl font-serif font-light text-[#EAEAEA]">
+                  Amir H. Jalali
+                </span>
+              </Link>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-3 -mr-3 text-[#888888] hover:text-[#EAEAEA] transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
 
             {/* Navigation Links - centered, stacked */}
-            <nav className="flex flex-col items-center gap-8">
+            <nav className="flex-1 flex flex-col items-center justify-center gap-8">
               {navItems.map((item, index) => {
                 const isActive = pathname === item.href
                 return (
@@ -160,10 +174,17 @@ export default function NavigationEnhanced() {
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
                       className={`text-3xl font-serif font-light transition-colors ${
-                        isActive ? 'text-white' : 'text-[#888888] hover:text-white'
+                        isActive ? 'text-[#EAEAEA]' : 'text-[#666666] hover:text-[#EAEAEA]'
                       }`}
                     >
                       {item.label}
+                      {isActive && (
+                        <motion.div
+                          layoutId="mobile-nav-indicator"
+                          className="h-px w-full bg-white/30 mt-1"
+                          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                        />
+                      )}
                     </Link>
                   </motion.div>
                 )
@@ -175,12 +196,12 @@ export default function NavigationEnhanced() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.4 }}
-              className="absolute bottom-8"
+              className="py-8 text-center border-t border-white/5"
             >
               <Link
                 href="/"
                 onClick={() => setMobileOpen(false)}
-                className="text-xs font-mono uppercase tracking-widest text-[#666666] hover:text-white transition-colors"
+                className="text-label text-[#666666] hover:text-[#EAEAEA] transition-colors"
               >
                 Home
               </Link>
