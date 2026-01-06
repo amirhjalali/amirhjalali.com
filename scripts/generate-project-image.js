@@ -93,21 +93,19 @@ Photorealistic rendering with abstract elements. Think: if fact-checking was vis
   },
   camp_alborz: {
     name: 'Camp Alborz',
-    prompt: `The majestic Alborz mountain range silhouetted against a star-filled night sky, with ethereal threads of light connecting points across the peaks and valleys.
+    prompt: `A stylized screenshot of a Burning Man theme camp community website, displayed at a slight 3D angle floating in a pure black void.
 
-The mountains dominate the lower third of the frame — dramatic, ancient, grounding. Snow-capped peaks catch faint moonlight. This is Mount Damavand and its surrounding range, rendered with reverence.
+The website has a dark theme with the following elements visible:
+- Hero section showing a stunning night photo of an art installation in the desert - a large geometric sculpture glowing with LED lights against a starry playa sky
+- Camp name "CAMP ALBORZ" in elegant typography
+- Navigation showing: Events, Gallery, Members, Our Story
+- A grid of photos showing: fire spinning performances, art cars, people dancing at sunset, a decorated camp with colorful fabrics and lights, group photos of happy campers in costume
+- Upcoming events section with "Burning Man 2025" and "Regional Burns" listed
+- The vibe is creative, welcoming, artistic - a community of makers and dreamers
 
-Above and across the mountains, a constellation of small glowing points represents people — scattered across the peaks, in valleys, extending beyond the frame to suggest a global network. Thin, delicate lines of light connect these points, forming a web of human connection that spans continents.
+The screenshot has dark/noir color grading applied - desaturated with deep blacks, but the fire and LED elements retain warm orange/amber glow as accent colors.
 
-The connections pulse gently with warmth — despite the cold mountain setting and dark sky, there's an unmistakable sense of human warmth, of friendship, of shared dreams.
-
-A single campfire glows in a valley — tiny but warm — the origin point, the gathering place from which all connections spread.
-
-The mood: Belonging. Legacy. Friends and family across the world, united by shared experiences and dreams.
-
-Color palette: Deep night sky blacks and dark blues, silver moonlight on peaks, warm golden-white for the connection points and campfire. Stars as tiny white dots.
-
-Cinematic, epic landscape photography meets data visualization. Think: if human connection was mapped across sacred mountains.`,
+Subtle reflection beneath the floating screenshot. Clean, modern web design aesthetic. The image should immediately convey: art, fire, community, desert, creative expression, Burning Man culture.`,
     filename: 'camp_alborz_noir.png'
   },
   portfolio: {
