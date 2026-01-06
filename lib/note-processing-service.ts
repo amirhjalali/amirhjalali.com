@@ -435,10 +435,20 @@ Return in JSON format with key: sentiment`
 }
 
 /**
- * Download and optimize media (placeholder for future implementation)
+ * Download and store media in R2
  */
 export async function processMedia(url: string): Promise<string> {
-  // TODO: Implement media download and optimization
-  // For now, just return the original URL
-  return url
+  const { processMediaUrl } = await import('./media-processing-service')
+
+  try {
+    const result = await processMediaUrl(url)
+    if (result?.url) {
+      return result.url
+    }
+    // If processing fails, return original URL as fallback
+    return url
+  } catch (error) {
+    console.warn('Media processing failed, using original URL:', error)
+    return url
+  }
 }

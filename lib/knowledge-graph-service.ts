@@ -41,6 +41,7 @@ export async function getOrCreateTopic(topicName: string): Promise<string> {
 
 /**
  * Link a note to its topics, creating topic entities as needed
+ * Uses a transaction to ensure all-or-nothing operation
  */
 export async function linkNoteToTopics(
   noteId: string,
@@ -49,30 +50,70 @@ export async function linkNoteToTopics(
 ): Promise<void> {
   if (!topics || topics.length === 0) return
 
-  for (const topic of topics) {
-    try {
-      const topicId = await getOrCreateTopic(topic)
+  // Normalize and deduplicate topics
+  const normalizedTopics = [...new Set(topics.map(normalizeTopic).filter(t => t.length > 0))]
 
-      // Create or update the NoteTopic link
-      await prisma.noteTopic.upsert({
-        where: {
-          noteId_topicId: { noteId, topicId },
-        },
-        create: {
-          noteId,
-          topicId,
-          autoExtracted,
-        },
-        update: {
-          autoExtracted,
-        },
-      })
+  if (normalizedTopics.length === 0) return
 
-      // Update topic note count
-      await updateTopicNoteCount(topicId)
-    } catch (error) {
-      console.warn(`Failed to link topic "${topic}" to note ${noteId}:`, error)
-    }
+  try {
+    // Use a transaction to ensure atomicity
+    await prisma.$transaction(async (tx) => {
+      const topicIds: string[] = []
+
+      // First, get or create all topics
+      for (const topic of topics) {
+        const normalized = normalizeTopic(topic)
+        if (!normalized) continue
+
+        // Find or create topic within transaction
+        let existing = await tx.topic.findUnique({
+          where: { name: normalized },
+        })
+
+        if (!existing) {
+          existing = await tx.topic.create({
+            data: {
+              name: normalized,
+              displayName: topic.trim(),
+            },
+          })
+        }
+
+        topicIds.push(existing.id)
+      }
+
+      // Then, create all NoteTopic links
+      for (const topicId of topicIds) {
+        await tx.noteTopic.upsert({
+          where: {
+            noteId_topicId: { noteId, topicId },
+          },
+          create: {
+            noteId,
+            topicId,
+            autoExtracted,
+          },
+          update: {
+            autoExtracted,
+          },
+        })
+      }
+
+      // Finally, update all topic note counts
+      for (const topicId of topicIds) {
+        const count = await tx.noteTopic.count({
+          where: { topicId },
+        })
+
+        await tx.topic.update({
+          where: { id: topicId },
+          data: { noteCount: count },
+        })
+      }
+    })
+  } catch (error) {
+    console.error(`Failed to link topics to note ${noteId}:`, error)
+    throw error // Re-throw to allow caller to handle
   }
 }
 

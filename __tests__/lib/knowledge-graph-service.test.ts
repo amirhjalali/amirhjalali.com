@@ -112,45 +112,58 @@ describe('knowledge-graph-service', () => {
   })
 
   describe('linkNoteToTopics', () => {
+    let mockTx: any
+
     beforeEach(() => {
-      // Default mock setup for topic operations
-      prismaMock.topic.findUnique.mockResolvedValue(null)
-      prismaMock.topic.create.mockImplementation((args: any) =>
-        Promise.resolve({
-          id: `topic-${args.data.name}`,
-          name: args.data.name,
-          displayName: args.data.displayName,
-          noteCount: 0,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      )
-      prismaMock.noteTopic.upsert.mockResolvedValue({} as any)
-      prismaMock.noteTopic.count.mockResolvedValue(1)
-      prismaMock.topic.update.mockResolvedValue({} as any)
+      // Create mock transaction object
+      mockTx = {
+        topic: {
+          findUnique: jest.fn().mockResolvedValue(null),
+          create: jest.fn().mockImplementation((args: any) =>
+            Promise.resolve({
+              id: `topic-${args.data.name}`,
+              name: args.data.name,
+              displayName: args.data.displayName,
+              noteCount: 0,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            })
+          ),
+          update: jest.fn().mockResolvedValue({} as any),
+        },
+        noteTopic: {
+          upsert: jest.fn().mockResolvedValue({} as any),
+          count: jest.fn().mockResolvedValue(1),
+        },
+      }
+
+      // Mock $transaction to execute the callback with mockTx
+      prismaMock.$transaction.mockImplementation(async (callback: any) => {
+        return callback(mockTx)
+      })
     })
 
     it('should link topics to a note', async () => {
       await linkNoteToTopics('note-123', ['JavaScript', 'TypeScript'])
 
-      expect(prismaMock.noteTopic.upsert).toHaveBeenCalledTimes(2)
+      expect(mockTx.noteTopic.upsert).toHaveBeenCalledTimes(2)
     })
 
     it('should do nothing when topics array is empty', async () => {
       await linkNoteToTopics('note-123', [])
 
-      expect(prismaMock.topic.findUnique).not.toHaveBeenCalled()
-      expect(prismaMock.noteTopic.upsert).not.toHaveBeenCalled()
+      // $transaction should not be called for empty topics
+      expect(prismaMock.$transaction).not.toHaveBeenCalled()
     })
 
     it('should do nothing when topics is undefined', async () => {
       await linkNoteToTopics('note-123', undefined as any)
 
-      expect(prismaMock.topic.findUnique).not.toHaveBeenCalled()
+      expect(prismaMock.$transaction).not.toHaveBeenCalled()
     })
 
     it('should set autoExtracted flag correctly', async () => {
-      prismaMock.topic.findUnique.mockResolvedValue({
+      mockTx.topic.findUnique.mockResolvedValue({
         id: 'topic-existing',
         name: 'react',
         displayName: 'React',
@@ -161,7 +174,7 @@ describe('knowledge-graph-service', () => {
 
       await linkNoteToTopics('note-123', ['React'], false)
 
-      expect(prismaMock.noteTopic.upsert).toHaveBeenCalledWith(
+      expect(mockTx.noteTopic.upsert).toHaveBeenCalledWith(
         expect.objectContaining({
           create: expect.objectContaining({
             autoExtracted: false,
@@ -171,26 +184,15 @@ describe('knowledge-graph-service', () => {
     })
 
     it('should continue processing when one topic fails', async () => {
-      prismaMock.topic.findUnique
+      // Transaction will re-throw errors, so if one topic fails, the whole transaction fails
+      mockTx.topic.findUnique
         .mockResolvedValueOnce(null)
         .mockRejectedValueOnce(new Error('DB Error'))
-        .mockResolvedValueOnce(null)
 
-      prismaMock.topic.create.mockImplementation((args: any) =>
-        Promise.resolve({
-          id: `topic-${args.data.name}`,
-          name: args.data.name,
-          displayName: args.data.displayName,
-          noteCount: 0,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      )
-
-      // Should not throw, should continue processing
+      // With transactions, errors are re-thrown
       await expect(
-        linkNoteToTopics('note-123', ['Topic1', 'Topic2', 'Topic3'])
-      ).resolves.not.toThrow()
+        linkNoteToTopics('note-123', ['Topic1', 'Topic2'])
+      ).rejects.toThrow('DB Error')
     })
   })
 

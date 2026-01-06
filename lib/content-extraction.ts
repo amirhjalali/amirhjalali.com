@@ -233,6 +233,33 @@ export async function extractContentFromUrl(url: string): Promise<ExtractedConte
   const domain = extractDomain(url)
 
   try {
+    // Check if URL is a PDF and handle separately
+    const { isPdfUrl, extractPdfFromUrl, generatePdfExcerpt } = await import('./pdf-processing-service')
+    if (isPdfUrl(url)) {
+      const pdfResult = await extractPdfFromUrl(url)
+      return {
+        title: pdfResult.title || null,
+        content: pdfResult.textContent,
+        textContent: pdfResult.textContent,
+        excerpt: generatePdfExcerpt(pdfResult.textContent),
+        byline: pdfResult.author || null,
+        siteName: domain,
+        favicon: null,
+        ogImage: null,
+        publishedTime: null,
+        wordCount: pdfResult.wordCount,
+        readingTime: pdfResult.readingTime,
+        domain,
+        sourceType: 'document',
+        contentHash: pdfResult.contentHash,
+        metadata: {
+          pageCount: String(pdfResult.pageCount),
+          ...(pdfResult.subject && { subject: pdfResult.subject }),
+          ...(pdfResult.keywords && { keywords: pdfResult.keywords.join(', ') }),
+        },
+      }
+    }
+
     // Fetch with timeout
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 15000)
