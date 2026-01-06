@@ -7,12 +7,17 @@ import {
   Sparkles,
   X,
   LayoutGrid,
-  List
+  List,
+  Network,
+  Brain,
+  Settings
 } from 'lucide-react'
 import QuickAdd from './components/QuickAdd'
 import NotesList from './components/NotesList'
 import NoteChat from './components/NoteChat'
 import SemanticSearch from './components/SemanticSearch'
+import KnowledgeGraph from './components/KnowledgeGraph'
+import ReviewQueue from './components/ReviewQueue'
 
 type ViewMode = 'grid' | 'list'
 type Panel = 'chat' | 'search' | null
@@ -23,6 +28,8 @@ export default function NotesPageClient() {
   const [activePanel, setActivePanel] = useState<Panel>(null)
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [isMobile, setIsMobile] = useState(false)
+  const [showGraph, setShowGraph] = useState(false)
+  const [showReview, setShowReview] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024)
@@ -79,6 +86,24 @@ export default function NotesPageClient() {
                 <List className="w-4 h-4" />
               </button>
             </div>
+
+            {/* Knowledge Graph Toggle */}
+            <button
+              onClick={() => setShowGraph(true)}
+              className="p-2 rounded-lg transition-colors bg-white/5 hover:bg-white/10 text-[#888888] hover:text-[#EAEAEA]"
+              title="Knowledge Graph"
+            >
+              <Network className="w-4 h-4" />
+            </button>
+
+            {/* Review Queue Toggle */}
+            <button
+              onClick={() => setShowReview(true)}
+              className="p-2 rounded-lg transition-colors bg-white/5 hover:bg-white/10 text-[#888888] hover:text-[#EAEAEA]"
+              title="Review Queue"
+            >
+              <Brain className="w-4 h-4" />
+            </button>
 
             {/* AI Chat Toggle */}
             <button
@@ -184,6 +209,12 @@ export default function NotesPageClient() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Knowledge Graph Modal */}
+      <KnowledgeGraph isOpen={showGraph} onClose={() => setShowGraph(false)} />
+
+      {/* Review Queue Modal */}
+      <ReviewQueue isOpen={showReview} onClose={() => setShowReview(false)} />
     </div>
   )
 }
