@@ -3,6 +3,7 @@ import type { Note, NoteType, NoteMetadata } from '@/lib/types'
 import OpenAI from 'openai'
 import { extractContentFromUrl, extractVideoInfo, type ExtractedContent } from './content-extraction'
 import { indexNote as createEmbeddings } from './embedding-service'
+import { fetchYouTubeTranscript, isYouTubeUrl, formatDuration } from './youtube-transcript'
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -96,6 +97,52 @@ export async function processNote(
           metadata = {
             ...metadata,
             video: videoInfo as any,
+          }
+        }
+
+        // Extract YouTube transcript if applicable
+        if (isYouTubeUrl(note.content)) {
+          try {
+            console.log(`Extracting YouTube transcript for: ${note.content}`)
+            const transcript = await fetchYouTubeTranscript(note.content)
+
+            if (transcript) {
+              // Use transcript as the full content for AI analysis
+              fullContent = transcript.fullText
+              wordCount = transcript.wordCount
+              readingTime = Math.max(1, Math.ceil(wordCount / 200))
+
+              // Update metadata with transcript info
+              metadata = {
+                ...metadata,
+                transcript: {
+                  available: true,
+                  wordCount: transcript.wordCount,
+                  videoDuration: transcript.duration,
+                  videoDurationFormatted: formatDuration(transcript.duration),
+                },
+              }
+
+              console.log(`Transcript extracted: ${transcript.wordCount} words, ${formatDuration(transcript.duration)} duration`)
+            } else {
+              // No transcript available - mark in metadata
+              metadata = {
+                ...metadata,
+                transcript: {
+                  available: false,
+                  reason: 'Transcript not available or disabled for this video',
+                },
+              }
+            }
+          } catch (transcriptError) {
+            console.warn('Failed to extract YouTube transcript:', transcriptError)
+            metadata = {
+              ...metadata,
+              transcript: {
+                available: false,
+                reason: 'Error extracting transcript',
+              },
+            }
           }
         }
       } else if (note.type === 'TEXT') {
