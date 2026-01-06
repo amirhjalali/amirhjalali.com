@@ -21,20 +21,21 @@ const openai = new OpenAI({
 const projectConfigs = {
   gabooja: {
     name: 'Gabooja',
-    prompt: `A sleek, dark monochrome mockup of an e-commerce creator platform interface.
+    prompt: `A single premium black hoodie floating majestically in an infinite void of absolute darkness.
 
-The scene shows a stylized app/website UI with:
-- A creator profile showcasing custom merchandise (t-shirts, hoodies, mugs)
-- Product cards with minimalist design
-- Social engagement elements (likes, comments, shares)
-- A modern shopping cart interface
+The hoodie is rendered with extreme photorealism — every thread, every fold, every texture visible. It looks impossibly luxurious, the kind of item you'd see in a high-fashion editorial or Apple product shoot.
 
-Style: Neural noir aesthetic - predominantly black (#050505) background with crisp white (#EAEAEA) UI elements and subtle gray (#888888) accents.
-The interface should have subtle glowing edges, clean typography, and a sophisticated tech feel.
-Think: dark mode e-commerce meets futuristic social platform.
-The image should feel premium, modern, and suggest creator economy/social commerce.
-No text or logos visible, just the visual representation of the platform concept.
-Photorealistic rendering with dramatic lighting, slight bloom effects on UI elements.`,
+From beneath the hoodie, ethereal wisps of light and luminous digital particles are rising upward, as if the garment is being materialized from pure data and light. The particles transition from geometric/digital at the bottom to organic fabric at the top — capturing the moment of creation, digital becoming physical.
+
+A single dramatic spotlight from directly above creates a halo effect around the hoodie, with subtle god rays cutting through the darkness. The edges of the garment catch the light with a soft glow.
+
+The overall mood is: witnessing magic happen. Premium. Aspirational. Technological but human.
+
+Think: if Apple made creator merchandise. High-end fashion photography meets subtle sci-fi. The image should make you WANT that hoodie.
+
+Color palette: Deep true black void (#000000 to #050505), pure white light sources, the hoodie itself in charcoal/black with visible texture. No other colors.
+
+Composition: Centered, slightly low angle looking up at the floating garment, creating a sense of reverence and desire.`,
     filename: 'gabooja_noir.png'
   },
   avenu: {

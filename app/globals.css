@@ -36,10 +36,40 @@
     --text-caption: 0.75rem;
     --text-micro: 0.625rem;
 
-    /* Responsive Spacing */
-    --space-section: clamp(3rem, 8vw, 6rem);
+    /* ========================================
+       DESIGN SYSTEM v2.0 - Spacing Tokens
+       Use ONLY these values for consistency
+       ======================================== */
+
+    /* Strict Spacing Scale (5 increments only) */
+    --space-xs: 0.5rem;     /* 8px - Tight spacing, within components */
+    --space-sm: 1rem;       /* 16px - Small gaps, element margins */
+    --space-md: 2rem;       /* 32px - Standard section padding */
+    --space-lg: 4rem;       /* 64px - Section separators */
+    --space-xl: 6rem;       /* 96px - Page section rhythm */
+
+    /* Responsive Section Spacing */
+    --space-section: clamp(4rem, 10vw, 6rem);
+    --space-page-x: clamp(1.5rem, 5vw, 3rem);
+
+    /* Legacy - kept for compatibility */
     --space-card: clamp(1rem, 3vw, 1.5rem);
     --space-content: clamp(1rem, 4vw, 1.5rem);
+
+    /* ========================================
+       DESIGN SYSTEM v2.0 - Border Tokens
+       ======================================== */
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-default: rgba(255, 255, 255, 0.12);
+    --border-emphasis: rgba(255, 255, 255, 0.2);
+
+    /* ========================================
+       DESIGN SYSTEM v2.0 - Color Tokens
+       ======================================== */
+    --color-bg: #050505;
+    --color-fg: #EAEAEA;
+    --color-muted: #888888;
+    --color-subtle: #666666;
 
     /* Golden Ratio System (φ = 1.618) */
     --phi: 1.618;
