@@ -23,9 +23,9 @@ export default function Home() {
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="text-center mb-2"
         >
-          {/* Primary: Name - Dominant visual using text-hero */}
+          {/* Primary: Name */}
           <h1 className="text-hero mb-4">
-            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">A</span>mir H. Jalal<span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">i</span>
+            Amir H. Jalali
           </h1>
 
           {/* Secondary: Role - Supporting context using text-label */}
@@ -63,7 +63,7 @@ export default function Home() {
           </motion.div>
 
           {/* Nav links with underline hover effect */}
-          <div className="flex justify-center gap-8 sm:gap-16 text-label">
+          <div className="flex justify-center gap-6 sm:gap-12 text-label">
             <Link href="/work" className="group flex flex-col items-center gap-2">
               <span className="text-[#888888] group-hover:text-[#EAEAEA] transition-colors duration-300">Work</span>
               <span className="w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
@@ -74,6 +74,10 @@ export default function Home() {
             </Link>
             <Link href="/about" className="group flex flex-col items-center gap-2">
               <span className="text-[#888888] group-hover:text-[#EAEAEA] transition-colors duration-300">About</span>
+              <span className="w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
+            </Link>
+            <Link href="/contact" className="group flex flex-col items-center gap-2">
+              <span className="text-[#888888] group-hover:text-[#EAEAEA] transition-colors duration-300">Contact</span>
               <span className="w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
             </Link>
           </div>

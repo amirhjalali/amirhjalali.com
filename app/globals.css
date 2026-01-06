@@ -6,184 +6,47 @@
 
 @layer base {
   :root {
-    /* Light mode colors */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 152 100% 30%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 152 100% 30%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 152 100% 30%;
+    /* shadcn/ui compatible color tokens (monochrome) */
+    --background: 0 0% 2%;
+    --foreground: 0 0% 92%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 92%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 92%;
+    --primary: 0 0% 92%;
+    --primary-foreground: 0 0% 2%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 92%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 53%;
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 92%;
+    --destructive: 0 0% 40%;
+    --destructive-foreground: 0 0% 92%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 50%;
     --radius: 0.5rem;
 
-    /* Semantic Type Scale */
-    --text-display: clamp(3rem, 8vw, 7rem);
-    --text-headline: clamp(2rem, 5vw, 4rem);
-    --text-title: clamp(1.25rem, 2vw, 1.75rem);
-    --text-body: clamp(1rem, 1.2vw, 1.125rem);
-    --text-caption: 0.75rem;
-    --text-micro: 0.625rem;
-
-    /* ========================================
-       DESIGN SYSTEM v2.0 - Spacing Tokens
-       Use ONLY these values for consistency
-       ======================================== */
-
-    /* Strict Spacing Scale (5 increments only) */
-    --space-xs: 0.5rem;     /* 8px - Tight spacing, within components */
-    --space-sm: 1rem;       /* 16px - Small gaps, element margins */
-    --space-md: 2rem;       /* 32px - Standard section padding */
-    --space-lg: 4rem;       /* 64px - Section separators */
-    --space-xl: 6rem;       /* 96px - Page section rhythm */
-
-    /* Responsive Section Spacing */
+    /* Spacing Tokens */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 2rem;
+    --space-lg: 4rem;
+    --space-xl: 6rem;
     --space-section: clamp(4rem, 10vw, 6rem);
     --space-page-x: clamp(1.5rem, 5vw, 3rem);
 
-    /* Legacy - kept for compatibility */
-    --space-card: clamp(1rem, 3vw, 1.5rem);
-    --space-content: clamp(1rem, 4vw, 1.5rem);
-
-    /* ========================================
-       DESIGN SYSTEM v2.0 - Border Tokens
-       ======================================== */
+    /* Border Tokens */
     --border-subtle: rgba(255, 255, 255, 0.08);
     --border-default: rgba(255, 255, 255, 0.12);
     --border-emphasis: rgba(255, 255, 255, 0.2);
 
-    /* ========================================
-       DESIGN SYSTEM v2.0 - Color Tokens
-       ======================================== */
+    /* Color Tokens */
     --color-bg: #050505;
     --color-fg: #EAEAEA;
     --color-muted: #888888;
     --color-subtle: #666666;
-
-    /* Golden Ratio System (φ = 1.618) */
-    --phi: 1.618;
-    --phi-2: 2.618;
-    /* φ² */
-    --phi-3: 4.236;
-    /* φ³ */
-    --phi-inv: 0.618;
-    /* 1/φ */
-    --phi-inv-2: 0.382;
-    /* 1/φ² */
-
-    /* Golden Ratio Spacing Scale */
-    --space-phi-xs: calc(0.25rem * var(--phi-inv-2));
-    /* ~0.095rem */
-    --space-phi-sm: calc(0.5rem * var(--phi-inv));
-    /* ~0.309rem */
-    --space-phi-base: 0.5rem;
-    /* Base unit */
-    --space-phi-md: calc(0.5rem * var(--phi));
-    /* ~0.809rem */
-    --space-phi-lg: calc(0.5rem * var(--phi-2));
-    /* ~1.309rem */
-    --space-phi-xl: calc(0.5rem * var(--phi-3));
-    /* ~2.118rem */
-    --space-phi-2xl: calc(0.5rem * var(--phi-3) * var(--phi));
-    /* ~3.427rem */
-    --space-phi-3xl: calc(0.5rem * var(--phi-3) * var(--phi-2));
-    /* ~5.545rem */
-
-    /* Golden Ratio Font Scale */
-    --text-phi-xs: calc(1rem / var(--phi-2));
-    /* ~0.382rem */
-    --text-phi-sm: calc(1rem / var(--phi));
-    /* ~0.618rem */
-    --text-phi-base: 1rem;
-    /* Base font size */
-    --text-phi-lg: calc(1rem * var(--phi));
-    /* ~1.618rem */
-    --text-phi-xl: calc(1rem * var(--phi-2));
-    /* ~2.618rem */
-    --text-phi-2xl: calc(1rem * var(--phi-3));
-    /* ~4.236rem */
-    --text-phi-3xl: calc(1rem * var(--phi-3) * var(--phi));
-    /* ~6.854rem */
-
-    /* Optical Corrections */
-    --optical-adjust-sm: -0.05em;
-    /* Small text optical adjustment */
-    --optical-adjust-icon: -0.125em;
-    /* Icon spacing adjustment */
-    --optical-adjust-button: calc(var(--space-phi-md) * 1.1);
-    /* Button padding adjustment */
-
-    /* Golden Ratio Border Radius */
-    --radius-phi-sm: calc(var(--radius) * var(--phi-inv));
-    /* ~0.309rem */
-    --radius-phi: var(--radius);
-    /* 0.5rem */
-    --radius-phi-md: calc(var(--radius) * var(--phi));
-    /* ~0.809rem */
-    --radius-phi-lg: calc(var(--radius) * var(--phi-2));
-    /* ~1.309rem */
-    --radius-phi-full: 9999px;
-  }
-
-  .light {
-    /* Light theme - professional with better contrast */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 158 64% 35%;
-    /* Darker teal/green for better contrast */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 158 64% 35%;
-    /* Match primary for consistency */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 158 64% 35%;
-    --dark-bg: 0 0% 98%;
-  }
-
-  .dark {
-    /* Dark theme - original design */
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --dark-bg: 0 0% 3.9%;
   }
 
   * {
@@ -196,55 +59,21 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    font-size: var(--text-body);
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
     line-height: 1.7;
     letter-spacing: -0.01em;
   }
 
-  /* Standardized typography */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     font-weight: 700;
     letter-spacing: -0.02em;
-  }
-
-  h1 {
-    @apply font-black;
-    font-size: var(--text-display);
-  }
-
-  h2 {
-    @apply font-bold;
-    font-size: var(--text-headline);
-  }
-
-  h3 {
-    @apply font-semibold;
-    font-size: var(--text-title);
   }
 
   p {
     line-height: 1.7;
   }
 
-  /* Card description styling */
-  .card-description {
-    font-size: var(--text-body);
-    line-height: 1.6;
-    color: #AAAAAA;
-  }
-
-  /* Uppercase text gets better spacing */
-  .uppercase {
-    letter-spacing: 0.05em;
-  }
-
-  /* Selection styles */
   ::selection {
     background-color: #FFFFFF;
     color: #000000;
@@ -252,11 +81,7 @@
 }
 
 @layer utilities {
-
-  /* ========================================
-     DESIGN SYSTEM v2.0 - Spacing Utilities
-     ======================================== */
-
+  /* Spacing Utilities */
   .section-padding {
     padding-top: var(--space-section);
     padding-bottom: var(--space-section);
@@ -267,112 +92,85 @@
     padding-right: var(--space-page-x);
   }
 
-  /* Stack utilities for consistent vertical rhythm */
-  .stack-xs > * + * { margin-top: var(--space-xs); }
-  .stack-sm > * + * { margin-top: var(--space-sm); }
-  .stack-md > * + * { margin-top: var(--space-md); }
-  .stack-lg > * + * { margin-top: var(--space-lg); }
-  .stack-xl > * + * { margin-top: var(--space-xl); }
-
-  /* ========================================
-     DESIGN SYSTEM v2.0 - Typography Classes
-     ======================================== */
-
-  /* Hero - Only for homepage main headline */
+  /* Typography Classes */
   .text-hero {
     font-size: clamp(3rem, 10vw, 8rem);
     font-family: var(--font-cormorant);
     font-weight: 300;
     line-height: 1;
     letter-spacing: -0.02em;
-    color: var(--color-fg, #EAEAEA);
+    color: var(--color-fg);
   }
 
-  /* Page Title - Main heading on each page */
   .text-page-title {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-family: var(--font-cormorant);
     font-weight: 300;
     line-height: 1.1;
-    color: var(--color-fg, #EAEAEA);
+    color: var(--color-fg);
   }
 
-  /* Section Title - Major sections within pages */
   .text-section-title {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-family: var(--font-cormorant);
     font-weight: 400;
     line-height: 1.2;
-    color: var(--color-fg, #EAEAEA);
+    color: var(--color-fg);
   }
 
-  /* Card Title - Featured cards, large cards */
   .text-card-title {
     font-size: clamp(1.25rem, 2vw, 1.75rem);
     font-family: var(--font-cormorant);
     font-weight: 400;
     line-height: 1.3;
-    color: var(--color-fg, #EAEAEA);
+    color: var(--color-fg);
   }
 
-  /* Body Large - Introductory paragraphs, important descriptions */
   .text-body-lg {
     font-size: clamp(1.125rem, 1.5vw, 1.25rem);
     line-height: 1.7;
-    color: var(--color-muted, #888888);
+    color: var(--color-muted);
   }
 
-  /* Body - Standard paragraph text */
   .text-body {
     font-size: clamp(1rem, 1.2vw, 1.0625rem);
     line-height: 1.7;
-    color: var(--color-muted, #888888);
+    color: var(--color-muted);
   }
 
-  /* Label - UI labels, metadata, dates */
   .text-label {
     font-size: 0.6875rem;
     font-family: var(--font-jetbrains);
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--color-subtle, #666666);
+    color: var(--color-subtle);
   }
 
-  /* Micro - Tags, tiny metadata */
   .text-micro {
     font-size: 0.625rem;
     font-family: var(--font-jetbrains);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-subtle, #666666);
+    color: var(--color-subtle);
   }
 
-  /* ========================================
-     DESIGN SYSTEM v2.0 - Card Borders
-     ======================================== */
-
-  /* Standard card border */
+  /* Card Borders */
   .card-border {
     border: 1px solid var(--border-default);
     border-radius: 1rem;
   }
 
-  /* Featured/emphasized card border */
   .card-border-emphasis {
     border: 1px solid var(--border-emphasis);
     border-radius: 1.5rem;
   }
 
-  /* Subtle card border (tags, small elements) */
   .card-border-subtle {
     border: 1px solid var(--border-subtle);
     border-radius: 0.5rem;
   }
 
-  /* ========================================
-     DESIGN SYSTEM v2.0 - Form Inputs
-     ======================================== */
-
+  /* Form Inputs */
   .input-field {
     width: 100%;
     padding: 1rem 1.25rem;
@@ -381,7 +179,7 @@
     border-radius: 0.75rem;
     color: #EAEAEA;
     font-size: 1rem;
-    transition: all 0.2s ease;
+    transition: border-color 0.2s ease, background 0.2s ease;
   }
 
   .input-field::placeholder {
@@ -400,12 +198,6 @@
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
   }
 
-  /* Error state */
-  .input-field[aria-invalid="true"] {
-    border-color: rgba(255, 100, 100, 0.5);
-  }
-
-  /* Label styling */
   .input-label {
     display: block;
     margin-bottom: 0.5rem;
@@ -416,29 +208,17 @@
     color: #888888;
   }
 
-  /* Error message */
-  .input-error {
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-    color: #888888;
-  }
-
-  /* ========================================
-     DESIGN SYSTEM v2.0 - Focus Styles
-     ======================================== */
-
-  /* Keyboard focus only */
+  /* Focus Styles */
   *:focus-visible {
     outline: 2px solid rgba(255, 255, 255, 0.5);
     outline-offset: 2px;
   }
 
-  /* For elements with custom focus styles */
   .custom-focus:focus-visible {
     outline: none;
   }
 
-  /* Noise Texture - Subtle animated grain for premium feel */
+  /* Noise Overlay */
   .noise-overlay {
     position: fixed;
     top: 0;
@@ -466,344 +246,16 @@
     90% { transform: translate(-2%, -1%); }
   }
 
-  /* Hero sections - radial spotlight */
-  .hero-atmosphere {
-    background:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,255,255,0.03), transparent),
-      #050505;
-  }
-
-  /* Card sections - bottom fade */
-  .cards-atmosphere {
-    background:
-      linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.01) 50%, transparent 100%),
-      #050505;
-  }
-
-  /* Footer - top border glow */
-  .footer-atmosphere {
-    background:
-      linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, transparent 30%),
-      #050505;
-  }
-
-  /* Glowing border effect on hover */
-  .glow-border {
-    position: relative;
-  }
-
-  .glow-border::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      135deg,
-      rgba(255,255,255,0.1) 0%,
-      rgba(255,255,255,0.05) 50%,
-      rgba(255,255,255,0.1) 100%
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .glow-border:hover::before {
-    opacity: 1;
-  }
-
-  /* Focus styles for keyboard navigation */
-  .focus-visible:focus-visible {
-    @apply outline-none ring-2 ring-white ring-offset-2 ring-offset-background;
-  }
-
-  /* Dark mode gradient (bright green/blue) */
-  .dark .text-gradient,
-  .text-gradient {
-    background: linear-gradient(to right, #00FF88, #00D9FF, #00FF88);
-    background-size: 200% auto;
-    color: #00FF88 !important;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 3s linear infinite;
-  }
-
-  /* Light mode gradient (darker teal/cyan) */
-  .light .text-gradient {
-    background: linear-gradient(to right, #0D9488, #0891B2, #0D9488);
-    background-size: 200% auto;
-    color: #0D9488 !important;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 3s linear infinite;
-  }
-
-  /* Fallback for browsers that don't support background-clip */
-  @supports (not (background-clip: text)) and (not (-webkit-background-clip: text)) {
-
-    .dark .text-gradient,
-    .text-gradient {
-      background: none;
-      color: #00FF88 !important;
-    }
-
-    .light .text-gradient {
-      background: none;
-      color: #0D9488 !important;
-    }
-  }
-
-  @keyframes gradient-shift {
-    to {
-      background-position: 200% center;
-    }
-  }
-
-  .glow {
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
-  }
-
+  /* Glass Effect */
   .glass {
     @apply backdrop-blur-md bg-white/5 border border-white/10;
   }
 
-  /* Light mode background gradients - subtle teal/green */
-  .light .hero-gradient {
-    background: radial-gradient(ellipse at center, rgba(13, 148, 136, 0.08) 0%, transparent 50%);
-  }
-
-  .light .mesh-gradient {
-    background-image:
-      radial-gradient(at 40% 20%, rgba(13, 148, 136, 0.12) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, rgba(8, 145, 178, 0.08) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, rgba(13, 148, 136, 0.06) 0px, transparent 50%),
-      radial-gradient(at 80% 50%, rgba(8, 145, 178, 0.06) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(13, 148, 136, 0.04) 0px, transparent 50%);
-  }
-
-  /* Dark mode background gradients - original green/blue */
-  .dark .hero-gradient,
-  .hero-gradient {
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-  }
-
-  .mesh-gradient {
-    background-image: none;
-  }
-
-  /* 3D Card Effects */
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-
-  .backface-hidden {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  .rotate-y-180 {
-    transform: rotateY(180deg);
-  }
-
-  /* Line clamp utility */
+  /* Line Clamp */
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-
-  /* Golden Ratio Typography Classes */
-  .text-phi-xs {
-    font-size: var(--text-phi-xs);
-  }
-
-  .text-phi-sm {
-    font-size: var(--text-phi-sm);
-  }
-
-  .text-phi-base {
-    font-size: var(--text-phi-base);
-  }
-
-  .text-phi-lg {
-    font-size: var(--text-phi-lg);
-  }
-
-  .text-phi-xl {
-    font-size: var(--text-phi-xl);
-  }
-
-  .text-phi-2xl {
-    font-size: var(--text-phi-2xl);
-  }
-
-  .text-phi-3xl {
-    font-size: var(--text-phi-3xl);
-  }
-
-  /* Golden Ratio Spacing Classes */
-  .p-phi-xs {
-    padding: var(--space-phi-xs);
-  }
-
-  .p-phi-sm {
-    padding: var(--space-phi-sm);
-  }
-
-  .p-phi-base {
-    padding: var(--space-phi-base);
-  }
-
-  .p-phi-md {
-    padding: var(--space-phi-md);
-  }
-
-  .p-phi-lg {
-    padding: var(--space-phi-lg);
-  }
-
-  .p-phi-xl {
-    padding: var(--space-phi-xl);
-  }
-
-  .p-phi-2xl {
-    padding: var(--space-phi-2xl);
-  }
-
-  .p-phi-3xl {
-    padding: var(--space-phi-3xl);
-  }
-
-  .px-phi-md {
-    padding-left: var(--space-phi-md);
-    padding-right: var(--space-phi-md);
-  }
-
-  .py-phi-md {
-    padding-top: var(--space-phi-md);
-    padding-bottom: var(--space-phi-md);
-  }
-
-  .px-phi-lg {
-    padding-left: var(--space-phi-lg);
-    padding-right: var(--space-phi-lg);
-  }
-
-  .py-phi-lg {
-    padding-top: var(--space-phi-lg);
-    padding-bottom: var(--space-phi-lg);
-  }
-
-  .gap-phi-sm {
-    gap: var(--space-phi-sm);
-  }
-
-  .gap-phi-md {
-    gap: var(--space-phi-md);
-  }
-
-  .gap-phi-lg {
-    gap: var(--space-phi-lg);
-  }
-
-  .gap-phi-xl {
-    gap: var(--space-phi-xl);
-  }
-
-  /* Golden Ratio Border Radius */
-  .rounded-phi-sm {
-    border-radius: var(--radius-phi-sm);
-  }
-
-  .rounded-phi {
-    border-radius: var(--radius-phi);
-  }
-
-  .rounded-phi-md {
-    border-radius: var(--radius-phi-md);
-  }
-
-  .rounded-phi-lg {
-    border-radius: var(--radius-phi-lg);
-  }
-
-  .rounded-phi-full {
-    border-radius: var(--radius-phi-full);
-  }
-
-  /* Optical Harmony Classes */
-  .optical-balance {
-    /* Apply optical adjustments for better visual balance */
-    letter-spacing: var(--optical-adjust-sm);
-  }
-
-  .optical-button {
-    /* Enhanced button with optical corrections */
-    padding: var(--optical-adjust-button) calc(var(--optical-adjust-button) * 2);
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-phi-sm);
-  }
-
-  .optical-button>svg,
-  .optical-button>[data-icon] {
-    /* Correct icon spacing in buttons */
-    margin-left: var(--optical-adjust-icon);
-    margin-right: calc(var(--optical-adjust-icon) / 2);
-  }
-
-  .optical-card {
-    /* Card with golden ratio proportions */
-    padding: var(--space-phi-xl);
-    border-radius: var(--radius-phi-md);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .optical-card:hover {
-    /* Subtle scale on hover using golden ratio */
-    transform: scale(calc(1 / var(--phi-inv-2)));
-  }
-
-  /* Golden Ratio Grid System */
-  .grid-phi {
-    display: grid;
-    gap: var(--space-phi-lg);
-  }
-
-  .grid-phi-2 {
-    grid-template-columns: 1fr var(--phi)fr;
-  }
-
-  .grid-phi-3 {
-    grid-template-columns: 1fr var(--phi)fr 1fr;
-  }
-
-  /* Visual Rhythm Classes */
-  .rhythm-tight {
-    line-height: var(--phi);
-  }
-
-  .rhythm-normal {
-    line-height: var(--phi-2);
-  }
-
-  .rhythm-loose {
-    line-height: var(--phi-3);
   }
 }
