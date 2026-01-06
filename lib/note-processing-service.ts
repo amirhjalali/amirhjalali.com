@@ -4,6 +4,7 @@ import OpenAI from 'openai'
 import { extractContentFromUrl, extractVideoInfo, type ExtractedContent } from './content-extraction'
 import { indexNote as createEmbeddings } from './embedding-service'
 import { fetchYouTubeTranscript, isYouTubeUrl, formatDuration } from './youtube-transcript'
+import { linkNoteToTopics, autoLinkRelatedNotes } from './knowledge-graph-service'
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -197,6 +198,17 @@ export async function processNote(
         } catch (indexError) {
           // Don't fail the whole process if indexing fails
           console.warn(`Indexing failed for note ${noteId}:`, indexError)
+        }
+      }
+
+      // Link note to topics in knowledge graph
+      if (topics && topics.length > 0) {
+        try {
+          await linkNoteToTopics(noteId, topics, true)
+          // Auto-link to related notes if they share 2+ topics
+          await autoLinkRelatedNotes(noteId, 2)
+        } catch (kgError) {
+          console.warn(`Knowledge graph linking failed for note ${noteId}:`, kgError)
         }
       }
 
