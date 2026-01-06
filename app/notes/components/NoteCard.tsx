@@ -94,8 +94,31 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
   }
 
   const isVideoType = note.type === 'VIDEO' || note.sourceType === 'video'
-  const hasImage = note.imageUrl || (note.metadata as any)?.image
-  const imageUrl = note.imageUrl || (note.metadata as any)?.image
+  const metadata = note.metadata as any
+
+  // Determine the best image to display
+  const getImageUrl = () => {
+    // For IMAGE type notes, use imageUrl or content (if it's a URL)
+    if (note.type === 'IMAGE') {
+      if (note.imageUrl) return note.imageUrl
+      // Check if content is a URL (uploaded image)
+      if (note.content?.startsWith('http')) return note.content
+    }
+    // For videos, prefer video thumbnail
+    if (metadata?.video?.thumbnailUrl) return metadata.video.thumbnailUrl
+    // Then check standard image sources
+    if (note.imageUrl) return note.imageUrl
+    if (metadata?.image) return metadata.image
+    if (metadata?.ogImage) return metadata.ogImage
+    return null
+  }
+
+  const imageUrl = getImageUrl()
+  const hasImage = !!imageUrl
+
+  // Check if this is a YouTube video with transcript
+  const hasTranscript = metadata?.transcript?.available === true
+  const videoDuration = metadata?.video?.duration || metadata?.transcript?.videoDurationFormatted
 
   // Compact card for list view
   if (compact) {
@@ -196,6 +219,19 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
               <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                 <Play className="w-5 h-5 text-white ml-0.5" />
               </div>
+            </div>
+          )}
+          {/* Video duration badge */}
+          {videoDuration && (
+            <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 rounded text-xs font-mono text-white">
+              {videoDuration}
+            </div>
+          )}
+          {/* Transcript available badge */}
+          {hasTranscript && (
+            <div className="absolute top-2 left-2 px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded text-xs font-mono text-white flex items-center gap-1">
+              <FileText className="w-3 h-3" />
+              Transcript
             </div>
           )}
           {/* Gradient overlay */}

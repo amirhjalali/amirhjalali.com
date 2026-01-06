@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { apiClient } from '@/lib/api-client'
 import type { Note } from '@/lib/types'
-import { Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain } from 'lucide-react'
+import { Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain, Youtube } from 'lucide-react'
+import VideoEmbed from '../components/VideoEmbed'
 import { formatDistanceToNow } from 'date-fns'
 import type { NoteType, ProcessStatus } from '@/lib/types'
 
@@ -23,6 +24,17 @@ const statusColors: Record<ProcessStatus, string> = {
   INDEXED: 'text-[#EAEAEA] bg-white/10 border-white/20',
   COMPLETED: 'text-[#EAEAEA] bg-white/10 border-white/20',
   FAILED: 'text-[#888888] bg-white/5 border-white/10',
+}
+
+// Helper to check if URL is a video platform
+function isVideoUrl(url: string): boolean {
+  if (!url) return false
+  return (
+    url.includes('youtube.com') ||
+    url.includes('youtu.be') ||
+    url.includes('vimeo.com') ||
+    url.includes('tiktok.com')
+  )
 }
 
 export default function NoteDetailClient({ noteId }: { noteId: string }) {
@@ -205,13 +217,35 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
           </div>
         </div>
 
-        {note.imageUrl && (
+        {/* Video Embed for YouTube/Vimeo links */}
+        {note.type === 'LINK' && isVideoUrl(note.content) && (
+          <VideoEmbed
+            url={note.content}
+            metadata={note.metadata as any}
+            fullContent={note.fullContent}
+          />
+        )}
+
+        {/* Image Display */}
+        {(note.imageUrl || (note.type === 'IMAGE' && note.content?.startsWith('http'))) && !isVideoUrl(note.content) && (
           <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={note.imageUrl}
+              src={note.imageUrl || note.content}
               alt={note.title || 'Note image'}
-              className="w-full h-auto max-h-[500px] object-contain bg-black/50"
+              className="w-full h-auto max-h-[600px] object-contain bg-black/50"
+            />
+          </div>
+        )}
+
+        {/* OG Image for articles without dedicated imageUrl */}
+        {!note.imageUrl && note.type === 'LINK' && !isVideoUrl(note.content) && (note.metadata as any)?.image && (
+          <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 mb-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={(note.metadata as any).image}
+              alt={note.title || 'Article image'}
+              className="w-full h-auto max-h-[400px] object-cover"
             />
           </div>
         )}
