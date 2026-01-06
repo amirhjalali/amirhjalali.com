@@ -1,451 +1,443 @@
-# Design Improvement Roadmap
+# Design Improvement Roadmap v2.0
 
-A comprehensive plan to elevate amirhjalali.com from "professional portfolio" to "memorable design statement."
+A comprehensive plan to refine amirhjalali.com based on the design critique conducted January 2026. These improvements address spacing consistency, visual hierarchy, mobile experience, and overall polish.
 
 ---
 
-## Phase 1: Typography & Foundation (Week 1-2)
+## Phase 1: Spacing System Overhaul
 
-### 1.1 Replace Inter with a Distinctive Sans-Serif
+**Problem**: Inconsistent spacing (`py-20`, `py-24`, `mb-6`, `mb-8`, `mb-16`) used interchangeably creates visual noise.
 
-**Current Problem:** Inter is the most overused font in modern web design. It's invisible—it doesn't communicate anything.
+### 1.1 Define Spacing Tokens
 
-**Solution:** Replace with one of these character-driven alternatives:
+Create a strict spacing system with only 5 increments:
 
-| Option | Personality | Best For |
-|--------|-------------|----------|
-| **Satoshi** | Geometric, modern, confident | Tech-forward feel |
-| **General Sans** | Friendly but professional | Approachable expert |
-| **Neue Haas Grotesk** | Classic Swiss, timeless | Refined minimalism |
-| **Söhne** | Editorial, Stripe-like | Premium positioning |
-| **Untitled Sans** | Contemporary, clean | Modern creative |
+```css
+/* app/globals.css - Add to :root */
+:root {
+  /* Spacing Scale - Use ONLY these values */
+  --space-xs: 0.5rem;    /* 8px - Tight spacing, within components */
+  --space-sm: 1rem;      /* 16px - Small gaps, element margins */
+  --space-md: 2rem;      /* 32px - Standard section padding */
+  --space-lg: 4rem;      /* 64px - Section separators */
+  --space-xl: 6rem;      /* 96px - Page section rhythm */
 
-**Implementation:**
-```tsx
-// app/layout.tsx - Add new font
-import { Satoshi } from 'next/font/google' // or local font
-
-const satoshi = localFont({
-  src: [
-    { path: '../fonts/Satoshi-Regular.woff2', weight: '400' },
-    { path: '../fonts/Satoshi-Medium.woff2', weight: '500' },
-    { path: '../fonts/Satoshi-Bold.woff2', weight: '700' },
-  ],
-  variable: '--font-sans',
-})
+  /* Responsive section spacing */
+  --space-section: clamp(4rem, 10vw, 6rem);
+  --space-page-x: clamp(1.5rem, 5vw, 3rem);
+}
 ```
 
 **Files to modify:**
-- `app/layout.tsx` - Font import
-- `app/globals.css` - Body font-family
-- `tailwind.config.js` - Font family definition
+- `app/globals.css` - Add spacing tokens
+- `tailwind.config.js` - Add custom spacing values
 
----
-
-### 1.2 Establish Type Scale with Purpose
-
-**Current Problem:** Font sizes feel arbitrary. The Golden Ratio system exists but isn't used.
-
-**Solution:** Create a purposeful type scale:
+### 1.2 Create Spacing Utility Classes
 
 ```css
-/* app/globals.css - Add semantic type tokens */
-:root {
-  /* Display - For hero headlines only */
-  --text-display: clamp(3rem, 8vw, 7rem);
-
-  /* Headline - Page titles */
-  --text-headline: clamp(2rem, 5vw, 4rem);
-
-  /* Title - Section headers, card titles */
-  --text-title: clamp(1.25rem, 2vw, 1.75rem);
-
-  /* Body - Primary reading text */
-  --text-body: clamp(1rem, 1.2vw, 1.125rem);
-
-  /* Caption - Labels, metadata */
-  --text-caption: 0.75rem;
-
-  /* Micro - Tags, timestamps */
-  --text-micro: 0.625rem;
+/* app/globals.css */
+.section-padding {
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
 }
+
+.container-padding {
+  padding-left: var(--space-page-x);
+  padding-right: var(--space-page-x);
+}
+
+.stack-sm > * + * { margin-top: var(--space-sm); }
+.stack-md > * + * { margin-top: var(--space-md); }
+.stack-lg > * + * { margin-top: var(--space-lg); }
 ```
 
-**Usage examples:**
-- Homepage name: `--text-display` with Cormorant
-- Page titles (Work, Thoughts): `--text-headline` with Cormorant
-- Card titles: `--text-title` with Cormorant
-- Descriptions: `--text-body` with new sans-serif
-- Labels: `--text-caption` with JetBrains Mono
-- Tags: `--text-micro` with JetBrains Mono
+### 1.3 Audit and Replace All Pages
+
+Update each page to use consistent spacing:
+
+| Page | Current | Target |
+|------|---------|--------|
+| Homepage | `py-20` | `section-padding` |
+| Work | `py-20`, `mb-12`, `mb-16` | `section-padding`, `stack-lg` |
+| Thoughts | `py-20 px-6` | `section-padding container-padding` |
+| About | `py-20 px-6`, `mb-6`, `mb-8` | `section-padding container-padding stack-md` |
+| Contact | `py-20` | `section-padding` |
+
+**Files to modify:**
+- `app/page.tsx`
+- `app/work/page.tsx`
+- `app/thoughts/page.tsx` (or `ThoughtsPageClient.tsx`)
+- `app/about/page.tsx`
+- `app/contact/page.tsx` (or `ContactPageClient.tsx`)
 
 ---
 
-### 1.3 Increase Body Text Size
+## Phase 2: Typography System Enforcement
 
-**Current Problem:** 14px body text is too small for comfortable reading.
+**Problem**: CSS custom properties for type scale exist but Tailwind utilities used directly. Inconsistent `text-5xl md:text-7xl` patterns.
 
-**Solution:** Base body at 16-18px with generous line-height:
+### 2.1 Create Semantic Typography Classes
 
 ```css
-body {
-  font-size: var(--text-body); /* 16-18px responsive */
+/* app/globals.css - Typography Classes */
+
+/* Hero - Only for homepage main headline */
+.text-hero {
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-family: var(--font-cormorant);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Page Title - Main heading on each page */
+.text-page-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-family: var(--font-cormorant);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+/* Section Title - Major sections within pages */
+.text-section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-family: var(--font-cormorant);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* Card Title - Featured cards, large cards */
+.text-card-title {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-family: var(--font-cormorant);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Body Large - Introductory paragraphs, important descriptions */
+.text-body-lg {
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
   line-height: 1.7;
-  letter-spacing: -0.01em; /* Slight tightening for modern sans */
+  color: var(--color-muted, #888888);
 }
 
-/* Card descriptions */
-.card-description {
-  font-size: var(--text-body);
-  line-height: 1.6;
-  color: #AAAAAA; /* Slightly lighter than #888 for readability */
+/* Body - Standard paragraph text */
+.text-body {
+  font-size: clamp(1rem, 1.2vw, 1.0625rem);
+  line-height: 1.7;
+  color: var(--color-muted, #888888);
+}
+
+/* Label - UI labels, metadata, dates */
+.text-label {
+  font-size: 0.6875rem;
+  font-family: var(--font-jetbrains);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-subtle, #666666);
+}
+
+/* Micro - Tags, tiny metadata */
+.text-micro {
+  font-size: 0.625rem;
+  font-family: var(--font-jetbrains);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 ```
 
----
+### 2.2 Replace All Typography Patterns
 
-## Phase 2: Homepage Transformation (Week 2-3)
+Create a migration map:
 
-### 2.1 Strengthen the Value Proposition
+| Current Pattern | Replace With |
+|-----------------|--------------|
+| `text-5xl md:text-7xl font-serif font-light` | `text-page-title` |
+| `text-3xl md:text-4xl font-serif font-light` | `text-section-title` |
+| `text-xl md:text-2xl font-serif font-light` | `text-card-title` |
+| `text-[#888888] text-lg` | `text-body-lg` |
+| `text-[#888888]` (paragraph) | `text-body` |
+| `font-mono text-xs uppercase tracking-widest` | `text-label` |
+| `text-[10px] font-mono uppercase` | `text-micro` |
 
-**Current Problem:** "Human Consultant" is cryptic. Visitors don't immediately understand what you do.
-
-**Solution:** Add a supporting headline that communicates value:
-
-```tsx
-// app/page.tsx
-<motion.div className="text-center mb-2">
-  <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl 2xl:text-9xl font-light tracking-tight mb-3">
-    <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">A</span>
-    mir H. Jalal
-    <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">i</span>
-  </h1>
-
-  {/* Primary descriptor */}
-  <p className="font-mono text-xs md:text-sm uppercase tracking-[0.2em] text-[#888888] mb-6">
-    Human Consultant
-  </p>
-
-  {/* NEW: Value proposition */}
-  <motion.p
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.8, duration: 1.2 }}
-    className="font-sans text-lg md:text-xl text-[#666666] max-w-md mx-auto leading-relaxed"
-  >
-    Turning AI ambition into business reality.<br/>
-    <span className="text-[#888888]">14 years of making data work.</span>
-  </motion.p>
-</motion.div>
-```
+**Files to modify:**
+- All page files (app/*/page.tsx)
+- All card components (ProjectCard, ThoughtCard, FeaturedProjectCard, etc.)
+- NavigationEnhanced.tsx
+- Footer component (to be created)
 
 ---
 
-### 2.2 Make Navigation More Discoverable
+## Phase 3: Visual Hierarchy Improvements
 
-**Current Problem:** Bottom nav is nearly invisible. Visitors may miss it.
+**Problem**: Homepage hero elements compete for attention. Work page cards have identical weight.
 
-**Solution:** Add visual affordance with subtle animation:
+### 3.1 Homepage Hero Hierarchy
+
+Restructure the hero to create clear primary/secondary/tertiary levels:
 
 ```tsx
-// app/page.tsx - Enhanced bottom nav
-<motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 1.2, duration: 0.8 }}
-  className="absolute bottom-8 left-0 right-0 z-50"
->
-  {/* Scroll indicator */}
-  <motion.div
-    className="flex justify-center mb-4"
-    animate={{ y: [0, 8, 0] }}
-    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-  >
-    <div className="w-px h-8 bg-gradient-to-b from-transparent via-[#444444] to-transparent" />
-  </motion.div>
+// app/page.tsx - Hero section restructure
 
-  {/* Nav links */}
-  <div className="flex justify-center gap-8 sm:gap-16 font-mono text-xs uppercase tracking-widest">
-    <Link href="/work" className="group flex flex-col items-center gap-2">
-      <span className="text-[#888888] group-hover:text-[#EAEAEA] transition-colors">Work</span>
-      <span className="w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
-    </Link>
-    {/* ... repeat for other links */}
-  </div>
-</motion.div>
+{/* Primary: Name - Dominant visual */}
+<h1 className="text-hero text-[#EAEAEA] mb-4">
+  Amir H. Jalali
+</h1>
+
+{/* Secondary: Role - Supporting context */}
+<p className="text-label text-[#666666] mb-8">
+  Human Consultant
+</p>
+
+{/* Tertiary: Value prop - Readable supporting text */}
+<p className="text-body-lg max-w-md mx-auto text-center">
+  Transforming AI ambition into business reality.
+  14 years of making data work.
+</p>
 ```
 
----
+**Key changes:**
+- Remove or simplify the diagonal line treatment (competes with name)
+- Increase contrast between levels using size AND opacity
+- Animated profile photo should be secondary to name
 
-### 2.3 Add Ambient Motion to Homepage
+### 3.2 Work Page Featured Differentiation
 
-**Current Problem:** After initial load, the homepage is static.
-
-**Solution:** Subtle continuous animation:
-
-```tsx
-// components/Spotlight.tsx - Add breathing animation
-<motion.div
-  ref={ref}
-  className="absolute w-[800px] h-[800px] rounded-full bg-white/[0.03] blur-3xl"
-  style={{
-    left: -400,
-    top: -400,
-    x: springX,
-    y: springY,
-  }}
-  animate={{
-    scale: [1, 1.05, 1],
-    opacity: [0.03, 0.05, 0.03],
-  }}
-  transition={{
-    duration: 8,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-/>
-```
-
----
-
-## Phase 3: Card System Overhaul (Week 3-4)
-
-### 3.1 Differentiate Project Cards from Thought Cards
-
-**Current Problem:** Both content types look identical.
-
-**Solution:** Create distinct visual signatures:
-
-**Project Cards (Horizontal emphasis):**
-```tsx
-// components/ProjectCard.tsx - New layout
-<article className="group relative grid grid-cols-[1fr,1.2fr] gap-0 border border-white/10 rounded-xl overflow-hidden">
-  {/* Image takes 45% */}
-  <div className="relative aspect-[4/3] overflow-hidden">
-    <LazyImage ... />
-  </div>
-
-  {/* Content takes 55% */}
-  <div className="p-6 flex flex-col justify-between">
-    <div>
-      <span className="text-[10px] font-mono uppercase tracking-widest text-[#666666]">Project</span>
-      <h3 className="text-2xl font-serif font-light mt-2 mb-3">{project.title}</h3>
-      <p className="text-[#888888] text-sm">{project.description}</p>
-    </div>
-    <div className="flex items-center justify-between mt-4">
-      <div className="flex gap-2">
-        {project.tags.slice(0, 2).map(tag => (
-          <span key={tag} className="text-[10px] px-2 py-1 border border-white/10 rounded-full">
-            {tag}
-          </span>
-        ))}
-      </div>
-      <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white transition-colors" />
-    </div>
-  </div>
-</article>
-```
-
-**Thought Cards (Vertical, content-focused):**
-```tsx
-// components/ThoughtCard.tsx - Keep vertical but enhance
-<article className="group relative border border-white/10 rounded-xl overflow-hidden">
-  {/* Smaller image ratio */}
-  <div className="relative aspect-[2/1] overflow-hidden">
-    <LazyImage ... />
-    {/* Reading time badge */}
-    <div className="absolute bottom-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-[10px] font-mono">
-      {article.readTime}
-    </div>
-  </div>
-
-  <div className="p-6">
-    {/* Date more prominent */}
-    <time className="text-[11px] font-mono text-[#666666]">
-      {formatDate(article.publishedAt)}
-    </time>
-    <h3 className="text-xl font-serif font-light mt-2 mb-3 line-clamp-2">
-      {article.title}
-    </h3>
-    <p className="text-[#888888] text-sm line-clamp-3">
-      {article.excerpt}
-    </p>
-  </div>
-</article>
-```
-
----
-
-### 3.2 Add Grid Variation
-
-**Current Problem:** Uniform 3-column grid is predictable.
-
-**Solution:** Feature the first/latest item larger:
+Make the featured project dramatically larger:
 
 ```tsx
-// app/work/page.tsx
-<div className="grid gap-8">
-  {/* Featured project - full width */}
-  <motion.div className="col-span-full">
-    <FeaturedProjectCard project={projects[0]} />
-  </motion.div>
+// components/FeaturedProjectCard.tsx enhancements
 
-  {/* Rest in 2-column grid */}
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {projects.slice(1).map((project, index) => (
-      <ProjectCard key={project.id} project={project} index={index} />
-    ))}
-  </div>
-</div>
-```
-
-**Featured card design:**
-```tsx
-// components/FeaturedProjectCard.tsx
-<article className="group relative grid md:grid-cols-2 gap-0 border border-white/10 rounded-2xl overflow-hidden bg-white/[0.02]">
-  <div className="relative aspect-[16/10] md:aspect-auto overflow-hidden">
-    <LazyImage className="object-cover w-full h-full" />
-    {/* Gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#050505]/80 md:block hidden" />
-  </div>
-
-  <div className="p-8 md:p-12 flex flex-col justify-center">
-    <span className="text-[10px] font-mono uppercase tracking-widest text-[#666666] mb-4">
+{/* Make featured card 2x the visual presence */}
+<article className="
+  relative
+  grid md:grid-cols-[1.2fr,1fr]
+  gap-0
+  border border-white/20  {/* Slightly brighter border */}
+  rounded-3xl            {/* Larger radius */}
+  overflow-hidden
+  bg-white/[0.03]        {/* Subtle fill */}
+  min-h-[400px] md:min-h-[500px]  {/* Taller */}
+">
+  {/* Add "Featured" badge */}
+  <div className="absolute top-6 left-6 z-10">
+    <span className="text-micro px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full">
       Featured Project
     </span>
-    <h2 className="text-3xl md:text-4xl font-serif font-light mb-4">{title}</h2>
-    <p className="text-[#888888] text-lg mb-6">{longDescription}</p>
-    <div className="flex flex-wrap gap-2">
-      {tags.map(tag => ...)}
-    </div>
   </div>
+
+  {/* Title should be noticeably larger */}
+  <h2 className="text-section-title text-[#EAEAEA] mb-4">
+    {project.title}
+  </h2>
 </article>
 ```
 
----
+### 3.3 Card Border Standardization
 
-### 3.3 Enhance Hover States
+Establish consistent border treatments:
 
-**Current Problem:** `y: -4` lift is predictable and overused.
-
-**Solution:** Varied, purposeful hover effects:
-
-```tsx
-// Different hover behaviors per context
-
-// Project cards: Subtle scale + border glow
-<motion.div
-  whileHover={{
-    scale: 1.02,
-    transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] }
-  }}
-  className="group ... hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
->
-
-// Thought cards: Image zoom + content reveal
-<motion.div whileHover="hover" initial="rest" animate="rest">
-  <motion.div
-    variants={{ rest: { scale: 1 }, hover: { scale: 1.05 } }}
-    className="overflow-hidden"
-  >
-    <LazyImage />
-  </motion.div>
-  <motion.div
-    variants={{ rest: { y: 0 }, hover: { y: -4 } }}
-    className="p-6"
-  >
-    {/* Content slides up slightly */}
-  </motion.div>
-</motion.div>
-
-// CTA buttons: Magnetic effect
-<MagneticWrapper strength={0.3}>
-  <Button>Get in Touch</Button>
-</MagneticWrapper>
-```
-
----
-
-## Phase 4: Motion & Interaction Polish (Week 4-5)
-
-### 4.1 Create Motion Tokens
-
-**Current Problem:** Animation timing is scattered and inconsistent.
-
-**Solution:** Centralized motion system:
-
-```ts
-// lib/motion.ts
-export const easings = {
-  // Smooth entrances
-  smooth: [0.23, 1, 0.32, 1],
-  // Snappy interactions
-  snappy: [0.17, 0.67, 0.3, 0.96],
-  // Bouncy reveals
-  bounce: [0.34, 1.56, 0.64, 1],
-  // Natural settle
-  settle: [0.4, 0, 0.2, 1],
+```css
+/* app/globals.css - Card border tokens */
+:root {
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-emphasis: rgba(255, 255, 255, 0.2);
 }
 
-export const durations = {
-  instant: 0.1,
-  fast: 0.2,
-  normal: 0.4,
-  slow: 0.6,
-  dramatic: 1.0,
+/* Standard card */
+.card-border {
+  border: 1px solid var(--border-default);
+  border-radius: 1rem;  /* rounded-2xl = 1rem */
 }
 
-export const stagger = {
-  fast: 0.05,
-  normal: 0.1,
-  slow: 0.15,
+/* Featured/emphasized card */
+.card-border-emphasis {
+  border: 1px solid var(--border-emphasis);
+  border-radius: 1.5rem;
 }
 
-// Reusable variants
-export const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: durations.normal, ease: easings.smooth }
-  }
-}
-
-export const scaleIn = {
-  hidden: { opacity: 0, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: durations.fast, ease: easings.snappy }
-  }
+/* Subtle card (tags, small elements) */
+.card-border-subtle {
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
 }
 ```
 
+**Files to modify:**
+- `app/page.tsx` (HeroEnhanced)
+- `components/FeaturedProjectCard.tsx`
+- `components/ProjectCard.tsx`
+- `components/ThoughtCard.tsx`
+- `components/FeaturedArticleCard.tsx`
+
 ---
 
-### 4.2 Add Scroll-Triggered Animations
+## Phase 4: Footer Implementation
 
-**Current Problem:** Only homepage has entrance animations.
+**Problem**: No consistent footer across pages. Abrupt page endings feel unfinished.
 
-**Solution:** Animate elements as they enter viewport:
+### 4.1 Create Site Footer Component
 
 ```tsx
-// components/AnimateOnScroll.tsx
+// components/Footer.tsx
 'use client'
 
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { fadeInUp } from '@/lib/motion'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Github, Linkedin, Twitter, Mail } from 'lucide-react'
+import MagneticWrapper from '@/components/ui/magnetic-wrapper'
 
-interface Props {
-  children: React.ReactNode
-  delay?: number
-  className?: string
+const navLinks = [
+  { href: '/work', label: 'Work' },
+  { href: '/thoughts', label: 'Thoughts' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+]
+
+const socialLinks = [
+  { href: 'https://github.com/amirhjalali', icon: Github, label: 'GitHub' },
+  { href: 'https://linkedin.com/in/amirhjalali', icon: Linkedin, label: 'LinkedIn' },
+  { href: 'https://twitter.com/amirhjalali', icon: Twitter, label: 'Twitter' },
+  { href: 'mailto:hello@amirhjalali.com', icon: Mail, label: 'Email' },
+]
+
+export function Footer() {
+  const currentYear = new Date().getFullYear()
+
+  return (
+    <footer className="relative border-t border-white/10 bg-[#050505]">
+      {/* Subtle top gradient */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+      <div className="max-w-7xl mx-auto section-padding container-padding">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+
+          {/* Brand Column */}
+          <div>
+            <Link href="/" className="inline-block">
+              <span className="text-card-title text-[#EAEAEA]">AHJ</span>
+            </Link>
+            <p className="text-body mt-4 max-w-xs">
+              Generative AI consultant transforming data into opportunity.
+            </p>
+          </div>
+
+          {/* Navigation Column */}
+          <div>
+            <h4 className="text-label text-[#EAEAEA] mb-4">Navigation</h4>
+            <nav className="flex flex-col gap-3">
+              {navLinks.map(link => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-body hover:text-[#EAEAEA] transition-colors w-fit"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Social Column */}
+          <div>
+            <h4 className="text-label text-[#EAEAEA] mb-4">Connect</h4>
+            <div className="flex gap-4">
+              {socialLinks.map(({ href, icon: Icon, label }) => (
+                <MagneticWrapper key={href} strength={0.3}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-all"
+                    aria-label={label}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                </MagneticWrapper>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-12 pt-8 border-t border-white/5">
+          <p className="text-micro text-[#666666]">
+            {currentYear} Amir H. Jalali. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  )
 }
+
+export default Footer
+```
+
+### 4.2 Add Footer to Layout
+
+```tsx
+// app/layout.tsx - Add Footer import and placement
+import Footer from '@/components/Footer'
+
+// Inside RootLayout, after main content:
+<main id="main-content" className="pt-20" role="main">
+  {children}
+</main>
+<Footer />
+```
+
+**Files to create:**
+- `components/Footer.tsx`
+
+**Files to modify:**
+- `app/layout.tsx`
+
+---
+
+## Phase 5: Animation Rationalization
+
+**Problem**: Multiple animation layers (page transitions, scroll triggers, hover states, noise grain, custom cursor) can feel overwhelming.
+
+### 5.1 Create Animation Priority System
+
+Define when each animation type should be used:
+
+```ts
+// lib/motion.ts - Add animation priority guide
+
+/**
+ * Animation Priority System
+ *
+ * Level 1 (Always): Page fade transitions, essential hover feedback
+ * Level 2 (Default): Scroll reveals for main content, card hovers
+ * Level 3 (Optional): Magnetic effects, custom cursor, loading sequence
+ * Level 4 (Reduced Motion): Disable Levels 2-3, keep only Level 1
+ */
+
+export const shouldAnimate = {
+  // Check user preference for reduced motion
+  prefersReducedMotion: () =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+}
+```
+
+### 5.2 Add Reduced Motion Support
+
+```tsx
+// components/AnimateOnScroll.tsx - Add reduced motion check
+import { shouldAnimate } from '@/lib/motion'
 
 export function AnimateOnScroll({ children, delay = 0, className }: Props) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const prefersReducedMotion = shouldAnimate.prefersReducedMotion()
+
+  // Skip animation if user prefers reduced motion
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>
+  }
 
   return (
     <motion.div
@@ -462,690 +454,525 @@ export function AnimateOnScroll({ children, delay = 0, className }: Props) {
 }
 ```
 
-**Usage:**
-```tsx
-// app/work/page.tsx
-<AnimateOnScroll>
-  <ProjectCard ... />
-</AnimateOnScroll>
-```
+### 5.3 Disable Loading Sequence by Default
 
----
-
-### 4.3 Page Transitions
-
-**Current Problem:** Hard cuts between pages.
-
-**Solution:** Smooth page transitions:
+The loading sequence should be opt-in, not default:
 
 ```tsx
-// app/template.tsx (new file)
-'use client'
+// app/layout.tsx - Make LoadingSequence optional
+// Remove LoadingSequence wrapper or set enabled={false} by default
 
-import { motion } from 'framer-motion'
+// If keeping:
+<LoadingSequence enabled={false}>
+  {children}
+</LoadingSequence>
 
-export default function Template({ children }: { children: React.ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-    >
-      {children}
-    </motion.div>
-  )
-}
+// Or remove entirely and only use for special pages
 ```
 
----
-
-### 4.4 Magnetic Cursor Effects
-
-**Current Problem:** The magnetic wrapper exists but isn't used.
-
-**Solution:** Apply to key interactive elements:
-
-```tsx
-// components/ui/magnetic-wrapper.tsx - Enhanced
-'use client'
-
-import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { useRef, useState } from 'react'
-
-interface Props {
-  children: React.ReactNode
-  strength?: number
-  className?: string
-}
-
-export function MagneticWrapper({ children, strength = 0.4, className }: Props) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [isHovered, setIsHovered] = useState(false)
-
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-
-  const springConfig = { damping: 15, stiffness: 150 }
-  const springX = useSpring(x, springConfig)
-  const springY = useSpring(y, springConfig)
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-
-    x.set((e.clientX - centerX) * strength)
-    y.set((e.clientY - centerY) * strength)
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-    x.set(0)
-    y.set(0)
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
-}
-```
-
-**Apply to:**
-- Primary CTA buttons
-- Social links on contact page
-- Navigation links
-- Project card arrows
-
----
-
-## Phase 5: Texture & Atmosphere (Week 5-6)
-
-### 5.1 Enhance the Noise Overlay
-
-**Current Problem:** 3% opacity is invisible.
-
-**Solution:** Make it intentional or remove it:
+### 5.4 Reduce Noise Animation Frequency
 
 ```css
-/* Option A: Commit to visible grain */
+/* app/globals.css - Slow down grain animation */
 .noise-overlay {
-  opacity: 0.06; /* Visible but not distracting */
-  mix-blend-mode: overlay; /* Better integration */
-}
-
-/* Option B: Animated grain for premium feel */
-.noise-overlay {
-  opacity: 0.04;
-  animation: grain 0.5s steps(10) infinite;
-}
-
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0) }
-  10% { transform: translate(-2%, -2%) }
-  20% { transform: translate(2%, 2%) }
-  30% { transform: translate(-1%, 1%) }
-  40% { transform: translate(1%, -1%) }
-  50% { transform: translate(-2%, 2%) }
-  60% { transform: translate(2%, -2%) }
-  70% { transform: translate(-1%, -1%) }
-  80% { transform: translate(1%, 1%) }
-  90% { transform: translate(-2%, -1%) }
+  opacity: 0.04;  /* Slightly reduced */
+  animation: grain 1s steps(6) infinite;  /* Slower, fewer steps */
 }
 ```
 
----
-
-### 5.2 Add Depth with Gradients
-
-**Current Problem:** Flat #050505 background everywhere.
-
-**Solution:** Subtle gradient atmospheres per section:
-
-```css
-/* Hero sections - radial spotlight */
-.hero-atmosphere {
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,255,255,0.03), transparent),
-    #050505;
-}
-
-/* Card sections - bottom fade */
-.cards-atmosphere {
-  background:
-    linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.01) 50%, transparent 100%),
-    #050505;
-}
-
-/* Footer - top border glow */
-.footer-atmosphere {
-  background:
-    linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, transparent 30%),
-    #050505;
-}
-```
+**Files to modify:**
+- `lib/motion.ts`
+- `components/AnimateOnScroll.tsx`
+- `app/layout.tsx` or wherever LoadingSequence is used
+- `app/globals.css`
+- `components/CustomCursor.tsx` (add reduced motion check)
 
 ---
 
-### 5.3 Implement Subtle Border Glow on Focus
+## Phase 6: Mobile Navigation Enhancement
 
-**Current Problem:** Card borders are static.
+**Problem**: Full-screen overlay works but lacks current page indication and has disconnected branding.
 
-**Solution:** Animated border on hover:
-
-```css
-/* Glowing border effect */
-.glow-border {
-  position: relative;
-}
-
-.glow-border::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(255,255,255,0.1) 0%,
-    rgba(255,255,255,0.05) 50%,
-    rgba(255,255,255,0.1) 100%
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.glow-border:hover::before {
-  opacity: 1;
-}
-```
-
----
-
-## Phase 6: About Page Redesign (Week 6-7)
-
-### 6.1 Timeline Visualization
-
-**Current Problem:** Wall of identical cards.
-
-**Solution:** Visual timeline with hierarchy:
+### 6.1 Add Active State to Mobile Navigation
 
 ```tsx
-// app/about/components/Timeline.tsx
-<div className="relative">
-  {/* Vertical line */}
-  <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-white/10" />
+// components/NavigationEnhanced.tsx - Mobile menu enhancements
 
-  {experiences.map((exp, index) => (
-    <motion.div
-      key={exp.id}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      className={`relative grid md:grid-cols-2 gap-8 mb-16 ${
-        index % 2 === 0 ? '' : 'md:direction-rtl'
-      }`}
-    >
-      {/* Year marker */}
-      <div className="absolute left-0 md:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-white/20 border-2 border-[#050505]" />
+'use client'
+import { usePathname } from 'next/navigation'
 
-      {/* Content */}
-      <div className={`${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12 md:col-start-2'}`}>
-        <span className="text-[10px] font-mono uppercase tracking-widest text-[#666666]">
-          {exp.period}
-        </span>
-        <h3 className="text-xl font-serif font-light mt-2">{exp.title}</h3>
-        <p className="text-[#888888] text-sm mt-1">{exp.company}</p>
+export function NavigationEnhanced() {
+  const pathname = usePathname()
 
-        {/* Expandable achievements */}
-        <ExpandableContent>
-          <ul className="mt-4 space-y-2">
-            {exp.achievements.map((a, i) => (
-              <li key={i} className="text-sm text-[#888888] flex gap-2">
-                <span className="text-white/30">-</span>
-                {a}
-              </li>
-            ))}
-          </ul>
-        </ExpandableContent>
-      </div>
-    </motion.div>
-  ))}
+  // In mobile menu:
+  {navItems.map((item, index) => {
+    const isActive = pathname === item.href
+
+    return (
+      <motion.div key={item.href} ...>
+        <Link
+          href={item.href}
+          className={`
+            text-3xl font-serif font-light transition-colors
+            ${isActive ? 'text-[#EAEAEA]' : 'text-[#666666] hover:text-[#EAEAEA]'}
+          `}
+        >
+          {item.label}
+          {isActive && (
+            <motion.div
+              layoutId="mobile-nav-indicator"
+              className="h-px w-full bg-white/30 mt-1"
+            />
+          )}
+        </Link>
+      </motion.div>
+    )
+  })}
+```
+
+### 6.2 Improve Mobile Menu Header
+
+```tsx
+// components/NavigationEnhanced.tsx - Better header branding
+
+{/* Mobile menu header */}
+<div className="flex items-center justify-between mb-12">
+  <Link href="/" onClick={() => setMobileOpen(false)}>
+    <span className="text-xl font-serif font-light text-[#EAEAEA]">
+      Amir H. Jalali
+    </span>
+  </Link>
+
+  <button
+    onClick={() => setMobileOpen(false)}
+    className="p-3 -mr-3 text-[#888888] hover:text-[#EAEAEA] transition-colors"
+    aria-label="Close menu"
+  >
+    <X className="w-6 h-6" />
+  </button>
 </div>
 ```
 
----
-
-### 6.2 Expandable Content Component
-
-**Current Problem:** All achievements shown at once.
-
-**Solution:** Progressive disclosure:
+### 6.3 Desktop Navigation Active State
 
 ```tsx
-// components/ExpandableContent.tsx
-'use client'
+// components/NavigationEnhanced.tsx - Desktop nav active state
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+{navLinks.map(link => {
+  const isActive = pathname === link.href
 
-export function ExpandableContent({
-  children,
-  previewLines = 2
+  return (
+    <Link
+      key={link.href}
+      href={link.href}
+      className={`
+        text-label transition-colors relative
+        ${isActive ? 'text-[#EAEAEA]' : 'text-[#888888] hover:text-[#EAEAEA]'}
+      `}
+    >
+      {link.label}
+      {isActive && (
+        <motion.div
+          layoutId="desktop-nav-indicator"
+          className="absolute -bottom-1 left-0 right-0 h-px bg-white/30"
+        />
+      )}
+    </Link>
+  )
+})}
+```
+
+**Files to modify:**
+- `components/NavigationEnhanced.tsx`
+
+---
+
+## Phase 7: Form & Accessibility Improvements
+
+**Problem**: Form inputs rely on subtle borders that may have contrast issues. Focus states need enhancement.
+
+### 7.1 Enhanced Input Styles
+
+```css
+/* app/globals.css - Form input improvements */
+
+.input-field {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  color: #EAEAEA;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input-field::placeholder {
+  color: #666666;
+}
+
+.input-field:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+/* Error state */
+.input-field[aria-invalid="true"] {
+  border-color: rgba(255, 100, 100, 0.5);
+}
+
+/* Label styling */
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.6875rem;
+  font-family: var(--font-jetbrains);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #888888;
+}
+
+/* Error message */
+.input-error {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #888888;
+}
+```
+
+### 7.2 Update Contact Form Component
+
+```tsx
+// components/ContactForm.tsx (or wherever the form is)
+
+<div className="space-y-6">
+  <div>
+    <label htmlFor="name" className="input-label">
+      Name <span className="text-[#666666]">*</span>
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      aria-required="true"
+      aria-invalid={errors.name ? "true" : "false"}
+      aria-describedby={errors.name ? "name-error" : undefined}
+      className="input-field"
+      placeholder="Your name"
+    />
+    {errors.name && (
+      <p id="name-error" className="input-error" role="alert">
+        {errors.name}
+      </p>
+    )}
+  </div>
+
+  {/* Repeat for email, message, etc. */}
+</div>
+```
+
+### 7.3 Focus Visible Enhancement
+
+```css
+/* app/globals.css - Global focus visible styles */
+
+/* Remove default focus, add custom */
+*:focus {
+  outline: none;
+}
+
+/* Keyboard focus only */
+*:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* For elements with custom focus styles */
+.custom-focus:focus-visible {
+  outline: none;
+}
+```
+
+**Files to modify:**
+- `app/globals.css`
+- `app/contact/ContactPageClient.tsx` (or equivalent)
+
+---
+
+## Phase 8: Expandable Content Affordance
+
+**Problem**: Users may not know sections can expand. Interaction affordance isn't obvious.
+
+### 8.1 Improve Visual Indicator
+
+```tsx
+// components/ExpandableContent.tsx - Better expand indicator
+
+export function ExpandableList({
+  items,
+  previewCount = 3
 }: {
-  children: React.ReactNode
-  previewLines?: number
+  items: string[]
+  previewCount?: number
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const hasMore = items.length > previewCount
+
+  const visibleItems = isExpanded ? items : items.slice(0, previewCount)
+  const hiddenCount = items.length - previewCount
 
   return (
     <div>
-      <AnimatePresence initial={false}>
-        <motion.div
-          initial={false}
-          animate={{ height: isExpanded ? 'auto' : `${previewLines * 1.5}rem` }}
-          className="overflow-hidden"
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
+      <ul className="space-y-2">
+        {visibleItems.map((item, i) => (
+          <motion.li
+            key={i}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: i * 0.05 }}
+            className="text-body flex gap-3"
+          >
+            <span className="text-[#444444] select-none">-</span>
+            <span>{item}</span>
+          </motion.li>
+        ))}
+      </ul>
 
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-1 mt-2 text-[10px] font-mono uppercase tracking-widest text-[#666666] hover:text-white transition-colors"
-      >
-        {isExpanded ? 'Show less' : 'Show more'}
-        <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
-          <ChevronDown className="w-3 h-3" />
-        </motion.div>
-      </button>
+      {hasMore && (
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="mt-4 flex items-center gap-2 text-label text-[#666666] hover:text-[#EAEAEA] transition-colors group"
+        >
+          <span className="border-b border-dashed border-current pb-0.5">
+            {isExpanded ? 'Show less' : `Show ${hiddenCount} more`}
+          </span>
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            className="transition-transform"
+          >
+            <ChevronDown className="w-3 h-3" />
+          </motion.div>
+        </button>
+      )}
     </div>
   )
 }
 ```
 
----
-
-### 6.3 Skills Visualization
-
-**Current Problem:** Tags blur together.
-
-**Solution:** Grouped, scannable skills:
+### 8.2 Add Collapse Animation
 
 ```tsx
-// app/about/components/SkillsSection.tsx
-const skillCategories = {
-  'AI & ML': ['LLMs', 'OpenAI API', 'LangChain', 'Prompt Engineering', 'RAG'],
-  'Data': ['Data Architecture', 'ETL/ELT', 'Data Modeling', 'Warehousing'],
-  'Cloud': ['AWS', 'GCP', 'Docker', 'Kubernetes'],
-  'Languages': ['Python', 'TypeScript', 'SQL', 'Go'],
-}
+// components/ExpandableContent.tsx - Smoother animation
 
-<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-  {Object.entries(skillCategories).map(([category, skills]) => (
-    <div key={category}>
-      <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#666666] mb-4">
-        {category}
-      </h4>
-      <ul className="space-y-2">
-        {skills.map(skill => (
-          <li key={skill} className="text-sm text-[#888888]">{skill}</li>
-        ))}
-      </ul>
-    </div>
-  ))}
-</div>
-```
-
----
-
-## Phase 7: Mobile Excellence (Week 7-8)
-
-### 7.1 Mobile Navigation Redesign
-
-**Current Problem:** Slide-in from right is unconventional and confusing.
-
-**Solution:** Full-screen overlay with centered content:
-
-```tsx
-// components/MobileNav.tsx
-<AnimatePresence>
-  {mobileOpen && (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-[#050505] flex flex-col items-center justify-center"
-    >
-      {/* Close button */}
-      <button
-        onClick={() => setMobileOpen(false)}
-        className="absolute top-6 right-6 p-2"
+<AnimatePresence initial={false}>
+  <motion.ul
+    className="space-y-2 overflow-hidden"
+    initial={false}
+    animate={{ height: 'auto' }}
+  >
+    {visibleItems.map((item, i) => (
+      <motion.li
+        key={item}
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: 'auto' }}
+        exit={{ opacity: 0, height: 0 }}
+        transition={{ duration: 0.2 }}
+        className="text-body flex gap-3"
       >
-        <X className="w-6 h-6" />
-      </button>
-
-      {/* Navigation links */}
-      <nav className="flex flex-col items-center gap-8">
-        {navItems.map((item, index) => (
-          <motion.div
-            key={item.href}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Link
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className="text-3xl font-serif font-light"
-            >
-              {item.label}
-            </Link>
-          </motion.div>
-        ))}
-      </nav>
-
-      {/* Social links at bottom */}
-      <div className="absolute bottom-8 flex gap-6">
-        {socialLinks.map(link => ...)}
-      </div>
-    </motion.div>
-  )}
+        <span className="text-[#444444] select-none">-</span>
+        <span>{item}</span>
+      </motion.li>
+    ))}
+  </motion.ul>
 </AnimatePresence>
 ```
 
----
-
-### 7.2 Touch-Optimized Cards
-
-**Current Problem:** Hover states don't translate to mobile.
-
-**Solution:** Active states and touch feedback:
-
-```tsx
-// components/ProjectCard.tsx - Mobile enhancements
-<motion.article
-  whileTap={{ scale: 0.98 }} // Touch feedback
-  className="
-    ...
-    active:bg-white/5
-    touch-manipulation
-  "
->
-  {/* Ensure touch targets are at least 44px */}
-  <div className="p-6 min-h-[44px]">
-    ...
-  </div>
-</motion.article>
-```
+**Files to modify:**
+- `components/ExpandableContent.tsx`
 
 ---
 
-### 7.3 Mobile-Specific Spacing
+## Phase 9: Performance & Polish
 
-**Current Problem:** Desktop spacing on mobile is cramped.
+**Problem**: Multiple animation layers may cause performance issues on lower-end devices.
 
-**Solution:** Responsive spacing tokens:
+### 9.1 Add Performance Detection
 
-```css
-/* app/globals.css */
-:root {
-  --space-section: clamp(3rem, 8vw, 6rem);
-  --space-card: clamp(1rem, 3vw, 1.5rem);
-  --space-content: clamp(1rem, 4vw, 1.5rem);
-}
+```ts
+// lib/performance.ts
+export function getDevicePerformance(): 'high' | 'medium' | 'low' {
+  if (typeof window === 'undefined') return 'medium'
 
-/* Usage */
-.section {
-  padding-top: var(--space-section);
-  padding-bottom: var(--space-section);
-}
-
-.card {
-  padding: var(--space-card);
-}
-```
-
----
-
-## Phase 8: Signature Moments (Week 8-9)
-
-### 8.1 Custom Cursor (Desktop Only)
-
-Create a subtle custom cursor that reinforces the light/reveal theme:
-
-```tsx
-// components/CustomCursor.tsx
-'use client'
-
-import { useEffect, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
-
-export function CustomCursor() {
-  const [isHovering, setIsHovering] = useState(false)
-  const cursorX = useMotionValue(-100)
-  const cursorY = useMotionValue(-100)
-
-  const springConfig = { damping: 25, stiffness: 400 }
-  const cursorXSpring = useSpring(cursorX, springConfig)
-  const cursorYSpring = useSpring(cursorY, springConfig)
-
-  useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX)
-      cursorY.set(e.clientY)
-    }
-
-    const handleHoverStart = () => setIsHovering(true)
-    const handleHoverEnd = () => setIsHovering(false)
-
-    window.addEventListener('mousemove', moveCursor)
-
-    // Add hover detection for interactive elements
-    document.querySelectorAll('a, button, [role="button"]').forEach(el => {
-      el.addEventListener('mouseenter', handleHoverStart)
-      el.addEventListener('mouseleave', handleHoverEnd)
-    })
-
-    return () => {
-      window.removeEventListener('mousemove', moveCursor)
-    }
-  }, [cursorX, cursorY])
-
-  // Only show on desktop
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-    return null
+  // Check for reduced motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return 'low'
   }
 
-  return (
-    <>
-      {/* Main cursor dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-white pointer-events-none z-[9999] mix-blend-difference"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-      />
+  // Check hardware concurrency (CPU cores)
+  const cores = navigator.hardwareConcurrency || 4
+  if (cores <= 2) return 'low'
+  if (cores <= 4) return 'medium'
 
-      {/* Hover ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 rounded-full border border-white/30 pointer-events-none z-[9998]"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{
-          scale: isHovering ? 1.5 : 1,
-          opacity: isHovering ? 1 : 0.5,
-        }}
-        transition={{ duration: 0.2 }}
-      />
-    </>
-  )
+  // Check device memory if available
+  const memory = (navigator as any).deviceMemory
+  if (memory && memory < 4) return 'low'
+  if (memory && memory < 8) return 'medium'
+
+  return 'high'
+}
+
+export function shouldUseComplexAnimations(): boolean {
+  return getDevicePerformance() !== 'low'
 }
 ```
 
----
-
-### 8.2 Page Load Sequence
-
-Create a memorable first impression:
+### 9.2 Conditionally Disable Heavy Effects
 
 ```tsx
-// components/LoadingSequence.tsx
-'use client'
+// components/CustomCursor.tsx - Performance check
+import { shouldUseComplexAnimations } from '@/lib/performance'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-
-export function LoadingSequence({ children }: { children: React.ReactNode }) {
-  const [isLoading, setIsLoading] = useState(true)
+export function CustomCursor() {
+  const [shouldRender, setShouldRender] = useState(false)
 
   useEffect(() => {
-    // Minimum display time for brand impact
-    const timer = setTimeout(() => setIsLoading(false), 1500)
-    return () => clearTimeout(timer)
+    // Only render on high-performance desktop devices
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+    const hasPerformance = shouldUseComplexAnimations()
+    setShouldRender(!isMobile && hasPerformance)
   }, [])
 
-  return (
-    <>
-      <AnimatePresence>
-        {isLoading && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.1 }}
-              className="text-center"
-            >
-              {/* Animated logo or name */}
-              <motion.h1
-                className="text-4xl font-serif font-light"
-                animate={{
-                  opacity: [0.5, 1, 0.5],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                AHJ
-              </motion.h1>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+  if (!shouldRender) return null
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        {children}
-      </motion.div>
-    </>
-  )
+  // ... rest of component
 }
 ```
 
----
-
-### 8.3 Easter Egg: Konami Code
-
-Add a playful hidden feature:
+### 9.3 Lazy Load Heavy Components
 
 ```tsx
-// hooks/useKonamiCode.ts
-import { useEffect, useState } from 'react'
+// app/layout.tsx - Dynamic imports for non-critical components
+import dynamic from 'next/dynamic'
 
-const KONAMI_CODE = [
-  'ArrowUp', 'ArrowUp',
-  'ArrowDown', 'ArrowDown',
-  'ArrowLeft', 'ArrowRight',
-  'ArrowLeft', 'ArrowRight',
-  'KeyB', 'KeyA'
-]
+const CustomCursor = dynamic(() => import('@/components/CustomCursor'), {
+  ssr: false,
+  loading: () => null,
+})
 
-export function useKonamiCode(callback: () => void) {
-  const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === KONAMI_CODE[index]) {
-        if (index === KONAMI_CODE.length - 1) {
-          callback()
-          setIndex(0)
-        } else {
-          setIndex(i => i + 1)
-        }
-      } else {
-        setIndex(0)
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [index, callback])
-}
-
-// Usage: Reveal an alternate color theme, show a hidden message, etc.
+const LoadingSequence = dynamic(() => import('@/components/LoadingSequence'), {
+  ssr: false,
+})
 ```
 
----
+**Files to create:**
+- `lib/performance.ts`
 
-## Implementation Priority Matrix
-
-| Phase | Impact | Effort | Priority |
-|-------|--------|--------|----------|
-| Phase 1: Typography | High | Low | **P0** |
-| Phase 2: Homepage | High | Medium | **P0** |
-| Phase 3: Cards | High | Medium | **P1** |
-| Phase 4: Motion | Medium | Medium | **P1** |
-| Phase 5: Texture | Low | Low | **P2** |
-| Phase 6: About | Medium | High | **P2** |
-| Phase 7: Mobile | High | Medium | **P1** |
-| Phase 8: Signature | Medium | High | **P3** |
+**Files to modify:**
+- `components/CustomCursor.tsx`
+- `app/layout.tsx`
 
 ---
 
-## Quick Wins (Do First)
+## Phase 10: Content & Copywriting Polish
 
-1. **Replace Inter with Satoshi/General Sans** - 30 minutes
-2. **Increase body text size to 16-18px** - 15 minutes
-3. **Add value proposition to homepage** - 30 minutes
-4. **Increase noise overlay to 6%** - 5 minutes
-5. **Add scroll indicator to homepage** - 20 minutes
-6. **Apply magnetic wrapper to CTA buttons** - 15 minutes
+**Problem**: "Human Consultant" tagline is cryptic. Some descriptive text could be stronger.
+
+### 10.1 Homepage Messaging
+
+Update the value proposition to be clearer:
+
+```tsx
+// Current: "Human Consultant" (cryptic)
+// Options to consider:
+
+// Option A: Descriptive
+<p className="text-label">AI Strategy Consultant</p>
+<p className="text-body-lg">
+  Helping businesses harness AI to solve real problems.
+</p>
+
+// Option B: Outcome-focused
+<p className="text-label">AI Consultant</p>
+<p className="text-body-lg">
+  From AI strategy to implementation.
+  14 years making technology deliver results.
+</p>
+
+// Option C: Keep "Human" but explain
+<p className="text-label">Human Consultant</p>
+<p className="text-body-lg">
+  The human element in AI transformation.
+  Strategy, implementation, and hands-on expertise.
+</p>
+```
+
+### 10.2 CTA Button Copy
+
+Review and improve call-to-action text:
+
+| Current | Consider |
+|---------|----------|
+| "View Work" | "See Projects" or "View Portfolio" |
+| "Read Thoughts" | "Read Articles" or "Latest Thinking" |
+| "Get in Touch" | "Start a Conversation" or "Work Together" |
+| "Learn More" | More specific: "Read Case Study" |
+
+### 10.3 About Page Introduction
+
+The about page should immediately communicate value:
+
+```tsx
+// Current: Generic bio
+// Improved: Lead with impact
+
+<p className="text-body-lg mb-8">
+  I've spent 14 years helping organizations turn data into decisions
+  and AI experiments into production systems. Currently serving as
+  CTO at AVENU AI, I focus on the practical side of AI adoption—not
+  just what's possible, but what actually works.
+</p>
+```
+
+**Files to modify:**
+- `app/page.tsx` (or HeroEnhanced)
+- `app/about/page.tsx`
+- Various CTA buttons throughout
+
+---
+
+## Implementation Priority
+
+| Phase | Impact | Effort | Priority | Estimate |
+|-------|--------|--------|----------|----------|
+| Phase 1: Spacing System | High | Medium | **P0** | 2-3 hours |
+| Phase 2: Typography Enforcement | High | Medium | **P0** | 2-3 hours |
+| Phase 3: Visual Hierarchy | High | Medium | **P1** | 2-3 hours |
+| Phase 4: Footer | Medium | Low | **P1** | 1 hour |
+| Phase 5: Animation Rationalization | Medium | Low | **P1** | 1-2 hours |
+| Phase 6: Mobile Nav Enhancement | Medium | Low | **P2** | 1 hour |
+| Phase 7: Form Accessibility | Medium | Low | **P2** | 1-2 hours |
+| Phase 8: Expandable Affordance | Low | Low | **P3** | 30 min |
+| Phase 9: Performance Polish | Medium | Medium | **P2** | 2 hours |
+| Phase 10: Copywriting | Medium | Low | **P3** | 1 hour |
+
+---
+
+## Quick Wins (15 minutes each)
+
+1. **Add spacing tokens to globals.css** - Foundation for consistency
+2. **Add footer to layout.tsx** - Immediately improves page endings
+3. **Add active state to navigation** - Better wayfinding
+4. **Reduce noise animation speed** - Less distracting
+5. **Add `prefers-reduced-motion` check** - Accessibility improvement
+6. **Enhance input focus states** - Better form UX
 
 ---
 
@@ -1153,31 +980,61 @@ export function useKonamiCode(callback: () => void) {
 
 After implementation, the site should:
 
-- [ ] Have a distinctive typography voice (not Inter)
-- [ ] Communicate value proposition within 3 seconds
-- [ ] Have visually distinct content types (projects vs. thoughts)
-- [ ] Feel alive with purposeful motion
-- [ ] Work beautifully on mobile
-- [ ] Have 2-3 memorable interaction moments
-- [ ] Load with a branded sequence
-- [ ] Feel cohesive across all pages
+- [ ] Have consistent spacing rhythm across all pages
+- [ ] Use semantic typography classes instead of utility combinations
+- [ ] Have clear visual hierarchy on every page
+- [ ] Include a footer with navigation and social links
+- [ ] Respect user's reduced motion preferences
+- [ ] Show active state in navigation
+- [ ] Have accessible, clearly-focused form inputs
+- [ ] Perform smoothly on mid-range devices
+- [ ] Communicate value proposition within 5 seconds
+
+---
+
+## Design System Audit Checklist
+
+Before marking complete, verify:
+
+**Spacing**
+- [ ] All `py-20`, `py-24` replaced with `section-padding`
+- [ ] All arbitrary `mb-*` replaced with stack utilities
+- [ ] Container padding consistent across pages
+
+**Typography**
+- [ ] No raw `text-5xl md:text-7xl` patterns remaining
+- [ ] All headings use semantic classes
+- [ ] Body text uses `text-body` or `text-body-lg`
+- [ ] Labels use `text-label`
+
+**Components**
+- [ ] All cards use standardized border tokens
+- [ ] Buttons follow primary/secondary patterns
+- [ ] Form inputs use `.input-field` class
+
+**Motion**
+- [ ] Reduced motion preference respected
+- [ ] Heavy animations conditionally loaded
+- [ ] No animation on low-performance devices
+
+**Accessibility**
+- [ ] Focus visible on all interactive elements
+- [ ] Form errors properly announced
+- [ ] Navigation shows current page
 
 ---
 
 ## Resources
 
-**Fonts:**
-- [Satoshi](https://www.fontshare.com/fonts/satoshi)
-- [General Sans](https://www.fontshare.com/fonts/general-sans)
-- [Söhne](https://klim.co.nz/retail-fonts/soehne/)
+**Design Systems Reference:**
+- [Radix UI Themes](https://www.radix-ui.com/themes) - Spacing and type scale
+- [Tailwind Spacing](https://tailwindcss.com/docs/customizing-spacing)
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG21/Understanding/focus-visible.html)
 
-**Inspiration:**
-- [Stripe](https://stripe.com) - Motion and typography
-- [Linear](https://linear.app) - Dark mode, monochrome
-- [Vercel](https://vercel.com) - Gradient atmospheres
-- [Rauno](https://rauno.me) - Personal portfolio excellence
+**Performance:**
+- [web.dev Performance](https://web.dev/performance/)
+- [Framer Motion Performance](https://www.framer.com/motion/guide-reduce-bundle-size/)
 
-**Tools:**
-- [Framer Motion](https://www.framer.com/motion/) - Animation
-- [Cubic Bezier](https://cubic-bezier.com/) - Easing curves
-- [Type Scale](https://typescale.com/) - Typography ratios
+**Accessibility:**
+- [A11y Checklist](https://www.a11yproject.com/checklist/)
+- [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
