@@ -3,7 +3,10 @@
  * Extracts text and metadata from PDF files
  */
 
-import pdf from 'pdf-parse'
+import * as pdfParse from 'pdf-parse'
+
+// Handle both ESM and CommonJS exports
+const pdf = (pdfParse as any).default || pdfParse
 
 export interface PdfExtractionResult {
   textContent: string

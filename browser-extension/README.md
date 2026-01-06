@@ -1,9 +1,10 @@
-# Quick Notes Capture - Chrome Extension
+# KnowNote - Chrome Extension
 
-A Chrome extension for quickly capturing notes, links, and highlights from any webpage to your personal knowledge base.
+A powerful Chrome extension for capturing notes, links, and content from any webpage with intelligent platform detection and AI-powered processing.
 
 ## Features
 
+### Core Features
 - **Quick Capture**: Save links, text selections, and screenshots with one click
 - **Context Menu**: Right-click to save selected text, links, or images
 - **Keyboard Shortcuts**: `Ctrl+Shift+S` to quick save
@@ -11,6 +12,17 @@ A Chrome extension for quickly capturing notes, links, and highlights from any w
 - **Multiple Note Types**: Link, Thought, or Highlight
 - **Tag Support**: Organize captures with tags
 - **Recent History**: Quick access to recent saves
+
+### Platform Detection
+The extension automatically detects content type and offers platform-specific features:
+
+- **YouTube**: Shows transcript availability, one-click "Save with Transcript" button
+- **Twitter/X**: Detects threads, extracts all tweets with "Save Thread" button
+- **Medium/Substack**: Identifies articles with author info
+- **GitHub**: Detects repos, issues, and PRs
+- **Reddit**: Identifies subreddits
+- **Hacker News**: Recognizes HN threads
+- **Podcasts**: Detects podcast platform pages (Apple, Spotify, Overcast, etc.)
 
 ## Installation
 
