@@ -40,82 +40,93 @@ Composition: Centered, slightly low angle looking up at the floating garment, cr
   },
   avenu: {
     name: 'Avenu.AI',
-    prompt: `A sophisticated dark monochrome mockup of an AI recruitment platform interface.
+    prompt: `A single holographic human silhouette floating in an infinite black void, being assembled from thousands of glowing data points and resume fragments.
 
-The scene shows:
-- AI-powered candidate matching visualization
-- Resume analysis dashboard with scoring
-- Interview scheduling interface
-- Talent pipeline workflow
+The figure is mid-formation — the head and shoulders are fully realized and luminous, while the torso dissolves into floating text snippets, skill badges, and experience markers. It's the visualization of AI finding the perfect candidate from millions of data points.
 
-Style: Neural noir aesthetic - black (#050505) background with white (#EAEAEA) UI elements.
-Subtle AI/neural network patterns integrated into the design.
-Clean, corporate-tech feel with dramatic lighting.
-Photorealistic, premium SaaS dashboard aesthetic.`,
+Streams of light connect scattered resume elements (education, skills, experience) flowing upward and coalescing into this ideal candidate form. The effect is like watching a constellation form a person.
+
+A subtle golden/white glow emanates from the completed portions, suggesting "this is the one" — the perfect match found by AI.
+
+The mood: Discovery. Precision. The moment AI surfaces the needle from the haystack.
+
+Color palette: Deep black void, luminous white/silver data streams, subtle warm glow on the formed figure. No UI elements, no dashboards — just the pure concept of AI-powered talent discovery.
+
+Photorealistic rendering with ethereal, almost spiritual quality. Think: if finding perfect talent was visualized as an act of creation.`,
     filename: 'avenu_noir.png'
   },
   plaiced: {
     name: 'PLAICED',
-    prompt: `A dark monochrome mockup of an AI advertising platform interface.
+    prompt: `A single floating advertisement creative/banner in the center of an infinite black void, with visible streams of AI optimization happening around it in real-time.
 
-The scene shows:
-- Ad campaign dashboard with performance metrics
-- AI-generated ad variations preview
-- ROI analytics with graphs and charts
-- Targeting optimization interface
+The ad itself is a sleek, minimal rectangular frame — but around it, countless thin light streams are flowing IN from the left (representing audience data, targeting parameters, behavioral signals) and flowing OUT to the right as amplified, glowing conversion paths.
 
-Style: Neural noir aesthetic - black background with white/gray UI elements.
-Data visualization with subtle glow effects.
-Premium advertising tech feel.
-Photorealistic rendering.`,
+The ad acts as a prism or transformer — chaotic data enters, optimized results emerge. Small floating metrics and upward arrows suggest ROI climbing. The streams have a subtle gradient from cool silver (input) to warm gold (output/conversions).
+
+In the darkness around this central piece, faint ghostly variations of the ad float — A/B test versions that the AI evaluated and dismissed, now fading into the void while the optimized version glows brightest.
+
+The mood: Alchemy. Transformation. AI turning advertising spend into measurable results.
+
+Color palette: True black void, silver/white data streams, golden/warm conversion indicators. The ad creative itself is minimal white on dark.
+
+Photorealistic with data visualization elements. Think: the moment an ad becomes effective, visualized as light passing through a lens.`,
     filename: 'plaiced_noir.png'
   },
   argumend: {
     name: 'ARGUMEND',
-    prompt: `A dark monochrome mockup of a fact-checking/discourse platform interface.
+    prompt: `A single luminous checkmark or verification symbol emerging from a storm of fragmented, chaotic text in an infinite black void.
 
-The scene shows:
-- Content analysis panel with claim verification
-- Context addition interface
-- Source credibility indicators
-- Discussion threads with fact-check overlays
+The scene captures the moment of truth emerging from noise. Swirling around the edges of the frame are countless text fragments, distorted claims, and garbled information — representing the chaos of online discourse. They spiral inward like a vortex.
 
-Style: Neural noir aesthetic - black background with white/gray elements.
-Intellectual, trustworthy feel with clean design.
-Subtle neural network patterns suggesting AI analysis.
-Photorealistic rendering.`,
+At the center, a pristine, glowing verification checkmark hovers — clean, geometric, radiant. It's the signal extracted from noise. Light rays emanate outward from it, pushing back the chaos.
+
+Below the checkmark, settled text becomes readable and organized — facts that have been verified, context that has been added. Above it, the chaos continues to swirl, waiting to be processed.
+
+The mood: Clarity. Truth. The moment understanding defeats misinformation.
+
+Color palette: Deep black void, chaotic gray text fragments at the edges, pure brilliant white for the verification symbol and verified content. No colors — just the stark contrast between confusion and clarity.
+
+The checkmark should feel almost sacred — a beacon of truth in darkness.
+
+Photorealistic rendering with abstract elements. Think: if fact-checking was visualized as light cutting through fog.`,
     filename: 'argumend_noir.png'
   },
   camp_alborz: {
     name: 'Camp Alborz',
-    prompt: `A dark monochrome artistic representation of a global community network.
+    prompt: `The majestic Alborz mountain range silhouetted against a star-filled night sky, with ethereal threads of light connecting points across the peaks and valleys.
 
-The scene shows:
-- Abstract connected nodes representing people worldwide
-- Mountain silhouette (Alborz) in the background
-- Community gathering visualization
-- Global connections and collaboration paths
+The mountains dominate the lower third of the frame — dramatic, ancient, grounding. Snow-capped peaks catch faint moonlight. This is Mount Damavand and its surrounding range, rendered with reverence.
 
-Style: Neural noir aesthetic - black background with white/gray elements.
-Warm community feel despite dark palette.
-Subtle glow on connection points.
-Artistic and inspirational.`,
+Above and across the mountains, a constellation of small glowing points represents people — scattered across the peaks, in valleys, extending beyond the frame to suggest a global network. Thin, delicate lines of light connect these points, forming a web of human connection that spans continents.
+
+The connections pulse gently with warmth — despite the cold mountain setting and dark sky, there's an unmistakable sense of human warmth, of friendship, of shared dreams.
+
+A single campfire glows in a valley — tiny but warm — the origin point, the gathering place from which all connections spread.
+
+The mood: Belonging. Legacy. Friends and family across the world, united by shared experiences and dreams.
+
+Color palette: Deep night sky blacks and dark blues, silver moonlight on peaks, warm golden-white for the connection points and campfire. Stars as tiny white dots.
+
+Cinematic, epic landscape photography meets data visualization. Think: if human connection was mapped across sacred mountains.`,
     filename: 'camp_alborz_noir.png'
   },
   portfolio: {
     name: 'MR AI Portfolio',
-    prompt: `A dark monochrome mockup of a modern AI-powered portfolio website.
+    prompt: `A sleek, floating laptop or monitor in an infinite black void, its screen glowing with this very portfolio website — a recursive, self-referential image.
 
-The scene shows:
-- Sleek portfolio homepage with hero section
-- Project cards with hover states
-- AI article generation interface preview
-- Modern navigation with smooth animations
+The device hovers at a slight angle, premium and minimal — think Apple product photography. The screen displays a dark portfolio interface with elegant typography and subtle UI elements visible but not readable.
 
-Style: Neural noir aesthetic - black (#050505) background with white elements.
-Self-referential meta design showing a portfolio within a portfolio.
-Premium tech aesthetic.
-Photorealistic rendering.`,
+From the edges of the screen, streams of code, AI symbols, and creative particles flow outward into the void — representing the AI-powered nature of the site, content being generated, ideas becoming reality.
+
+The glow from the screen is the primary light source, casting subtle reflections on the device's edges. Small floating elements around it suggest the technologies powering it: React symbols, AI nodes, creative sparks.
+
+The mood: Meta. Self-aware. A creation contemplating itself. Technology serving creativity.
+
+Color palette: True black void, the screen glow in cool white/silver, subtle warm accents for the AI elements. The portfolio on screen should feel premium — dark with white text.
+
+The image should feel like peeking behind the curtain — seeing the tool that was used to create everything else in the work section.
+
+Photorealistic product photography with surreal elements. Think: if a portfolio became conscious and looked at itself.`,
     filename: 'portfolio_noir.png'
   }
 };

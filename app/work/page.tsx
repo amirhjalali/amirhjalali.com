@@ -89,14 +89,14 @@ export default function ProjectsPage() {
       <div className="noise-overlay" />
       <Spotlight />
 
-      <div className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+      <div className="relative z-10 section-padding container-padding max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
+          <h1 className="text-page-title mb-6">
             Work
           </h1>
         </motion.div>
@@ -125,18 +125,18 @@ export default function ProjectsPage() {
           transition={{ delay: 0.8 }}
           className="text-center mt-20"
         >
-          <div className="border border-white/10 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto bg-white/[0.02] backdrop-blur-md">
-            <h3 className="text-3xl mb-4 font-serif font-light text-[#EAEAEA]">
+          <div className="card-border-emphasis p-8 md:p-12 max-w-4xl mx-auto bg-white/[0.02] backdrop-blur-md">
+            <h3 className="text-section-title mb-4">
               Let's Build Something Amazing
             </h3>
-            <p className="text-[#888888] mb-8 max-w-2xl mx-auto text-lg">
+            <p className="text-body-lg mb-8 max-w-2xl mx-auto">
               I'm always exploring new ideas and open to working on innovative AI projects.
               Whether you're looking for technical expertise, strategic guidance, or investment opportunities,
               let's collaborate to create the future.
             </p>
             <Button asChild size="lg" className="bg-white text-[#050505] hover:bg-[#EAEAEA] transition-colors font-mono uppercase tracking-widest">
               <Link href="/contact">
-                Get in Touch
+                Start a Conversation
               </Link>
             </Button>
           </div>

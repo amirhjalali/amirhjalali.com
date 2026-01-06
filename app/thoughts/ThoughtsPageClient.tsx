@@ -65,13 +65,13 @@ export default function ThoughtsPageClient({ articles }: ThoughtsPageClientProps
       <div className="noise-overlay" />
       <Spotlight />
 
-      <div className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+      <div className="relative z-10 section-padding container-padding max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-6 text-[#EAEAEA]">
+          <h1 className="text-page-title mb-6">
             Thoughts
           </h1>
         </motion.div>

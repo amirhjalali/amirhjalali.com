@@ -13,7 +13,7 @@ export default function ContactPageClient() {
       <div className="noise-overlay" />
       <Spotlight />
 
-      <div className="relative z-10 px-6 py-20 max-w-4xl mx-auto">
+      <div className="relative z-10 section-padding container-padding max-w-4xl mx-auto">
         {/* Back button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -22,7 +22,7 @@ export default function ContactPageClient() {
         >
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-colors font-mono text-xs uppercase tracking-widest"
+            className="inline-flex items-center gap-2 text-label text-[#888888] hover:text-[#EAEAEA] transition-colors"
             aria-label="Go back to homepage"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -39,10 +39,10 @@ export default function ContactPageClient() {
           transition={{ delay: 0.1 }}
           className="mb-16 text-center"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-light mb-6 text-[#EAEAEA]">
+          <h1 className="text-page-title mb-6">
             Get in Touch
           </h1>
-          <p className="text-xl text-[#888888] max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-body-lg max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? I'm always open to discussing new opportunities and ideas.
           </p>
         </motion.header>
@@ -74,7 +74,7 @@ export default function ContactPageClient() {
 
           {/* Social Links */}
           <div className="pt-8 border-t border-white/10 w-full max-w-xs">
-            <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888] mb-6 text-center">Connect</h3>
+            <h3 className="text-label text-[#888888] mb-6 text-center">Connect</h3>
             <div className="flex justify-center gap-6">
               <a
                 href="https://linkedin.com/in/amirhjalali"

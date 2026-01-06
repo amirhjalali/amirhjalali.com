@@ -14,34 +14,35 @@ export default function Home() {
       <PortraitReveal />
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pb-4">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen container-padding pb-4">
 
-        {/* Hero Section */}
+        {/* Hero Section - Clear visual hierarchy */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="text-center mb-2"
         >
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl 2xl:text-9xl font-light tracking-tight mb-3 text-[#EAEAEA]">
+          {/* Primary: Name - Dominant visual using text-hero */}
+          <h1 className="text-hero mb-4">
             <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">A</span>mir H. Jalal<span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] font-normal">i</span>
           </h1>
 
-          {/* Primary descriptor */}
-          <p className="font-mono text-xs md:text-sm uppercase tracking-[0.2em] text-[#888888] mb-6">
-            Human Consultant
+          {/* Secondary: Role - Supporting context using text-label */}
+          <p className="text-label text-[#666666] mb-8">
+            AI Strategy Consultant
           </p>
 
-          {/* Value proposition */}
+          {/* Tertiary: Value prop - Readable supporting text using text-body-lg */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 1.2 }}
-            className="font-sans text-lg md:text-xl text-[#666666] max-w-md mx-auto leading-relaxed"
+            className="text-body-lg max-w-md mx-auto text-center"
           >
-            Turning AI ambition into business reality.
+            Transforming AI ambition into business reality.
             <br />
-            <span className="text-[#888888]">14 years of making data work.</span>
+            <span className="text-[#888888]">14 years of making data deliver results.</span>
           </motion.p>
         </motion.div>
 
@@ -62,7 +63,7 @@ export default function Home() {
           </motion.div>
 
           {/* Nav links with underline hover effect */}
-          <div className="flex justify-center gap-8 sm:gap-16 font-mono text-xs uppercase tracking-widest">
+          <div className="flex justify-center gap-8 sm:gap-16 text-label">
             <Link href="/work" className="group flex flex-col items-center gap-2">
               <span className="text-[#888888] group-hover:text-[#EAEAEA] transition-colors duration-300">Work</span>
               <span className="w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
