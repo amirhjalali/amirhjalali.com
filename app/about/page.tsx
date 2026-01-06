@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { Download, Mail, Github, Linkedin } from 'lucide-react'
 import Spotlight from '@/components/Spotlight'
+import { ExpandableList } from '@/components/ExpandableContent'
+import { MagneticWrapper } from '@/components/ui/magnetic-wrapper'
 import './print.css'
 
 const experience = [
@@ -286,40 +288,48 @@ export default function ContactPage() {
           </h1>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="flex gap-2">
-              <a
-                href="https://github.com/amirhjalali"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center"
-                aria-label="GitHub"
-              >
-                <Github className="w-4 h-4" />
-              </a>
-              <a
-                href="https://linkedin.com/in/amirhjalali"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a
-                href="mailto:amirhjalali@gmail.com"
-                className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center"
-                aria-label="Email"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
-              <a
-                href="/AmirJalaliResume_04-01-2025.pdf"
-                download="AmirJalaliResume_04-01-2025.pdf"
-                className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center no-print"
-                aria-label="Download PDF"
-              >
-                <Download className="w-4 h-4" />
-              </a>
+            <div className="flex gap-3">
+              <MagneticWrapper magneticStrength={0.4}>
+                <a
+                  href="https://github.com/amirhjalali"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center"
+                  aria-label="GitHub"
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+              </MagneticWrapper>
+              <MagneticWrapper magneticStrength={0.4}>
+                <a
+                  href="https://linkedin.com/in/amirhjalali"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </a>
+              </MagneticWrapper>
+              <MagneticWrapper magneticStrength={0.4}>
+                <a
+                  href="mailto:amirhjalali@gmail.com"
+                  className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center"
+                  aria-label="Email"
+                >
+                  <Mail className="w-4 h-4" />
+                </a>
+              </MagneticWrapper>
+              <MagneticWrapper magneticStrength={0.4}>
+                <a
+                  href="/AmirJalaliResume_04-01-2025.pdf"
+                  download="AmirJalaliResume_04-01-2025.pdf"
+                  className="p-3 border border-white/10 rounded-full text-[#EAEAEA] hover:bg-white/5 hover:border-white/20 transition-all inline-flex items-center justify-center no-print"
+                  aria-label="Download PDF"
+                >
+                  <Download className="w-4 h-4" />
+                </a>
+              </MagneticWrapper>
             </div>
           </div>
         </motion.div>
@@ -366,15 +376,18 @@ export default function ContactPage() {
                       {exp.description}
                     </p>
 
-                    {/* Achievements */}
-                    <ul className="space-y-3 mb-6">
-                      {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm text-[#EAEAEA]/60 font-light group-hover:text-[#EAEAEA]/80 transition-colors">
+                    {/* Achievements - Expandable */}
+                    <ExpandableList
+                      items={exp.achievements}
+                      previewCount={3}
+                      className="space-y-3 mb-6"
+                      renderItem={(achievement, i) => (
+                        <div key={i} className="flex items-start gap-3 text-sm text-[#EAEAEA]/60 font-light group-hover:text-[#EAEAEA]/80 transition-colors">
                           <div className="w-1 h-1 bg-white/30 rounded-full mt-2 flex-shrink-0 group-hover:bg-white/60 transition-colors"></div>
                           {achievement}
-                        </li>
-                      ))}
-                    </ul>
+                        </div>
+                      )}
+                    />
 
                     {/* Skills */}
                     <div className="flex flex-wrap gap-2">

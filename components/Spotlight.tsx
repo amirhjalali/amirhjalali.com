@@ -33,6 +33,15 @@ export default function Spotlight() {
                     x: springX,
                     y: springY,
                 }}
+                animate={{
+                    scale: [1, 1.05, 1],
+                    opacity: [0.03, 0.05, 0.03],
+                }}
+                transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                }}
             />
         </div>
     )

@@ -118,68 +118,74 @@ export default function NavigationEnhanced() {
         </div>
       </div>
 
-      {/* Right-side Mobile Menu Panel */}
+      {/* Full-screen Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileOpen && (
-          <>
-            {/* Backdrop - transparent to keep left side visible */}
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="absolute top-6 right-6 p-2 text-[#888888] hover:text-white transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Navigation Links - centered, stacked */}
+            <nav className="flex flex-col items-center gap-8">
+              {navItems.map((item, index) => {
+                const isActive = pathname === item.href
+                return (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: index * 0.1,
+                      duration: 0.4,
+                      ease: [0.23, 1, 0.32, 1]
+                    }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-3xl font-serif font-light transition-colors ${
+                        isActive ? 'text-white' : 'text-[#888888] hover:text-white'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                )
+              })}
+            </nav>
+
+            {/* Home link at bottom */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/40 z-[100] lg:hidden"
-              onClick={() => setMobileOpen(false)}
-            />
-
-            {/* Compact Slide-in Panel */}
-            <motion.div
-              id="mobile-menu"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 right-0 h-20 bg-[#050505] z-[101] lg:hidden flex items-center"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation menu"
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="absolute bottom-8"
             >
-              {/* Navigation Links - right aligned, horizontal */}
-              <nav className="flex items-center gap-6 px-4">
-                {navItems
-                  .filter(item => !pathname.startsWith(item.href))
-                  .map((item, index) => (
-                    <motion.div
-                      key={item.href}
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        delay: index * 0.05,
-                        duration: 0.2,
-                        ease: [0.22, 1, 0.36, 1]
-                      }}
-                    >
-                      <Link
-                        href={item.href}
-                        onClick={() => setMobileOpen(false)}
-                        className="text-sm font-mono uppercase tracking-wider text-[#888888] hover:text-white transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    </motion.div>
-                  ))}
-              </nav>
-
-              {/* Close button */}
-              <button
+              <Link
+                href="/"
                 onClick={() => setMobileOpen(false)}
-                className="p-4 text-[#888888] hover:text-white transition-colors"
-                aria-label="Close menu"
+                className="text-xs font-mono uppercase tracking-widest text-[#666666] hover:text-white transition-colors"
               >
-                <X className="w-5 h-5" />
-              </button>
+                Home
+              </Link>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.nav>

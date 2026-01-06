@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import ProjectSkeleton from '@/components/ProjectSkeleton'
 import { Button } from '@/components/ui/button'
 import Spotlight from '@/components/Spotlight'
+import FeaturedProjectCard from '@/components/FeaturedProjectCard'
 
 // Helper to add basePath to image URLs
 const getImageUrl = (url: string) => {
@@ -26,8 +27,8 @@ const projects = [
     id: 1,
     title: 'GABOOJA!',
     description: 'E-commerce / social media platform currently in stealth beta',
-    longDescription: 'E-commerce / social media platform currently in stealth beta. Seeking investors to join this exciting opportunity in the evolving digital commerce space.',
-    tags: ['E-commerce', 'Social Media', 'Startup', 'Investment'],
+    longDescription: 'E-commerce / social media platform currently in stealth beta. Building the future of creator-led commerce where creators drop, fans shop, and moments turn into movements.',
+    tags: ['E-commerce', 'Social Media', 'Startup', 'Creator Economy'],
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
     image: getImageUrl('/images/projects/47a93f37b854c4a561ed76f6a027e73d.jpg'),
@@ -80,6 +81,7 @@ const projects = [
 ]
 
 export default function ProjectsPage() {
+  const [featuredProject, ...otherProjects] = projects
 
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
@@ -99,14 +101,19 @@ export default function ProjectsPage() {
           </h1>
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* Featured Project - Full Width */}
+        <div className="mb-12">
+          <FeaturedProjectCard project={featuredProject} />
+        </div>
+
+        {/* Other Projects Grid - 2 columns */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+          className="grid gap-8 grid-cols-1 md:grid-cols-2"
         >
-          {projects.map((project, index) => (
+          {otherProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </motion.div>
@@ -118,16 +125,16 @@ export default function ProjectsPage() {
           transition={{ delay: 0.8 }}
           className="text-center mt-20"
         >
-          <div className="glass border border-white/10 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto bg-white/5 backdrop-blur-md">
+          <div className="border border-white/10 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto bg-white/[0.02] backdrop-blur-md">
             <h3 className="text-3xl mb-4 font-serif font-light text-[#EAEAEA]">
               Let's Build Something Amazing
             </h3>
-            <p className="text-[#888888] mb-8 max-w-2xl mx-auto text-lg font-mono">
+            <p className="text-[#888888] mb-8 max-w-2xl mx-auto text-lg">
               I'm always exploring new ideas and open to working on innovative AI projects.
               Whether you're looking for technical expertise, strategic guidance, or investment opportunities,
               let's collaborate to create the future.
             </p>
-            <Button asChild size="lg" className="bg-[#EAEAEA] text-[#050505] hover:bg-white transition-colors font-mono uppercase tracking-widest">
+            <Button asChild size="lg" className="bg-white text-[#050505] hover:bg-[#EAEAEA] transition-colors font-mono uppercase tracking-widest">
               <Link href="/contact">
                 Get in Touch
               </Link>

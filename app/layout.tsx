@@ -1,11 +1,26 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import NavigationEnhanced from '@/components/NavigationEnhanced'
 import SkipNavigation from '@/components/SkipNavigation'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import StructuredData from '@/components/StructuredData'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import CustomCursor from '@/components/CustomCursor'
 import './globals.css'
+
+// Satoshi - Distinctive sans-serif to replace Inter
+const satoshi = localFont({
+  src: [
+    { path: '../public/fonts/Satoshi-Light.woff2', weight: '300', style: 'normal' },
+    { path: '../public/fonts/Satoshi-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../public/fonts/Satoshi-Medium.woff2', weight: '500', style: 'normal' },
+    { path: '../public/fonts/Satoshi-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../public/fonts/Satoshi-Black.woff2', weight: '900', style: 'normal' },
+  ],
+  variable: '--font-satoshi',
+  display: 'swap',
+})
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -103,7 +118,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${cormorant.variable} ${jetbrains.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${satoshi.variable} ${cormorant.variable} ${jetbrains.variable}`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -116,6 +131,7 @@ export default function RootLayout({
           <GoogleAnalytics />
           <StructuredData />
           <SkipNavigation />
+          <CustomCursor />
           <NavigationEnhanced />
           <main id="main-content" className="pt-20" role="main">
             {children}

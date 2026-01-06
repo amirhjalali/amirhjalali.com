@@ -56,7 +56,7 @@ module.exports = {
       fontFamily: {
         serif: ['var(--font-cormorant)', 'serif'],
         mono: ['var(--font-jetbrains)', 'monospace'],
-        sans: ['Inter', 'sans-serif'],
+        sans: ['var(--font-satoshi)', 'system-ui', 'sans-serif'],
       },
       animation: {
         'text-morph': 'morph 4s ease-in-out infinite',
