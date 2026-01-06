@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Quick Notes Capture",
+  "version": "1.0.0",
+  "description": "Capture notes, links, and highlights from any webpage",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://amirhjalali.com/*",
+    "http://localhost:3000/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "src/icons/icon16.png",
+      "32": "src/icons/icon32.png",
+      "48": "src/icons/icon48.png",
+      "128": "src/icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/content.js"],
+      "css": ["src/content/content.css"]
+    }
+  ],
+  "options_page": "src/options/options.html",
+  "icons": {
+    "16": "src/icons/icon16.png",
+    "32": "src/icons/icon32.png",
+    "48": "src/icons/icon48.png",
+    "128": "src/icons/icon128.png"
+  }
+}
