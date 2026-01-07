@@ -45,8 +45,6 @@ export default function Home() {
           <Link href="/thoughts" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">Thoughts</Link>
           <span className="text-[#333333]">/</span>
           <Link href="/about" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">About</Link>
-          <span className="text-[#333333]">/</span>
-          <Link href="/contact" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">Contact</Link>
         </motion.nav>
 
       </div>
