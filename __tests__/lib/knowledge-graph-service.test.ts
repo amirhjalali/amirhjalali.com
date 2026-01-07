@@ -261,7 +261,7 @@ describe('knowledge-graph-service', () => {
               relevance: 1.0 - i * 0.01,
               note: { id: `note-${i + 2}`, title: `Note ${i + 2}` },
               topic: { name: 'topic', displayName: 'Topic' },
-            }))
+            })) as any
         )
 
       const results = await findRelatedNotes('note-1', 5)
@@ -287,7 +287,7 @@ describe('knowledge-graph-service', () => {
             note: { id: 'note-3', title: 'High Score' },
             topic: { name: 't', displayName: 'T' },
           },
-        ])
+        ] as any)
 
       const results = await findRelatedNotes('note-1')
 
@@ -318,7 +318,7 @@ describe('knowledge-graph-service', () => {
             note: { id: 'note-2', title: 'Related' },
             topic: { name: 't2', displayName: 'Topic 2' },
           },
-        ])
+        ] as any)
 
       prismaMock.noteLink.findUnique.mockResolvedValue(null)
       prismaMock.noteLink.create.mockResolvedValue({} as any)
@@ -349,7 +349,7 @@ describe('knowledge-graph-service', () => {
             note: { id: 'note-2', title: 'Related' },
             topic: { name: 't1', displayName: 'Topic 1' },
           },
-        ])
+        ] as any)
 
       const linksCreated = await autoLinkRelatedNotes('note-1', 2)
 
@@ -375,7 +375,7 @@ describe('knowledge-graph-service', () => {
             note: { id: 'note-2', title: 'Related' },
             topic: { name: 't2', displayName: 'T2' },
           },
-        ])
+        ] as any)
 
       // Link already exists
       prismaMock.noteLink.findUnique.mockResolvedValue({ id: 'existing-link' } as any)
@@ -404,7 +404,7 @@ describe('knowledge-graph-service', () => {
             note: { id: 'note-2', title: 'Related' },
             topic: { name: 't2', displayName: 'T2' },
           },
-        ])
+        ] as any)
 
       // Forward link doesn't exist, but reverse does
       prismaMock.noteLink.findUnique

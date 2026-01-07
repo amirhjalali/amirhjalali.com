@@ -506,7 +506,7 @@ describe('spaced-repetition-service', () => {
 
       for (let i = 0; i < 5; i++) {
         prismaMock.note.findUnique.mockResolvedValue(currentNote as any)
-        prismaMock.note.update.mockImplementation((args: any) => {
+        prismaMock.note.update.mockImplementation(((args: any) => {
           currentNote = {
             ...currentNote,
             interval: args.data.interval,
@@ -514,7 +514,7 @@ describe('spaced-repetition-service', () => {
             reviewCount: args.data.reviewCount,
           }
           return Promise.resolve(currentNote)
-        })
+        }) as any)
 
         const result = await recordReview('note-1', 4)
         reviews.push({ interval: result.interval, easeFactor: result.easeFactor })
@@ -540,7 +540,7 @@ describe('spaced-repetition-service', () => {
 
       // Good review
       prismaMock.note.findUnique.mockResolvedValue(currentNote as any)
-      prismaMock.note.update.mockImplementation((args: any) => {
+      prismaMock.note.update.mockImplementation(((args: any) => {
         currentNote = {
           ...currentNote,
           interval: args.data.interval,
@@ -548,7 +548,7 @@ describe('spaced-repetition-service', () => {
           reviewCount: args.data.reviewCount,
         }
         return Promise.resolve(currentNote)
-      })
+      }) as any)
 
       const goodResult = await recordReview('note-1', 4)
       expect(goodResult.interval).toBeGreaterThan(6)

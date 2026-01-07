@@ -29,7 +29,7 @@ import { uploadToR2 } from '@/lib/upload-utils'
 
 // Helper to create mock NextRequest
 function createMockRequest(url: string, options: RequestInit = {}): NextRequest {
-  return new NextRequest(url, options)
+  return new NextRequest(url, options as any)
 }
 
 describe('/api/notes', () => {
@@ -200,7 +200,7 @@ describe('/api/notes', () => {
             processStatus: 'COMPLETED',
             imageUrl: null,
             topics: [],
-          }))
+          })) as any
       )
 
       const request = createMockRequest('http://localhost:3000/api/notes?limit=50&offset=0')
