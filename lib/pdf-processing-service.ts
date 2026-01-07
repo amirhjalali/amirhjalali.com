@@ -165,8 +165,12 @@ export function isPdfUrl(url: string): boolean {
     if (path.endsWith('.pdf')) return true
 
     // Check query parameters (some PDFs are served with ?type=pdf)
-    const type = urlObj.searchParams.get('type')
-    if (type?.toLowerCase() === 'pdf') return true
+    // Handle case-insensitive parameter names
+    for (const [key, value] of urlObj.searchParams.entries()) {
+      if (key.toLowerCase() === 'type' && value.toLowerCase() === 'pdf') {
+        return true
+      }
+    }
 
     return false
   } catch {
