@@ -333,3 +333,16 @@ model NoteLink {
   @@index([toNoteId])
   @@index([linkType])
 }
+
+// Daily Todo Tasks
+model DailyTask {
+  id          String    @id @default(cuid())
+  text        String
+  position    Int       // 0-9 for ordering
+  completedAt DateTime? // NULL if active, set when done
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([completedAt, position])
+  @@index([completedAt, createdAt])
+}
