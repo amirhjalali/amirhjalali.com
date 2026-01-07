@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Plus,
@@ -10,7 +10,8 @@ import {
   List,
   Network,
   Brain,
-  MessageSquare
+  MessageSquare,
+  Download
 } from 'lucide-react'
 import QuickAdd from './components/QuickAdd'
 import NotesList from './components/NotesList'
@@ -32,6 +33,8 @@ export default function NotesPageClient() {
   const [showGraph, setShowGraph] = useState(false)
   const [showReview, setShowReview] = useState(false)
   const [showChat, setShowChat] = useState(false)
+  const [showExportMenu, setShowExportMenu] = useState(false)
+  const exportMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024)
@@ -40,9 +43,44 @@ export default function NotesPageClient() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
+  // Close export menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (exportMenuRef.current && !exportMenuRef.current.contains(event.target as Node)) {
+        setShowExportMenu(false)
+      }
+    }
+
+    if (showExportMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showExportMenu])
+
   const handleNoteAdded = () => {
     setRefreshKey((prev) => prev + 1)
     setShowQuickAdd(false)
+  }
+
+  const handleExport = async (format: 'markdown' | 'json') => {
+    try {
+      const response = await fetch(`/api/notes/export?format=${format}`)
+      if (!response.ok) throw new Error('Export failed')
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `notes-export-${Date.now()}.${format === 'markdown' ? 'md' : 'json'}`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+
+      setShowExportMenu(false)
+    } catch (error) {
+      console.error('Export failed:', error)
+    }
   }
 
   const togglePanel = (panel: Panel) => {
@@ -106,6 +144,35 @@ export default function NotesPageClient() {
             >
               <Brain className="w-4 h-4" />
             </button>
+
+            {/* Export Dropdown */}
+            <div className="relative" ref={exportMenuRef}>
+              <button
+                onClick={() => setShowExportMenu(!showExportMenu)}
+                className="p-2 rounded-lg transition-colors bg-white/5 hover:bg-white/10 text-[#888888] hover:text-[#EAEAEA]"
+                aria-label="Export notes"
+                title="Export notes"
+              >
+                <Download className="w-4 h-4" />
+              </button>
+
+              {showExportMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-[#0a0a0a] border border-white/10 rounded-lg shadow-xl z-50">
+                  <button
+                    onClick={() => handleExport('markdown')}
+                    className="w-full px-4 py-3 text-left text-sm text-[#EAEAEA] hover:bg-white/5 rounded-t-lg transition-colors"
+                  >
+                    Export as Markdown
+                  </button>
+                  <button
+                    onClick={() => handleExport('json')}
+                    className="w-full px-4 py-3 text-left text-sm text-[#EAEAEA] hover:bg-white/5 rounded-b-lg transition-colors"
+                  >
+                    Export as JSON
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* Chat Panel Toggle */}
             <button
