@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { apiClient } from '@/lib/api-client'
 import type { Note, NoteType, ProcessStatus } from '@/lib/types'
 import NoteCard from './NoteCard'
@@ -106,37 +106,34 @@ export default function NotesList({ refreshKey, viewMode: externalViewMode }: No
       </div>
 
       {/* Notes Grid/List */}
-      {notes.length === 0 && !isLoading ? (
-        <div className="text-center py-12">
-          <p className="text-[#888888] font-mono text-sm">
-            No notes found. Create your first note above!
-          </p>
-        </div>
-      ) : (
-        <motion.div
-          layout
-          className={
-            viewMode === 'grid'
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
-              : 'space-y-4'
-          }
-        >
-          <AnimatePresence mode="popLayout">
+      <div className="min-h-[400px]">
+        {notes.length === 0 && !isLoading ? (
+          <div className="text-center py-12">
+            <p className="text-[#888888] font-mono text-sm">
+              No notes found. Create your first note above!
+            </p>
+          </div>
+        ) : (
+          <div
+            className={
+              viewMode === 'grid'
+                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
+                : 'space-y-4'
+            }
+          >
             {notes.map((note) => (
               <motion.div
-                layout
                 key={note.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.2 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.15 }}
               >
                 <NoteCard note={note} onDelete={fetchNotes} compact={viewMode === 'list'} />
               </motion.div>
             ))}
-          </AnimatePresence>
-        </motion.div>
-      )}
+          </div>
+        )}
+      </div>
 
       {/* Pagination */}
       {(page > 0 || hasMore) && (
