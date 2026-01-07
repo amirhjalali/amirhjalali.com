@@ -1,53 +1,26 @@
-'use client'
+import { Metadata } from 'next'
+import HomePageClient from './HomePageClient'
 
-import { motion } from 'framer-motion'
-import PortraitReveal from '@/components/PortraitReveal'
-import Link from 'next/link'
+export const metadata: Metadata = {
+  title: 'Amir H. Jalali - AI Strategy Consultant',
+  description: 'AI Strategy Consultant and Co-Founder & CPO at Gabooja. 14+ years experience in Generative AI, Data Engineering, and Business Intelligence. Building the future of creator-led commerce.',
+  openGraph: {
+    title: 'Amir H. Jalali - AI Strategy Consultant',
+    description: 'AI Strategy Consultant and Co-Founder & CPO at Gabooja. 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
+    type: 'website',
+    url: 'https://amirhjalali.com',
+    siteName: 'Amir H. Jalali',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Amir H. Jalali - AI Strategy Consultant',
+    description: 'AI Strategy Consultant and Co-Founder & CPO at Gabooja. 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
+  },
+  alternates: {
+    canonical: 'https://amirhjalali.com',
+  },
+}
 
 export default function Home() {
-  return (
-    <div className="min-h-screen relative overflow-hidden bg-[#050505] text-[#EAEAEA] -mt-20">
-      {/* Background Effects */}
-      <div className="noise-overlay" />
-      <PortraitReveal />
-
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen container-padding pb-4">
-
-        {/* Hero Section - Clear visual hierarchy */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="text-center mb-2"
-        >
-          {/* Primary: Name */}
-          <h1 className="text-hero mb-4">
-            Amir H. Jalali
-          </h1>
-
-          {/* Secondary: Role - Supporting context using text-label */}
-          <p className="text-label text-[#666666] mb-8">
-            AI Strategy Consultant
-          </p>
-
-        </motion.div>
-
-        {/* Bottom Navigation */}
-        <motion.nav
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-2 text-label"
-        >
-          <Link href="/work" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">Work</Link>
-          <span className="text-[#333333]">/</span>
-          <Link href="/thoughts" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">Thoughts</Link>
-          <span className="text-[#333333]">/</span>
-          <Link href="/about" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">About</Link>
-        </motion.nav>
-
-      </div>
-    </div>
-  )
+  return <HomePageClient />
 }
