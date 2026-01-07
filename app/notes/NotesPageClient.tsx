@@ -10,7 +10,7 @@ import {
   List,
   Network,
   Brain,
-  Settings
+  MessageSquare
 } from 'lucide-react'
 import QuickAdd from './components/QuickAdd'
 import NotesList from './components/NotesList'
@@ -18,6 +18,7 @@ import NoteChat from './components/NoteChat'
 import SemanticSearch from './components/SemanticSearch'
 import KnowledgeGraph from './components/KnowledgeGraph'
 import ReviewQueue from './components/ReviewQueue'
+import NotesChatPanel from './components/NotesChatPanel'
 
 type ViewMode = 'grid' | 'list'
 type Panel = 'chat' | 'search' | null
@@ -30,6 +31,7 @@ export default function NotesPageClient() {
   const [isMobile, setIsMobile] = useState(false)
   const [showGraph, setShowGraph] = useState(false)
   const [showReview, setShowReview] = useState(false)
+  const [showChat, setShowChat] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024)
@@ -103,6 +105,16 @@ export default function NotesPageClient() {
               title="Review Queue"
             >
               <Brain className="w-4 h-4" />
+            </button>
+
+            {/* Chat Panel Toggle */}
+            <button
+              onClick={() => setShowChat(true)}
+              className="p-2 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-all"
+              aria-label="Open chat"
+              title="Ask your notes"
+            >
+              <MessageSquare className="w-5 h-5 text-[#888888]" />
             </button>
 
             {/* AI Chat Toggle */}
@@ -215,6 +227,12 @@ export default function NotesPageClient() {
 
       {/* Review Queue Modal */}
       <ReviewQueue isOpen={showReview} onClose={() => setShowReview(false)} />
+
+      {/* Notes Chat Panel */}
+      <NotesChatPanel
+        isOpen={showChat}
+        onClose={() => setShowChat(false)}
+      />
     </div>
   )
 }
