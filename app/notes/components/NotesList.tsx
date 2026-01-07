@@ -72,6 +72,8 @@ export default function NotesList({ refreshKey, viewMode: externalViewMode }: No
   }, [refreshKey, fetchNotes])
 
   const handleFilterChange = (newFilters: typeof filters) => {
+    // Show loading state when filters change (not just refresh spinner)
+    setIsLoading(true)
     setFilters(newFilters)
     setPage(0)
   }

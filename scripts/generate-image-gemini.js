@@ -13,8 +13,26 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// Project prompts - same as OpenAI version
+// Project prompts
 const projectConfigs = {
+  gabooja: {
+    name: 'Gabooja',
+    prompt: `A stylized screenshot of a creator merchandise e-commerce website, displayed at a slight 3D angle floating in a pure black void.
+
+The website shows:
+- Dark theme e-commerce platform with "GABOOJA" logo
+- Hero section featuring a premium black hoodie product shot
+- Tagline like "Turn Moments into Merch" or "Creator Commerce"
+- Product grid showing hoodies, t-shirts, caps - all in dark/monochrome colors
+- Clean modern UI with Add to Cart buttons, prices
+- Creator-focused branding - feels like where YouTubers and streamers sell merch
+- Sleek, minimal, premium aesthetic
+
+The screenshot has dark/noir color grading - deep blacks, muted colors, subtle white accents. Product images pop against the dark UI.
+
+Subtle reflection beneath the floating screenshot. The image should convey: creator economy, premium merchandise, modern e-commerce, dark aesthetic.`,
+    filename: 'gabooja_gemini.png'
+  },
   camp_alborz: {
     name: 'Camp Alborz',
     prompt: `A stylized screenshot of a cultural community website, displayed at a slight 3D angle floating in a pure black void.
