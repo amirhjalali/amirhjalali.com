@@ -73,7 +73,7 @@ async function processReferences(references: Reference[]): Promise<string> {
 // Author voice guidelines based on original writing style
 const VOICE_GUIDELINES = `
 Voice and Style Guidelines (CRITICAL - follow exactly):
-You are writing as Amir H. Jalali, a senior AI consultant and CTO with 14+ years in data engineering and AI strategy.
+You are writing as Amir H. Jalali, Co-Founder & CPO at Gabooja with 14+ years in data engineering and AI strategy.
 
 Style:
 - Dense and analytical, not conversational
@@ -146,7 +146,7 @@ export async function generateArticleWithGemini(
     const topic = options.topic || 'Technology and Innovation';
     const model = options.textModel?.startsWith('gemini')
         ? options.textModel
-        : 'gemini-2.0-flash'; // Gemini 2.0 Flash - Released Dec 2024, 2x faster than 1.5 Pro
+        : 'gemini-3-flash-preview'; // Gemini 3 Flash - Latest model with Pro-level intelligence
 
     // Process references if provided
     const referenceContext = await processReferences(options.references || []);

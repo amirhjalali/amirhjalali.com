@@ -45,7 +45,7 @@ interface ArticleContent {
 }
 
 export async function generateArticleContent(options: AIMetadata): Promise<ArticleContent> {
-    const model = options.textModel || 'gpt-4o';
+    const model = options.textModel || 'gpt-5.2';
 
     // Use Gemini for gemini models or when references are provided
     if (model.startsWith('gemini') || (options.references?.length && isGeminiAvailable())) {
@@ -90,7 +90,7 @@ Format as JSON:
             'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-            model: model.includes('gpt') ? model : 'gpt-4o', // Use GPT-4o by default
+            model: model.includes('gpt') ? model : 'gpt-5.2', // Use GPT-5.2 by default
             messages: [
                 {
                     role: 'system',

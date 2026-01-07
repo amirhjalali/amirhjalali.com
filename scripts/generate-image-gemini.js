@@ -159,7 +159,7 @@ async function generateImage(projectKey, version = '') {
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash-exp-image-generation',
+      model: 'gemini-3-pro-image-preview',
       contents: config.prompt,
       config: {
         responseModalities: ['Text', 'Image'],

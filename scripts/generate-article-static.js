@@ -159,7 +159,7 @@ Format the response as a JSON object with:
   };
 
   const postData = {
-    model: 'gpt-4o',
+    model: 'gpt-5.2',
     messages: [
       { role: 'system', content: 'You are a technical writer documenting developments in AI and technology. Write with authority and pragmatism, avoiding generic marketing language and forced enthusiasm. Focus on concrete observations and specific insights.' },
       { role: 'user', content: prompt }
@@ -246,7 +246,7 @@ Return ONLY a JSON object with:
   };
 
   const briefPostData = {
-    model: 'gpt-4o',
+    model: 'gpt-5.2',
     messages: [
       { role: 'system', content: 'You are an expert at translating technical article concepts into abstract visual compositions. Focus on extracting core metaphors and creating coherent image briefs.' },
       { role: 'user', content: briefPrompt }
@@ -388,7 +388,7 @@ Return ONLY the JSON object, no other text.`;
   };
 
   const postData = {
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-opus-4-5-20251101',
     max_tokens: 4096,
     temperature: 0.8,
     messages: [
@@ -574,10 +574,10 @@ async function main() {
     let modelUsed;
     if (config.useAnthropic) {
       articleData = await generateWithAnthropic(topic);
-      modelUsed = 'claude-sonnet-4';
+      modelUsed = 'claude-opus-4.5';
     } else {
       articleData = await generateWithOpenAI(topic);
-      modelUsed = 'gpt-4o';
+      modelUsed = 'gpt-5.2';
     }
 
     // Generate featured image with DALL-E 3 (two-step process based on article content)
