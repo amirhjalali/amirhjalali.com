@@ -45,7 +45,7 @@ interface ArticleContent {
 }
 
 export async function generateArticleContent(options: AIMetadata): Promise<ArticleContent> {
-    const model = options.textModel || 'gpt-4o-mini';
+    const model = options.textModel || 'gpt-4o';
 
     // Use Gemini for gemini models or when references are provided
     if (model.startsWith('gemini') || (options.references?.length && isGeminiAvailable())) {
@@ -90,11 +90,11 @@ Format as JSON:
             'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-            model: model.includes('gpt') ? model : 'gpt-4o-mini', // Fallback for now
+            model: model.includes('gpt') ? model : 'gpt-4o', // Use GPT-4o by default
             messages: [
                 {
                     role: 'system',
-                    content: `You are writing as Amir H. Jalali, a senior AI consultant and CTO with 14+ years in data engineering and AI strategy. Your writing style is:
+                    content: `You are writing as Amir H. Jalali, Co-Founder & CPO at Gabooja with 14+ years in data engineering and AI strategy. Your writing style is:
 - Dense and analytical, not conversational
 - Technical but accessible to informed readers
 - Focused on implications and what matters, not explanations of basics
