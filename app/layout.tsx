@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     template: '%s | Amir H. Jalali'
   },
   manifest: '/manifest.json',
-  description: 'Generative AI consultant with 14 years experience in Data Warehousing, Business Intelligence, and AI Strategy. Currently CTO at AVENU AI. Specializing in LLMs, prompt engineering, and AI-driven solutions.',
+  description: 'Co-Founder & CPO at Gabooja. 14+ years experience in Generative AI, Data Warehousing, Business Intelligence, and AI Strategy. Building the future of creator-led commerce.',
   keywords: [
     'Amir Jalali',
     'AI Consultant',
@@ -52,11 +52,12 @@ export const metadata: Metadata = {
     'LLMs',
     'Large Language Models',
     'AI Strategy',
-    'AVENU AI',
+    'Gabooja',
+    'Creator Economy',
     'Prompt Engineering',
     'Machine Learning',
     'Artificial Intelligence',
-    'CTO',
+    'CPO',
     'Data Science',
     'AI Implementation',
     'Digital Transformation'
@@ -67,8 +68,8 @@ export const metadata: Metadata = {
   category: 'Technology',
   classification: 'AI Consulting',
   openGraph: {
-    title: 'Amir H. Jalali - Human Consultant',
-    description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
+    title: 'Amir H. Jalali - Co-Founder & CPO at Gabooja',
+    description: 'Co-Founder & CPO at Gabooja. Building the future of creator-led commerce with 14+ years in AI and data.',
     url: 'https://amirhjalali.com',
     siteName: 'Amir H. Jalali',
     type: 'website',
@@ -85,8 +86,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Amir H. Jalali - Human Consultant',
-    description: 'Generative AI consultant with 14 years experience. Transforming data into opportunity with AI.',
+    title: 'Amir H. Jalali - Co-Founder & CPO at Gabooja',
+    description: 'Co-Founder & CPO at Gabooja. Building the future of creator-led commerce with 14+ years in AI and data.',
     images: ['https://amirhjalali.com/og-image.png'],
     creator: '@amirhjalali',
     site: '@amirhjalali',
