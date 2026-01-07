@@ -4,8 +4,9 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://amirhjalali.github.io/amirhjalali.com/sitemap.xml
+Sitemap: https://amirhjalali.com/sitemap.xml
 
-# Disallow admin areas
+# Disallow admin and API areas
 Disallow: /admin
 Disallow: /api
+Disallow: /notes
