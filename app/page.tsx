@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Spotlight from '@/components/Spotlight'
 import PortraitReveal from '@/components/PortraitReveal'
 import Link from 'next/link'
 
@@ -10,7 +9,6 @@ export default function Home() {
     <div className="min-h-screen relative overflow-hidden bg-[#050505] text-[#EAEAEA] -mt-20">
       {/* Background Effects */}
       <div className="noise-overlay" />
-      <Spotlight />
       <PortraitReveal />
 
       {/* Main Content */}
