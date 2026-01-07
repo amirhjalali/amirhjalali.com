@@ -9,6 +9,7 @@
     "contextMenus"
   ],
   "host_permissions": [
+    "https://notes.amirhjalali.com/*",
     "https://amirhjalali.com/*",
     "http://localhost:3000/*"
   ],
