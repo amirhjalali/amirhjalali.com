@@ -6,7 +6,6 @@ import SkipNavigation from '@/components/SkipNavigation'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import StructuredData from '@/components/StructuredData'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import CustomCursor from '@/components/CustomCursor'
 import Footer from '@/components/Footer'
 import './globals.css'
 
@@ -132,7 +131,6 @@ export default function RootLayout({
           <GoogleAnalytics />
           <StructuredData />
           <SkipNavigation />
-          <CustomCursor />
           <NavigationEnhanced />
           <main id="main-content" className="pt-20" role="main">
             {children}
