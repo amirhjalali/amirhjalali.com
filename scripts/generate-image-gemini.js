@@ -75,35 +75,50 @@ Mood: Discovery. Precision. AI-powered talent matching.`,
 
   plaiced: {
     name: 'PLAICED',
-    prompt: `A sleek advertising creative or digital ad frame floating in the center of an infinite black void, with visible streams of AI optimization happening around it.
+    prompt: `A professional marketing analytics dashboard displayed on a large curved monitor, floating in darkness.
 
-The ad itself is a minimal rectangular frame with a simple product image inside. Around it, countless thin light streams are flowing IN from the left (representing audience data, targeting signals, behavioral data) and flowing OUT to the right as amplified, glowing conversion paths.
+The screen shows a REAL advertising dashboard interface:
+- Multiple ad campaign cards showing different creatives (product images, lifestyle shots)
+- Clear metrics: CTR percentages, conversion rates, ROAS numbers
+- A prominent graph showing performance trending upward
+- Green/positive indicators on winning campaigns
+- Clean, modern dark UI design (like Meta Ads Manager or Google Ads but sleeker)
 
-The ad acts as a prism or transformer — chaotic data enters, optimized results emerge. Small floating metrics, percentages, and upward arrows suggest ROI climbing. The streams have a subtle gradient from cool silver (input data) to warm gold (conversions/results).
+The monitor is premium - think ultrawide curved display with thin bezels. It's the command center for a performance marketer.
 
-In the darkness, faint ghostly variations of the ad float nearby — A/B test versions that the AI evaluated, now fading while the optimized version glows brightest.
+Dramatic lighting from the screen illuminates the scene. The dashboard data glows with importance.
 
-Color palette: True black void, silver/white data streams, golden warm conversion indicators, the ad frame in clean white.
+A few floating elements nearby: small chart icons, dollar signs, upward trending arrows - but subtle, not overwhelming.
 
-Composition: Ad centered, data streams flowing left to right, metrics floating nearby.
-Mood: Transformation. Optimization. AI turning ad spend into results.`,
+Color palette: Black void background, screen with dark UI, green for positive metrics, white text, subtle blue accents.
+
+Style: Tech product photography meets data visualization. Premium, professional.
+Mood: "This is how you win at advertising." Control. Performance. Results.`,
     filename: 'plaiced_noir.png'
   },
 
   argumend: {
     name: 'ARGUMEND',
-    prompt: `A luminous verification checkmark or balance scale floating in the center of an infinite black void, emerging from a swirl of chaotic text fragments.
+    prompt: `A social media post or tweet displayed on a phone screen, with visible fact-check annotations and context labels being applied to it.
 
-The scene captures truth emerging from noise. Swirling around the edges of the frame are countless text fragments, distorted claims, garbled headlines — representing the chaos of online misinformation. They spiral inward like a vortex being drawn to the center.
+The phone floats in darkness, showing a realistic social media interface:
+- A controversial or misleading post/claim visible on screen
+- Overlay annotations highlighting specific claims
+- A "Context Added" or "Fact Check" label being applied
+- Source citations appearing next to disputed claims
+- The UI looks like Twitter/X Community Notes or similar fact-checking interface
 
-At the center, a pristine, glowing checkmark (or balanced scale) hovers — clean, geometric, radiant with white light. It's the signal extracted from noise. Subtle light rays emanate outward from it, pushing back the chaos.
+The phone is modern and premium (iPhone-style). The screen is the light source.
 
-Below the symbol, text becomes readable and organized — verified facts settling into clarity. Above, the chaos continues to swirl, waiting to be processed.
+Around the phone, faint visual elements suggest the fact-checking process:
+- Small document/source icons floating nearby
+- Connected lines showing claim verification
+- A subtle "verified" checkmark badge
 
-Color palette: Deep black void, chaotic gray text fragments at edges, pure brilliant white for the verification symbol, softer white for verified text.
+Color palette: Black void, phone screen with dark social media UI, blue for links/verification, yellow/orange for warning labels, white text.
 
-Composition: Symbol centered, chaos swirling at edges, clarity spreading from center.
-Mood: Truth. Clarity. Order from chaos.`,
+Style: Product photography of a phone showing real UI. Clean, editorial.
+Mood: "The truth, verified." Transparency. Accountability. Fighting misinformation.`,
     filename: 'argumend_noir.png'
   },
 
