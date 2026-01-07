@@ -6,7 +6,10 @@
   "permissions": [
     "activeTab",
     "storage",
-    "contextMenus"
+    "contextMenus",
+    "cookies",
+    "scripting",
+    "alarms"
   ],
   "host_permissions": [
     "https://notes.amirhjalali.com/*",
@@ -39,5 +42,14 @@
     "32": "src/icons/icon32.png",
     "48": "src/icons/icon48.png",
     "128": "src/icons/icon128.png"
+  },
+  "commands": {
+    "save-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Save current page to Notes"
+    }
   }
 }
