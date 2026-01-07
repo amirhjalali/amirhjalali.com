@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { Article } from '@/lib/types'
 import SocialShare from '@/components/SocialShare'
 import Spotlight from '@/components/Spotlight'
+import ArticleModelAttribution from '@/components/ArticleModelAttribution'
+import ArticleRating from '@/components/ArticleRating'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
 
@@ -244,6 +246,24 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
         </motion.article>
 
         {/* Article Footer */}
+        <motion.footer
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-16 pt-8 border-t border-white/10"
+        >
+          {/* Rating */}
+          {article.aiGenerated && (
+            <div className="mb-6">
+              <ArticleRating articleId={article.id} mode="thumbs" />
+            </div>
+          )}
+
+          {/* Model Attribution (only for AI-generated articles) */}
+          {article.aiGenerated && article.metadata && (
+            <ArticleModelAttribution metadata={article.metadata} />
+          )}
+        </motion.footer>
 
       </div>
 

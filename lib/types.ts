@@ -13,7 +13,33 @@ export interface AIMetadata {
     topic?: string
     additionalInstructions?: string
     references?: Reference[]
+
+    // Eval/A-B Testing Support
+    evalGroup?: string           // Group ID for A/B comparisons (e.g., "eval-2026-01-07-001")
+    variantId?: 'A' | 'B'        // Which variant in a comparison pair
+    comparisonPairId?: string    // Links two articles being compared
+
+    // User feedback for evals
+    rating?: number              // 1-5 star rating
+    feedback?: string            // Optional written feedback
+    ratedAt?: string             // ISO timestamp of rating
+    preferredInComparison?: boolean  // Was this the winner in a head-to-head?
+
     [key: string]: any
+}
+
+// Eval comparison result
+export interface EvalComparison {
+    id: string
+    articleA: string             // Article ID
+    articleB: string             // Article ID
+    topic: string                // Same topic for fair comparison
+    modelA: string               // Model used for A
+    modelB: string               // Model used for B
+    winner?: 'A' | 'B' | 'tie'   // Result
+    winnerReason?: string        // Why this one won
+    createdAt: string
+    evaluatedAt?: string
 }
 
 export interface Article {
