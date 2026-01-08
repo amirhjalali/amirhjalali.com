@@ -346,3 +346,37 @@ model DailyTask {
   @@index([completedAt, position])
   @@index([completedAt, createdAt])
 }
+
+// AI Model Evaluation: A/B Testing for Article Generation
+model EvalComparison {
+  id              String    @id @default(cuid())
+
+  // The topic used for both articles
+  topic           String
+
+  // Article A
+  articleAId      String    // Draft or Article ID
+  modelA          String    // Model ID (e.g., "gpt-5.2", "claude-opus-4.5")
+
+  // Article B
+  articleBId      String    // Draft or Article ID
+  modelB          String    // Model ID
+
+  // Evaluation results
+  winner          String?   // "A", "B", or "tie"
+  winnerReason    String?   // Optional reason for preference
+
+  // Metadata
+  evalGroup       String    // Group ID for tracking eval batches
+  status          String    @default("pending") // pending, evaluated
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  evaluatedAt     DateTime?
+  evaluatedBy     String?   // Username of evaluator
+
+  @@index([status, createdAt])
+  @@index([modelA])
+  @@index([modelB])
+  @@index([evalGroup])
+}

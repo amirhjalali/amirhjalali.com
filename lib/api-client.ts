@@ -285,6 +285,91 @@ class APIClient {
     }
     return response.json()
   }
+
+  // Eval/A-B Testing
+  async generateEvalPair(options: {
+    topic: string
+    modelA: string
+    modelB: string
+    imageModel?: string
+  }): Promise<{ comparison: any; draftA: Draft; draftB: Draft }> {
+    const response = await fetch(`${this.baseUrl}/eval/generate-pair`, this.getFetchOptions({
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(options),
+    }))
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.error || 'Failed to generate eval pair')
+    }
+    return response.json()
+  }
+
+  async getEvalPairs(params?: {
+    status?: 'pending' | 'evaluated'
+    model?: string
+    limit?: number
+    offset?: number
+  }): Promise<{ comparisons: any[]; total: number; hasMore: boolean }> {
+    const queryParams = new URLSearchParams()
+    if (params?.status) queryParams.set('status', params.status)
+    if (params?.model) queryParams.set('model', params.model)
+    if (params?.limit) queryParams.set('limit', params.limit.toString())
+    if (params?.offset) queryParams.set('offset', params.offset.toString())
+
+    const url = `${this.baseUrl}/eval/pairs${queryParams.toString() ? `?${queryParams}` : ''}`
+    const response = await fetch(url, this.getFetchOptions())
+    return this.handleResponse(response, 'Failed to fetch eval pairs')
+  }
+
+  async getEvalPair(pairId: string): Promise<{ comparison: any; draftA: Draft; draftB: Draft }> {
+    const response = await fetch(`${this.baseUrl}/eval/pairs/${pairId}`, this.getFetchOptions())
+    return this.handleResponse(response, 'Failed to fetch eval pair')
+  }
+
+  async submitEvaluation(pairId: string, data: {
+    winner: 'A' | 'B' | 'tie'
+    reason?: string
+  }): Promise<{ success: boolean; comparison: any }> {
+    const response = await fetch(`${this.baseUrl}/eval/pairs/${pairId}`, this.getFetchOptions({
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }))
+    return this.handleResponse(response, 'Failed to submit evaluation')
+  }
+
+  async deleteEvalPair(pairId: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/eval/pairs/${pairId}`, this.getFetchOptions({
+      method: 'DELETE',
+    }))
+    return this.handleResponse(response, 'Failed to delete eval pair')
+  }
+
+  async getEvalAnalytics(): Promise<{
+    summary: { totalEvaluated: number; pendingEvaluations: number; uniqueModels: number }
+    modelStats: Array<{
+      model: string
+      modelName: string
+      wins: number
+      losses: number
+      ties: number
+      total: number
+      winRate: number
+    }>
+    headToHead: Array<{
+      modelA: string
+      modelB: string
+      modelAWins: number
+      modelBWins: number
+      ties: number
+      total: number
+    }>
+    recentEvaluations: any[]
+  }> {
+    const response = await fetch(`${this.baseUrl}/eval/analytics`, this.getFetchOptions())
+    return this.handleResponse(response, 'Failed to fetch eval analytics')
+  }
 }
 
 // Export singleton instance

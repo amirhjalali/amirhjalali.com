@@ -27,6 +27,10 @@ const stepLabels: Record<GenerationStep, string> = {
   saving_draft: 'Saving Draft',
   completed: 'Completed',
   error: 'Error',
+  // Eval-specific steps
+  generating_article_a: 'Generating Article A',
+  generating_article_b: 'Generating Article B',
+  articles_generated: 'Articles Generated',
 }
 
 export default function GenerationProgress({

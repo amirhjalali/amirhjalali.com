@@ -211,6 +211,10 @@ export type GenerationStep =
     | 'saving_draft'
     | 'completed'
     | 'error'
+    // Eval-specific steps
+    | 'generating_article_a'
+    | 'generating_article_b'
+    | 'articles_generated'
 
 export interface ProgressEvent {
     step: GenerationStep

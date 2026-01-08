@@ -25,8 +25,10 @@ import DraftEditor from '@/components/DraftEditor'
 import BulkPublishProgress from '@/components/BulkPublishProgress'
 import GenerationSettingsModal from '@/components/GenerationSettingsModal'
 import GenerationProgress from '@/components/GenerationProgress'
+import EvalDashboard from '@/components/admin/EvalDashboard'
 import { useGenerationProgress } from '@/hooks/useGenerationProgress'
 import { AIMetadata } from '@/lib/types'
+import { FlaskConical } from 'lucide-react'
 
 interface DashboardClientProps {
   user: { username: string; role: string }
@@ -57,7 +59,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [_sortBy, _setSortBy] = useState<'date' | 'title'>('date')
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
-  const [showPublished, setShowPublished] = useState(false)
+  const [activeView, setActiveView] = useState<'drafts' | 'published' | 'evals'>('drafts')
   const [refreshing, setRefreshing] = useState(false)
   const [bulkPublishState, setBulkPublishState] = useState<{
     isPublishing: boolean
@@ -321,7 +323,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
     try {
       await apiClient.publishArticle(articleId, false)
       await loadData()
-      setShowPublished(false) // Switch to drafts tab to show the moved article
+      setActiveView('drafts') // Switch to drafts tab to show the moved article
     } catch (error) {
       console.error('Error unpublishing article:', error)
       alert('Failed to unpublish article. Please try again.')
@@ -386,12 +388,12 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`p-6 rounded-xl border transition-all cursor-pointer ${!showPublished ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10 hover:border-white/20'}`}
-            onClick={() => setShowPublished(false)}
+            className={`p-6 rounded-xl border transition-all cursor-pointer ${activeView === 'drafts' ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10 hover:border-white/20'}`}
+            onClick={() => setActiveView('drafts')}
           >
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888]">Drafts</h3>
@@ -404,14 +406,28 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
-            className={`p-6 rounded-xl border transition-all cursor-pointer ${showPublished ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10 hover:border-white/20'}`}
-            onClick={() => setShowPublished(true)}
+            className={`p-6 rounded-xl border transition-all cursor-pointer ${activeView === 'published' ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10 hover:border-white/20'}`}
+            onClick={() => setActiveView('published')}
           >
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888]">Published</h3>
               <CheckCircle className="w-4 h-4 text-[#888888]" />
             </div>
             <p className="text-4xl font-serif font-light">{sortedPublishedArticles.length}</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className={`p-6 rounded-xl border transition-all cursor-pointer ${activeView === 'evals' ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10 hover:border-white/20'}`}
+            onClick={() => setActiveView('evals')}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-[#888888]">Evals</h3>
+              <FlaskConical className="w-4 h-4 text-[#888888]" />
+            </div>
+            <p className="text-4xl font-serif font-light">A/B</p>
           </motion.div>
         </div>
 
@@ -451,7 +467,10 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
         </div>
 
         {/* Content */}
-        {!showPublished ? (
+        {activeView === 'evals' ? (
+          /* Evals View */
+          <EvalDashboard />
+        ) : activeView === 'drafts' ? (
           /* Drafts View */
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* List */}
@@ -469,7 +488,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
               </div>
 
               {/* Bulk Actions Bar */}
-              {selectedIds.size > 0 && !showPublished && (
+              {selectedIds.size > 0 && activeView === 'drafts' && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
