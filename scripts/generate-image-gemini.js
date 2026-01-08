@@ -99,26 +99,26 @@ Mood: "This is how you win at advertising." Control. Performance. Results.`,
 
   argumend: {
     name: 'ARGUMEND',
-    prompt: `A social media post or tweet displayed on a phone screen, with visible fact-check annotations and context labels being applied to it.
+    prompt: `A glowing logic tree or argument map floating in darkness - an interactive diagram showing how a debate is structured.
 
-The phone floats in darkness, showing a realistic social media interface:
-- A controversial or misleading post/claim visible on screen
-- Overlay annotations highlighting specific claims
-- A "Context Added" or "Fact Check" label being applied
-- Source citations appearing next to disputed claims
-- The UI looks like Twitter/X Community Notes or similar fact-checking interface
+The visualization shows a TRUTH TREE:
+- A central claim/thesis node at the top (glowing brighter than others)
+- Branching nodes below representing supporting arguments, counter-arguments, and evidence
+- Connecting lines/edges between nodes showing logical relationships
+- Some nodes colored green (verified/strong arguments), some red/orange (refuted/weak), some neutral white
+- The structure looks like a flowchart or mind map but specifically for logical argumentation
+- Clean, modern node design with rounded rectangles and clear typography
 
-The phone is modern and premium (iPhone-style). The screen is the light source.
+This is what you'd see in a logic mapping tool built with React Flow - nodes you can drag, connect, and organize.
 
-Around the phone, faint visual elements suggest the fact-checking process:
-- Small document/source icons floating nearby
-- Connected lines showing claim verification
-- A subtle "verified" checkmark badge
+The diagram floats in a black void, glowing softly. The nodes emit light, making the logical structure visible in the darkness.
 
-Color palette: Black void, phone screen with dark social media UI, blue for links/verification, yellow/orange for warning labels, white text.
+At the top or center, a debate topic is visible: something like "Is AGI an existential risk?" or a controversial thesis being analyzed.
 
-Style: Product photography of a phone showing real UI. Clean, editorial.
-Mood: "The truth, verified." Transparency. Accountability. Fighting misinformation.`,
+Color palette: Black void, white/silver for neutral nodes, green for verified claims, orange/red for refuted claims, soft blue or white connecting lines.
+
+Style: Data visualization meets interactive UI design. Clean, technical, intellectual.
+Mood: "See the logic clearly." Structured thinking. Debate resolved through reason.`,
     filename: 'argumend_noir.png'
   },
 
