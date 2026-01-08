@@ -33,7 +33,8 @@
     {
       "matches": ["<all_urls>"],
       "js": ["src/content/content.js"],
-      "css": ["src/content/content.css"]
+      "css": ["src/content/content.css"],
+      "run_at": "document_idle"
     }
   ],
   "options_page": "src/options/options.html",
@@ -50,6 +51,13 @@
         "mac": "Alt+Shift+S"
       },
       "description": "Save current page to Notes"
+    },
+    "toggle-sidebar": {
+      "suggested_key": {
+        "default": "Alt+Shift+N",
+        "mac": "Alt+Shift+N"
+      },
+      "description": "Toggle related notes sidebar"
     }
   }
 }

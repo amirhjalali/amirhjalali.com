@@ -155,6 +155,22 @@ chrome.commands.onCommand.addListener(async (command) => {
       tab.id
     );
   }
+
+  if (command === 'toggle-sidebar') {
+    // Toggle related notes sidebar
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    if (!tab?.id) {
+      console.warn('No active tab found for sidebar toggle');
+      return;
+    }
+
+    try {
+      await chrome.tabs.sendMessage(tab.id, { action: 'toggle-sidebar' });
+    } catch (error) {
+      console.log('Could not toggle sidebar:', error.message);
+    }
+  }
 });
 
 /**
@@ -386,6 +402,38 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .then(() => sendResponse({ success: true }))
       .catch((error) => sendResponse({ success: false, error: error.message }));
     return true;
+  }
+
+  if (message.action === 'toggleSidebar') {
+    // Toggle related notes sidebar from popup
+    chrome.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
+      if (tab?.id) {
+        chrome.tabs
+          .sendMessage(tab.id, { action: 'toggle-sidebar' })
+          .then(() => sendResponse({ success: true }))
+          .catch((error) => sendResponse({ success: false, error: error.message }));
+      } else {
+        sendResponse({ success: false, error: 'No active tab' });
+      }
+    });
+    return true;
+  }
+});
+
+/**
+ * Handle extension icon click - toggle sidebar instead of popup
+ * This allows users to quickly access related notes
+ */
+chrome.action.onClicked.addListener(async (tab) => {
+  // Only toggle sidebar if popup is not set
+  // Since we have a popup defined, this won't fire by default
+  // But we can use it as a fallback
+  if (tab?.id) {
+    try {
+      await chrome.tabs.sendMessage(tab.id, { action: 'toggle-sidebar' });
+    } catch (error) {
+      console.log('Could not toggle sidebar:', error.message);
+    }
   }
 });
 
