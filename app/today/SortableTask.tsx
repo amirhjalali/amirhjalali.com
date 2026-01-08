@@ -59,6 +59,11 @@ export default function SortableTask({ task, onComplete, onDelete, onUpdate }: P
     }
   }, [isEditing])
 
+  // Sync editText when task.text changes externally
+  useEffect(() => {
+    setEditText(task.text)
+  }, [task.text])
+
   const handleSave = () => {
     const trimmed = editText.trim()
     if (trimmed && trimmed !== task.text) {
@@ -104,6 +109,7 @@ export default function SortableTask({ task, onComplete, onDelete, onUpdate }: P
         drag="x"
         dragConstraints={{ left: -100, right: 0 }}
         dragElastic={0.1}
+        dragSnapToOrigin
         onDragEnd={handleDragEnd}
         style={{ x }}
         className={`flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl group relative ${

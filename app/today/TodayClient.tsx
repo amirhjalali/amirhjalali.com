@@ -18,7 +18,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-import { Archive } from 'lucide-react'
+import { Archive, Home } from 'lucide-react'
 import Link from 'next/link'
 import SortableTask from './SortableTask'
 
@@ -157,14 +157,23 @@ export default function TodayClient() {
   })
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#EAEAEA] flex flex-col">
-      <header className="p-6 pb-4">
+    <div className="min-h-screen bg-[#050505] text-[#EAEAEA] flex flex-col pb-safe">
+      <header className="p-6 pb-4 pt-safe">
         <div className="max-w-lg mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-serif font-light">Today</h1>
-            <p className="text-[#888888] font-mono text-xs uppercase tracking-widest mt-1">
-              {today}
-            </p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/"
+              className="p-2 -ml-2 hover:bg-white/5 rounded-lg transition-colors"
+              title="Home"
+            >
+              <Home className="w-5 h-5 text-[#888888]" />
+            </Link>
+            <div>
+              <h1 className="text-4xl font-serif font-light">Today</h1>
+              <p className="text-[#888888] font-mono text-xs uppercase tracking-widest mt-1">
+                {today}
+              </p>
+            </div>
           </div>
           <Link
             href="/today/archive"

@@ -19,8 +19,14 @@ type Stats = {
   monthlyAvg: number
 }
 
-function groupTasksByDate(tasks: CompletedTask[]) {
-  const groups: Record<string, CompletedTask[]> = {}
+type GroupedTasks = {
+  label: string
+  date: Date
+  tasks: CompletedTask[]
+}
+
+function groupTasksByDate(tasks: CompletedTask[]): GroupedTasks[] {
+  const groups: Map<string, { date: Date; tasks: CompletedTask[] }> = new Map()
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const yesterday = new Date(today)
@@ -29,21 +35,34 @@ function groupTasksByDate(tasks: CompletedTask[]) {
   for (const task of tasks) {
     const date = new Date(task.completedAt)
     date.setHours(0, 0, 0, 0)
+    const dateKey = date.toISOString()
 
-    let key: string
+    let label: string
     if (date.getTime() === today.getTime()) {
-      key = 'Today'
+      label = 'Today'
     } else if (date.getTime() === yesterday.getTime()) {
-      key = 'Yesterday'
+      label = 'Yesterday'
     } else {
-      key = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     }
 
-    if (!groups[key]) groups[key] = []
-    groups[key].push(task)
+    if (!groups.has(dateKey)) {
+      groups.set(dateKey, { date, tasks: [] })
+    }
+    groups.get(dateKey)!.tasks.push(task)
   }
 
-  return groups
+  // Sort by date descending (most recent first)
+  return Array.from(groups.entries())
+    .sort(([, a], [, b]) => b.date.getTime() - a.date.getTime())
+    .map(([, group]) => {
+      const label = group.date.getTime() === today.getTime()
+        ? 'Today'
+        : group.date.getTime() === yesterday.getTime()
+        ? 'Yesterday'
+        : group.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      return { label, date: group.date, tasks: group.tasks }
+    })
 }
 
 function formatTime(dateStr: string) {
@@ -153,19 +172,19 @@ export default function ArchiveClient() {
                 </div>
               )}
 
-              {Object.keys(groupedTasks).length === 0 ? (
+              {groupedTasks.length === 0 ? (
                 <div className="text-center py-12">
                   <p className="text-[#888888] font-mono text-sm">No completed tasks yet</p>
                 </div>
               ) : (
                 <div className="space-y-6">
-                  {Object.entries(groupedTasks).map(([date, dateTasks]) => (
-                    <div key={date}>
+                  {groupedTasks.map((group) => (
+                    <div key={group.label}>
                       <h2 className="text-[#888888] font-mono text-xs uppercase tracking-widest mb-3 border-b border-white/10 pb-2">
-                        {date}
+                        {group.label}
                       </h2>
                       <ul className="space-y-2">
-                        {dateTasks.map((task) => (
+                        {group.tasks.map((task) => (
                           <motion.li
                             key={task.id}
                             initial={{ opacity: 0 }}
