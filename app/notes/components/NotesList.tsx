@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { apiClient } from '@/lib/api-client'
 import type { Note, NoteType, ProcessStatus } from '@/lib/types'
@@ -71,12 +71,12 @@ export default function NotesList({ refreshKey, viewMode: externalViewMode }: No
     }
   }, [refreshKey, fetchNotes])
 
-  const handleFilterChange = (newFilters: typeof filters) => {
+  const handleFilterChange = useCallback((newFilters: typeof filters) => {
     // Show loading state when filters change (not just refresh spinner)
     setIsLoading(true)
     setFilters(newFilters)
     setPage(0)
-  }
+  }, [])
 
   if (isLoading && notes.length === 0) {
     return (

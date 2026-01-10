@@ -30,7 +30,7 @@ export default function NoteFilters({ onFilterChange }: NoteFiltersProps) {
     return () => clearTimeout(timer)
   }, [search])
 
-  // Emit filter changes
+  // Emit filter changes - onFilterChange is intentionally not in deps as it's a stable callback
   useEffect(() => {
     onFilterChange({
       type: type || undefined,
@@ -39,7 +39,8 @@ export default function NoteFilters({ onFilterChange }: NoteFiltersProps) {
       sortBy,
       order,
     })
-  }, [type, status, debouncedSearch, sortBy, order, onFilterChange])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, status, debouncedSearch, sortBy, order])
 
   const handleClear = () => {
     setSearch('')
