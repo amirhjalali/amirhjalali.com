@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { X, ZoomIn, ZoomOut, Maximize2, RefreshCw } from 'lucide-react'
+import { X, ZoomIn, ZoomOut, Maximize2, RefreshCw, Play, Pause } from 'lucide-react'
 
 interface GraphNode {
   id: string
@@ -34,8 +34,12 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
+  const [temperature, setTemperature] = useState(1.0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [draggingNode, setDraggingNode] = useState<string | null>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const animationRef = useRef<number>(null)
+  const temperatureRef = useRef(1.0)
 
   // Fetch graph data
   const fetchGraphData = useCallback(async () => {
@@ -61,6 +65,9 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
 
         setNodes(initializedNodes)
         setEdges(data.edges)
+        // Reset temperature to start simulation fresh
+        setTemperature(1.0)
+        temperatureRef.current = 1.0
       }
     } catch (error) {
       console.error('Failed to fetch graph data:', error)
@@ -75,21 +82,42 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
     }
   }, [isOpen, fetchGraphData])
 
-  // Force-directed simulation
+  // Force-directed simulation with temperature-based cooling
   useEffect(() => {
     if (nodes.length === 0) return
 
     const simulate = () => {
-      setNodes((prevNodes) => {
-        const newNodes = [...prevNodes]
+      // Check if simulation should be paused or has cooled down
+      if (isPaused) {
+        animationRef.current = requestAnimationFrame(simulate)
+        return
+      }
 
-        // Node-node repulsion
+      // Cool down the temperature
+      const newTemp = temperatureRef.current * 0.995
+      temperatureRef.current = newTemp
+
+      // Stop simulation if cooled enough (but keep loop for potential reheat)
+      if (newTemp < 0.01 && !draggingNode) {
+        animationRef.current = requestAnimationFrame(simulate)
+        return
+      }
+
+      setNodes((prevNodes) => {
+        const newNodes = prevNodes.map(n => ({ ...n }))
+
+        // Node-node repulsion (scaled by temperature)
         for (let i = 0; i < newNodes.length; i++) {
+          // Skip force calculations for dragged node
+          if (newNodes[i].id === draggingNode) continue
+
           for (let j = i + 1; j < newNodes.length; j++) {
+            if (newNodes[j].id === draggingNode) continue
+
             const dx = newNodes[j].x! - newNodes[i].x!
             const dy = newNodes[j].y! - newNodes[i].y!
             const dist = Math.sqrt(dx * dx + dy * dy) || 1
-            const force = 500 / (dist * dist)
+            const force = (500 / (dist * dist)) * newTemp
 
             const fx = (dx / dist) * force
             const fy = (dy / dist) * force
@@ -101,16 +129,19 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
           }
         }
 
-        // Edge attraction
+        // Edge attraction (scaled by temperature)
         for (const edge of edges) {
           const sourceNode = newNodes.find((n) => n.id === edge.source)
           const targetNode = newNodes.find((n) => n.id === edge.target)
 
           if (sourceNode && targetNode) {
+            // Skip if either node is being dragged
+            if (sourceNode.id === draggingNode || targetNode.id === draggingNode) continue
+
             const dx = targetNode.x! - sourceNode.x!
             const dy = targetNode.y! - sourceNode.y!
             const dist = Math.sqrt(dx * dx + dy * dy) || 1
-            const force = dist * 0.01 * edge.weight
+            const force = dist * 0.01 * edge.weight * newTemp
 
             const fx = (dx / dist) * force
             const fy = (dy / dist) * force
@@ -122,22 +153,35 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
           }
         }
 
-        // Center gravity
+        // Center gravity (scaled by temperature)
         for (const node of newNodes) {
-          node.vx! -= node.x! * 0.01
-          node.vy! -= node.y! * 0.01
+          if (node.id === draggingNode) continue
+          node.vx! -= node.x! * 0.01 * newTemp
+          node.vy! -= node.y! * 0.01 * newTemp
         }
 
-        // Apply velocities with damping
+        // Apply velocities with improved damping
         for (const node of newNodes) {
-          node.vx! *= 0.9
-          node.vy! *= 0.9
+          if (node.id === draggingNode) continue
+
+          node.vx! *= 0.7  // Faster settling (was 0.9)
+          node.vy! *= 0.7
+
+          // Stop micro-movements
+          if (Math.abs(node.vx!) < 0.1) node.vx = 0
+          if (Math.abs(node.vy!) < 0.1) node.vy = 0
+
           node.x! += node.vx!
           node.y! += node.vy!
         }
 
         return newNodes
       })
+
+      // Update temperature state periodically for UI
+      if (Math.random() < 0.1) {
+        setTemperature(newTemp)
+      }
 
       animationRef.current = requestAnimationFrame(simulate)
     }
@@ -149,9 +193,9 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [nodes.length, edges])
+  }, [nodes.length, edges, isPaused, draggingNode])
 
-  // Mouse handlers for panning
+  // Mouse handlers for panning and node dragging
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.target === svgRef.current) {
       setIsDragging(true)
@@ -159,8 +203,29 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
     }
   }
 
+  const handleNodeMouseDown = (e: React.MouseEvent, nodeId: string) => {
+    e.stopPropagation()
+    setDraggingNode(nodeId)
+    // Reheat simulation slightly when dragging
+    temperatureRef.current = Math.max(temperatureRef.current, 0.3)
+    setTemperature(temperatureRef.current)
+  }
+
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
+    if (draggingNode) {
+      // Update dragged node position directly
+      const rect = svgRef.current?.getBoundingClientRect()
+      if (rect) {
+        const newX = (e.clientX - rect.left - pan.x - rect.width / 2) / zoom
+        const newY = (e.clientY - rect.top - pan.y - rect.height / 2) / zoom
+        setNodes(prev => prev.map(n => {
+          if (n.id === draggingNode) {
+            return { ...n, x: newX, y: newY, vx: 0, vy: 0 }
+          }
+          return n
+        }))
+      }
+    } else if (isDragging) {
       setPan({
         x: e.clientX - dragStart.x,
         y: e.clientY - dragStart.y,
@@ -170,6 +235,11 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
 
   const handleMouseUp = () => {
     setIsDragging(false)
+    if (draggingNode) {
+      setDraggingNode(null)
+      // Let simulation settle after dropping node
+      temperatureRef.current = Math.max(temperatureRef.current, 0.2)
+    }
   }
 
   // Zoom handlers
@@ -215,7 +285,22 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
               <Maximize2 className="w-4 h-4 text-[#888888]" />
             </button>
             <button
-              onClick={fetchGraphData}
+              onClick={() => setIsPaused(p => !p)}
+              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              title={isPaused ? "Resume simulation" : "Pause simulation"}
+            >
+              {isPaused ? (
+                <Play className="w-4 h-4 text-[#888888]" />
+              ) : (
+                <Pause className="w-4 h-4 text-[#888888]" />
+              )}
+            </button>
+            <button
+              onClick={() => {
+                fetchGraphData()
+                temperatureRef.current = 1.0
+                setTemperature(1.0)
+              }}
               className="p-2 hover:bg-white/10 rounded-lg transition-colors"
               title="Refresh"
             >
@@ -275,22 +360,35 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
                   <g
                     key={node.id}
                     transform={`translate(${node.x}, ${node.y})`}
-                    onClick={() => setSelectedNode(node)}
-                    className="cursor-pointer"
+                    onMouseDown={(e) => handleNodeMouseDown(e, node.id)}
+                    onClick={() => !draggingNode && setSelectedNode(node)}
+                    className={`cursor-grab ${draggingNode === node.id ? 'cursor-grabbing' : ''}`}
                   >
                     <circle
                       r={node.size || 10}
-                      fill={node.type === 'topic' ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)'}
-                      stroke={selectedNode?.id === node.id ? 'white' : 'rgba(255,255,255,0.3)'}
-                      strokeWidth={selectedNode?.id === node.id ? 2 : 1}
+                      fill={
+                        draggingNode === node.id
+                          ? 'rgba(255,255,255,0.4)'
+                          : node.type === 'topic'
+                          ? 'rgba(255,255,255,0.2)'
+                          : 'rgba(255,255,255,0.1)'
+                      }
+                      stroke={
+                        draggingNode === node.id
+                          ? 'white'
+                          : selectedNode?.id === node.id
+                          ? 'white'
+                          : 'rgba(255,255,255,0.3)'
+                      }
+                      strokeWidth={draggingNode === node.id || selectedNode?.id === node.id ? 2 : 1}
                       className="hover:fill-white/30 transition-colors"
                     />
                     <text
-                      y={node.size + 12}
+                      y={(node.size || 10) + 12}
                       textAnchor="middle"
                       fill="rgba(255,255,255,0.6)"
                       fontSize={10}
-                      className="pointer-events-none"
+                      className="pointer-events-none select-none"
                     >
                       {node.label.length > 20 ? node.label.substring(0, 17) + '...' : node.label}
                     </text>
@@ -341,7 +439,10 @@ export default function KnowledgeGraph({ isOpen, onClose }: KnowledgeGraphProps)
           <span>{nodes.filter((n) => n.type === 'topic').length} topics</span>
           <span>{nodes.filter((n) => n.type === 'note').length} notes</span>
           <span>{edges.length} connections</span>
-          <span className="ml-auto">Scroll to zoom • Drag to pan</span>
+          {temperature > 0.01 && !isPaused && (
+            <span className="text-[#666666]">settling...</span>
+          )}
+          <span className="ml-auto">Scroll to zoom • Drag nodes to move • Drag canvas to pan</span>
         </div>
       </div>
     </div>
