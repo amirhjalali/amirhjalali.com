@@ -127,7 +127,7 @@ export async function generateImage(title: string, options: AIMetadata): Promise
     const topic = options.topic || 'Technology';
     const style = options.imageStyle || 'minimal, sophisticated, dark monochromatic, subtle gradients, cinematic lighting';
     const customPrompt = options.imagePrompt;
-    const model = options.imageModel || 'dall-e-3';
+    const model = options.imageModel || 'gpt-image-1.5';
 
     // Refined prompt for high-quality, minimal aesthetic that matches site design
     const imagePrompt = customPrompt || `Create an elegant, minimalist featured image for a professional tech article about ${topic}.
@@ -148,15 +148,13 @@ The image should feel timeless and complement serif typography on a black backgr
         }
     }
 
-    // Fall back to OpenAI DALL-E
+    // Fall back to OpenAI image generation
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) throw new Error('OpenAI API key not configured');
 
-    // TODO: Add support for Replicate
-    if (model.includes('stable-diffusion') || model.includes('flux')) {
-        // Placeholder for Replicate logic
-        console.warn('Replicate models not yet configured. Falling back to DALL-E 3.');
-    }
+    // Determine which OpenAI image model to use
+    const openaiImageModel = model.startsWith('gpt-image') ? model : 'gpt-image-1.5';
+    console.log(`Using OpenAI for image generation (model: ${openaiImageModel})`);
 
     const response = await fetch('https://api.openai.com/v1/images/generations', {
         method: 'POST',
@@ -165,12 +163,12 @@ The image should feel timeless and complement serif typography on a black backgr
             'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-            model: 'dall-e-3', // Always use DALL-E 3 for now until Replicate is set up
+            model: openaiImageModel,
             prompt: imagePrompt,
             n: 1,
             size: '1792x1024', // Landscape format (16:9-ish) for better featured image proportions
-            quality: 'hd', // Upgrade to HD quality for professional look
-            style: 'natural' // Changed from 'vivid' to 'natural' for more sophisticated, subtle results
+            quality: 'hd', // HD quality for professional look
+            style: 'natural' // Natural for more sophisticated, subtle results
         })
     });
 

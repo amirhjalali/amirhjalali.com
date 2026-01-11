@@ -9,26 +9,36 @@ interface ArticleModelAttributionProps {
 
 // Human-readable model names
 const MODEL_DISPLAY_NAMES: Record<string, string> = {
-  // OpenAI
+  // OpenAI Text Models
   'gpt-5.2': 'GPT-5.2',
-  'gpt-5.2-thinking': 'GPT-5.2 Thinking',
+  'gpt-5.2-pro': 'GPT-5.2 Pro',
+  'o4-mini': 'O4 Mini',
+  'o3': 'O3',
   'gpt-5.1': 'GPT-5.1',
-  'gpt-5': 'GPT-5',
   'gpt-4o': 'GPT-4o',
   'gpt-4o-mini': 'GPT-4o Mini',
-  // Anthropic
+  // Anthropic Text Models
   'claude-opus-4-5-20251101': 'Claude Opus 4.5',
   'claude-opus-4.5': 'Claude Opus 4.5',
+  'claude-sonnet-4-5-20250929': 'Claude Sonnet 4.5',
+  'claude-sonnet-4.5': 'Claude Sonnet 4.5',
+  'claude-haiku-4-5-20251001': 'Claude Haiku 4.5',
+  'claude-haiku-4.5': 'Claude Haiku 4.5',
   'claude-sonnet-4-20250514': 'Claude Sonnet 4',
   'claude-sonnet-4': 'Claude Sonnet 4',
-  'claude-3-5-sonnet-20241022': 'Claude 3.5 Sonnet',
-  // Google
+  // Google Text Models
   'gemini-3-flash-preview': 'Gemini 3 Flash',
   'gemini-3-pro-preview': 'Gemini 3 Pro',
-  'gemini-3-pro-image-preview': 'Gemini 3 Pro',
-  'gemini-2.0-flash': 'Gemini 2.0 Flash',
-  // Image models
+  'gemini-2.5-flash': 'Gemini 2.5 Flash',
+  'gemini-2.5-pro': 'Gemini 2.5 Pro',
+  // OpenAI Image Models
+  'gpt-image-1.5': 'GPT Image 1.5',
+  'gpt-image-1': 'GPT Image 1',
   'dall-e-3': 'DALL-E 3',
+  // Google Image Models
+  'gemini-3-pro-image-preview': 'Nano Banana Pro',
+  'imagen-4.0-generate-001': 'Imagen 4',
+  'imagen-4': 'Imagen 4',
 }
 
 function getDisplayName(modelId: string | undefined): string {

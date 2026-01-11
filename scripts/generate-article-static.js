@@ -197,8 +197,8 @@ async function downloadImage(url, filepath) {
   });
 }
 
-// Generate image using DALL-E 3 (two-step process)
-async function generateImageWithDALLE(articleData) {
+// Generate image using GPT Image 1.5 (two-step process)
+async function generateImageWithGPTImage(articleData) {
   if (!config.openaiKey) {
     console.log('⚠️  OpenAI API key not found, skipping image generation');
     return '';
@@ -269,7 +269,7 @@ Return ONLY a JSON object with:
     imageBrief = { image_prompt: imagePrompt };
   }
 
-  console.log('🎨 Step 2: Generating image with DALL-E 3...');
+  console.log('🎨 Step 2: Generating image with GPT Image 1.5...');
 
   const imagePrompt = imageBrief.image_prompt;
 
@@ -285,12 +285,12 @@ Return ONLY a JSON object with:
   };
 
   const postData = {
-    model: 'dall-e-3',
+    model: 'gpt-image-1.5',
     prompt: imagePrompt,
     n: 1,
     size: '1792x1024', // Landscape format for featured image
-    quality: 'standard',
-    style: 'vivid'
+    quality: 'hd',
+    style: 'natural'
   };
 
   try {
@@ -580,8 +580,8 @@ async function main() {
       modelUsed = 'gpt-5.2';
     }
 
-    // Generate featured image with DALL-E 3 (two-step process based on article content)
-    const imageUrl = await generateImageWithDALLE(articleData);
+    // Generate featured image with GPT Image 1.5 (two-step process based on article content)
+    const imageUrl = await generateImageWithGPTImage(articleData);
 
     // Calculate metadata
     const wordCount = articleData.content.trim().split(/\s+/).length;
@@ -607,7 +607,7 @@ async function main() {
         generatedAt: new Date().toISOString(),
         topic: topic,
         model: modelUsed,
-        imageModel: imageUrl ? 'dall-e-3' : 'none'
+        imageModel: imageUrl ? 'gpt-image-1.5' : 'none'
       }
     };
 
@@ -668,4 +668,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { generateWithOpenAI, generateWithAnthropic, generateImageWithDALLE, calculateReadTime };
+module.exports = { generateWithOpenAI, generateWithAnthropic, generateImageWithGPTImage, calculateReadTime };

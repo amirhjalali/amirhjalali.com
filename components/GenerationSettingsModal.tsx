@@ -24,8 +24,8 @@ export default function GenerationSettingsModal({
 }: GenerationSettingsModalProps) {
     const [settings, setSettings] = useState<AIMetadata>({
         topic: initialSettings.topic || '',
-        textModel: initialSettings.textModel || 'gemini-2.0-flash',
-        imageModel: initialSettings.imageModel || 'dall-e-3',
+        textModel: initialSettings.textModel || 'gemini-3-flash-preview',
+        imageModel: initialSettings.imageModel || 'gpt-image-1.5',
         imageResolution: initialSettings.imageResolution || '2K',
         imageStyle: initialSettings.imageStyle || 'abstract, contemporary, tech-focused, visually striking',
         imagePrompt: initialSettings.imagePrompt || '',
@@ -118,11 +118,21 @@ export default function GenerationSettingsModal({
                                     onChange={(e) => setSettings({ ...settings, textModel: e.target.value })}
                                     className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 appearance-none"
                                 >
-                                    <option value="gemini-2.0-flash">Gemini 2.0 Flash (Fastest - NEW!)</option>
-                                    <option value="gemini-2.5-flash">Gemini 2.5 Flash (Fast & Smart)</option>
-                                    <option value="gemini-2.5-pro">Gemini 2.5 Pro (Advanced Reasoning)</option>
-                                    <option value="gpt-4o-mini">GPT-4o Mini (Fast & Efficient)</option>
-                                    <option value="gpt-4o">GPT-4o (High Quality)</option>
+                                    <optgroup label="Google Gemini">
+                                        <option value="gemini-3-flash-preview">Gemini 3 Flash (Fastest)</option>
+                                        <option value="gemini-3-pro-preview">Gemini 3 Pro (Best Quality)</option>
+                                        <option value="gemini-2.5-flash">Gemini 2.5 Flash (Stable)</option>
+                                    </optgroup>
+                                    <optgroup label="OpenAI">
+                                        <option value="gpt-5.2">GPT-5.2 (Latest Flagship)</option>
+                                        <option value="gpt-5.2-pro">GPT-5.2 Pro (Enhanced Reasoning)</option>
+                                        <option value="o4-mini">O4 Mini (Fast Reasoning)</option>
+                                    </optgroup>
+                                    <optgroup label="Anthropic">
+                                        <option value="claude-sonnet-4-5-20250929">Claude Sonnet 4.5 (Recommended)</option>
+                                        <option value="claude-opus-4-5-20251101">Claude Opus 4.5 (Most Capable)</option>
+                                        <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (Fastest)</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
@@ -217,11 +227,15 @@ export default function GenerationSettingsModal({
                                     }}
                                     className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 appearance-none"
                                 >
-                                    <option value="gemini-3-pro-image-preview">Nano Banana Pro (2K/4K - NEW!)</option>
-                                    <option value="gemini-image">Nano Banana (Fast 1K)</option>
-                                    <option value="dall-e-3">DALL-E 3 (Standard)</option>
-                                    <option value="stable-diffusion-xl">Stable Diffusion XL (Replicate - Coming Soon)</option>
-                                    <option value="flux-pro">Flux Pro (Replicate - Coming Soon)</option>
+                                    <optgroup label="OpenAI">
+                                        <option value="gpt-image-1.5">GPT Image 1.5 (Best Quality)</option>
+                                        <option value="gpt-image-1">GPT Image 1 (Standard)</option>
+                                        <option value="dall-e-3">DALL-E 3 (Legacy - Deprecated May 2026)</option>
+                                    </optgroup>
+                                    <optgroup label="Google">
+                                        <option value="gemini-3-pro-image-preview">Nano Banana Pro (2K/4K)</option>
+                                        <option value="imagen-4.0-generate-001">Imagen 4 (High Quality)</option>
+                                    </optgroup>
                                 </select>
                             </div>
 

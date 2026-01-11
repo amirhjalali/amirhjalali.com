@@ -13,22 +13,32 @@ export interface EvalModelConfig {
 }
 
 export const EVAL_TEXT_MODELS: Record<string, EvalModelConfig> = {
+  // OpenAI Models
   'gpt-5.2': {
     id: 'gpt-5.2',
     provider: 'openai',
     name: 'GPT-5.2',
     model: 'gpt-5.2',
-    description: 'Latest OpenAI flagship model with advanced reasoning',
+    description: 'Latest OpenAI flagship model (400k context)',
     supportsImages: false,
   },
-  'gpt-5.2-thinking': {
-    id: 'gpt-5.2-thinking',
+  'gpt-5.2-pro': {
+    id: 'gpt-5.2-pro',
     provider: 'openai',
-    name: 'GPT-5.2 Thinking',
-    model: 'gpt-5.2-thinking',
-    description: 'GPT-5.2 with extended chain-of-thought reasoning',
+    name: 'GPT-5.2 Pro',
+    model: 'gpt-5.2-pro',
+    description: 'Enhanced reasoning and analysis capabilities',
     supportsImages: false,
   },
+  'o4-mini': {
+    id: 'o4-mini',
+    provider: 'openai',
+    name: 'O4 Mini',
+    model: 'o4-mini',
+    description: 'Fast reasoning model for efficient analysis',
+    supportsImages: false,
+  },
+  // Anthropic Models
   'claude-opus-4.5': {
     id: 'claude-opus-4.5',
     provider: 'anthropic',
@@ -37,20 +47,29 @@ export const EVAL_TEXT_MODELS: Record<string, EvalModelConfig> = {
     description: 'Anthropic\'s most capable model for complex tasks',
     supportsImages: false,
   },
-  'claude-sonnet-4': {
-    id: 'claude-sonnet-4',
+  'claude-sonnet-4.5': {
+    id: 'claude-sonnet-4.5',
     provider: 'anthropic',
-    name: 'Claude Sonnet 4',
-    model: 'claude-sonnet-4-20250514',
-    description: 'Balanced performance and speed for daily use',
+    name: 'Claude Sonnet 4.5',
+    model: 'claude-sonnet-4-5-20250929',
+    description: 'Best balance of intelligence, speed, and cost',
     supportsImages: false,
   },
+  'claude-haiku-4.5': {
+    id: 'claude-haiku-4.5',
+    provider: 'anthropic',
+    name: 'Claude Haiku 4.5',
+    model: 'claude-haiku-4-5-20251001',
+    description: 'Fastest Claude model for real-time applications',
+    supportsImages: false,
+  },
+  // Google Models
   'gemini-3-flash': {
     id: 'gemini-3-flash',
     provider: 'google',
     name: 'Gemini 3 Flash',
     model: 'gemini-3-flash-preview',
-    description: 'Fast and efficient for quick generations',
+    description: 'Fast frontier-class performance at low cost',
     supportsImages: false,
   },
   'gemini-3-pro': {
@@ -58,26 +77,52 @@ export const EVAL_TEXT_MODELS: Record<string, EvalModelConfig> = {
     provider: 'google',
     name: 'Gemini 3 Pro',
     model: 'gemini-3-pro-preview',
-    description: 'Google\'s flagship multimodal model',
+    description: 'Google\'s flagship multimodal model (1M context)',
     supportsImages: false,
   },
 };
 
 export const EVAL_IMAGE_MODELS: Record<string, EvalModelConfig> = {
+  // OpenAI Image Models
+  'gpt-image-1.5': {
+    id: 'gpt-image-1.5',
+    provider: 'openai',
+    name: 'GPT Image 1.5',
+    model: 'gpt-image-1.5',
+    description: 'Latest OpenAI image model with superior quality',
+    supportsImages: true,
+  },
+  'gpt-image-1': {
+    id: 'gpt-image-1',
+    provider: 'openai',
+    name: 'GPT Image 1',
+    model: 'gpt-image-1',
+    description: 'Standard GPT-powered image generation',
+    supportsImages: true,
+  },
   'dall-e-3': {
     id: 'dall-e-3',
     provider: 'openai',
     name: 'DALL-E 3',
     model: 'dall-e-3',
-    description: 'High-quality image generation with strong prompt following',
+    description: 'Legacy image model (deprecated May 2026)',
     supportsImages: true,
   },
+  // Google Image Models
   'gemini-3-pro-image': {
     id: 'gemini-3-pro-image',
     provider: 'google',
-    name: 'Gemini 3 Pro Image',
+    name: 'Nano Banana Pro',
     model: 'gemini-3-pro-image-preview',
-    description: 'Native image generation from Gemini 3',
+    description: 'High-fidelity image generation with text rendering',
+    supportsImages: true,
+  },
+  'imagen-4': {
+    id: 'imagen-4',
+    provider: 'google',
+    name: 'Imagen 4',
+    model: 'imagen-4.0-generate-001',
+    description: 'Google\'s latest high-quality image generator',
     supportsImages: true,
   },
 };
