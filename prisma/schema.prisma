@@ -347,6 +347,41 @@ model DailyTask {
   @@index([completedAt, createdAt])
 }
 
+// Failed Generation Queue - for retrying failed AI generations
+model FailedGeneration {
+  id              String    @id @default(cuid())
+
+  // What was being generated
+  generationType  String    // "article", "image", "eval_pair"
+
+  // Request details (for retry)
+  requestData     Json      // The original request options
+
+  // Error details
+  error           String    // Error message
+  errorDetails    String?   // Full error stack/response
+  errorCode       String?   // API error code if available
+
+  // Retry tracking
+  attempts        Int       @default(1)
+  maxAttempts     Int       @default(3)
+  lastAttemptAt   DateTime  @default(now())
+  nextRetryAt     DateTime? // When to retry next (exponential backoff)
+
+  // Status
+  status          String    @default("pending") // pending, retrying, resolved, abandoned
+  resolvedAt      DateTime?
+  resolvedDraftId String?   // If retry succeeded, link to the created draft
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([status, nextRetryAt])
+  @@index([generationType, status])
+  @@index([createdAt])
+}
+
 // AI Model Evaluation: A/B Testing for Article Generation
 model EvalComparison {
   id              String    @id @default(cuid())

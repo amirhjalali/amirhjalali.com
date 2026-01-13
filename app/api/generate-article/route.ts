@@ -6,6 +6,7 @@ import { generateArticleContent, generateImage, downloadImageAsBase64 } from '@/
 import { AIMetadata } from '@/lib/types';
 import { Draft as PrismaDraft } from '@prisma/client';
 import { createSSEStream } from '@/lib/sse-helper';
+import { parseAPIError, calculateNextRetryTime } from '@/lib/generation-error';
 
 // Zod schema for request validation
 const GenerateArticleSchema = z.object({
@@ -40,8 +41,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // Declare outside try block so it's available in catch for error logging
+  let rawBody: Record<string, unknown> = {};
+
   try {
-    const rawBody = await request.json().catch(() => ({}));
+    rawBody = await request.json().catch(() => ({}));
     const parseResult = GenerateArticleSchema.safeParse(rawBody);
 
     if (!parseResult.success) {
@@ -219,9 +223,36 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Article generation error:', error);
+
+    // Parse error for detailed logging
+    const errorDetails = parseAPIError(error);
+    console.error('Parsed error details:', JSON.stringify(errorDetails, null, 2));
+
+    // Save to failed generations queue for retry
+    try {
+      await prisma.failedGeneration.create({
+        data: {
+          generationType: 'article',
+          requestData: rawBody,
+          error: errorDetails.message,
+          errorDetails: JSON.stringify(errorDetails),
+          errorCode: errorDetails.code,
+          nextRetryAt: calculateNextRetryTime(1),
+        },
+      });
+      console.log('Failed generation saved for retry');
+    } catch (saveError) {
+      console.error('Failed to save failed generation:', saveError);
+    }
+
     const message = error instanceof Error ? error.message : 'Failed to generate article';
     return NextResponse.json(
-      { error: 'Article generation failed', details: process.env.NODE_ENV === 'development' ? message : undefined },
+      {
+        error: 'Article generation failed',
+        details: process.env.NODE_ENV === 'development' ? message : undefined,
+        errorCode: errorDetails.code,
+        supportedValues: errorDetails.supportedValues,
+      },
       { status: 500 }
     );
   }
