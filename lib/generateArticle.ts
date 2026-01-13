@@ -120,8 +120,7 @@ async function generateImage(title: string, topic: string, apiKey: string): Prom
         prompt: imagePrompt,
         n: 1,
         size: '1792x1024',
-        quality: 'standard',
-        style: 'vivid'
+        quality: 'standard'
       })
     });
   } catch (error: any) {

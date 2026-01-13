@@ -289,8 +289,7 @@ Return ONLY a JSON object with:
     prompt: imagePrompt,
     n: 1,
     size: '1792x1024', // Landscape format for featured image
-    quality: 'hd',
-    style: 'natural'
+    quality: 'hd'
   };
 
   try {

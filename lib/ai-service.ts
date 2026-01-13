@@ -167,8 +167,7 @@ The image should feel timeless and complement serif typography on a black backgr
             prompt: imagePrompt,
             n: 1,
             size: '1792x1024', // Landscape format (16:9-ish) for better featured image proportions
-            quality: 'hd', // HD quality for professional look
-            style: 'natural' // Natural for more sophisticated, subtle results
+            quality: 'hd' // HD quality for professional look
         })
     });
 
