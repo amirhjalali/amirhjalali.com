@@ -5,9 +5,8 @@
 // Mock pdf-parse before importing the service
 jest.mock('pdf-parse', () => {
   const mockPdfParse = jest.fn()
-  // Handle both ESM and CommonJS
-  mockPdfParse.default = mockPdfParse
-  return mockPdfParse
+  // Handle both ESM and CommonJS by returning object with default
+  return Object.assign(mockPdfParse, { default: mockPdfParse })
 })
 
 // Mock crypto module

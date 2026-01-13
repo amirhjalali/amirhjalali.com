@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Declare outside try block so it's available in catch for error logging
-  let rawBody: Record<string, unknown> = {};
+  let rawBody: object = {};
 
   try {
     rawBody = await request.json().catch(() => ({}));
