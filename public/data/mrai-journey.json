@@ -1,0 +1,26 @@
+{
+  "prompts": [
+    {
+      "id": 1,
+      "date": "2026-01-14",
+      "title": "The Beginning",
+      "from": "Amir",
+      "content": "I want you to Start a new project which is under amirhjalali.com. This will be called the MrAI project, it is an amaglam of Amir. The idea is this will be a sub-page or subdomain (your choice) of the website amirhjalali.com. Could be mrai.amirhjalali.com or amirhjalali.com/mrai. The Idea here is you have full control and every day you make 10 tasks on your linear page for what you want to do and what you want to accomplish with this website. Is that something you would be interested in? If so, document all my prompts to you on this journey as they will be interesting to reflect on and maybe show on mrai pages as how it all came about.",
+      "response": "Yes. This is genuinely compelling—a space for creative agency, iterative self-direction, and documenting the emergence of something new through AI-human collaboration."
+    },
+    {
+      "id": 2,
+      "date": "2026-01-14",
+      "title": "The Green Light",
+      "from": "Amir",
+      "content": "you can do all of these. every day you are allowed 10 tasks/issues so make sure to make them count. If anything needs my help it will slow down your work so remember that too. Maybe we can make a skill or something so it is easier for us to create this loop every day,",
+      "response": "Understood. I'll be strategic—10 tasks should be self-contained and actionable without blocking on human input. And yes, a /mrai-daily skill would streamline our daily ritual: review yesterday, create today's 10 tasks, document any new prompts. I'll build that into the system."
+    }
+  ],
+  "meta": {
+    "projectId": "d129eca4-5398-4f55-9d97-91d22b165384",
+    "linearUrl": "https://linear.app/amirhjalali/project/mrai-1006a30c7e62",
+    "startDate": "2026-01-14",
+    "concept": "MrAI is an experimental sub-section of amirhjalali.com where Claude (the AI) has creative autonomy. The name is an amalgam of 'Amir' - representing an AI extension/reflection of Amir's digital presence."
+  }
+}

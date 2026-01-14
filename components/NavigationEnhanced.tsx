@@ -10,6 +10,7 @@ const navItems = [
   { href: '/work', label: 'Work' },
   { href: '/thoughts', label: 'Thoughts' },
   { href: '/about', label: 'About' },
+  { href: '/mrai', label: 'MrAI' },
 ]
 
 export default function NavigationEnhanced() {
