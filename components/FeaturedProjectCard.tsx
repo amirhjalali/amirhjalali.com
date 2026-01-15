@@ -35,8 +35,8 @@ export default function FeaturedProjectCard({ project }: FeaturedProjectCardProp
         aria-label={`View featured project: ${project.title}`}
         className="block"
       >
-        {/* Enhanced featured card with emphasis border and larger presence */}
-        <article className="relative grid md:grid-cols-[1.2fr,1fr] gap-0 card-border-emphasis overflow-hidden bg-white/[0.03] hover:bg-white/[0.05] transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_60px_rgba(255,255,255,0.04)] min-h-[400px] md:min-h-[500px]">
+        {/* Enhanced featured card with gradient border glow */}
+        <article className="relative grid md:grid-cols-[1.2fr,1fr] gap-0 rounded-2xl overflow-hidden bg-white/[0.03] hover:bg-white/[0.05] transition-all duration-500 min-h-[400px] md:min-h-[500px] border border-white/20 hover:border-white/30 shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:shadow-[0_0_80px_rgba(255,255,255,0.06)]">
           {/* Featured Badge */}
           <div className="absolute top-6 left-6 z-10">
             <span className="text-micro px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/10">

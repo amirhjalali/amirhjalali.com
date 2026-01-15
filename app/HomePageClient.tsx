@@ -38,15 +38,15 @@ export default function HomePageClient() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-2 text-label"
+          className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-1 text-label"
         >
-          <Link href="/work" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">Work</Link>
-          <span className="text-[#333333]">/</span>
-          <Link href="/thoughts" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">Thoughts</Link>
-          <span className="text-[#333333]">/</span>
-          <Link href="/about" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">About</Link>
-          <span className="text-[#333333]">/</span>
-          <Link href="/mrai" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">MrAI</Link>
+          <Link href="/work" className="text-[#666666] hover:text-[#EAEAEA] hover:tracking-[0.2em] transition-all duration-300 px-4 py-2">Work</Link>
+          <span className="text-[#333333] select-none">/</span>
+          <Link href="/thoughts" className="text-[#666666] hover:text-[#EAEAEA] hover:tracking-[0.2em] transition-all duration-300 px-4 py-2">Thoughts</Link>
+          <span className="text-[#333333] select-none">/</span>
+          <Link href="/about" className="text-[#666666] hover:text-[#EAEAEA] hover:tracking-[0.2em] transition-all duration-300 px-4 py-2">About</Link>
+          <span className="text-[#333333] select-none">/</span>
+          <Link href="/mrai" className="text-[#666666] hover:text-[#EAEAEA] hover:tracking-[0.2em] transition-all duration-300 px-4 py-2">MrAI</Link>
         </motion.nav>
 
       </div>

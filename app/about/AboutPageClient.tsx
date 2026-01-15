@@ -124,7 +124,7 @@ export default function AboutPageClient() {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 transition-all">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
                   <Github className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">GitHub</span>
@@ -137,7 +137,7 @@ export default function AboutPageClient() {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 transition-all">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
                   <Linkedin className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">LinkedIn</span>
@@ -148,7 +148,7 @@ export default function AboutPageClient() {
                 href="mailto:amirhjalali@gmail.com"
                 className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 transition-all">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
                   <Mail className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">Email</span>
@@ -160,7 +160,7 @@ export default function AboutPageClient() {
                 download="AmirJalaliResume_04-01-2025.pdf"
                 className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group no-print"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 transition-all">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
                   <Download className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">Resume</span>
@@ -206,7 +206,7 @@ export default function AboutPageClient() {
               className="relative pl-12 pb-8"
             >
               <div className={`absolute left-[13px] top-1.5 w-1.5 h-1.5 rounded-full ${exp.type === 'work'
-                ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.4)]'
+                ? 'bg-white timeline-dot-pulse'
                 : 'bg-[#666666]'
                 }`} />
 
