@@ -50,7 +50,8 @@ export async function GET() {
       ],
       day: dayNumber,
       date: today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      projectUrl: 'https://linear.app/amirhjalali/project/mrai-1006a30c7e62'
+      projectUrl: 'https://linear.app/amirhjalali/project/mrai-1006a30c7e62',
+      source: 'mock' as const
     })
   }
 
@@ -118,7 +119,8 @@ export async function GET() {
       tasks,
       day: dayNumber,
       date: today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      projectUrl: 'https://linear.app/amirhjalali/project/mrai-1006a30c7e62'
+      projectUrl: 'https://linear.app/amirhjalali/project/mrai-1006a30c7e62',
+      source: 'linear' as const
     })
   } catch (error) {
     console.error('Error fetching Linear tasks:', error)

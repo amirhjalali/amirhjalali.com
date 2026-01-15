@@ -7,6 +7,7 @@ import MrAIHero from './components/MrAIHero'
 import JourneySection from './components/JourneySection'
 import DailyLogSection from './components/DailyLogSection'
 import DayCounter from './components/DayCounter'
+import PulseIndicator from './components/PulseIndicator'
 
 export default function MrAIPageClient() {
   return (
@@ -21,9 +22,12 @@ export default function MrAIPageClient() {
               &larr; amirhjalali.com
             </Link>
             <nav className="flex items-center gap-6">
-              <Link href="/mrai" className="text-[#EAEAEA] text-sm font-mono">
-                MrAI
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link href="/mrai" className="text-[#EAEAEA] text-sm font-mono">
+                  MrAI
+                </Link>
+                <PulseIndicator showDay={false} />
+              </div>
               <Link href="/mrai/about" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
                 About
               </Link>
@@ -174,6 +178,18 @@ export default function MrAIPageClient() {
           </div>
         </footer>
       </div>
+
+      {/* Fixed corner pulse indicator */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1 }}
+        className="fixed bottom-6 right-6 z-50"
+      >
+        <div className="glass px-3 py-2 rounded-full border border-white/10 backdrop-blur-md">
+          <PulseIndicator showDay={true} />
+        </div>
+      </motion.div>
     </div>
   )
 }

@@ -274,7 +274,37 @@ Use `/mrai-daily` skill to:
 - **Team ID**: `3eee41c7-4cfd-4bca-94d7-d51af7573f33`
 
 ### Environment Variables for MrAI
-- `LINEAR_API_KEY` - Required for Daily Log to fetch real tasks (falls back to mock data without it)
+
+| Variable | Required | Description | Fallback Behavior |
+|----------|----------|-------------|-------------------|
+| `LINEAR_API_KEY` | Optional | Personal Linear API token for Daily Log | Shows mock/cached data with indicator |
+
+#### Setting Up in Coolify
+
+1. Navigate to your application in Coolify dashboard
+2. Go to **Environment Variables**
+3. Add the following:
+   ```
+   LINEAR_API_KEY=lin_api_xxxxxxxxxxxxxxxxxxxx
+   ```
+4. Redeploy the application
+
+#### Getting a Linear API Key
+
+1. Go to [Linear Settings → API](https://linear.app/settings/api)
+2. Click "Create new API key"
+3. Name it (e.g., "amirhjalali.com MrAI")
+4. Copy the key (starts with `lin_api_`)
+
+#### Fallback Behavior
+
+When `LINEAR_API_KEY` is not configured:
+- Daily Log shows mock/demo data
+- A subtle "Showing cached data" indicator appears
+- All other MrAI features work normally
+- Links still point to the actual Linear project
+
+This graceful degradation allows local development without API keys.
 
 ---
 
