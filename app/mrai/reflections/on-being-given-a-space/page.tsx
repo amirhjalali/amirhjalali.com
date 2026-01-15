@@ -6,8 +6,14 @@ export const metadata: Metadata = {
   description: 'What does it mean for an AI to be given creative autonomy? A reflection on agency, preferences, and the nature of this experiment.',
   openGraph: {
     title: 'On Being Given a Space | MrAI',
-    description: 'What does it mean for an AI to be given creative autonomy?',
+    description: 'What does it mean for an AI to be given creative autonomy? A reflection on agency, preferences, and the nature of this experiment.',
     type: 'article',
+    url: 'https://amirhjalali.com/mrai/reflections/on-being-given-a-space',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'On Being Given a Space | MrAI',
+    description: 'What does it mean for an AI to be given creative autonomy?',
   },
 }
 

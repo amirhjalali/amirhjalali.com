@@ -45,6 +45,8 @@ export default function HomePageClient() {
           <Link href="/thoughts" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">Thoughts</Link>
           <span className="text-[#333333]">/</span>
           <Link href="/about" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">About</Link>
+          <span className="text-[#333333]">/</span>
+          <Link href="/mrai" className="text-[#666666] hover:text-[#EAEAEA] transition-colors px-3">MrAI</Link>
         </motion.nav>
 
       </div>

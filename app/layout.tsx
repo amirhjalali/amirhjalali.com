@@ -36,28 +36,25 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://amirhjalali.com'),
   title: {
-    default: 'Amir H. Jalali - Human Consultant',
+    default: 'Amir H. Jalali - AI Strategy Consultant',
     template: '%s | Amir H. Jalali'
   },
   manifest: '/manifest.json',
-  description: 'Co-Founder & CPO at Gabooja. 14+ years experience in Generative AI, Data Warehousing, Business Intelligence, and AI Strategy. Building the future of creator-led commerce.',
+  description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence. Helping organizations navigate the AI transformation.',
   keywords: [
     'Amir Jalali',
     'AI Consultant',
+    'AI Strategy',
     'Generative AI',
     'Data Engineering',
     'Business Intelligence',
-    'Data Warehousing',
     'LLMs',
     'Large Language Models',
-    'AI Strategy',
-    'Gabooja',
-    'Creator Economy',
     'Prompt Engineering',
     'Machine Learning',
     'Artificial Intelligence',
-    'CPO',
     'Data Science',
     'AI Implementation',
     'Digital Transformation'
@@ -68,27 +65,17 @@ export const metadata: Metadata = {
   category: 'Technology',
   classification: 'AI Consulting',
   openGraph: {
-    title: 'Amir H. Jalali - Co-Founder & CPO at Gabooja',
-    description: 'Co-Founder & CPO at Gabooja. Building the future of creator-led commerce with 14+ years in AI and data.',
+    title: 'Amir H. Jalali - AI Strategy Consultant',
+    description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
     url: 'https://amirhjalali.com',
     siteName: 'Amir H. Jalali',
     type: 'website',
     locale: 'en_US',
-    images: [
-      {
-        url: 'https://amirhjalali.com/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Amir H. Jalali - AI Consultant & Data Engineering Expert',
-        type: 'image/png',
-      }
-    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Amir H. Jalali - Co-Founder & CPO at Gabooja',
-    description: 'Co-Founder & CPO at Gabooja. Building the future of creator-led commerce with 14+ years in AI and data.',
-    images: ['https://amirhjalali.com/og-image.png'],
+    title: 'Amir H. Jalali - AI Strategy Consultant',
+    description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
     creator: '@amirhjalali',
     site: '@amirhjalali',
   },
