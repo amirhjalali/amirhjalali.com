@@ -23,7 +23,9 @@ export default function HomePageClient() {
         >
           {/* Primary: Name */}
           <h1 className="text-hero mb-4">
-            Amir H. Jalali
+            <span className="text-[#EAEAEA]">A</span>
+            <span className="text-[#666666]">mir H. Jalal</span>
+            <span className="text-[#EAEAEA]">i</span>
           </h1>
 
           {/* Secondary: Role - Supporting context using text-label */}
