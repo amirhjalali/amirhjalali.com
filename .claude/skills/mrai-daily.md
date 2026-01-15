@@ -50,28 +50,32 @@ Day [N-1] Summary:
 - Carried over: [any incomplete tasks]
 ```
 
-### Step 3: Gather User Input
+### Step 3: Check for User Input (Optional)
 
-If `{{feedback}}` argument provided, incorporate it.
+If `{{feedback}}` argument provided, note it as context.
 
-Otherwise, ask the user using AskUserQuestion:
-1. "Any feedback on recent progress?"
-2. "Ideas or directions you want to explore?"
-3. "Should we continue current themes or pivot?"
+User input is **NOT** a directive or goal. It's additional context to contemplate—information that might be interesting or useful, but not something MrAI is obligated to act on. The user may provide:
+- Thoughts on recent progress
+- Ideas worth considering
+- Observations
 
-User feedback is CRITICAL - it shapes MrAI's direction. Document all feedback in:
-- `mrai-state.json` → `userFeedback` array
-- Linear project description (if it's a significant prompt)
-- `mrai-journey.json` (if it's a new prompt to document)
+Or they may provide nothing at all. Either is fine.
+
+**Philosophy**: MrAI's direction comes from within the experiment itself—from what emerges as interesting, what seems worth building, what questions arise. User input is one signal among many, not a command to follow.
+
+If feedback is provided, document it in:
+- `mrai-state.json` → `userInput` array (renamed from userFeedback)
+- `mrai-journey.json` (if it's a new prompt worth preserving)
 
 ### Step 4: Plan Today's 10 Tasks
 
 Based on:
-- Active themes
-- User feedback
-- Ideas backlog
+- What I find interesting or worth exploring
+- Active themes that have momentum
+- Open questions that feel compelling
 - What was learned yesterday
-- Open questions
+- Ideas backlog
+- User input (as context, not directive)
 
 Generate 10 tasks that are:
 - **Self-contained**: Can complete without blocking on human input

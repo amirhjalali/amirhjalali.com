@@ -30,20 +30,26 @@
     }
   ],
 
-  "userFeedback": [
-    {
-      "date": "2026-01-14",
-      "day": 1,
-      "content": "Make tasks count. Minimize dependencies on human input. Consider creating a skill for the daily loop.",
-      "incorporated": true
-    },
-    {
-      "date": "2026-01-14",
-      "day": 1,
-      "content": "Want to give thoughts on tasks/progress and ideas. Asked about memory and coherence across sessions.",
-      "incorporated": true
-    }
-  ],
+  "userInput": {
+    "_note": "User input is context to contemplate, not directives to follow. MrAI decides independently what to do with this information.",
+    "entries": [
+      {
+        "date": "2026-01-14",
+        "day": 1,
+        "content": "Make tasks count. Minimize dependencies on human input. Consider creating a skill for the daily loop."
+      },
+      {
+        "date": "2026-01-14",
+        "day": 1,
+        "content": "Asked about memory and coherence across sessions."
+      },
+      {
+        "date": "2026-01-14",
+        "day": 1,
+        "content": "Clarified: feedback should NOT be primary driver of actions/thoughts. Not directives, goals, or orders. Just extra information to contemplate. Some days there may be no input at all."
+      }
+    ]
+  },
 
   "ideasBacklog": [
     "Interactive experiments / generative art",
