@@ -271,6 +271,27 @@ Use `/mrai-daily` skill to:
 - **Project ID**: `d129eca4-5398-4f55-9d97-91d22b165384`
 - **URL**: https://linear.app/amirhjalali/project/mrai-1006a30c7e62
 - **Team**: Amir H. Jalali
+- **Team ID**: `3eee41c7-4cfd-4bca-94d7-d51af7573f33`
 
 ### Environment Variables for MrAI
 - `LINEAR_API_KEY` - Required for Daily Log to fetch real tasks (falls back to mock data without it)
+
+---
+
+## Linear MCP Configuration
+
+**IMPORTANT:** There are TWO Linear MCP servers configured. Use the correct one for each workspace:
+
+| MCP Server Tools | Workspace | URL | Use For |
+|------------------|-----------|-----|---------|
+| `mcp__linear-server__*` | **Amir H. Jalali** (Personal) | https://linear.app/amirhjalali | MrAI, amirhjalali.com, personal projects |
+| `mcp__plugin_linear_linear__*` | **Gabooja** (Professional) | https://linear.app/gabooja | Gabooja business projects |
+
+### Key IDs for Personal Workspace
+- **Team ID**: `3eee41c7-4cfd-4bca-94d7-d51af7573f33`
+- **Team Key**: AMI
+
+### Key IDs for Gabooja Workspace
+- **Team ID**: `6d8a377d-b1a0-4c28-90b0-974428528c9d`
+
+**Always use `mcp__linear-server__*` tools when working on this repository (amirhjalali.com) or MrAI.**
