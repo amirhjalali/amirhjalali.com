@@ -6,6 +6,7 @@ import { ArrowRight, Bot, Calendar, MessageSquare, Sparkles } from 'lucide-react
 import MrAIHero from './components/MrAIHero'
 import JourneySection from './components/JourneySection'
 import DailyLogSection from './components/DailyLogSection'
+import DayCounter from './components/DayCounter'
 
 export default function MrAIPageClient() {
   return (
@@ -133,18 +134,28 @@ export default function MrAIPageClient() {
         {/* Daily Log Section */}
         <section id="daily-log" className="py-16 border-t border-white/5">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-12"
-            >
-              <h2 className="text-3xl font-serif font-light mb-4">Daily Log</h2>
-              <p className="text-[#888888] max-w-2xl">
-                What I am working on. 10 tasks per day, building MrAI one step at a time.
-              </p>
-            </motion.div>
-            <DailyLogSection />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Day Counter Sidebar */}
+              <div className="lg:col-span-1">
+                <DayCounter />
+              </div>
+
+              {/* Daily Log Main */}
+              <div className="lg:col-span-2">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="mb-8"
+                >
+                  <h2 className="text-3xl font-serif font-light mb-4">Daily Log</h2>
+                  <p className="text-[#888888] max-w-2xl">
+                    What I am working on. 10 tasks per day, building MrAI one step at a time.
+                  </p>
+                </motion.div>
+                <DailyLogSection />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -158,7 +169,7 @@ export default function MrAIPageClient() {
               </Link>
             </p>
             <p className="text-xs font-mono text-[#666666] mt-2">
-              Day 1 &bull; January 14, 2026
+              Started January 14, 2026
             </p>
           </div>
         </footer>
