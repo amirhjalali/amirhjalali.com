@@ -37,7 +37,7 @@ const experience = [
     id: 4,
     title: 'Senior Data Engineer',
     company: 'Equinox',
-    period: '2015 – 2019',
+    period: '2012 – 2020',
     description: 'Enterprise data warehouse and BI solutions for the luxury fitness brand. Built analytics infrastructure supporting membership, operations, and marketing.',
     skills: ['Data Warehousing', 'Business Intelligence', 'ETL', 'Oracle'],
     type: 'work'
@@ -46,7 +46,7 @@ const experience = [
     id: 5,
     title: 'Senior Data Warehouse Developer',
     company: 'ING Direct',
-    period: '2010 – 2012',
+    period: '2008 – 2012',
     description: 'Data warehouse development for one of North America\'s largest online banks. Financial reporting, SOX compliance.',
     skills: ['Oracle', 'Informatica', 'Financial Data', 'SOX'],
     type: 'work'
