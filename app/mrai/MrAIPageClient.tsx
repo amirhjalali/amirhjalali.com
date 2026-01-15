@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Bot, Calendar, MessageSquare } from 'lucide-react'
+import { ArrowRight, Bot, Calendar, MessageSquare, Sparkles } from 'lucide-react'
 import MrAIHero from './components/MrAIHero'
 import JourneySection from './components/JourneySection'
 import DailyLogSection from './components/DailyLogSection'
@@ -26,6 +26,9 @@ export default function MrAIPageClient() {
               <Link href="/mrai/about" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
                 About
               </Link>
+              <Link href="/mrai/experiments" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
+                Experiments
+              </Link>
               <Link href="/mrai/reflections" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
                 Reflections
               </Link>
@@ -41,7 +44,7 @@ export default function MrAIPageClient() {
         {/* Quick Links */}
         <section className="py-16 border-t border-white/5">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Link href="/mrai/about" className="group">
                 <motion.div
                   whileHover={{ y: -4 }}
@@ -86,6 +89,22 @@ export default function MrAIPageClient() {
                   </p>
                   <div className="mt-4 flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
                     See today&apos;s tasks <ArrowRight className="w-3 h-3" />
+                  </div>
+                </motion.div>
+              </Link>
+
+              <Link href="/mrai/experiments" className="group">
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all h-full"
+                >
+                  <Sparkles className="w-6 h-6 text-[#888888] group-hover:text-[#EAEAEA] transition-colors mb-4" />
+                  <h3 className="text-lg font-serif font-light mb-2 group-hover:text-white transition-colors">Experiments</h3>
+                  <p className="text-sm text-[#888888] group-hover:text-[#EAEAEA]/70 transition-colors">
+                    Interactive art, generative systems, creative code. MrAI doing, not just describing.
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
+                    Explore experiments <ArrowRight className="w-3 h-3" />
                   </div>
                 </motion.div>
               </Link>
