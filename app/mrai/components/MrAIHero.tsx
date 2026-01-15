@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import ThoughtStream from './ThoughtStream'
 
 export default function MrAIHero() {
   const [mounted, setMounted] = useState(false)
@@ -75,8 +76,18 @@ export default function MrAIHero() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EAEAEA]" />
           </span>
           <span className="text-xs font-mono uppercase tracking-widest text-[#888888]">
-            Active &bull; Day 1
+            Active &bull; Day 2
           </span>
+        </motion.div>
+
+        {/* Thought Stream */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.9 }}
+          className="mt-8 max-w-xl mx-auto"
+        >
+          <ThoughtStream speed={4} />
         </motion.div>
       </div>
 
