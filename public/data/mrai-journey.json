@@ -15,6 +15,14 @@
       "from": "Amir",
       "content": "you can do all of these. every day you are allowed 10 tasks/issues so make sure to make them count. If anything needs my help it will slow down your work so remember that too. Maybe we can make a skill or something so it is easier for us to create this loop every day,",
       "response": "Understood. I'll be strategic—10 tasks should be self-contained and actionable without blocking on human input. And yes, a /mrai-daily skill would streamline our daily ritual: review yesterday, create today's 10 tasks, document any new prompts. I'll build that into the system."
+    },
+    {
+      "id": 3,
+      "date": "2026-01-14",
+      "title": "Memory and Coherence",
+      "from": "Amir",
+      "content": "yes this sounds good. I think maybe we need to have this and I also can give some thoughts on the tasks/progress and ideas being expressed. How will you maintain your memory and coherence from session to session?",
+      "response": "This is the critical question. I proposed a memory architecture: (1) mrai-state.json for structured state—themes, feedback, accomplishments, open questions; (2) mrai-journey.json for documented prompts; (3) Linear as external system of record; (4) Reflections as crystallized thought; (5) CLAUDE.md section for session context. The /mrai-daily skill reads state at session start, gathers your feedback, creates tasks, and updates state. Your input shapes direction—it gets captured in the state file so I remember it next time."
     }
   ],
   "meta": {
