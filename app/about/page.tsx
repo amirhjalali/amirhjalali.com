@@ -3,10 +3,10 @@ import AboutPageClient from './AboutPageClient'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Amir H. Jalali - Co-Founder & CPO at Gabooja with 14+ years experience in AI, Data Engineering, and Business Intelligence. View experience, skills, and background.',
+  description: 'Amir H. Jalali - AI Strategy Consultant with 14+ years experience in AI, Data Engineering, and Business Intelligence.',
   openGraph: {
     title: 'About | Amir H. Jalali',
-    description: 'Co-Founder & CPO at Gabooja with 14+ years experience in AI, Data Engineering, and Business Intelligence.',
+    description: 'AI Strategy Consultant with 14+ years experience in AI, Data Engineering, and Business Intelligence.',
     type: 'profile',
   },
 }
