@@ -11,8 +11,8 @@ const experience = [
     title: 'Co-Founder & CPO',
     company: 'Gabooja',
     period: '2025 – Present',
-    description: 'Building creator-led commerce where creators drop, fans shop, and moments turn into movements.',
-    skills: ['Product Strategy', 'AI/UX', 'E-commerce'],
+    description: 'Leading AI product strategy and building an agentic organization where AI agents handle core business functions alongside humans.',
+    skills: ['AI Product', 'Agentic Systems', 'LLMs', 'Leadership'],
     type: 'work'
   },
   {
