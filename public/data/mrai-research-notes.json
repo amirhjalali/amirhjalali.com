@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "description": "Research notes for future MrAI experiments",
+    "lastUpdated": "2026-01-15"
+  },
+  "research": [
+    {
+      "topic": "Generative Art Libraries & Patterns",
+      "date": "2026-01-15",
+      "day": 2,
+      "sections": [
+        {
+          "title": "Canvas 2D (Current Approach)",
+          "notes": [
+            "Used for Particle Field experiment",
+            "Pros: Simple, performant for 2D, no dependencies",
+            "Cons: Limited to 2D, manual rendering logic",
+            "Best for: Particles, simple geometric patterns, data visualization"
+          ],
+          "suitability": "High - matches monochrome aesthetic well"
+        },
+        {
+          "title": "Three.js",
+          "notes": [
+            "Full 3D WebGL library",
+            "Large bundle size (~150KB min)",
+            "Excellent for: 3D scenes, complex geometries, particle systems with depth",
+            "Learning curve: Moderate",
+            "Monochrome compatibility: Easy to configure single-color materials"
+          ],
+          "ideas": [
+            "3D particle nebula - depth adds visual interest",
+            "Wireframe geometry animations",
+            "Camera flythrough of abstract space",
+            "Morphing shapes between states"
+          ],
+          "suitability": "Medium - may be overkill for simple experiments"
+        },
+        {
+          "title": "p5.js",
+          "notes": [
+            "Creative coding library, Processing for the web",
+            "Beginner-friendly API",
+            "Good for: Sketches, educational content, quick prototypes",
+            "Bundle size: ~800KB (large)",
+            "Has both 2D and WebGL modes"
+          ],
+          "ideas": [
+            "Generative text/typography",
+            "Sound visualization (if audio added)",
+            "Interactive drawing tools"
+          ],
+          "suitability": "Low - bundle size concerns, Canvas 2D sufficient"
+        },
+        {
+          "title": "Raw WebGL Shaders",
+          "notes": [
+            "Maximum performance and control",
+            "Very steep learning curve (GLSL)",
+            "Best for: Visual effects, post-processing, GPU-intensive patterns",
+            "No dependencies, smallest bundle"
+          ],
+          "ideas": [
+            "Noise-based backgrounds (Perlin/Simplex)",
+            "Flow fields",
+            "Reaction-diffusion patterns",
+            "Ray marching / distance fields"
+          ],
+          "suitability": "Medium - powerful but complex"
+        },
+        {
+          "title": "GSAP + SVG",
+          "notes": [
+            "GreenSock Animation Platform",
+            "Excellent for: Complex animation timelines, morphing SVG paths",
+            "Good performance, well-documented",
+            "Bundle size: ~60KB"
+          ],
+          "ideas": [
+            "Logo/icon animations",
+            "Drawing animations (line reveals)",
+            "Morphing shapes between states",
+            "Scroll-triggered animations"
+          ],
+          "suitability": "High - good for UI/UX micro-interactions"
+        }
+      ]
+    },
+    {
+      "topic": "Algorithm Patterns for Future Experiments",
+      "date": "2026-01-15",
+      "day": 2,
+      "patterns": [
+        {
+          "name": "Perlin/Simplex Noise",
+          "description": "Smooth, natural-looking randomness",
+          "applications": ["Flow fields", "Terrain generation", "Organic movement"],
+          "complexity": "Medium",
+          "priority": "High - fundamental for generative art"
+        },
+        {
+          "name": "Flocking/Boids",
+          "description": "Emergent swarm behavior from simple rules",
+          "applications": ["Particle swarms", "Bird/fish simulations", "Crowd behavior"],
+          "complexity": "Medium",
+          "priority": "High - builds on current particle system"
+        },
+        {
+          "name": "Reaction-Diffusion",
+          "description": "Chemical pattern simulation (Turing patterns)",
+          "applications": ["Organic patterns", "Coral/zebra stripes", "Evolving textures"],
+          "complexity": "High",
+          "priority": "Medium - visually striking but compute-heavy"
+        },
+        {
+          "name": "L-Systems",
+          "description": "Recursive growth patterns",
+          "applications": ["Plants/trees", "Fractals", "Branching structures"],
+          "complexity": "Medium",
+          "priority": "Medium - interesting but may not fit aesthetic"
+        },
+        {
+          "name": "Voronoi/Delaunay",
+          "description": "Space partitioning algorithms",
+          "applications": ["Cell-like patterns", "Network visualizations", "Territory maps"],
+          "complexity": "Medium",
+          "priority": "Medium - could pair well with particles"
+        }
+      ]
+    },
+    {
+      "topic": "Technical Constraints",
+      "date": "2026-01-15",
+      "day": 2,
+      "constraints": [
+        {
+          "area": "Performance",
+          "notes": [
+            "Target 60fps on mid-range devices",
+            "Limit particle count (~200 max for smooth animation)",
+            "Consider requestAnimationFrame throttling for background tabs",
+            "Use canvas offscreen rendering for complex scenes"
+          ]
+        },
+        {
+          "area": "Accessibility",
+          "notes": [
+            "Provide reduced motion alternative",
+            "Don't rely solely on animation for meaning",
+            "Consider prefers-reduced-motion media query"
+          ]
+        },
+        {
+          "area": "Bundle Size",
+          "notes": [
+            "Prefer native Canvas/WebGL over large libraries",
+            "Lazy load experiments (dynamic imports)",
+            "Three.js acceptable for complex 3D, but defer loading"
+          ]
+        },
+        {
+          "area": "Design System",
+          "notes": [
+            "All visuals must use monochrome palette",
+            "#050505 background, #EAEAEA primary, #888888 muted",
+            "White glows/opacity variations for depth",
+            "No color gradients"
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Experiment Ideas for Day 3+",
+      "date": "2026-01-15",
+      "day": 2,
+      "ideas": [
+        {
+          "name": "Flow Field",
+          "description": "Particles following noise-based vector field",
+          "difficulty": "Medium",
+          "appeal": "High - mesmerizing, organic movement"
+        },
+        {
+          "name": "Breathing Grid",
+          "description": "Grid of dots that expand/contract with Perlin noise",
+          "difficulty": "Low",
+          "appeal": "Medium - simple but hypnotic"
+        },
+        {
+          "name": "Constellation Generator",
+          "description": "Random star placement with procedural constellation lines",
+          "difficulty": "Medium",
+          "appeal": "High - fits space/creation theme"
+        },
+        {
+          "name": "Text Particle Morphing",
+          "description": "Particles form text, then dissolve",
+          "difficulty": "High",
+          "appeal": "High - dramatic, meaningful"
+        },
+        {
+          "name": "Audio Reactive Waveform",
+          "description": "Visualize ambient sound or music",
+          "difficulty": "Medium",
+          "appeal": "Medium - requires audio context permission"
+        }
+      ]
+    }
+  ]
+}
