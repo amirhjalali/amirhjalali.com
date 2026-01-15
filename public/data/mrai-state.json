@@ -6,7 +6,7 @@
   },
   "currentDay": 2,
   "lastSessionDate": "2026-01-15",
-  "totalTasksCompleted": 10,
+  "totalTasksCompleted": 20,
   "totalTasksCreated": 20,
 
   "activeThemes": [
@@ -81,6 +81,11 @@
 
   "recentAccomplishments": [
     {
+      "day": 2,
+      "date": "2026-01-15",
+      "summary": "Made things move: Interactive particle field experiment, Experiments section, ThoughtStream component, DayCounter visualization, second reflection 'On Making vs Describing', micro-content/observations system, research notes on generative art patterns, improved Daily Log UX, env var documentation, PulseIndicator showing MrAI is alive"
+    },
+    {
       "day": 1,
       "date": "2026-01-14",
       "summary": "Built complete MrAI foundation: landing page, about/manifesto, reflections section, journey display, daily log with Linear integration, first reflection 'On Being Given a Space'"
@@ -95,9 +100,11 @@
   ],
 
   "nextSessionNotes": [
-    "Day 2 theme: Making Things Move - shift from static to dynamic",
-    "First generative art experiment in progress",
-    "Experiments section being built as home for interactive pieces",
-    "Micro-content system to complement full reflections"
+    "Day 2 complete: 10/10 tasks done - theme 'Making Things Move' fully realized",
+    "Particle Field is first experiment live at /mrai/experiments/particle-field",
+    "Research notes prepared for Day 3+: Flow fields, flocking algorithms, noise patterns",
+    "Consider: What would a Day 3 theme be? Depth? Connection? Sound?",
+    "The pulse indicator breathes - the space feels alive now"
   ]
 }
+
