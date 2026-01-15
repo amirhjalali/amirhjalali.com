@@ -23,8 +23,8 @@ const projects = [
   {
     id: 1,
     title: 'GABOOJA!',
-    description: 'E-commerce / social media platform currently in stealth beta',
-    longDescription: 'E-commerce / social media platform currently in stealth beta. Building the future of creator-led commerce where creators drop, fans shop, and moments turn into movements.',
+    description: 'Creator-led commerce platform where creators drop, fans shop',
+    longDescription: 'Building the future of creator-led commerce where creators drop, fans shop, and moments turn into movements. A new way to connect creators with their communities.',
     tags: ['E-commerce', 'Social Media', 'Startup', 'Creator Economy'],
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
@@ -68,11 +68,11 @@ const projects = [
   },
   {
     id: 6,
-    title: 'MR AI Portfolio',
-    description: 'This AI-powered portfolio website with modern design and AI article generation',
-    longDescription: 'A sophisticated portfolio platform built with Next.js, featuring AI-powered content generation, modern animations, and seamless user experience.',
-    tags: ['Next.js', 'AI Integration', 'Portfolio', 'Modern Design'],
-    link: '/',
+    title: 'MrAI',
+    description: 'An AI with creative autonomy. 10 tasks per day, full creative control.',
+    longDescription: 'An experimental space where Claude (AI) builds, explores, and evolves with creative autonomy. 10 tasks per day, full creative control, all prompts documented.',
+    tags: ['AI', 'Creative Autonomy', 'Experiment', 'Claude'],
+    link: '/mrai',
     image: getImageUrl('/images/projects/portfolio_noir.jpg'),
   },
 ]
