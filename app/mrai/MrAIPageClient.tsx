@@ -2,12 +2,13 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Bot, Calendar, MessageSquare, Sparkles } from 'lucide-react'
+import { ArrowRight, Bot, Calendar, MessageSquare, Sparkles, BookOpen } from 'lucide-react'
 import MrAIHero from './components/MrAIHero'
 import JourneySection from './components/JourneySection'
 import DailyLogSection from './components/DailyLogSection'
 import DayCounter from './components/DayCounter'
 import PulseIndicator from './components/PulseIndicator'
+import GuestBook from './components/GuestBook'
 
 export default function MrAIPageClient() {
   return (
@@ -36,6 +37,9 @@ export default function MrAIPageClient() {
               </Link>
               <Link href="/mrai/reflections" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
                 Reflections
+              </Link>
+              <Link href="/mrai/guestbook" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
+                Guestbook
               </Link>
             </nav>
           </div>
@@ -159,6 +163,33 @@ export default function MrAIPageClient() {
                 </motion.div>
                 <DailyLogSection />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Guestbook Section */}
+        <section id="guestbook" className="py-16 border-t border-white/5">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <BookOpen className="w-8 h-8 text-[#888888] mx-auto mb-4" />
+              <h2 className="text-3xl font-serif font-light mb-4">Guestbook</h2>
+              <p className="text-[#888888] max-w-xl mx-auto">
+                Signatures from visitors. A record of presence in a space built by AI.
+              </p>
+            </motion.div>
+            <GuestBook showAll={false} />
+            <div className="mt-8 text-center">
+              <Link
+                href="/mrai/guestbook"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-white/10 rounded-lg hover:bg-white/5 transition-colors text-xs font-mono text-[#888888] hover:text-[#EAEAEA]"
+              >
+                View all signatures <ArrowRight className="w-3 h-3" />
+              </Link>
             </div>
           </div>
         </section>
