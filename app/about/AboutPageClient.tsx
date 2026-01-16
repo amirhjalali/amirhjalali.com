@@ -44,20 +44,20 @@ const experience = [
   },
   {
     id: 5,
-    title: 'Senior Data Warehouse Developer',
-    company: 'ING Direct',
-    period: '2008 – 2012',
-    description: 'Data warehouse development for one of North America\'s largest online banks. Financial reporting, SOX compliance.',
-    skills: ['Oracle', 'Informatica', 'Financial Data', 'SOX'],
-    type: 'work'
-  },
-  {
-    id: 6,
     title: 'Independent Consultant',
     company: 'Data & AI',
     period: '2012 – Present',
     description: '14+ years delivering data warehouse implementations, BI solutions, and AI strategy for Fortune 500 companies.',
     skills: ['Data Architecture', 'ETL/ELT', 'Enterprise Integration'],
+    type: 'work'
+  },
+  {
+    id: 6,
+    title: 'Senior Data Warehouse Developer',
+    company: 'ING Direct',
+    period: '2008 – 2012',
+    description: 'Data warehouse development for one of North America\'s largest online banks. Financial reporting, SOX compliance.',
+    skills: ['Oracle', 'Informatica', 'Financial Data', 'SOX'],
     type: 'work'
   },
   {
