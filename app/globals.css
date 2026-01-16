@@ -55,6 +55,7 @@
 
   html {
     @apply scroll-smooth;
+    color-scheme: dark;
   }
 
   body {
@@ -280,5 +281,58 @@
   .px-safe {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
+  }
+
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .noise-overlay {
+      animation: none;
+    }
+
+    .timeline-dot-pulse {
+      animation: none;
+      box-shadow: 0 0 8px rgba(255,255,255,0.4);
+    }
+  }
+
+  /* Motion-safe utilities - only animate when user allows */
+  .motion-safe\:animate-pulse {
+    animation: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .motion-safe\:animate-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  }
+
+  /* Loading ellipsis animation */
+  .loading-dots::after {
+    content: '';
+    animation: ellipsis 1.5s infinite;
+  }
+
+  @keyframes ellipsis {
+    0% { content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+    100% { content: ''; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-dots::after {
+      animation: none;
+      content: '...';
+    }
   }
 }

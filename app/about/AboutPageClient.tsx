@@ -122,9 +122,9 @@ export default function AboutPageClient() {
                 href="https://github.com/amirhjalali"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group"
+                className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-colors group"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-[transform,background,border-color,box-shadow] duration-300">
                   <Github className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">GitHub</span>
@@ -135,9 +135,9 @@ export default function AboutPageClient() {
                 href="https://linkedin.com/in/amirhjalali"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group"
+                className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-colors group"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-[transform,background,border-color,box-shadow] duration-300">
                   <Linkedin className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">LinkedIn</span>
@@ -146,9 +146,9 @@ export default function AboutPageClient() {
             <MagneticWrapper magneticStrength={0.4}>
               <a
                 href="mailto:amirhjalali@gmail.com"
-                className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group"
+                className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-colors group"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-[transform,background,border-color,box-shadow] duration-300">
                   <Mail className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">Email</span>
@@ -160,7 +160,7 @@ export default function AboutPageClient() {
                 download="AmirJalaliResume_04-01-2025.pdf"
                 className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-all group no-print"
               >
-                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
+                <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-[transform,background,border-color,box-shadow] duration-300">
                   <Download className="w-4 h-4" />
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-widest">Resume</span>
@@ -181,7 +181,7 @@ export default function AboutPageClient() {
               skillList.map((skill) => (
                 <span
                   key={skill}
-                  className="text-[10px] px-3 py-1.5 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] hover:border-white/20 hover:text-[#EAEAEA] transition-all cursor-default"
+                  className="text-[10px] px-3 py-1.5 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] hover:border-white/20 hover:text-[#EAEAEA] transition-[border-color,color] cursor-default"
                 >
                   {skill}
                 </span>

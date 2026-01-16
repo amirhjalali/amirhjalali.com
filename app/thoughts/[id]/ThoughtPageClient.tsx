@@ -1,15 +1,21 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Script from 'next/script'
 import { notFound } from 'next/navigation'
 import { useState } from 'react'
 import { Article } from '@/lib/types'
 import SocialShare from '@/components/SocialShare'
-import Spotlight from '@/components/Spotlight'
 import ArticleModelAttribution from '@/components/ArticleModelAttribution'
 import ArticleRating from '@/components/ArticleRating'
+
+// Dynamic import for non-critical visual effects
+const Spotlight = dynamic(() => import('@/components/Spotlight'), {
+  ssr: false,
+  loading: () => null
+})
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
 

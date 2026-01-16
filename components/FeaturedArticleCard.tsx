@@ -29,7 +29,7 @@ export default function FeaturedArticleCard({ article }: FeaturedArticleCardProp
         aria-label={`Read article: ${article.title}`}
         className="block"
       >
-        <article className="relative grid md:grid-cols-2 gap-0 border border-white/10 rounded-2xl overflow-hidden bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_40px_rgba(255,255,255,0.03)]">
+        <article className="relative grid md:grid-cols-2 gap-0 border border-white/10 rounded-2xl overflow-hidden bg-white/[0.02] hover:bg-white/[0.04] transition-[background,border-color,box-shadow] duration-500 hover:border-white/20 hover:shadow-[0_0_40px_rgba(255,255,255,0.03)]">
           {/* Image Section */}
           {article.imageUrl && (
             <div className="relative aspect-[16/10] md:aspect-auto overflow-hidden">
@@ -81,7 +81,7 @@ export default function FeaturedArticleCard({ article }: FeaturedArticleCardProp
                 {article.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] px-3 py-1.5 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
+                    className="text-[10px] px-3 py-1.5 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-[border-color,color]"
                   >
                     {tag}
                   </span>

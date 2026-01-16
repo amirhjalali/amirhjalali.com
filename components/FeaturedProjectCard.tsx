@@ -36,7 +36,7 @@ export default function FeaturedProjectCard({ project }: FeaturedProjectCardProp
         className="block"
       >
         {/* Enhanced featured card with gradient border glow */}
-        <article className="relative grid md:grid-cols-[1.2fr,1fr] gap-0 rounded-2xl overflow-hidden bg-white/[0.03] hover:bg-white/[0.05] transition-all duration-500 min-h-[400px] md:min-h-[500px] border border-white/20 hover:border-white/30 shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:shadow-[0_0_80px_rgba(255,255,255,0.06)]">
+        <article className="relative grid md:grid-cols-[1.2fr,1fr] gap-0 rounded-2xl overflow-hidden bg-white/[0.03] hover:bg-white/[0.05] transition-[background,border-color,box-shadow] duration-500 min-h-[400px] md:min-h-[500px] border border-white/20 hover:border-white/30 shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:shadow-[0_0_80px_rgba(255,255,255,0.06)]">
           {/* Featured Badge */}
           <div className="absolute top-6 left-6 z-10">
             <span className="text-micro px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/10">
@@ -78,7 +78,7 @@ export default function FeaturedProjectCard({ project }: FeaturedProjectCardProp
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-micro px-3 py-1.5 border border-white/10 rounded-full text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
+                    className="text-micro px-3 py-1.5 border border-white/10 rounded-full text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-[border-color,color]"
                   >
                     {tag}
                   </span>

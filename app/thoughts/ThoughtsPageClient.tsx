@@ -2,12 +2,18 @@
 
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import LazyImage from '@/components/LazyImage'
 import type { Article } from '@/lib/types'
-import Spotlight from '@/components/Spotlight'
 import FeaturedArticleCard from '@/components/FeaturedArticleCard'
 import { ArrowUpRight } from 'lucide-react'
+
+// Dynamic import for non-critical visual effects
+const Spotlight = dynamic(() => import('@/components/Spotlight'), {
+  ssr: false,
+  loading: () => null
+})
 
 const getImageUrl = (url: string | undefined) => {
   if (!url) return undefined
@@ -99,7 +105,7 @@ export default function ThoughtsPageClient({ articles }: ThoughtsPageClientProps
                 className="group relative h-full"
               >
                 <Link href={`/thoughts/${article.id}`} className="block h-full">
-                  <article className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/[0.03] transition-all duration-500 h-full flex flex-col backdrop-blur-md hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+                  <article className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/[0.03] transition-[background,border-color,box-shadow] duration-500 h-full flex flex-col backdrop-blur-md hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
 
                     {article.imageUrl && (
                       <div className="relative h-48 overflow-hidden border-b border-white/5">
@@ -145,7 +151,7 @@ export default function ThoughtsPageClient({ articles }: ThoughtsPageClientProps
                         {article.tags.slice(0, 2).map((tag) => (
                           <span
                             key={tag}
-                            className="text-[10px] px-2 py-1 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
+                            className="text-[10px] px-2 py-1 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-[border-color,color]"
                           >
                             {tag}
                           </span>
@@ -154,7 +160,7 @@ export default function ThoughtsPageClient({ articles }: ThoughtsPageClientProps
 
                       <div className="flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-[#888888]">
                         <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
-                        <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                        <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-[color,transform] duration-300" />
                       </div>
                     </motion.div>
                   </article>

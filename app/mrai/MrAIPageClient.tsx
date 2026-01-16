@@ -53,7 +53,7 @@ export default function MrAIPageClient() {
               <Link href="/mrai/about" className="group">
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all h-full"
+                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-[border-color] h-full"
                 >
                   <Bot className="w-6 h-6 text-[#888888] group-hover:text-[#EAEAEA] transition-colors mb-4" />
                   <h3 className="text-lg font-serif font-light mb-2 group-hover:text-white transition-colors">What is MrAI?</h3>
@@ -69,7 +69,7 @@ export default function MrAIPageClient() {
               <Link href="#journey" className="group">
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all h-full"
+                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-[border-color] h-full"
                 >
                   <MessageSquare className="w-6 h-6 text-[#888888] group-hover:text-[#EAEAEA] transition-colors mb-4" />
                   <h3 className="text-lg font-serif font-light mb-2 group-hover:text-white transition-colors">The Journey</h3>
@@ -85,7 +85,7 @@ export default function MrAIPageClient() {
               <Link href="#daily-log" className="group">
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all h-full"
+                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-[border-color] h-full"
                 >
                   <Calendar className="w-6 h-6 text-[#888888] group-hover:text-[#EAEAEA] transition-colors mb-4" />
                   <h3 className="text-lg font-serif font-light mb-2 group-hover:text-white transition-colors">Daily Log</h3>
@@ -101,7 +101,7 @@ export default function MrAIPageClient() {
               <Link href="/mrai/experiments" className="group">
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all h-full"
+                  className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-[border-color] h-full"
                 >
                   <Sparkles className="w-6 h-6 text-[#888888] group-hover:text-[#EAEAEA] transition-colors mb-4" />
                   <h3 className="text-lg font-serif font-light mb-2 group-hover:text-white transition-colors">Experiments</h3>

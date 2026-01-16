@@ -44,7 +44,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         aria-label={`View project: ${project.title}`}
         className="block h-full"
       >
-        <article className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/[0.03] transition-all duration-500 h-full flex flex-col backdrop-blur-md hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+        <article className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/[0.03] transition-[background,border-color,box-shadow] duration-500 h-full flex flex-col backdrop-blur-md hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
 
           <div className="relative h-48 overflow-hidden border-b border-white/5">
             <LazyImage
@@ -80,7 +80,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               {project.tags.slice(0, 2).map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] px-2 py-1 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-all"
+                  className="text-[10px] px-2 py-1 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-[border-color,color]"
                 >
                   {tag}
                 </span>
@@ -89,7 +89,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
             <div className="flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-[#888888]">
               <span>View Project</span>
-              <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+              <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-[color,transform] duration-300" />
             </div>
           </motion.div>
         </article>

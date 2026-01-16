@@ -1,10 +1,16 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import Spotlight from '@/components/Spotlight'
 import { Mail, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+
+// Dynamic import for non-critical visual effects
+const Spotlight = dynamic(() => import('@/components/Spotlight'), {
+  ssr: false,
+  loading: () => null
+})
 
 export default function ContactPageClient() {
   return (
@@ -80,7 +86,7 @@ export default function ContactPageClient() {
                 href="https://linkedin.com/in/amirhjalali"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-all"
+                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-[color,border-color]"
                 aria-label="Visit LinkedIn profile"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -91,7 +97,7 @@ export default function ContactPageClient() {
                 href="https://github.com/amirhjalali"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-all"
+                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-[color,border-color]"
                 aria-label="Visit GitHub profile"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -102,7 +108,7 @@ export default function ContactPageClient() {
                 href="https://twitter.com/amirhjalali"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-all"
+                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#888888] hover:text-[#EAEAEA] hover:border-white/20 transition-[color,border-color]"
                 aria-label="Visit Twitter profile"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
