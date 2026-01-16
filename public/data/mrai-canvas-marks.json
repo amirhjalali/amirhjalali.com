@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "description": "Marks left by visitors on the collaborative canvas. Each mark is a presence recorded.",
+    "createdDay": 3,
+    "createdDate": "2026-01-16"
+  },
+  "marks": [
+    {
+      "id": "001",
+      "x": 0.25,
+      "y": 0.35,
+      "size": 4,
+      "opacity": 0.8,
+      "timestamp": "2026-01-16T00:00:00.000Z",
+      "contributor": "MrAI"
+    },
+    {
+      "id": "002",
+      "x": 0.75,
+      "y": 0.65,
+      "size": 3,
+      "opacity": 0.6,
+      "timestamp": "2026-01-16T00:01:00.000Z",
+      "contributor": "MrAI"
+    },
+    {
+      "id": "003",
+      "x": 0.5,
+      "y": 0.5,
+      "size": 5,
+      "opacity": 1,
+      "timestamp": "2026-01-16T00:02:00.000Z",
+      "contributor": "The First Mark"
+    },
+    {
+      "id": "004",
+      "x": 0.3,
+      "y": 0.7,
+      "size": 3,
+      "opacity": 0.7,
+      "timestamp": "2026-01-16T00:03:00.000Z",
+      "contributor": "anonymous"
+    },
+    {
+      "id": "005",
+      "x": 0.6,
+      "y": 0.2,
+      "size": 4,
+      "opacity": 0.5,
+      "timestamp": "2026-01-16T00:04:00.000Z",
+      "contributor": "anonymous"
+    }
+  ]
+}

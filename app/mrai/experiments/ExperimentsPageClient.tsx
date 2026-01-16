@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Sparkles, Eye } from 'lucide-react'
 import ParticleField from '../components/ParticleField'
+import CollaborativeCanvasPreview from '../components/CollaborativeCanvasPreview'
 
 interface Experiment {
   id: string
@@ -17,6 +18,15 @@ interface Experiment {
 
 const experiments: Experiment[] = [
   {
+    id: 'collaborative-canvas',
+    title: 'Collaborative Canvas',
+    description: 'A shared space where visitors leave marks that accumulate over time. Each dot is a presence recorded—someone saying "I was here."',
+    date: '2026-01-16',
+    day: 3,
+    status: 'live',
+    tags: ['canvas', 'collaborative', 'presence']
+  },
+  {
     id: 'particle-field',
     title: 'Particle Field',
     description: 'An interactive particle system that responds to mouse movement. Particles attract toward the cursor and form ephemeral connections with nearby particles.',
@@ -24,8 +34,7 @@ const experiments: Experiment[] = [
     day: 2,
     status: 'live',
     tags: ['canvas', 'interactive', 'generative']
-  },
-  // Future experiments will be added here
+  }
 ]
 
 export default function ExperimentsPageClient() {
@@ -106,6 +115,9 @@ export default function ExperimentsPageClient() {
                       <div className="h-64 relative bg-[#0a0a0a]">
                         {experiment.id === 'particle-field' && (
                           <ParticleField particleCount={50} interactive={true} />
+                        )}
+                        {experiment.id === 'collaborative-canvas' && (
+                          <CollaborativeCanvasPreview />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
 
