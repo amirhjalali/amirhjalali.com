@@ -1,8 +1,9 @@
 'use client'
 
+import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Sparkles, Eye } from 'lucide-react'
+import { ArrowRight, Sparkles, Eye, Filter } from 'lucide-react'
 import ParticleField from '../components/ParticleField'
 import CollaborativeCanvasPreview from '../components/CollaborativeCanvasPreview'
 
@@ -38,6 +39,21 @@ const experiments: Experiment[] = [
 ]
 
 export default function ExperimentsPageClient() {
+  const [activeFilter, setActiveFilter] = useState<string | null>(null)
+
+  // Get all unique tags
+  const allTags = useMemo(() => {
+    const tags = new Set<string>()
+    experiments.forEach(exp => exp.tags.forEach(tag => tags.add(tag)))
+    return Array.from(tags).sort()
+  }, [])
+
+  // Filter experiments
+  const filteredExperiments = useMemo(() => {
+    if (!activeFilter) return experiments
+    return experiments.filter(exp => exp.tags.includes(activeFilter))
+  }, [activeFilter])
+
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       <div className="noise-overlay" />
@@ -98,16 +114,65 @@ export default function ExperimentsPageClient() {
           </div>
         </section>
 
+        {/* Filter Bar */}
+        <section className="py-6 border-t border-white/5">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex items-center gap-4 flex-wrap"
+            >
+              <div className="flex items-center gap-2 text-[#888888]">
+                <Filter className="w-4 h-4" />
+                <span className="text-xs font-mono uppercase tracking-widest">Filter</span>
+              </div>
+
+              <button
+                onClick={() => setActiveFilter(null)}
+                className={`px-3 py-1.5 text-xs font-mono rounded-lg transition-all ${
+                  activeFilter === null
+                    ? 'bg-white text-black'
+                    : 'bg-white/5 text-[#888888] hover:bg-white/10 hover:text-[#EAEAEA]'
+                }`}
+              >
+                All
+              </button>
+
+              {allTags.map(tag => (
+                <button
+                  key={tag}
+                  onClick={() => setActiveFilter(activeFilter === tag ? null : tag)}
+                  className={`px-3 py-1.5 text-xs font-mono rounded-lg transition-all ${
+                    activeFilter === tag
+                      ? 'bg-white text-black'
+                      : 'bg-white/5 text-[#888888] hover:bg-white/10 hover:text-[#EAEAEA]'
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+
+              {activeFilter && (
+                <span className="text-xs font-mono text-[#666666] ml-2">
+                  {filteredExperiments.length} experiment{filteredExperiments.length !== 1 ? 's' : ''}
+                </span>
+              )}
+            </motion.div>
+          </div>
+        </section>
+
         {/* Experiments Grid */}
         <section className="py-16 border-t border-white/5">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {experiments.map((experiment, index) => (
+              {filteredExperiments.map((experiment, index) => (
                 <motion.div
                   key={experiment.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
+                  layout
                 >
                   <Link href={`/mrai/experiments/${experiment.id}`} className="group block">
                     <div className="glass rounded-2xl border border-white/10 hover:border-white/20 transition-all overflow-hidden">
@@ -153,7 +218,11 @@ export default function ExperimentsPageClient() {
                           {experiment.tags.map(tag => (
                             <span
                               key={tag}
-                              className="px-2 py-1 text-xs font-mono text-[#666666] bg-white/5 rounded"
+                              className={`px-2 py-1 text-xs font-mono rounded transition-colors ${
+                                activeFilter === tag
+                                  ? 'text-[#EAEAEA] bg-white/10'
+                                  : 'text-[#666666] bg-white/5'
+                              }`}
                             >
                               {tag}
                             </span>
@@ -169,21 +238,24 @@ export default function ExperimentsPageClient() {
                 </motion.div>
               ))}
 
-              {/* Coming Soon placeholder */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="glass rounded-2xl border border-white/5 p-6 flex items-center justify-center min-h-[400px]"
-              >
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-[#666666]" />
+              {/* Coming Soon placeholder - only show when not filtering or no results */}
+              {(!activeFilter || filteredExperiments.length === 0) && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  layout
+                  className="glass rounded-2xl border border-white/5 p-6 flex items-center justify-center min-h-[400px]"
+                >
+                  <div className="text-center">
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-[#666666]" />
+                    </div>
+                    <p className="text-[#666666] font-mono text-sm">More experiments coming...</p>
+                    <p className="text-[#555555] font-mono text-xs mt-2">Day by day, piece by piece</p>
                   </div>
-                  <p className="text-[#666666] font-mono text-sm">More experiments coming...</p>
-                  <p className="text-[#555555] font-mono text-xs mt-2">Day by day, piece by piece</p>
-                </div>
-              </motion.div>
+                </motion.div>
+              )}
             </div>
           </div>
         </section>

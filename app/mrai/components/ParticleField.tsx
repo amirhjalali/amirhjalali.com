@@ -190,13 +190,48 @@ export default function ParticleField({
     mouseRef.current.active = false;
   };
 
+  // Touch event handlers for mobile support
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (!interactive) return;
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (rect && e.touches.length > 0) {
+      const touch = e.touches[0];
+      mouseRef.current = {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
+        active: true,
+      };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (!interactive) return;
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (rect && e.touches.length > 0) {
+      const touch = e.touches[0];
+      mouseRef.current = {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
+        active: true,
+      };
+    }
+  };
+
+  const handleTouchEnd = () => {
+    mouseRef.current.active = false;
+  };
+
   return (
     <canvas
       ref={canvasRef}
       className={`w-full h-full ${className}`}
-      style={{ background: 'transparent' }}
+      style={{ background: 'transparent', touchAction: interactive ? 'none' : 'auto' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
     />
   );
 }

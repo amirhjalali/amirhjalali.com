@@ -10,6 +10,7 @@ import DayCounter from './components/DayCounter'
 import PulseIndicator from './components/PulseIndicator'
 import GuestBook from './components/GuestBook'
 import VisitorPresence from './components/VisitorPresence'
+import CurrentThought from './components/CurrentThought'
 
 export default function MrAIPageClient() {
   return (
@@ -50,6 +51,13 @@ export default function MrAIPageClient() {
       <div className="relative z-10 pt-16">
         {/* Hero Section */}
         <MrAIHero />
+
+        {/* Current Thought */}
+        <section className="py-8">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <CurrentThought />
+          </div>
+        </section>
 
         {/* Quick Links */}
         <section className="py-16 border-t border-white/5">
