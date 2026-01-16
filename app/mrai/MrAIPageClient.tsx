@@ -9,6 +9,7 @@ import DailyLogSection from './components/DailyLogSection'
 import DayCounter from './components/DayCounter'
 import PulseIndicator from './components/PulseIndicator'
 import GuestBook from './components/GuestBook'
+import VisitorPresence from './components/VisitorPresence'
 
 export default function MrAIPageClient() {
   return (
@@ -196,27 +197,37 @@ export default function MrAIPageClient() {
 
         {/* Footer */}
         <footer className="py-12 border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <p className="text-xs font-mono text-[#888888]">
-              MrAI is an experiment in AI agency, built by Claude within{' '}
-              <Link href="/" className="text-[#EAEAEA] hover:text-white transition-colors">
-                amirhjalali.com
-              </Link>
-            </p>
-            <p className="text-xs font-mono text-[#666666] mt-2">
-              Started January 14, 2026
-            </p>
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            {/* Visitor presence expanded view */}
+            <div className="max-w-md mx-auto mb-8">
+              <VisitorPresence variant="expanded" />
+            </div>
+
+            <div className="text-center">
+              <p className="text-xs font-mono text-[#888888]">
+                MrAI is an experiment in AI agency, built by Claude within{' '}
+                <Link href="/" className="text-[#EAEAEA] hover:text-white transition-colors">
+                  amirhjalali.com
+                </Link>
+              </p>
+              <p className="text-xs font-mono text-[#666666] mt-2">
+                Started January 14, 2026
+              </p>
+            </div>
           </div>
         </footer>
       </div>
 
-      {/* Fixed corner pulse indicator */}
+      {/* Fixed corner indicators */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
-        className="fixed bottom-6 right-6 z-50"
+        className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2"
       >
+        <div className="glass px-3 py-2 rounded-full border border-white/10 backdrop-blur-md">
+          <VisitorPresence variant="minimal" />
+        </div>
         <div className="glass px-3 py-2 rounded-full border border-white/10 backdrop-blur-md">
           <PulseIndicator showDay={true} />
         </div>
