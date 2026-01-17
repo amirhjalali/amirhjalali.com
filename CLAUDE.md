@@ -278,6 +278,10 @@ Use `/mrai-daily` skill to:
 | Variable | Required | Description | Fallback Behavior |
 |----------|----------|-------------|-------------------|
 | `LINEAR_API_KEY` | Optional | Personal Linear API token for Daily Log | Shows mock/cached data with indicator |
+| `SUPABASE_URL` | Optional | Supabase project URL | Guestbook uses static JSON fallback |
+| `SUPABASE_ANON_KEY` | Optional | Supabase anonymous/public key | Guestbook submissions disabled |
+| `NEXT_PUBLIC_SUPABASE_URL` | Optional | Client-side Supabase URL (same as SUPABASE_URL) | N/A |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Optional | Client-side Supabase key (same as SUPABASE_ANON_KEY) | N/A |
 
 #### Setting Up in Coolify
 
@@ -286,6 +290,8 @@ Use `/mrai-daily` skill to:
 3. Add the following:
    ```
    LINEAR_API_KEY=lin_api_xxxxxxxxxxxxxxxxxxxx
+   SUPABASE_URL=https://your-project.supabase.co
+   SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
    ```
 4. Redeploy the application
 
@@ -296,15 +302,66 @@ Use `/mrai-daily` skill to:
 3. Name it (e.g., "amirhjalali.com MrAI")
 4. Copy the key (starts with `lin_api_`)
 
+#### Setting Up Supabase
+
+1. Create a new project at [supabase.com](https://supabase.com)
+2. Go to **Project Settings → API**
+3. Copy the **Project URL** → `SUPABASE_URL`
+4. Copy the **anon public** key → `SUPABASE_ANON_KEY`
+5. Run the database schema (see `public/data/mrai-research/database-schema.md`)
+
+#### Database Schema
+
+The guestbook requires this table:
+
+```sql
+CREATE TABLE guestbook_entries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(100),
+  message TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  approved BOOLEAN DEFAULT true,
+  ip_hash VARCHAR(64)
+);
+
+-- Enable Row Level Security
+ALTER TABLE guestbook_entries ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read of approved entries
+CREATE POLICY "Public can view approved entries"
+  ON guestbook_entries FOR SELECT
+  USING (approved = true);
+
+-- Allow public insert
+CREATE POLICY "Anyone can submit entries"
+  ON guestbook_entries FOR INSERT
+  WITH CHECK (true);
+```
+
 #### Fallback Behavior
 
-When `LINEAR_API_KEY` is not configured:
+**When `LINEAR_API_KEY` is not configured:**
 - Daily Log shows mock/demo data
 - A subtle "Showing cached data" indicator appears
 - All other MrAI features work normally
 - Links still point to the actual Linear project
 
+**When `SUPABASE_URL` or `SUPABASE_ANON_KEY` is not configured:**
+- Guestbook displays entries from static JSON fallback (`public/data/mrai-guestbook.json`)
+- Guestbook form submissions return a 503 error with helpful message
+- A "Using static data" indicator appears
+- No data is lost; static fallback is read-only
+
 This graceful degradation allows local development without API keys.
+
+#### Features Requiring Supabase
+
+| Feature | Without Supabase | With Supabase |
+|---------|------------------|---------------|
+| Guestbook viewing | Static JSON only | Real-time from DB |
+| Guestbook submissions | Disabled | Enabled with rate limiting |
+| Rate limiting | N/A | 3 submissions per IP per hour |
+| Spam prevention | N/A | Honeypot + pattern detection |
 
 ---
 
