@@ -67,11 +67,48 @@ export async function GET() {
   }
 }
 
+// Check for spam patterns in message
+function isSpammy(text: string): boolean {
+  // Check for excessive URLs (more than 2)
+  const urlCount = (text.match(/https?:\/\//gi) || []).length
+  if (urlCount > 2) return true
+
+  // Check for repeated characters (e.g., "aaaaaaaa")
+  if (/(.)\1{7,}/.test(text)) return true
+
+  // Check for all caps (if message is long enough)
+  if (text.length > 20 && text === text.toUpperCase()) return true
+
+  // Check for common spam phrases
+  const spamPhrases = [
+    'buy now', 'click here', 'limited time', 'act now',
+    'free money', 'casino', 'viagra', 'cryptocurrency giveaway'
+  ]
+  const lowerText = text.toLowerCase()
+  if (spamPhrases.some(phrase => lowerText.includes(phrase))) return true
+
+  return false
+}
+
 // POST - Submit a new guestbook entry
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, message } = body
+    const { name, message, website } = body
+
+    // Honeypot check - if website field is filled, silently reject (it's a bot)
+    if (website && website.trim().length > 0) {
+      // Return fake success to not alert the bot
+      return NextResponse.json({
+        success: true,
+        entry: {
+          id: 'fake-' + Date.now(),
+          name: name || 'Anonymous',
+          message: message,
+          timestamp: new Date().toISOString()
+        }
+      }, { status: 201 })
+    }
 
     // Validation
     if (!message || typeof message !== 'string') {
@@ -103,6 +140,14 @@ export async function POST(request: NextRequest) {
     if (trimmedName && trimmedName.length > 50) {
       return NextResponse.json(
         { error: 'Name must be 50 characters or less' },
+        { status: 400 }
+      )
+    }
+
+    // Spam pattern check
+    if (isSpammy(trimmedMessage) || (trimmedName && isSpammy(trimmedName))) {
+      return NextResponse.json(
+        { error: 'Message appears to be spam. Please try again with different content.' },
         { status: 400 }
       )
     }

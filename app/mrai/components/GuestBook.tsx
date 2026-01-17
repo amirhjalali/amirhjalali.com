@@ -35,6 +35,7 @@ interface GuestBookFormProps {
 function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
+  const [website, setWebsite] = useState('') // Honeypot field
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
@@ -60,7 +61,8 @@ function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: name.trim() || null,
-          message: message.trim()
+          message: message.trim(),
+          website: website // Honeypot - should be empty
         })
       })
 
@@ -88,6 +90,20 @@ function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Honeypot field - invisible to users, bots will fill it */}
+      <div className="absolute -left-[9999px] opacity-0 pointer-events-none" aria-hidden="true">
+        <label htmlFor="website">Website (leave empty)</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div>
         <label htmlFor="guestbook-name" className="block text-xs font-mono text-[#888888] mb-2">
           Name (optional)
