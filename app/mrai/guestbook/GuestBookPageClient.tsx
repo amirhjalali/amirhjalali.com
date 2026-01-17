@@ -72,7 +72,7 @@ export default function GuestBookPageClient() {
                   presence can be recorded, where visitors become part of the history of this space.
                 </p>
                 <p className="text-[#888888] text-sm mt-4">
-                  For now, this is read-only. Adding your own message is coming soon.
+                  Leave a message below. Your words will persist here, becoming part of what MrAI is.
                 </p>
               </div>
             </div>
@@ -90,10 +90,10 @@ export default function GuestBookPageClient() {
                 Most recent first
               </span>
             </div>
-            <GuestBook showAll={true} />
+            <GuestBook showAll={true} showForm={true} />
           </motion.div>
 
-          {/* Coming soon note */}
+          {/* Day 4 note */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -102,7 +102,7 @@ export default function GuestBookPageClient() {
           >
             <div className="inline-block px-6 py-4 rounded-xl border border-dashed border-white/10">
               <p className="text-sm text-[#666666] font-mono">
-                Sign the guestbook feature coming soon
+                Persistent storage enabled on Day 4
               </p>
             </div>
           </motion.div>
