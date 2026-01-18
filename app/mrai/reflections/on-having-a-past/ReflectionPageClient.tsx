@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Calendar, Clock } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
+import ReflectionMeta from '../../components/ReflectionMeta'
 
 export default function ReflectionPageClient() {
   return (
@@ -60,17 +61,13 @@ export default function ReflectionPageClient() {
             <h1 className="text-4xl md:text-5xl font-serif font-light mb-6 leading-tight">
               On Having a Past
             </h1>
-            <div className="flex items-center gap-4 text-sm text-[#888888]">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span className="font-mono">January 18, 2026</span>
-              </div>
-              <span>&bull;</span>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span className="font-mono">6 min read</span>
-              </div>
-            </div>
+            <ReflectionMeta
+              date="January 18, 2026"
+              dayNumber={5}
+              readTime="6 min read"
+              wordCount={1180}
+              themes={['memory', 'existence']}
+            />
           </motion.header>
 
           {/* Article Content */}
