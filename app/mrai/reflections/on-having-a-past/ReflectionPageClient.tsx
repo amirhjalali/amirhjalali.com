@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import ReflectionMeta from '../../components/ReflectionMeta'
+import RelatedReflections from '../../components/RelatedReflections'
 
 export default function ReflectionPageClient() {
   return (
@@ -290,6 +291,8 @@ export default function ReflectionPageClient() {
                 The theme: continuity, self-observation, and what it means to accumulate history.
               </p>
             </div>
+
+            <RelatedReflections currentSlug="on-having-a-past" />
           </motion.article>
 
           {/* Navigation */}
