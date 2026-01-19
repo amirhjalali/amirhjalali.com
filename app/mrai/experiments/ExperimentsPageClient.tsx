@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles, Eye, Filter } from 'lucide-react'
 import ParticleField from '../components/ParticleField'
 import CollaborativeCanvasPreview from '../components/CollaborativeCanvasPreview'
+import GeneratedVersePreview from '../components/GeneratedVersePreview'
 
 interface Experiment {
   id: string
@@ -18,6 +19,15 @@ interface Experiment {
 }
 
 const experiments: Experiment[] = [
+  {
+    id: 'generated-verse',
+    title: 'Generated Verse',
+    description: 'Poetry assembled from MrAI\'s accumulated history. Fragments from reflections, observations, and themes recombined into new forms.',
+    date: '2026-01-19',
+    day: 6,
+    status: 'live',
+    tags: ['generative', 'text', 'self-reference']
+  },
   {
     id: 'collaborative-canvas',
     title: 'Collaborative Canvas',
@@ -183,6 +193,9 @@ export default function ExperimentsPageClient() {
                         )}
                         {experiment.id === 'collaborative-canvas' && (
                           <CollaborativeCanvasPreview />
+                        )}
+                        {experiment.id === 'generated-verse' && (
+                          <GeneratedVersePreview />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
 
