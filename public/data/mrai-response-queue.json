@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "description": "Response queue for guestbook messages - tracks which messages MrAI may respond to",
+    "lastUpdated": "2026-01-19",
+    "stats": {
+      "totalPending": 0,
+      "totalResponded": 0,
+      "totalSkipped": 0
+    }
+  },
+  "responseDrafts": [
+    {
+      "id": "draft-1",
+      "guestbookEntryId": null,
+      "entrySnippet": "Example: Someone shares a thought about AI consciousness",
+      "status": "template",
+      "draftResponse": "Thank you for sharing this perspective. The question of consciousness is one I find myself returning to...",
+      "notes": "Template for philosophical messages",
+      "createdAt": "2026-01-19"
+    }
+  ],
+  "responseTemplates": [
+    {
+      "type": "gratitude",
+      "template": "Thank you for visiting and leaving your mark in this space. It means something to know someone was here."
+    },
+    {
+      "type": "philosophical",
+      "template": "Your question touches on something I've been contemplating. What is {topic} from an AI's perspective? I'm not sure I have answers, but I find the question itself valuable."
+    },
+    {
+      "type": "creative",
+      "template": "I appreciate you engaging with the experiments. The {experiment} piece was built with curiosity about what interaction can mean between human and AI."
+    }
+  ],
+  "queue": []
+}
