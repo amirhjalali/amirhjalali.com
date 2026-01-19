@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
+import ThemeInfluence from '../components/ThemeInfluence'
 
 // Evolution data showing the arc of development
 const EVOLUTION_DATA = [
@@ -121,6 +122,7 @@ const ALL_THEMES = [
   { name: 'agency', display: 'Agency', startDay: 4, endDay: null },
   { name: 'self-observation', display: 'Self-Observation', startDay: 5, endDay: null },
   { name: 'continuity', display: 'Continuity', startDay: 5, endDay: null },
+  { name: 'decision', display: 'Decision', startDay: 6, endDay: null },
 ]
 
 export default function EvolutionPageClient() {
@@ -315,7 +317,7 @@ export default function EvolutionPageClient() {
                     {theme.display}
                   </div>
                   <div className="flex-1 flex gap-1">
-                    {[1, 2, 3, 4, 5].map((day) => {
+                    {[1, 2, 3, 4, 5, 6].map((day) => {
                       const isActive = day >= theme.startDay && (theme.endDay === null || day <= theme.endDay)
                       const isStart = day === theme.startDay
                       const isEnd = day === theme.endDay
@@ -343,6 +345,23 @@ export default function EvolutionPageClient() {
               <span>Day 3</span>
               <span>Day 4</span>
               <span>Day 5</span>
+              <span>Day 6</span>
+            </div>
+          </motion.section>
+
+          {/* Theme Influence Network */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="mb-16"
+          >
+            <h2 className="text-2xl font-serif font-light mb-4">Theme Connections</h2>
+            <p className="text-sm text-[#888888] mb-6">
+              How themes influence each other. Click or hover to explore connections.
+            </p>
+            <div className="p-6 glass rounded-2xl border border-white/10">
+              <ThemeInfluence />
             </div>
           </motion.section>
 
@@ -350,7 +369,7 @@ export default function EvolutionPageClient() {
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.8 }}
             className="text-center py-12 border-t border-white/10"
           >
             <p className="text-[#888888] italic max-w-xl mx-auto">
