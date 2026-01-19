@@ -3,11 +3,75 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { apiClient } from '@/lib/api-client'
-import type { Note } from '@/lib/types'
-import { Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain, Youtube } from 'lucide-react'
+import type { Note, Platform, AuthorInfo, EngagementMetrics, MediaItem, MentionedLink } from '@/lib/types'
+import {
+  Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain, Youtube,
+  ChevronDown, ChevronUp, Heart, MessageCircle, Repeat2, Eye, Star, GitFork, Users, Github, Twitter, CheckCircle2, ImageIcon, FileCode, Bookmark
+} from 'lucide-react'
 import VideoEmbed from '../components/VideoEmbed'
 import { formatDistanceToNow } from 'date-fns'
 import type { NoteType, ProcessStatus } from '@/lib/types'
+
+// Platform icons
+const platformConfig: Record<Platform | 'default', { icon: typeof LinkIcon; label: string }> = {
+  twitter: { icon: Twitter, label: 'X' },
+  youtube: { icon: Youtube, label: 'YouTube' },
+  linkedin: { icon: Users, label: 'LinkedIn' },
+  reddit: { icon: MessageCircle, label: 'Reddit' },
+  medium: { icon: FileText, label: 'Medium' },
+  substack: { icon: FileText, label: 'Substack' },
+  github: { icon: Github, label: 'GitHub' },
+  news: { icon: FileText, label: 'News' },
+  generic: { icon: LinkIcon, label: 'Link' },
+  default: { icon: LinkIcon, label: 'Link' },
+}
+
+// Format large numbers compactly
+function formatNumber(num: number | undefined): string {
+  if (num === undefined || num === null) return ''
+  if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
+  if (num >= 1000) return `${(num / 1000).toFixed(1)}K`
+  return num.toString()
+}
+
+// Expandable Section Component
+function ExpandableSection({
+  title,
+  icon: Icon,
+  defaultOpen = false,
+  children
+}: {
+  title: string
+  icon: typeof LinkIcon
+  defaultOpen?: boolean
+  children: React.ReactNode
+}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen)
+
+  return (
+    <div className="border border-white/10 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors"
+      >
+        <div className="flex items-center gap-2">
+          <Icon className="w-4 h-4 text-[#888888]" />
+          <span className="text-sm font-mono uppercase tracking-widest text-[#888888]">{title}</span>
+        </div>
+        {isOpen ? (
+          <ChevronUp className="w-4 h-4 text-[#888888]" />
+        ) : (
+          <ChevronDown className="w-4 h-4 text-[#888888]" />
+        )}
+      </button>
+      {isOpen && (
+        <div className="px-4 pb-4 border-t border-white/10">
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
 
 const typeIcons: Record<NoteType, typeof LinkIcon> = {
   LINK: LinkIcon,
@@ -20,6 +84,8 @@ const typeIcons: Record<NoteType, typeof LinkIcon> = {
 
 const statusColors: Record<ProcessStatus, string> = {
   PENDING: 'text-[#888888] bg-white/5 border-white/10',
+  EXTRACTING: 'text-[#EAEAEA] bg-white/5 border-white/20',
+  ANALYZING: 'text-[#EAEAEA] bg-white/5 border-white/20',
   PROCESSING: 'text-[#EAEAEA] bg-white/5 border-white/20',
   INDEXED: 'text-[#EAEAEA] bg-white/10 border-white/20',
   COMPLETED: 'text-[#EAEAEA] bg-white/10 border-white/20',
@@ -356,6 +422,214 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
             )}
           </div>
         )}
+
+        {/* Expandable Sections for Enrichment Data */}
+        <div className="space-y-3 mt-6">
+          {/* Author & Engagement Section */}
+          {((note as any).author || (note as any).engagement) && (
+            <ExpandableSection title="Author & Engagement" icon={Users} defaultOpen>
+              <div className="pt-4 space-y-4">
+                {/* Author Info */}
+                {(note as any).author && (
+                  <div className="flex items-start gap-4">
+                    {(note as any).author.avatarUrl && (
+                      <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 flex-shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={(note as any).author.avatarUrl}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-[#EAEAEA]">
+                          {(note as any).author.name}
+                        </span>
+                        {(note as any).author.verified && (
+                          <CheckCircle2 className="w-4 h-4 text-[#EAEAEA]" />
+                        )}
+                      </div>
+                      {(note as any).author.handle && (
+                        <span className="text-sm text-[#888888]">@{(note as any).author.handle}</span>
+                      )}
+                      {(note as any).author.bio && (
+                        <p className="text-sm text-[#888888] mt-1 line-clamp-2">{(note as any).author.bio}</p>
+                      )}
+                      {(note as any).author.followerCount && (
+                        <span className="text-xs text-[#888888] mt-1 block">
+                          {formatNumber((note as any).author.followerCount)} followers
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Engagement Metrics */}
+                {(note as any).engagement && (
+                  <div className="flex flex-wrap gap-4 text-sm text-[#888888]">
+                    {(note as any).engagement.likes !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <Heart className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.likes)} likes
+                      </span>
+                    )}
+                    {(note as any).engagement.retweets !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <Repeat2 className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.retweets)} reposts
+                      </span>
+                    )}
+                    {(note as any).engagement.comments !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <MessageCircle className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.comments)} comments
+                      </span>
+                    )}
+                    {(note as any).engagement.replies !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <MessageCircle className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.replies)} replies
+                      </span>
+                    )}
+                    {(note as any).engagement.views !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <Eye className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.views)} views
+                      </span>
+                    )}
+                    {(note as any).engagement.stars !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <Star className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.stars)} stars
+                      </span>
+                    )}
+                    {(note as any).engagement.forks !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <GitFork className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.forks)} forks
+                      </span>
+                    )}
+                    {(note as any).engagement.upvotes !== undefined && (
+                      <span className="flex items-center gap-1.5">
+                        <ChevronUp className="w-4 h-4" />
+                        {formatNumber((note as any).engagement.upvotes)} upvotes
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </ExpandableSection>
+          )}
+
+          {/* Media Gallery Section */}
+          {(note as any).mediaItems && (note as any).mediaItems.length > 0 && (
+            <ExpandableSection title="Media Gallery" icon={ImageIcon}>
+              <div className="pt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
+                {((note as any).mediaItems as MediaItem[]).map((media, i) => (
+                  <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-white/10 bg-white/5">
+                    {media.type === 'image' && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={media.url}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                    {media.type === 'video' && (
+                      <div className="relative w-full h-full">
+                        {media.thumbnailUrl ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={media.thumbnailUrl}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Video className="w-8 h-8 text-[#888888]" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                            <Video className="w-4 h-4 text-white" />
+                          </div>
+                        </div>
+                        {media.duration && (
+                          <span className="absolute bottom-1 right-1 px-1.5 py-0.5 bg-black/80 rounded text-[10px] font-mono text-white">
+                            {Math.floor(media.duration / 60)}:{String(Math.floor(media.duration % 60)).padStart(2, '0')}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    {media.type === 'gif' && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={media.url}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </ExpandableSection>
+          )}
+
+          {/* Mentioned Links Section */}
+          {(note as any).mentionedLinks && (note as any).mentionedLinks.length > 0 && (
+            <ExpandableSection title="Mentioned Links" icon={Bookmark}>
+              <div className="pt-4 space-y-2">
+                {((note as any).mentionedLinks as MentionedLink[]).map((link, i) => (
+                  <a
+                    key={i}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all group"
+                  >
+                    {link.favicon && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={link.favicon} alt="" className="w-4 h-4" />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm text-[#EAEAEA] group-hover:text-white truncate block">
+                        {link.title || link.url}
+                      </span>
+                      {link.domain && (
+                        <span className="text-xs text-[#888888]">{link.domain}</span>
+                      )}
+                    </div>
+                    <ExternalLink className="w-3.5 h-3.5 text-[#888888] group-hover:text-[#EAEAEA]" />
+                  </a>
+                ))}
+              </div>
+            </ExpandableSection>
+          )}
+
+          {/* Full Content Section */}
+          {note.fullContent && note.fullContent !== note.content && (
+            <ExpandableSection title="Full Content" icon={FileText}>
+              <div className="pt-4 prose prose-invert max-w-none">
+                <p className="text-sm text-[#EAEAEA] whitespace-pre-wrap">
+                  {note.fullContent}
+                </p>
+              </div>
+            </ExpandableSection>
+          )}
+
+          {/* Platform Data Section */}
+          {(note as any).platformData && Object.keys((note as any).platformData).length > 0 && (
+            <ExpandableSection title="Platform Metadata" icon={FileCode}>
+              <div className="pt-4">
+                <pre className="text-xs text-[#888888] bg-black/20 p-3 rounded-lg overflow-x-auto">
+                  {JSON.stringify((note as any).platformData, null, 2)}
+                </pre>
+              </div>
+            </ExpandableSection>
+          )}
+        </div>
 
         {/* Source Info */}
         {note.type === 'LINK' && (note.domain || note.sourceUrl) && (

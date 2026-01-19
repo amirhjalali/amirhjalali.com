@@ -77,7 +77,125 @@ export interface Draft {
 
 // Notes Feature Types
 export type NoteType = 'LINK' | 'TEXT' | 'IMAGE' | 'VIDEO' | 'PDF' | 'DOCUMENT'
-export type ProcessStatus = 'PENDING' | 'PROCESSING' | 'INDEXED' | 'COMPLETED' | 'PARTIAL' | 'FAILED'
+export type ProcessStatus = 'PENDING' | 'EXTRACTING' | 'ANALYZING' | 'PROCESSING' | 'INDEXED' | 'COMPLETED' | 'PARTIAL' | 'FAILED'
+
+// Platform types for extractors
+export type Platform = 'twitter' | 'youtube' | 'linkedin' | 'reddit' | 'medium' | 'substack' | 'github' | 'news' | 'generic'
+
+// Author information extracted from posts
+export interface AuthorInfo {
+    name?: string
+    handle?: string
+    avatarUrl?: string
+    bio?: string
+    profileUrl?: string
+    verified?: boolean
+    followerCount?: number
+}
+
+// Engagement metrics (platform-specific)
+export interface EngagementMetrics {
+    likes?: number
+    shares?: number
+    retweets?: number
+    comments?: number
+    replies?: number
+    views?: number
+    upvotes?: number
+    downvotes?: number
+    score?: number
+    claps?: number
+    stars?: number
+    forks?: number
+    [key: string]: number | undefined
+}
+
+// Media items from posts
+export interface MediaItem {
+    type: 'image' | 'video' | 'gif' | 'audio'
+    url: string
+    thumbnailUrl?: string
+    alt?: string
+    width?: number
+    height?: number
+    duration?: number // seconds for video/audio
+}
+
+// Links mentioned in content
+export interface MentionedLink {
+    url: string
+    title?: string
+    domain?: string
+    description?: string
+    favicon?: string
+}
+
+// Extraction result from platform extractors
+export interface ExtractionResult {
+    platform: Platform
+    success: boolean
+
+    // Core content
+    title?: string
+    content?: string
+    excerpt?: string
+
+    // Author
+    author?: AuthorInfo
+
+    // Visual
+    thumbnailUrl?: string
+    screenshotUrl?: string
+
+    // Engagement
+    engagement?: EngagementMetrics
+
+    // Media
+    mediaItems?: MediaItem[]
+
+    // Links
+    mentionedLinks?: MentionedLink[]
+
+    // Platform-specific metadata
+    platformData?: {
+        postId?: string
+        threadId?: string
+        isThread?: boolean
+        isReply?: boolean
+        parentPostUrl?: string
+        publishedAt?: string
+        editedAt?: string
+        subreddit?: string
+        repository?: string
+        language?: string
+        [key: string]: any
+    }
+
+    // Extraction metadata
+    extractedAt: string
+    extractorVersion: string
+    error?: string
+}
+
+// Domain pattern for learning system
+export interface DomainPattern {
+    id: string
+    domain: string
+    version: number
+    sampleCount: number
+    selectors: {
+        title?: string
+        author?: string
+        authorAvatar?: string
+        content?: string
+        date?: string
+        images?: string
+        engagement?: Record<string, string>
+    }
+    confidence: number // 0-1
+    createdAt: string
+    updatedAt: string
+}
 
 export interface NoteMetadata {
     domain?: string
@@ -115,11 +233,17 @@ export interface Note {
     sourceType?: string | null
     domain?: string | null
     favicon?: string | null
+    platform?: Platform | null
 
     // Rich content
     imageUrl?: string | null
     videoUrl?: string | null
     excerpt?: string | null
+    thumbnailUrl?: string | null
+    screenshotUrl?: string | null
+
+    // Author info (enriched)
+    author?: AuthorInfo | null
 
     // Full extracted content
     fullContent?: string | null
@@ -128,6 +252,18 @@ export interface Note {
 
     // Metadata
     metadata?: NoteMetadata | null
+
+    // Engagement metrics (enriched)
+    engagement?: EngagementMetrics | null
+
+    // Media items (enriched)
+    mediaItems?: MediaItem[] | null
+
+    // Links mentioned in content (enriched)
+    mentionedLinks?: MentionedLink[] | null
+
+    // User's personal notes
+    userNotes?: string | null
 
     // Organization
     tags: string[]
@@ -150,6 +286,14 @@ export interface Note {
 
     // Reading estimate
     readingTime?: number | null
+
+    // Extraction metadata
+    extractorUsed?: string | null
+    extractedAt?: string | null
+    extractionVersion?: string | null
+
+    // Platform-specific data
+    platformData?: Record<string, any> | null
 
     createdAt: string
     updatedAt: string

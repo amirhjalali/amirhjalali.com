@@ -1,10 +1,11 @@
 import { prisma } from './db'
-import type { Note, NoteType, NoteMetadata } from '@/lib/types'
+import type { Note, NoteType, NoteMetadata, Platform, AuthorInfo, EngagementMetrics, MediaItem, MentionedLink } from '@/lib/types'
 import OpenAI from 'openai'
 import { extractContentFromUrl, extractVideoInfo, type ExtractedContent } from './content-extraction'
 import { indexNote as createEmbeddings } from './embedding-service'
 import { fetchYouTubeTranscript, isYouTubeUrl, formatDuration } from './youtube-transcript'
 import { linkNoteToTopics, autoLinkRelatedNotes } from './knowledge-graph-service'
+import { extractFromUrl, getPlatformForUrl, EXTRACTOR_VERSION } from './extractors'
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -53,9 +54,69 @@ export async function processNote(
     let sourceType: string | null = null
     let contentHash: string | null = null
 
+    // New enrichment fields
+    let platform: Platform | null = null
+    let author: AuthorInfo | null = null
+    let engagement: EngagementMetrics | null = null
+    let mediaItems: MediaItem[] | null = null
+    let mentionedLinks: MentionedLink[] | null = null
+    let thumbnailUrl: string | null = null
+    let extractorUsed: string | null = null
+    let extractedAt: string | null = null
+    let extractionVersion: string | null = null
+    let platformData: Record<string, any> | null = null
+
     try {
       // Extract content for LINK type using improved extraction
       if (note.type === 'LINK') {
+        // Use new platform-specific extractors for enrichment
+        platform = getPlatformForUrl(note.content)
+        console.log(`[ProcessNote] Detected platform: ${platform} for ${note.content}`)
+
+        try {
+          const enrichmentResult = await extractFromUrl(note.content)
+
+          if (enrichmentResult.success) {
+            // Apply enrichment data
+            author = enrichmentResult.author || null
+            engagement = enrichmentResult.engagement || null
+            mediaItems = enrichmentResult.mediaItems || null
+            mentionedLinks = enrichmentResult.mentionedLinks || null
+            thumbnailUrl = enrichmentResult.thumbnailUrl || null
+            extractorUsed = enrichmentResult.platform
+            extractedAt = enrichmentResult.extractedAt
+            extractionVersion = enrichmentResult.extractorVersion
+            platformData = enrichmentResult.platformData || null
+
+            // Use extracted title if available and note doesn't have one
+            if (!note.title && enrichmentResult.title) {
+              await prisma.note.update({
+                where: { id: noteId },
+                data: { title: enrichmentResult.title },
+              })
+            }
+
+            // Use enrichment content if it's longer than what we'll get from generic extraction
+            if (enrichmentResult.content && enrichmentResult.content.length > 100) {
+              fullContent = enrichmentResult.content
+              wordCount = enrichmentResult.content.split(/\s+/).filter(w => w.length > 0).length
+              readingTime = Math.max(1, Math.ceil(wordCount / 200))
+            }
+
+            // Use excerpt from enrichment
+            if (enrichmentResult.excerpt) {
+              excerpt = enrichmentResult.excerpt
+            }
+
+            console.log(`[ProcessNote] Enrichment successful: author=${!!author}, media=${mediaItems?.length || 0}, engagement=${!!engagement}`)
+          } else {
+            console.warn(`[ProcessNote] Platform extraction failed: ${enrichmentResult.error}`)
+          }
+        } catch (enrichError) {
+          console.warn(`[ProcessNote] Enrichment error (non-fatal):`, enrichError)
+        }
+
+        // Continue with original content extraction for additional data
         extractedContent = await extractContentFromUrl(note.content)
 
         // Check for video content
@@ -168,7 +229,7 @@ export async function processNote(
       // Analyze sentiment
       sentiment = await analyzeSentiment(contentForAnalysis)
 
-      // Update note with all processing results
+      // Update note with all processing results including enrichment
       const updatedNote = await prisma.note.update({
         where: { id: noteId },
         data: {
@@ -188,6 +249,17 @@ export async function processNote(
           favicon,
           sourceType,
           contentHash,
+          // New enrichment fields
+          platform: platform || undefined,
+          thumbnailUrl: thumbnailUrl || undefined,
+          author: author as any || undefined,
+          engagement: engagement as any || undefined,
+          mediaItems: mediaItems as any || undefined,
+          mentionedLinks: mentionedLinks as any || undefined,
+          extractorUsed: extractorUsed || undefined,
+          extractedAt: extractedAt ? new Date(extractedAt) : undefined,
+          extractionVersion: extractionVersion || undefined,
+          platformData: platformData as any || undefined,
         },
       })
 
@@ -232,6 +304,17 @@ export async function processNote(
           fullContent,
           wordCount,
           readingTime,
+          // Include enrichment even on partial success
+          platform: platform || undefined,
+          thumbnailUrl: thumbnailUrl || undefined,
+          author: author as any || undefined,
+          engagement: engagement as any || undefined,
+          mediaItems: mediaItems as any || undefined,
+          mentionedLinks: mentionedLinks as any || undefined,
+          extractorUsed: extractorUsed || undefined,
+          extractedAt: extractedAt ? new Date(extractedAt) : undefined,
+          extractionVersion: extractionVersion || undefined,
+          platformData: platformData as any || undefined,
         },
       })
 

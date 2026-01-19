@@ -15,9 +15,19 @@ import {
   Star,
   Pin,
   BookOpen,
-  Play
+  Play,
+  Heart,
+  MessageCircle,
+  Repeat2,
+  Eye,
+  Github,
+  Twitter,
+  Youtube,
+  Users,
+  GitFork,
+  CheckCircle2
 } from 'lucide-react'
-import type { Note, NoteType, ProcessStatus } from '@/lib/types'
+import type { Note, NoteType, ProcessStatus, Platform, AuthorInfo, EngagementMetrics } from '@/lib/types'
 import { apiClient } from '@/lib/api-client'
 import { formatDistanceToNow } from 'date-fns'
 import ProcessingIndicator from './ProcessingIndicator'
@@ -40,12 +50,34 @@ const typeLabels: Record<NoteType, string> = {
   DOCUMENT: 'Document',
 }
 
+// Platform icons and colors
+const platformConfig: Record<Platform | 'default', { icon: typeof LinkIcon; label: string }> = {
+  twitter: { icon: Twitter, label: 'X' },
+  youtube: { icon: Youtube, label: 'YouTube' },
+  linkedin: { icon: Users, label: 'LinkedIn' },
+  reddit: { icon: MessageCircle, label: 'Reddit' },
+  medium: { icon: FileText, label: 'Medium' },
+  substack: { icon: FileText, label: 'Substack' },
+  github: { icon: Github, label: 'GitHub' },
+  news: { icon: FileText, label: 'News' },
+  generic: { icon: LinkIcon, label: 'Link' },
+  default: { icon: LinkIcon, label: 'Link' },
+}
+
 // Sentiment styling and icons
 const sentimentConfig: Record<string, { style: string; icon: string }> = {
   positive: { style: 'bg-white/10 text-[#EAEAEA] border border-white/20', icon: '↑' },
   negative: { style: 'bg-white/5 text-[#888888] border border-white/10', icon: '↓' },
   neutral: { style: 'bg-white/5 text-[#888888] border border-white/10', icon: '→' },
   mixed: { style: 'bg-white/5 text-[#888888] border border-white/10', icon: '↔' },
+}
+
+// Format large numbers compactly
+function formatNumber(num: number | undefined): string {
+  if (num === undefined || num === null) return ''
+  if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
+  if (num >= 1000) return `${(num / 1000).toFixed(1)}K`
+  return num.toString()
 }
 
 interface NoteCardProps {
@@ -57,6 +89,10 @@ interface NoteCardProps {
     pinned?: boolean
     starred?: boolean
     sourceType?: string | null
+    platform?: Platform | null
+    thumbnailUrl?: string | null
+    author?: AuthorInfo | null
+    engagement?: EngagementMetrics | null
   }
   onDelete?: () => void
   compact?: boolean
@@ -96,6 +132,15 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
   const isVideoType = note.type === 'VIDEO' || note.sourceType === 'video'
   const metadata = note.metadata as any
 
+  // Get platform config
+  const platform = note.platform || 'default'
+  const platformInfo = platformConfig[platform] || platformConfig.default
+  const PlatformIcon = platformInfo.icon
+
+  // Get author info
+  const author = note.author as AuthorInfo | undefined
+  const engagement = note.engagement as EngagementMetrics | undefined
+
   // Determine the best image to display
   const getImageUrl = () => {
     // For IMAGE type notes, use imageUrl or content (if it's a URL)
@@ -104,6 +149,8 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
       // Check if content is a URL (uploaded image)
       if (note.content?.startsWith('http')) return note.content
     }
+    // Check enrichment thumbnail first
+    if (note.thumbnailUrl) return note.thumbnailUrl
     // For videos, prefer video thumbnail
     if (metadata?.video?.thumbnailUrl) return metadata.video.thumbnailUrl
     // Then check standard image sources
@@ -120,47 +167,124 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
   const hasTranscript = metadata?.transcript?.available === true
   const videoDuration = metadata?.video?.duration || metadata?.transcript?.videoDurationFormatted
 
-  // Compact card for list view
+  // Compact card for list view - now with enrichment data
   if (compact) {
     return (
       <Link
         href={`/notes/${note.id}`}
-        className="flex items-center gap-4 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all group"
+        className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all group"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Favicon or Type Icon */}
-        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10">
-          {note.favicon ? (
+        {/* Thumbnail or Author Avatar or Platform Icon */}
+        <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
+          {imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={note.favicon} alt="" className="w-5 h-5" />
+            <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+          ) : author?.avatarUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={author.avatarUrl} alt="" className="w-full h-full object-cover" />
+          ) : note.favicon ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={note.favicon} alt="" className="w-6 h-6" />
           ) : (
-            <Icon className="w-5 h-5 text-[#888888]" />
+            <PlatformIcon className="w-5 h-5 text-[#888888]" />
           )}
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
+          {/* Title */}
           <h3 className="text-sm font-medium truncate group-hover:text-white transition-colors">
             {note.title || note.excerpt?.substring(0, 50) || 'Untitled'}
           </h3>
+
+          {/* Author + Source Row */}
           <div className="flex items-center gap-2 mt-0.5">
-            {note.domain && (
+            {author?.name && (
+              <span className="flex items-center gap-1 text-xs text-[#EAEAEA]">
+                {author.verified && <CheckCircle2 className="w-3 h-3" />}
+                {author.name}
+                {author.handle && <span className="text-[#888888]">@{author.handle}</span>}
+              </span>
+            )}
+            {!author?.name && note.domain && (
               <span className="text-xs text-[#888888] truncate">{note.domain}</span>
             )}
-            {note.readingTime && (
-              <span className="text-xs text-[#888888]">• {note.readingTime} min</span>
+            {note.platform && note.platform !== 'generic' && (
+              <span className="flex items-center gap-1 text-xs text-[#888888]">
+                <PlatformIcon className="w-3 h-3" />
+              </span>
+            )}
+          </div>
+
+          {/* Excerpt + Tags Row */}
+          <div className="flex items-center gap-2 mt-1">
+            {note.excerpt && (
+              <span className="text-xs text-[#888888] truncate max-w-[200px]">
+                {note.excerpt.substring(0, 60)}...
+              </span>
+            )}
+            {note.tags && note.tags.length > 0 && (
+              <div className="hidden sm:flex items-center gap-1">
+                {note.tags.slice(0, 2).map((tag) => (
+                  <span key={tag} className="px-1.5 py-0.5 bg-white/5 rounded text-[10px] text-[#888888]">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
         </div>
 
+        {/* Engagement Metrics */}
+        {engagement && (
+          <div className="hidden md:flex items-center gap-3 text-xs text-[#888888]">
+            {engagement.likes !== undefined && (
+              <span className="flex items-center gap-1">
+                <Heart className="w-3 h-3" />
+                {formatNumber(engagement.likes)}
+              </span>
+            )}
+            {engagement.retweets !== undefined && (
+              <span className="flex items-center gap-1">
+                <Repeat2 className="w-3 h-3" />
+                {formatNumber(engagement.retweets)}
+              </span>
+            )}
+            {engagement.comments !== undefined && (
+              <span className="flex items-center gap-1">
+                <MessageCircle className="w-3 h-3" />
+                {formatNumber(engagement.comments)}
+              </span>
+            )}
+            {engagement.views !== undefined && (
+              <span className="flex items-center gap-1">
+                <Eye className="w-3 h-3" />
+                {formatNumber(engagement.views)}
+              </span>
+            )}
+            {/* GitHub specific */}
+            {engagement.stars !== undefined && (
+              <span className="flex items-center gap-1">
+                <Star className="w-3 h-3" />
+                {formatNumber(engagement.stars)}
+              </span>
+            )}
+            {engagement.forks !== undefined && (
+              <span className="flex items-center gap-1">
+                <GitFork className="w-3 h-3" />
+                {formatNumber(engagement.forks)}
+              </span>
+            )}
+          </div>
+        )}
+
         {/* Status & Actions */}
         <div className="flex items-center gap-2">
-          {note.sentiment && sentimentConfig[note.sentiment] && (
-            <span className={`hidden sm:inline px-1.5 py-0.5 rounded text-[10px] uppercase ${sentimentConfig[note.sentiment].style}`}>
-              {sentimentConfig[note.sentiment].icon}
-            </span>
-          )}
+          <span className="text-[10px] text-[#888888] hidden sm:inline">
+            {formatDistanceToNow(new Date(note.createdAt), { addSuffix: false })}
+          </span>
           <ProcessingIndicator
             status={status}
             jobId={jobId}
@@ -244,20 +368,14 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
         {/* Header row */}
         <div className="flex items-start justify-between gap-3 mb-2">
           <div className="flex items-center gap-2 min-w-0">
+            {/* Platform icon */}
+            <PlatformIcon className="flex-shrink-0 w-4 h-4 text-[#888888]" />
             {/* Source info */}
-            {note.favicon ? (
-              <div className="flex-shrink-0 w-5 h-5 rounded overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={note.favicon} alt="" className="w-full h-full object-contain" />
-              </div>
-            ) : (
-              <Icon className="flex-shrink-0 w-4 h-4 text-[#888888]" />
-            )}
             {note.domain ? (
               <span className="text-xs font-mono text-[#888888] truncate">{note.domain}</span>
             ) : (
               <span className="text-xs font-mono uppercase tracking-widest text-[#888888]">
-                {typeLabels[note.type]}
+                {platformInfo.label}
               </span>
             )}
           </div>
@@ -277,6 +395,25 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
             </button>
           </div>
         </div>
+
+        {/* Author Info */}
+        {author && (author.name || author.handle) && (
+          <div className="flex items-center gap-2 mb-3">
+            {author.avatarUrl && (
+              <div className="w-6 h-6 rounded-full overflow-hidden border border-white/10">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={author.avatarUrl} alt="" className="w-full h-full object-cover" />
+              </div>
+            )}
+            <div className="flex items-center gap-1.5 text-xs">
+              {author.verified && <CheckCircle2 className="w-3 h-3 text-[#EAEAEA]" />}
+              <span className="text-[#EAEAEA] font-medium">{author.name}</span>
+              {author.handle && (
+                <span className="text-[#888888]">@{author.handle}</span>
+              )}
+            </div>
+          </div>
+        )}
 
         <Link href={`/notes/${note.id}`} className="block">
           {/* Title */}
@@ -324,6 +461,48 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
               {note.tags.length > 3 && (
                 <span className="px-2 py-0.5 text-xs font-mono text-[#888888]">
                   +{note.tags.length - 3}
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Engagement Metrics */}
+          {engagement && (
+            <div className="flex items-center gap-3 text-xs text-[#888888] mb-3">
+              {engagement.likes !== undefined && (
+                <span className="flex items-center gap-1">
+                  <Heart className="w-3 h-3" />
+                  {formatNumber(engagement.likes)}
+                </span>
+              )}
+              {engagement.retweets !== undefined && (
+                <span className="flex items-center gap-1">
+                  <Repeat2 className="w-3 h-3" />
+                  {formatNumber(engagement.retweets)}
+                </span>
+              )}
+              {engagement.comments !== undefined && (
+                <span className="flex items-center gap-1">
+                  <MessageCircle className="w-3 h-3" />
+                  {formatNumber(engagement.comments)}
+                </span>
+              )}
+              {engagement.views !== undefined && (
+                <span className="flex items-center gap-1">
+                  <Eye className="w-3 h-3" />
+                  {formatNumber(engagement.views)}
+                </span>
+              )}
+              {engagement.stars !== undefined && (
+                <span className="flex items-center gap-1">
+                  <Star className="w-3 h-3" />
+                  {formatNumber(engagement.stars)}
+                </span>
+              )}
+              {engagement.forks !== undefined && (
+                <span className="flex items-center gap-1">
+                  <GitFork className="w-3 h-3" />
+                  {formatNumber(engagement.forks)}
                 </span>
               )}
             </div>

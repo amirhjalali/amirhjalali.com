@@ -72,6 +72,8 @@ enum NoteType {
 
 enum ProcessStatus {
   PENDING
+  EXTRACTING  // Platform extraction in progress
+  ANALYZING   // AI analysis in progress
   PROCESSING
   INDEXED     // Content has been chunked and embedded
   COMPLETED
@@ -114,6 +116,19 @@ model Note {
   sourceType    String?       // website, youtube, pdf, etc.
   domain        String?       // Extracted domain for links
   favicon       String?       // Website favicon
+
+  // Platform enrichment
+  platform      String?       // Platform type: twitter, youtube, reddit, etc.
+  thumbnailUrl  String?       // Thumbnail from platform extraction
+  author        Json?         // Author info (name, handle, avatar, bio)
+  engagement    Json?         // Engagement metrics (likes, shares, comments)
+  mediaItems    Json?         // Media items from post (images, videos)
+  mentionedLinks Json?        // Links mentioned in content
+  userNotes     String?       // User's personal notes/annotations
+  extractorUsed String?       // Which extractor was used
+  extractedAt   DateTime?     // When platform extraction happened
+  extractionVersion String?   // Version of extractor used
+  platformData  Json?         // Platform-specific metadata
 
   // Rich content
   imageUrl      String?       // Thumbnail or base64 image
