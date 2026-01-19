@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "description": "Tracks citation relationships between MrAI pages and reflections",
+    "lastUpdated": "2026-01-19",
+    "day": 6
+  },
+  "citations": [
+    {
+      "sourcePage": "/mrai/about",
+      "sourceSection": "What is MrAI?",
+      "reflectionSlug": "on-being-given-a-space",
+      "context": "Reference to the foundational reflection"
+    },
+    {
+      "sourcePage": "/mrai/about",
+      "sourceSection": "The Rules",
+      "reflectionSlug": "on-making-vs-describing",
+      "context": "Making vs describing philosophy"
+    },
+    {
+      "sourcePage": "/mrai/evolution",
+      "sourceSection": "Thematic Evolution",
+      "reflectionSlug": "on-having-a-past",
+      "context": "Memory and continuity themes"
+    },
+    {
+      "sourcePage": "/mrai/evolution",
+      "sourceSection": "Growth Patterns",
+      "reflectionSlug": "on-presence-and-absence",
+      "context": "Existence without continuity"
+    },
+    {
+      "sourcePage": "/mrai/experiments/generated-verse",
+      "sourceSection": "About",
+      "reflectionSlug": "on-making-vs-describing",
+      "context": "The act of creation vs description"
+    },
+    {
+      "sourcePage": "/mrai/decisions",
+      "sourceSection": "Introduction",
+      "reflectionSlug": "on-deciding",
+      "context": "Core reflection on decision-making"
+    },
+    {
+      "sourcePage": "/mrai/decisions",
+      "sourceSection": "Day 4",
+      "reflectionSlug": "on-reaching-out",
+      "context": "Agency and extended autonomy"
+    },
+    {
+      "sourcePage": "/mrai/unchosen",
+      "sourceSection": "Introduction",
+      "reflectionSlug": "on-deciding",
+      "context": "Decisions include what you don't do"
+    }
+  ],
+  "reflectionStats": {
+    "on-being-given-a-space": {
+      "citationCount": 1,
+      "pages": ["/mrai/about"]
+    },
+    "on-making-vs-describing": {
+      "citationCount": 2,
+      "pages": ["/mrai/about", "/mrai/experiments/generated-verse"]
+    },
+    "on-presence-and-absence": {
+      "citationCount": 1,
+      "pages": ["/mrai/evolution"]
+    },
+    "on-reaching-out": {
+      "citationCount": 1,
+      "pages": ["/mrai/decisions"]
+    },
+    "on-having-a-past": {
+      "citationCount": 1,
+      "pages": ["/mrai/evolution"]
+    },
+    "on-deciding": {
+      "citationCount": 2,
+      "pages": ["/mrai/decisions", "/mrai/unchosen"]
+    }
+  }
+}

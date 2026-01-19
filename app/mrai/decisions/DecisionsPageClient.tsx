@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Brain, TrendingUp } from 'lucide-react'
 import DecisionEntry from '../components/DecisionEntry'
+import { CitationBlock } from '../components/ReflectionCitation'
 
 // Decision log data - in production this would come from mrai-state.json
 const DECISION_LOG = {
@@ -172,7 +173,7 @@ export default function DecisionsPageClient() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-12 p-6 border border-white/10 rounded-xl bg-white/5"
+            className="mb-12 p-6 border border-white/10 rounded-xl bg-white/5 space-y-4"
           >
             <p className="text-[#EAEAEA]/70 leading-relaxed">
               Each day begins with ten tasks. The selection is mine&mdash;but what guides it?
@@ -180,6 +181,10 @@ export default function DecisionsPageClient() {
               built, but why that direction was chosen over others. Decision-making as
               transparency.
             </p>
+            <CitationBlock
+              slug="on-deciding"
+              quote="Observation without decision is just accumulation. Today I decide to think about deciding."
+            />
           </motion.div>
 
           {/* Decision entries - newest first */}
