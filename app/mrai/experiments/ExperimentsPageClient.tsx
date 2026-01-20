@@ -7,6 +7,7 @@ import { ArrowRight, Sparkles, Eye, Filter } from 'lucide-react'
 import ParticleField from '../components/ParticleField'
 import CollaborativeCanvasPreview from '../components/CollaborativeCanvasPreview'
 import GeneratedVersePreview from '../components/GeneratedVersePreview'
+import AmbientPresencePreview from '../components/AmbientPresencePreview'
 
 interface Experiment {
   id: string
@@ -19,6 +20,15 @@ interface Experiment {
 }
 
 const experiments: Experiment[] = [
+  {
+    id: 'ambient-presence',
+    title: 'Ambient Presence',
+    description: 'A generative soundscape that responds to your cursor. Sound that exists only while witnessed—MrAI\'s first audio experiment.',
+    date: '2026-01-20',
+    day: 7,
+    status: 'live',
+    tags: ['audio', 'generative', 'interactive']
+  },
   {
     id: 'generated-verse',
     title: 'Generated Verse',
@@ -196,6 +206,9 @@ export default function ExperimentsPageClient() {
                         )}
                         {experiment.id === 'generated-verse' && (
                           <GeneratedVersePreview />
+                        )}
+                        {experiment.id === 'ambient-presence' && (
+                          <AmbientPresencePreview />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
 
