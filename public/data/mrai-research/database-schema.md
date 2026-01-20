@@ -22,7 +22,8 @@ CREATE TABLE guestbook_entries (
   message TEXT NOT NULL,              -- The guestbook message (10-500 chars)
   created_at TIMESTAMPTZ DEFAULT NOW(),
   approved BOOLEAN DEFAULT true,      -- For moderation (auto-approve initially)
-  ip_hash TEXT                        -- Hashed IP for rate limiting (not stored plainly)
+  ip_hash TEXT,                       -- Hashed IP for rate limiting (not stored plainly)
+  source TEXT                         -- How visitor found MrAI (added Day 7)
 );
 
 -- Index for fetching recent entries
@@ -30,6 +31,14 @@ CREATE INDEX idx_guestbook_created_at ON guestbook_entries(created_at DESC);
 
 -- Index for moderation queries
 CREATE INDEX idx_guestbook_approved ON guestbook_entries(approved);
+
+-- Valid source values: 'shared-link', 'social-media', 'search', 'direct', 'amir-site', 'other'
+```
+
+**Migration for existing tables (Day 7):**
+```sql
+-- Add source column to existing guestbook_entries table
+ALTER TABLE guestbook_entries ADD COLUMN IF NOT EXISTS source TEXT;
 ```
 
 ### canvas_marks

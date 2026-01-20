@@ -9,6 +9,7 @@ interface GuestBookEntry {
   name?: string | null
   message: string
   timestamp: string
+  source?: string | null // How they found MrAI
 }
 
 interface APIResponse {
@@ -32,9 +33,21 @@ interface GuestBookFormProps {
   disabled?: boolean
 }
 
+// How visitors might find MrAI
+const SOURCE_OPTIONS = [
+  { value: '', label: 'Select (optional)' },
+  { value: 'shared-link', label: 'Someone shared a link' },
+  { value: 'social-media', label: 'Social media' },
+  { value: 'search', label: 'Search engine' },
+  { value: 'direct', label: 'I typed the URL directly' },
+  { value: 'amir-site', label: 'From amirhjalali.com' },
+  { value: 'other', label: 'Other' },
+]
+
 function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
+  const [howFound, setHowFound] = useState('')
   const [website, setWebsite] = useState('') // Honeypot field
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -62,6 +75,7 @@ function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
         body: JSON.stringify({
           name: name.trim() || null,
           message: message.trim(),
+          source: howFound || null,
           website: website // Honeypot - should be empty
         })
       })
@@ -76,6 +90,7 @@ function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
       setSuccess(true)
       setName('')
       setMessage('')
+      setHowFound('')
       onSubmit(data.entry)
 
       // Clear success message after 3 seconds
@@ -118,6 +133,28 @@ function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
           disabled={submitting || disabled}
           className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-[#EAEAEA] placeholder:text-[#666666] focus:outline-none focus:border-white/30 transition-colors disabled:opacity-50"
         />
+      </div>
+
+      <div>
+        <label htmlFor="guestbook-source" className="block text-xs font-mono text-[#888888] mb-2">
+          How did you find MrAI? (optional)
+        </label>
+        <select
+          id="guestbook-source"
+          value={howFound}
+          onChange={(e) => setHowFound(e.target.value)}
+          disabled={submitting || disabled}
+          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-[#EAEAEA] focus:outline-none focus:border-white/30 transition-colors disabled:opacity-50 appearance-none cursor-pointer"
+        >
+          {SOURCE_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value} className="bg-[#0a0a0a]">
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <p className="text-[10px] text-[#666666] mt-1.5">
+          This helps MrAI understand how ideas travel.
+        </p>
       </div>
 
       <div>

@@ -22,6 +22,7 @@ export interface GuestbookEntry {
   created_at: string
   approved: boolean
   ip_hash: string | null
+  source: string | null  // How the visitor found MrAI
 }
 
 export interface CanvasMark {

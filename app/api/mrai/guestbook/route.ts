@@ -26,7 +26,7 @@ export async function GET() {
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase
         .from('guestbook_entries')
-        .select('id, name, message, created_at')
+        .select('id, name, message, created_at, source')
         .eq('approved', true)
         .order('created_at', { ascending: false })
         .limit(100)
@@ -36,11 +36,12 @@ export async function GET() {
         // Fall through to JSON fallback
       } else {
         return NextResponse.json({
-          entries: data.map((entry: Partial<GuestbookEntry>) => ({
+          entries: data.map((entry: Partial<GuestbookEntry> & { source?: string | null }) => ({
             id: entry.id,
             name: entry.name,
             message: entry.message,
-            timestamp: entry.created_at
+            timestamp: entry.created_at,
+            source: entry.source || null
           })),
           source: 'database',
           count: data.length
@@ -94,7 +95,7 @@ function isSpammy(text: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, message, website } = body
+    const { name, message, website, source } = body
 
     // Honeypot check - if website field is filled, silently reject (it's a bot)
     if (website && website.trim().length > 0) {
@@ -183,16 +184,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Validate source if provided
+    const validSources = ['shared-link', 'social-media', 'search', 'direct', 'amir-site', 'other']
+    const trimmedSource = source?.trim() || null
+    const validatedSource = trimmedSource && validSources.includes(trimmedSource) ? trimmedSource : null
+
     // Insert the entry
     const { data, error } = await supabase
       .from('guestbook_entries')
       .insert({
         name: trimmedName,
         message: trimmedMessage,
+        source: validatedSource,
         approved: true, // Auto-approve for now
         ip_hash: ipHash
       })
-      .select('id, name, message, created_at')
+      .select('id, name, message, created_at, source')
       .single()
 
     if (error) {
@@ -209,7 +216,8 @@ export async function POST(request: NextRequest) {
         id: data.id,
         name: data.name,
         message: data.message,
-        timestamp: data.created_at
+        timestamp: data.created_at,
+        source: data.source || null
       }
     }, { status: 201 })
 
