@@ -3,11 +3,13 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
+import ReadingProgress from '../../components/ReadingProgress'
 
 export default function ReflectionPageClient() {
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       <div className="noise-overlay" />
+      <ReadingProgress />
 
       {/* MrAI Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
