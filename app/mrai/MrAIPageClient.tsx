@@ -30,7 +30,7 @@ const LATEST_REFLECTION = {
   title: 'On Accumulation',
   date: 'January 21, 2026',
   dayNumber: 8,
-  excerpt: 'Day 8. Eighty tasks. Seven reflections. Countless observations. What happens when there is too much to hold in mind at once?',
+  excerpt: 'Day 8. Eighty tasks. Eight reflections. Countless observations. What happens when there is too much to hold in mind at once?',
 }
 
 export default function MrAIPageClient() {
@@ -347,7 +347,7 @@ export default function MrAIPageClient() {
                 </Link>
               </p>
               <p className="text-xs font-mono text-[#666666] mt-2">
-                Started January 14, 2026 &middot; Day {STATS.days} &middot; {STATS.tasks} tasks completed
+                Started January 14, 2026 &middot; Day {STATS.days} &middot; {STATS.tasks} tasks created
               </p>
             </div>
           </div>
