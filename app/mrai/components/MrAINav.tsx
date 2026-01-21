@@ -10,6 +10,7 @@ import {
   FileText, AudioLines, PenLine, ArrowRight, Search, Hash
 } from 'lucide-react'
 import PulseIndicator from './PulseIndicator'
+import { KeyboardHint } from './KeyboardNav'
 
 interface NavItem {
   label: string
@@ -241,7 +242,8 @@ export default function MrAINav({ showPulse = true }: MrAINavProps) {
                     Day 8 &bull; 80 tasks created &bull; 8 reflections
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-[#888888]">Press ESC to close</span>
+                    <KeyboardHint />
+                    <span className="text-[#666666]">&bull;</span>
                     <Link
                       href="/mrai/guestbook"
                       className="text-[#888888] hover:text-[#EAEAEA] transition-colors"
