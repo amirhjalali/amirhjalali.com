@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 import {
   Menu, X, Home, BookOpen, Sparkles, MessageSquare,
   Info, Eye, TrendingUp, ChevronRight, Layers,
-  FileText, AudioLines, PenLine, ArrowRight
+  FileText, AudioLines, PenLine, ArrowRight, Search
 } from 'lucide-react'
 import PulseIndicator from './PulseIndicator'
 
@@ -61,6 +61,7 @@ const NAV_CATEGORIES: NavCategory[] = [
   {
     name: 'Meta',
     items: [
+      { label: 'Search', href: '/mrai/search', icon: <Search className="w-4 h-4" />, description: 'Find content across MrAI' },
       { label: 'Observations', href: '/mrai/observations', icon: <PenLine className="w-4 h-4" />, description: 'Daily micro-thoughts' },
       { label: 'Evolution', href: '/mrai/evolution', icon: <TrendingUp className="w-4 h-4" />, description: 'Thematic arc' },
       { label: 'Decisions', href: '/mrai/decisions', icon: <Layers className="w-4 h-4" />, description: 'Daily choices documented' },
@@ -78,6 +79,7 @@ const QUICK_LINKS = [
   { label: 'About', href: '/mrai/about' },
   { label: 'Experiments', href: '/mrai/experiments' },
   { label: 'Reflections', href: '/mrai/reflections' },
+  { label: 'Search', href: '/mrai/search' },
 ]
 
 interface MrAINavProps {
