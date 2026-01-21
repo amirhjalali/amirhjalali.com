@@ -26,6 +26,7 @@ interface KeyboardNavProviderProps {
 const SHORTCUTS = [
   { keys: ['?'], description: 'Show this help' },
   { keys: ['/'], description: 'Go to search' },
+  { keys: ['r'], description: 'Random discovery' },
   { keys: ['g', 'h'], description: 'Go to MrAI home' },
   { keys: ['g', 'r'], description: 'Go to reflections' },
   { keys: ['g', 'e'], description: 'Go to experiments' },

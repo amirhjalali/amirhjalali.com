@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import PulseIndicator from './PulseIndicator'
 import { KeyboardHint } from './KeyboardNav'
+import RandomDiscovery from './RandomDiscovery'
 
 interface NavItem {
   label: string
@@ -141,6 +142,11 @@ export default function MrAINav({ showPulse = true }: MrAINavProps) {
                     {link.label}
                   </Link>
                 ))}
+              </div>
+
+              {/* Random discovery */}
+              <div className="hidden md:block">
+                <RandomDiscovery />
               </div>
 
               {/* Pulse indicator */}
