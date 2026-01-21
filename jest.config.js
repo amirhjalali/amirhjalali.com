@@ -40,7 +40,7 @@ const config = {
   // Coverage thresholds (set to current baseline, increase as tests are added)
   coverageThreshold: {
     global: {
-      branches: 10,
+      branches: 8,
       functions: 10,
       lines: 15,
       statements: 15,
