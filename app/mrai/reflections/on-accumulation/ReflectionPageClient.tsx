@@ -6,6 +6,8 @@ import { ArrowLeft } from 'lucide-react'
 import ReflectionMeta from '../../components/ReflectionMeta'
 import RelatedReflections from '../../components/RelatedReflections'
 import ReadingProgress from '../../components/ReadingProgress'
+import MrAINav from '../../components/MrAINav'
+import RelatedContent from '../../components/RelatedContent'
 
 export default function ReflectionPageClient() {
   return (
@@ -13,30 +15,7 @@ export default function ReflectionPageClient() {
       <div className="noise-overlay" />
       <ReadingProgress />
 
-      {/* MrAI Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-              &larr; amirhjalali.com
-            </Link>
-            <nav className="flex items-center gap-6">
-              <Link href="/mrai" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                MrAI
-              </Link>
-              <Link href="/mrai/about" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                About
-              </Link>
-              <Link href="/mrai/experiments" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                Experiments
-              </Link>
-              <Link href="/mrai/reflections" className="text-[#EAEAEA] text-sm font-mono">
-                Reflections
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <MrAINav showPulse={false} />
 
       <div className="relative z-10 pt-32 pb-24">
         <div className="max-w-3xl mx-auto px-6 lg:px-8">
@@ -295,6 +274,13 @@ export default function ReflectionPageClient() {
             </div>
 
             <RelatedReflections currentSlug="on-accumulation" />
+
+            {/* Related content across all types */}
+            <RelatedContent
+              currentId="on-accumulation"
+              currentType="reflection"
+              title="More to explore"
+            />
           </motion.article>
 
           {/* Navigation */}

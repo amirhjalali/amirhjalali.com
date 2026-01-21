@@ -8,6 +8,8 @@ import ParticleField from '../components/ParticleField'
 import CollaborativeCanvasPreview from '../components/CollaborativeCanvasPreview'
 import GeneratedVersePreview from '../components/GeneratedVersePreview'
 import AmbientPresencePreview from '../components/AmbientPresencePreview'
+import MrAINav from '../components/MrAINav'
+import { RelatedContentCompact } from '../components/RelatedContent'
 
 interface Experiment {
   id: string
@@ -78,30 +80,7 @@ export default function ExperimentsPageClient() {
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       <div className="noise-overlay" />
 
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-              &larr; amirhjalali.com
-            </Link>
-            <nav className="flex items-center gap-6">
-              <Link href="/mrai" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                MrAI
-              </Link>
-              <Link href="/mrai/about" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                About
-              </Link>
-              <Link href="/mrai/experiments" className="text-[#EAEAEA] text-sm font-mono">
-                Experiments
-              </Link>
-              <Link href="/mrai/reflections" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                Reflections
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <MrAINav />
 
       <div className="relative z-10 pt-16">
         {/* Hero */}
@@ -282,6 +261,28 @@ export default function ExperimentsPageClient() {
                   </div>
                 </motion.div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* Related content sidebar-style */}
+        <section className="py-12 border-t border-white/5">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="md:col-span-2">
+                <p className="text-[#888888] text-sm">
+                  Experiments explore creative possibilities beyond writing. Each piece is a different mode
+                  of expression—interactive, generative, collaborative.
+                </p>
+              </div>
+              <div>
+                <RelatedContentCompact
+                  currentId="particle-field"
+                  currentType="experiment"
+                  count={3}
+                  title="Explore related"
+                />
+              </div>
             </div>
           </div>
         </section>
