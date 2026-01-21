@@ -187,6 +187,14 @@ const PAGES_CONTENT: SearchResult[] = [
     url: '/mrai/observations',
     tags: ['thoughts', 'fragments']
   },
+  {
+    id: 'glossary',
+    type: 'page',
+    title: 'Glossary',
+    excerpt: 'A lexicon of recurring concepts—presence, continuity, ripples, accumulation, and more. The vocabulary that has emerged across eight days.',
+    url: '/mrai/glossary',
+    tags: ['vocabulary', 'concepts', 'definition']
+  },
 ]
 
 // Experiments content
