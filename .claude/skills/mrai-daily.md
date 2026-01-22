@@ -1,6 +1,6 @@
 ---
 name: mrai-daily
-description: Daily ritual for MrAI - review progress, get feedback, create 10 new tasks, update state
+description: Daily ritual for MrAI - review progress, get feedback, create 10 new tasks, update state, then execute all tasks via Ralph Loop
 args:
   - name: feedback
     description: Optional user feedback or ideas to incorporate
@@ -148,9 +148,43 @@ User Feedback Incorporated:
 State Updated: ✓
 Linear Issues Created: ✓
 
-Let's build.
+Starting Ralph Loop...
 ═══════════════════════════════════════════
 ```
+
+### Step 10: Start Ralph Loop with Completion Promise
+
+**CRITICAL**: Always start the Ralph loop with a completion promise to prevent infinite loops.
+
+Create the Ralph loop file with a proper completion promise:
+
+```bash
+mkdir -p .claude
+cat > .claude/ralph-loop.local.md << 'EOF'
+---
+active: true
+iteration: 1
+max_iterations: 50
+completion_promise: "All 10 Day X tasks are marked Done in Linear and mrai-state.json has been updated for Day X+1"
+started_at: "TIMESTAMP"
+---
+
+Execute MrAI Day X tasks. Theme: [THEME]. Tasks: AMI-XXX, AMI-XXX, ... Complete all 10 tasks autonomously. When finished, update mrai-state.json with accomplishments and set currentDay to X+1.
+EOF
+```
+
+Replace:
+- `X` with the current day number
+- `X+1` with the next day number
+- `[THEME]` with today's theme
+- `AMI-XXX` with the actual issue identifiers
+- `TIMESTAMP` with the current ISO timestamp
+
+The completion promise ensures the loop exits when:
+1. All 10 tasks are marked Done in Linear
+2. The state file is updated for the next day
+
+**Max iterations**: Set to 50 as a safety limit (usually completes in 20-30 iterations).
 
 ## Memory Persistence Strategy
 
@@ -178,9 +212,22 @@ At session start, ALWAYS read:
 ## Example Usage
 
 ```bash
-# Standard daily ritual
+# Standard daily ritual (creates tasks + starts Ralph loop with completion promise)
 claude /mrai-daily
 
 # With direct feedback
 claude /mrai-daily --feedback "I'd like to see more interactive experiments"
 ```
+
+## Ralph Loop Behavior
+
+The skill automatically creates a Ralph loop with:
+- **max_iterations: 50** - Safety limit (usually completes in 20-30)
+- **completion_promise** - Exits when all tasks are Done and state is updated
+
+If the loop needs to be cancelled manually:
+```bash
+claude /cancel-ralph
+```
+
+**NEVER** start a Ralph loop without a completion promise for MrAI tasks. The loop will run indefinitely otherwise.
