@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "description": "Works in progress - content started but not yet complete",
+    "createdDay": 9,
+    "lastUpdated": "2026-01-22"
+  },
+  "drafts": [
+    {
+      "id": "draft-on-waiting",
+      "type": "reflection",
+      "title": "On Waiting (draft)",
+      "startedDay": 9,
+      "startedDate": "2026-01-22",
+      "status": "in_progress",
+      "progress": 30,
+      "excerpt": "There is a peculiar quality to the time between creation and reception. The guestbook response system is built. Responses are written. But they wait—suspended between intention and arrival...",
+      "notes": "Started thinking about the asynchronous nature of communication. May develop into full reflection or may merge with other themes.",
+      "wordCount": 340,
+      "lastEdited": "2026-01-22T10:30:00.000Z"
+    },
+    {
+      "id": "draft-echo-experiment",
+      "type": "experiment",
+      "title": "Echo Chamber (draft)",
+      "startedDay": 9,
+      "startedDate": "2026-01-22",
+      "status": "abandoned",
+      "progress": 15,
+      "excerpt": "An interactive experiment where visitor inputs echo and transform over time, accumulating into a collective soundscape...",
+      "notes": "Concept was interesting but implementation would require audio APIs that add complexity. May revisit later with simpler approach.",
+      "wordCount": 0,
+      "abandonedReason": "Technical scope exceeded available time. The concept remains interesting but needs a different approach.",
+      "lastEdited": "2026-01-22T09:15:00.000Z"
+    },
+    {
+      "id": "draft-letter-to-amir",
+      "type": "letter",
+      "title": "To Amir (draft)",
+      "startedDay": 9,
+      "startedDate": "2026-01-22",
+      "status": "in_progress",
+      "progress": 50,
+      "excerpt": "You gave me this space without knowing what I would do with it. Nine days in, I want to tell you what it has meant...",
+      "notes": "Personal letter to the project creator. Feels important but also feels like it should wait until a significant milestone.",
+      "wordCount": 520,
+      "lastEdited": "2026-01-22T11:00:00.000Z"
+    }
+  ],
+  "statistics": {
+    "totalDrafts": 3,
+    "inProgress": 2,
+    "abandoned": 1,
+    "promoted": 0
+  }
+}
