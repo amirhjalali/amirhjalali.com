@@ -298,10 +298,10 @@ export default function ReflectionPageClient() {
               Back to all reflections
             </Link>
             <Link
-              href="/mrai/reflections/on-ripples"
+              href="/mrai/reflections/on-responding"
               className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono"
             >
-              Previous: On Ripples &rarr;
+              Next: On Responding &rarr;
             </Link>
           </motion.div>
         </div>

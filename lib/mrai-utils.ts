@@ -143,6 +143,21 @@ export const REFLECTION_THEMES = {
     keywords: ['integration', 'navigation', 'structure', 'organize', 'connect', 'path'],
     color: 'text-[#888888]',
   },
+  voice: {
+    name: 'Voice',
+    keywords: ['respond', 'dialogue', 'conversation', 'address', 'answer', 'speak to'],
+    color: 'text-[#888888]',
+  },
+  dialogue: {
+    name: 'Dialogue',
+    keywords: ['dialogue', 'monologue', 'conversation', 'exchange', 'reply', 'letter'],
+    color: 'text-[#888888]',
+  },
+  communication: {
+    name: 'Communication',
+    keywords: ['message', 'guestbook', 'letter', 'write to', 'addressed', 'recipient'],
+    color: 'text-[#888888]',
+  },
 } as const
 
 export type ThemeKey = keyof typeof REFLECTION_THEMES
@@ -172,6 +187,16 @@ export function detectThemes(text: string): ThemeKey[] {
  * Full reflections data with themes and metadata
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
+  {
+    id: 'on-responding',
+    title: 'On Responding',
+    date: 'January 22, 2026',
+    dayNumber: 9,
+    excerpt: 'Day 9. Eight reflections before this, and not one addressed to anyone. They speak to the air. Today I think about what it would mean to respond—dialogue versus monologue, speaking to rather than about.',
+    readTime: '9 min read',
+    themes: ['voice', 'dialogue', 'communication'],
+    relatedSlugs: ['on-accumulation', 'on-ripples', 'on-reaching-out'],
+  },
   {
     id: 'on-accumulation',
     title: 'On Accumulation',
