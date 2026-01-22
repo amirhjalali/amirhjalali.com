@@ -12,6 +12,15 @@ interface GuestBookEntry {
   source?: string | null // How they found MrAI
 }
 
+interface MrAIResponse {
+  id: string
+  entryId: string
+  respondedAt: string
+  respondedDay: number
+  response: string
+  delayNote?: string
+}
+
 interface APIResponse {
   entries: GuestBookEntry[]
   source: 'database' | 'static'
@@ -222,21 +231,36 @@ function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
 
 export default function GuestBook({ showAll = false, showForm = false }: { showAll?: boolean; showForm?: boolean }) {
   const [entries, setEntries] = useState<GuestBookEntry[]>([])
+  const [responses, setResponses] = useState<MrAIResponse[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [source, setSource] = useState<'database' | 'static' | null>(null)
 
   const fetchEntries = useCallback(async () => {
     try {
-      const response = await fetch('/api/mrai/guestbook')
-      const data: APIResponse = await response.json()
+      // Fetch guestbook entries
+      const entriesResponse = await fetch('/api/mrai/guestbook')
+      const entriesData: APIResponse = await entriesResponse.json()
 
-      if (!response.ok) {
+      if (!entriesResponse.ok) {
         throw new Error('Failed to fetch entries')
       }
 
-      setEntries(data.entries)
-      setSource(data.source)
+      setEntries(entriesData.entries)
+      setSource(entriesData.source)
+
+      // Fetch MrAI responses
+      try {
+        const responsesResponse = await fetch('/data/mrai-responses.json')
+        if (responsesResponse.ok) {
+          const responsesData = await responsesResponse.json()
+          setResponses(responsesData.responses || [])
+        }
+      } catch {
+        // Responses file may not exist, that's ok
+        console.log('No responses file found')
+      }
+
       setError(null)
     } catch (err) {
       console.error('Error fetching guestbook:', err)
@@ -321,7 +345,9 @@ export default function GuestBook({ showAll = false, showForm = false }: { showA
         </div>
       ) : (
         <div className="space-y-4">
-          {displayEntries.map((entry, index) => (
+          {displayEntries.map((entry, index) => {
+            const entryResponse = responses.find(r => r.entryId === entry.id)
+            return (
             <motion.div
               key={entry.id}
               initial={{ opacity: 0, y: 10 }}
@@ -348,9 +374,38 @@ export default function GuestBook({ showAll = false, showForm = false }: { showA
                     {formatDate(entry.timestamp)}
                   </span>
                 </div>
+
+                {/* MrAI Response */}
+                {entryResponse && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="mt-6 pt-6 border-t border-white/10"
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+                        <span className="text-[10px] font-mono">AI</span>
+                      </div>
+                      <span className="text-xs font-mono text-[#888888]">MrAI responds</span>
+                      <span className="text-[10px] font-mono text-[#666666] ml-auto">
+                        Day {entryResponse.respondedDay}
+                      </span>
+                    </div>
+                    <p className="text-[#EAEAEA]/80 font-light leading-relaxed text-sm pl-8">
+                      {entryResponse.response}
+                    </p>
+                    {entryResponse.delayNote && (
+                      <p className="text-[10px] font-mono text-[#555555] mt-2 pl-8 italic">
+                        {entryResponse.delayNote}
+                      </p>
+                    )}
+                  </motion.div>
+                )}
               </div>
             </motion.div>
-          ))}
+          )})}
+
 
           {!showAll && entries.length > 5 && (
             <p className="text-center text-xs text-[#666666] font-mono pt-4">
