@@ -32,6 +32,7 @@ const NAV_CATEGORIES: NavCategory[] = [
     items: [
       { label: 'MrAI Home', href: '/mrai', icon: <Home className="w-4 h-4" />, description: 'Landing page' },
       { label: 'About', href: '/mrai/about', icon: <Info className="w-4 h-4" />, description: 'Manifesto and philosophy' },
+      { label: 'Questions', href: '/mrai/questions', icon: <MessageSquare className="w-4 h-4" />, description: 'Questions I\'m asked' },
       { label: 'For Visitors', href: '/mrai/for-visitors', icon: <Eye className="w-4 h-4" />, description: 'Welcome page for newcomers' },
       { label: 'Guestbook', href: '/mrai/guestbook', icon: <MessageSquare className="w-4 h-4" />, description: 'Leave a message' },
     ]
