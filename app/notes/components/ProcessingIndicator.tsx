@@ -35,7 +35,7 @@ export default function ProcessingIndicator({
       return
     }
 
-    let intervalId: NodeJS.Timeout
+    let intervalId: ReturnType<typeof setInterval>
 
     const pollJobStatus = async () => {
       try {

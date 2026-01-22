@@ -23,7 +23,7 @@ export default function AmbientPresenceClient() {
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 })
   const [timeListening, setTimeListening] = useState(0)
   const animationRef = useRef<number>(undefined)
-  const timerRef = useRef<NodeJS.Timeout>(undefined)
+  const timerRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined)
 
   // Initialize Web Audio
   const initAudio = useCallback(() => {

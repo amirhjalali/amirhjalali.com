@@ -1,8 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
-import { BookOpen, Quote, Send, AlertCircle, CheckCircle } from 'lucide-react'
+import { BookOpen, Quote, Send, AlertCircle, CheckCircle, MessageSquare, List, MessagesSquare } from 'lucide-react'
 
 interface GuestBookEntry {
   id: string
@@ -229,12 +229,20 @@ function GuestBookForm({ onSubmit, disabled }: GuestBookFormProps) {
   )
 }
 
+type ViewMode = 'conversation' | 'list'
+
+interface ConversationGroup {
+  entry: GuestBookEntry
+  response?: MrAIResponse
+}
+
 export default function GuestBook({ showAll = false, showForm = false }: { showAll?: boolean; showForm?: boolean }) {
   const [entries, setEntries] = useState<GuestBookEntry[]>([])
   const [responses, setResponses] = useState<MrAIResponse[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [source, setSource] = useState<'database' | 'static' | null>(null)
+  const [viewMode, setViewMode] = useState<ViewMode>('conversation')
 
   const fetchEntries = useCallback(async () => {
     try {
@@ -315,6 +323,15 @@ export default function GuestBook({ showAll = false, showForm = false }: { showA
 
   const displayEntries = showAll ? entries : entries.slice(0, 5)
 
+  // Group entries with their responses for conversation view
+  const conversationGroups: ConversationGroup[] = displayEntries.map(entry => ({
+    entry,
+    response: responses.find(r => r.entryId === entry.id)
+  }))
+
+  // Count conversations (entries with responses)
+  const conversationCount = entries.filter(e => responses.some(r => r.entryId === e.id)).length
+
   return (
     <div className="space-y-8">
       {/* Form section */}
@@ -334,6 +351,51 @@ export default function GuestBook({ showAll = false, showForm = false }: { showA
         </motion.div>
       )}
 
+      {/* View toggle and stats */}
+      {entries.length > 0 && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
+          {/* Stats */}
+          <div className="flex items-center gap-4 text-xs font-mono text-[#666666]">
+            <span className="flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5" />
+              {entries.length} {entries.length === 1 ? 'message' : 'messages'}
+            </span>
+            {conversationCount > 0 && (
+              <span className="flex items-center gap-1.5">
+                <MessagesSquare className="w-3.5 h-3.5" />
+                {conversationCount} {conversationCount === 1 ? 'conversation' : 'conversations'}
+              </span>
+            )}
+          </div>
+
+          {/* View toggle */}
+          <div className="flex items-center gap-2 p-1 bg-white/5 rounded-lg border border-white/10">
+            <button
+              onClick={() => setViewMode('conversation')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
+                viewMode === 'conversation'
+                  ? 'bg-white/10 text-[#EAEAEA]'
+                  : 'text-[#888888] hover:text-[#EAEAEA]'
+              }`}
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Conversation</span>
+            </button>
+            <button
+              onClick={() => setViewMode('list')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
+                viewMode === 'list'
+                  ? 'bg-white/10 text-[#EAEAEA]'
+                  : 'text-[#888888] hover:text-[#EAEAEA]'
+              }`}
+            >
+              <List className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">List</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Entries section */}
       {entries.length === 0 ? (
         <div className="text-center py-12">
@@ -344,75 +406,159 @@ export default function GuestBook({ showAll = false, showForm = false }: { showA
           <p className="text-xs text-[#666666] mt-2">Be the first to leave your mark.</p>
         </div>
       ) : (
-        <div className="space-y-4">
-          {displayEntries.map((entry, index) => {
-            const entryResponse = responses.find(r => r.entryId === entry.id)
-            return (
-            <motion.div
-              key={entry.id}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative"
-            >
-              <div className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-[border-color]">
-                {/* Quote decoration */}
-                <Quote className="absolute top-4 right-4 w-5 h-5 text-white/5 group-hover:text-white/10 transition-colors" />
-
-                {/* Message */}
-                <p className="text-[#EAEAEA] font-light leading-relaxed pr-8">
-                  {entry.message}
-                </p>
-
-                {/* Attribution */}
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-sm text-[#EAEAEA] font-mono">
-                    {entry.name || 'Anonymous'}
-                  </span>
-                  <span className="text-xs text-[#666666] font-mono">
-                    {formatDate(entry.timestamp)}
-                  </span>
-                </div>
-
-                {/* MrAI Response */}
-                {entryResponse && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={viewMode}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-4"
+          >
+            {viewMode === 'conversation' ? (
+              // Conversation View - Grouped with visual threading
+              <>
+                {conversationGroups.map((group, index) => (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="mt-6 pt-6 border-t border-white/10"
+                    key={group.entry.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="group relative"
                   >
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
-                        <span className="text-[10px] font-mono">AI</span>
-                      </div>
-                      <span className="text-xs font-mono text-[#888888]">MrAI responds</span>
-                      <span className="text-[10px] font-mono text-[#666666] ml-auto">
-                        Day {entryResponse.respondedDay}
-                      </span>
-                    </div>
-                    <p className="text-[#EAEAEA]/80 font-light leading-relaxed text-sm pl-8">
-                      {entryResponse.response}
-                    </p>
-                    {entryResponse.delayNote && (
-                      <p className="text-[10px] font-mono text-[#555555] mt-2 pl-8 italic">
-                        {entryResponse.delayNote}
-                      </p>
+                    {/* Thread connector line for entries with responses */}
+                    {group.response && (
+                      <div className="absolute left-8 top-16 bottom-6 w-px bg-gradient-to-b from-white/20 via-white/10 to-transparent hidden sm:block" />
                     )}
+
+                    <div className={`glass rounded-xl border transition-[border-color] ${
+                      group.response
+                        ? 'border-white/20 hover:border-white/30'
+                        : 'border-white/10 hover:border-white/20'
+                    }`}>
+                      {/* Visitor message */}
+                      <div className="p-6 relative">
+                        <Quote className="absolute top-4 right-4 w-5 h-5 text-white/5 group-hover:text-white/10 transition-colors" />
+
+                        {/* Visitor avatar */}
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                            <span className="text-[10px] font-mono text-[#888888]">
+                              {(group.entry.name || 'A')[0].toUpperCase()}
+                            </span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between gap-2 mb-2">
+                              <span className="text-sm text-[#EAEAEA] font-mono truncate">
+                                {group.entry.name || 'Anonymous'}
+                              </span>
+                              <span className="text-xs text-[#666666] font-mono flex-shrink-0">
+                                {formatDate(group.entry.timestamp)}
+                              </span>
+                            </div>
+                            <p className="text-[#EAEAEA] font-light leading-relaxed">
+                              {group.entry.message}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* MrAI Response */}
+                      {group.response && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                          className="p-6 pt-0"
+                        >
+                          <div className="pl-3 sm:pl-11">
+                            <div className="p-4 bg-white/5 rounded-lg border-l-2 border-white/20">
+                              <div className="flex items-center gap-2 mb-3">
+                                <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+                                  <span className="text-[10px] font-mono">AI</span>
+                                </div>
+                                <span className="text-xs font-mono text-[#888888]">MrAI</span>
+                                <span className="text-[10px] font-mono text-[#555555]">•</span>
+                                <span className="text-[10px] font-mono text-[#666666]">
+                                  Day {group.response.respondedDay}
+                                </span>
+                              </div>
+                              <p className="text-[#EAEAEA]/80 font-light leading-relaxed text-sm">
+                                {group.response.response}
+                              </p>
+                              {group.response.delayNote && (
+                                <p className="text-[10px] font-mono text-[#555555] mt-3 italic">
+                                  {group.response.delayNote}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
                   </motion.div>
-                )}
-              </div>
-            </motion.div>
-          )})}
+                ))}
+              </>
+            ) : (
+              // List View - Simple chronological list
+              <>
+                {displayEntries.map((entry, index) => {
+                  const entryResponse = responses.find(r => r.entryId === entry.id)
+                  return (
+                    <motion.div
+                      key={entry.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                      className="group"
+                    >
+                      <div className="glass p-4 sm:p-6 rounded-xl border border-white/10 hover:border-white/20 transition-[border-color]">
+                        <div className="flex items-start gap-3">
+                          {/* Status indicator */}
+                          <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                            entryResponse ? 'bg-white/40' : 'bg-white/10'
+                          }`} />
 
+                          <div className="flex-1 min-w-0">
+                            {/* Header row */}
+                            <div className="flex items-center justify-between gap-2 mb-2">
+                              <span className="text-sm text-[#EAEAEA] font-mono truncate">
+                                {entry.name || 'Anonymous'}
+                              </span>
+                              <div className="flex items-center gap-2 flex-shrink-0">
+                                {entryResponse && (
+                                  <span className="text-[10px] font-mono text-[#888888] px-2 py-0.5 bg-white/5 rounded">
+                                    replied
+                                  </span>
+                                )}
+                                <span className="text-xs text-[#666666] font-mono">
+                                  {formatDate(entry.timestamp)}
+                                </span>
+                              </div>
+                            </div>
 
-          {!showAll && entries.length > 5 && (
-            <p className="text-center text-xs text-[#666666] font-mono pt-4">
-              + {entries.length - 5} more signatures
-            </p>
-          )}
-        </div>
+                            {/* Message preview */}
+                            <p className="text-[#EAEAEA]/80 font-light leading-relaxed text-sm line-clamp-2">
+                              {entry.message}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </>
+            )}
+
+            {!showAll && entries.length > 5 && (
+              <p className="text-center text-xs text-[#666666] font-mono pt-4">
+                + {entries.length - 5} more signatures
+              </p>
+            )}
+          </motion.div>
+        </AnimatePresence>
       )}
 
       {/* Source indicator */}
