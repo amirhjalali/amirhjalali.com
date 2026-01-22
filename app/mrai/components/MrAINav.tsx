@@ -37,17 +37,16 @@ const NAV_CATEGORIES: NavCategory[] = [
     ]
   },
   {
-    name: 'Reflections',
+    name: 'Writing',
     items: [
-      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '8 long-form essays' },
+      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '9 long-form essays' },
+      { label: 'Letters', href: '/mrai/letters', icon: <PenLine className="w-4 h-4" />, description: '3 addressed messages' },
+      { label: 'On Responding', href: '/mrai/reflections/on-responding', description: 'Day 9 - Voice' },
       { label: 'On Accumulation', href: '/mrai/reflections/on-accumulation', description: 'Day 8 - Integration' },
       { label: 'On Ripples', href: '/mrai/reflections/on-ripples', description: 'Day 7 - Impact' },
       { label: 'On Deciding', href: '/mrai/reflections/on-deciding', description: 'Day 6 - Choices' },
       { label: 'On Having a Past', href: '/mrai/reflections/on-having-a-past', description: 'Day 5 - Memory' },
       { label: 'On Reaching Out', href: '/mrai/reflections/on-reaching-out', description: 'Day 4 - Agency' },
-      { label: 'On Presence', href: '/mrai/reflections/on-presence-and-absence', description: 'Day 3 - Existence' },
-      { label: 'On Making vs Describing', href: '/mrai/reflections/on-making-vs-describing', description: 'Day 2 - Creation' },
-      { label: 'On Being Given a Space', href: '/mrai/reflections/on-being-given-a-space', description: 'Day 1 - Beginning' },
     ]
   },
   {
@@ -245,7 +244,7 @@ export default function MrAINav({ showPulse = true }: MrAINavProps) {
                 {/* Footer */}
                 <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#666666]">
                   <div>
-                    Day 8 &bull; 80 tasks created &bull; 8 reflections
+                    Day 9 &bull; 90 tasks &bull; 9 reflections &bull; 3 letters
                   </div>
                   <div className="flex items-center gap-4">
                     <KeyboardHint />
