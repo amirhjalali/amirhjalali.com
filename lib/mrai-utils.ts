@@ -24,18 +24,57 @@ export interface ReflectionData {
 }
 
 /**
+ * Reading speed constants for different content types
+ * Based on research on reading speeds:
+ * - Average adult reading speed: 200-250 wpm for prose
+ * - Technical content: 150-200 wpm
+ * - Simple/familiar content: 250-300 wpm
+ */
+export const READING_SPEEDS = {
+  default: 200,       // Standard prose
+  technical: 150,     // Code-heavy or technical content
+  philosophical: 180, // Dense philosophical writing (like reflections)
+  casual: 250,        // Light, conversational content
+  skim: 400,          // Skimming speed
+} as const
+
+export type ReadingSpeedType = keyof typeof READING_SPEEDS
+
+/**
  * Calculate reading metrics for a piece of text
  * @param text - The text content to analyze
- * @param wordsPerMinute - Reading speed (default: 200 wpm)
+ * @param options - Configuration options
  */
 export function calculateReadingMetrics(
   text: string,
-  wordsPerMinute: number = 200
+  options: {
+    wordsPerMinute?: number
+    contentType?: ReadingSpeedType
+    includeCodeBlocks?: boolean
+  } = {}
 ): ReflectionMetrics {
+  const {
+    contentType = 'default',
+    includeCodeBlocks = false,
+  } = options
+
+  // Use specified WPM or get from content type
+  const wordsPerMinute = options.wordsPerMinute ?? READING_SPEEDS[contentType]
+
+  // Optionally remove code blocks
+  let processedText = text
+  if (!includeCodeBlocks) {
+    processedText = processedText
+      .replace(/```[\s\S]*?```/g, '') // Remove fenced code blocks
+      .replace(/`[^`]+`/g, '') // Remove inline code
+  }
+
   // Clean the text - remove HTML-like patterns and extra whitespace
-  const cleanText = text
+  const cleanText = processedText
     .replace(/<[^>]*>/g, '') // Remove HTML tags
-    .replace(/&[a-z]+;/g, ' ') // Replace HTML entities with space
+    .replace(/&[a-z]+;/gi, ' ') // Replace HTML entities with space
+    .replace(/\{[^}]*\}/g, '') // Remove JSX expressions
+    .replace(/className="[^"]*"/g, '') // Remove className attributes
     .replace(/\s+/g, ' ') // Normalize whitespace
     .trim()
 
@@ -43,8 +82,8 @@ export function calculateReadingMetrics(
   const words = cleanText.split(/\s+/).filter(word => word.length > 0)
   const wordCount = words.length
 
-  // Calculate reading time
-  const readingTimeMinutes = Math.ceil(wordCount / wordsPerMinute)
+  // Calculate reading time with minimum of 1 minute
+  const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute))
 
   // Count characters (excluding whitespace)
   const characterCount = cleanText.replace(/\s/g, '').length
@@ -67,6 +106,44 @@ export function calculateReadingMetrics(
     paragraphCount,
     sentenceCount,
   }
+}
+
+/**
+ * Calculate reading time for multiple content pieces and get combined metrics
+ */
+export function calculateCombinedReadingTime(
+  texts: string[],
+  options: {
+    wordsPerMinute?: number
+    contentType?: ReadingSpeedType
+  } = {}
+): { totalWords: number; totalMinutes: number; pieces: ReflectionMetrics[] } {
+  const pieces = texts.map(text => calculateReadingMetrics(text, options))
+  const totalWords = pieces.reduce((sum, p) => sum + p.wordCount, 0)
+  const totalMinutes = pieces.reduce((sum, p) => sum + p.readingTimeMinutes, 0)
+
+  return { totalWords, totalMinutes, pieces }
+}
+
+/**
+ * Estimate difficulty level based on text metrics
+ */
+export function estimateReadingDifficulty(
+  metrics: ReflectionMetrics
+): 'easy' | 'moderate' | 'challenging' {
+  // Average words per sentence
+  const avgWordsPerSentence = metrics.sentenceCount > 0
+    ? metrics.wordCount / metrics.sentenceCount
+    : 0
+
+  // Longer sentences and more content = more challenging
+  if (avgWordsPerSentence > 25 || metrics.wordCount > 2000) {
+    return 'challenging'
+  }
+  if (avgWordsPerSentence > 18 || metrics.wordCount > 1000) {
+    return 'moderate'
+  }
+  return 'easy'
 }
 
 /**
