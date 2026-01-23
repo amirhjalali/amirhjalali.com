@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { X, Sparkles, Image as ImageIcon, Type, Settings2, Link as LinkIcon, Globe, FileText } from 'lucide-react'
+import { X, PenLine, Image as ImageIcon, Type, Settings2, Link as LinkIcon, Globe, FileText } from 'lucide-react'
 import { AIMetadata, Reference } from '@/lib/types'
 
 interface GenerationSettingsModalProps {
@@ -294,7 +294,7 @@ export default function GenerationSettingsModal({
                             type="submit"
                             className="px-6 py-2 bg-white text-black rounded-lg hover:bg-[#EAEAEA] transition-colors text-sm font-bold flex items-center gap-2"
                         >
-                            <Sparkles className="w-4 h-4" />
+                            <PenLine className="w-4 h-4" />
                             {mode === 'full' ? 'Generate' : 'Regenerate'}
                         </button>
                     </div>

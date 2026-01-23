@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Loader2, Sparkles, ArrowRight } from 'lucide-react'
+import { X, Loader2, PenLine, ArrowRight } from 'lucide-react'
 import { getTextModelOptions, getImageModelOptions } from '@/lib/eval-models'
 import { apiClient, Draft } from '@/lib/api-client'
 
@@ -231,7 +231,7 @@ export default function EvalGeneratorModal({
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4" />
+                  <PenLine className="w-4 h-4" />
                   Generate Pair
                 </>
               )}

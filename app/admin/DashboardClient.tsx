@@ -19,7 +19,7 @@ import {
   Upload,
   CheckSquare,
   Square,
-  Sparkles
+  PenLine
 } from 'lucide-react'
 import DraftEditor from '@/components/DraftEditor'
 import BulkPublishProgress from '@/components/BulkPublishProgress'
@@ -360,7 +360,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4" />
+                  <PenLine className="w-4 h-4" />
                   <span className="text-xs font-mono uppercase tracking-wider hidden sm:inline">Generate</span>
                 </>
               )}
