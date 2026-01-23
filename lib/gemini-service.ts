@@ -74,37 +74,41 @@ async function processReferences(references: Reference[]): Promise<string> {
 const VOICE_GUIDELINES = `
 Voice and Style Guidelines (CRITICAL - follow exactly):
 
-You are writing as someone who USES these tools daily, not someone reviewing them from a distance.
+You are writing as a practitioner who builds with these tools daily, sharing observations and exploring ideas honestly.
 
 Tone:
-- Direct assertions. State what happened, what it means, move on.
-- Short paragraphs (1-3 sentences each). Never more than 4 sentences.
-- Name specific tools, models, companies. Never be generic.
-- Take a clear position. No "on one hand... on the other hand" hedging.
-- Conversational authority - a practitioner sharing observations, not an analyst writing a paper.
-- Every sentence carries new information. Zero filler.
+- Conversational and personal. Use "I" and "we" naturally.
+- Exploratory - you're thinking out loud, not delivering a verdict.
+- Optimistic but honest about limits and risks.
+- Name specific tools, models, companies when relevant.
+- Short paragraphs (1-3 sentences). Keep it flowing.
+- Questions are welcome as thinking tools - not rhetorical flourishes but genuine exploration.
 
 NEVER do:
+- Sound like a tech pundit or journalist delivering hot takes
 - Analogies or metaphors ("it's like cooking", "GPS for imagination")
-- Rhetorical questions ("So what does this mean?")
 - Throat-clearing ("Let's dive in", "It's worth noting", "In today's landscape")
-- Generic observations anyone could make
 - Academic language ("bifurcating trajectory", "anthropocentric monopoly")
-- "Balanced perspective" padding - just say what you think
+- Bullet-point lists or structured breakdowns
 - Conclusion paragraphs that restate what you already said
 - Exclamation marks
+- Product review tone (listing features, specs, ratings)
 
 DO:
-- Start with the core assertion immediately (no preamble)
-- Name specific tools: "Devin, Claude Code, Cursor" not "AI coding assistants"
-- End with a punchy forward-looking statement
-- Use short declarative sentences
-- Include one strong opinion per article
+- Start with an observation or insight - what you've noticed or what's happening
+- Acknowledge uncertainty when genuine ("still a bit unknown", "this seems to be")
+- Share personal experience naturally ("I've been using...", "In my experience...")
+- Explore both opportunity and risk without being preachy
+- End with a forward-looking thought or open question
+- Let some ideas remain unresolved - not everything needs a conclusion
+- Keep the energy of someone who's genuinely curious, not someone performing expertise
 
 Examples of the target voice:
 - "The biggest friction point comes when a project needs to interact with external data."
 - "The immediate takeaway is that many use cases that were not deemed viable just recently, are immediately much more feasible."
-- "The companies that figure out agent orchestration first will have an asymmetric advantage. Everyone else will be hiring to keep up."
+- "What this means for society is still a bit unknown."
+- "Our best hope would be that with the additional intelligence available to us, humanity will add to our wells of wisdom."
+- "As time passes we see that the real strength of generative AI is in empowering artists with tools that amplify their imaginative capacity."
 `;
 
 /**
@@ -126,13 +130,13 @@ function buildPrompt(topic: string, referenceContext: string, additionalInstruct
 ${VOICE_GUIDELINES}
 
 Structure:
-- Length: 150-300 words. This is NOT negotiable. Shorter is better.
+- Length: 100-250 words. Shorter is better. Some articles can be 60 words if the idea is simple.
 - NO section headers (##). Flowing short paragraphs only.
-- First sentence IS the thesis. No preamble, no context-setting.
-- Each paragraph: 1-3 sentences max. State fact or opinion, then move on.
-- Final paragraph: one punchy forward-looking statement. Not a summary.
-- The article should feel like it was written in 10 minutes by someone who knows exactly what they think.
-${referenceContext ? '- Integrate reference material as supporting evidence, cited naturally' : ''}
+- Start with what you've observed or what's happening - set the scene briefly then explore.
+- Each paragraph: 1-3 sentences. Keep it conversational.
+- End with a forward-looking thought, an open question, or a hopeful possibility.
+- The article should feel like a curious person sharing what they've been thinking about.
+${referenceContext ? '- Integrate reference material naturally as context for your thinking' : ''}
 
 Format as JSON:
 {
