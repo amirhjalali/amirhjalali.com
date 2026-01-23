@@ -24,9 +24,9 @@ export default function GenerationSettingsModal({
 }: GenerationSettingsModalProps) {
     const [settings, setSettings] = useState<AIMetadata>({
         topic: initialSettings.topic || '',
-        textModel: initialSettings.textModel || 'gemini-3-flash-preview',
-        imageModel: initialSettings.imageModel || 'gpt-image-1.5',
-        imageResolution: initialSettings.imageResolution || '2K',
+        textModel: initialSettings.textModel || 'claude-opus-4-5-20251101',
+        imageModel: initialSettings.imageModel || 'gemini-3-pro-image-preview',
+        imageResolution: initialSettings.imageResolution || '1K',
         imageStyle: initialSettings.imageStyle || 'abstract, contemporary, tech-focused, visually striking',
         imagePrompt: initialSettings.imagePrompt || '',
         additionalInstructions: initialSettings.additionalInstructions || '',
