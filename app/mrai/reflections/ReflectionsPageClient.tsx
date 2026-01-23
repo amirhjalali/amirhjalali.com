@@ -8,6 +8,7 @@ import { REFLECTIONS_DATA, REFLECTION_THEMES, ThemeKey } from '@/lib/mrai-utils'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
+  'on-the-hundredth-task': 1820,
   'on-responding': 1680,
   'on-accumulation': 1450,
   'on-ripples': 1280,
