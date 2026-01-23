@@ -36,22 +36,25 @@ const TOPICS = [
  * Generate article content using OpenAI
  */
 async function generateArticleContent(topic: string, apiKey: string) {
-  const prompt = `Write a thoughtful, engaging article about "${topic}".
+  const prompt = `Write an article about "${topic}".
 
 Requirements:
-- Length: 600-800 words
-- Tone: Casual and conversational, like a personal blog post
-- Structure: Include 2-3 main sections with headers (use ## for markdown headers)
-- Style: Share personal insights and observations
-- Include practical examples or analogies
-- End with a thought-provoking conclusion
+- Length: 150-300 words. Shorter is better. This is NOT negotiable.
+- NO section headers. Flowing short paragraphs only.
+- First sentence IS the thesis. No preamble.
+- Each paragraph: 1-3 sentences max.
+- Name specific tools, models, companies. Never be generic.
+- Take a clear position. No hedging.
+- End with a punchy forward-looking statement. Not a summary.
+- NEVER use analogies, metaphors, rhetorical questions, or exclamation marks.
+- NEVER use phrases like "Let's dive in", "It's worth noting", "In today's landscape".
 
 Format the response as a JSON object with:
 {
-  "title": "Article title (engaging and clickable)",
-  "content": "Full article content in markdown format with headers",
-  "excerpt": "Brief 2-sentence summary (100-150 chars)",
-  "tags": ["array", "of", "relevant", "tags"]
+  "title": "ALL CAPS title, 2-6 words, direct (e.g. 'THE AGENT ECONOMY')",
+  "content": "Full article starting with # TITLE, then paragraphs",
+  "excerpt": "One direct sentence, under 160 chars, no fluff",
+  "tags": ["specific", "technical", "tags"]
 }`;
 
   let response;
@@ -67,14 +70,14 @@ Format the response as a JSON object with:
         messages: [
           {
             role: 'system',
-            content: 'You are a thoughtful tech blogger who writes engaging, insightful articles about AI and technology.'
+            content: 'You are writing as Amir H. Jalali - someone who builds with AI daily and shares sharp, brief observations about what is actually happening in tech. Your articles are 150-300 words, use ALL CAPS titles, and every sentence says something specific. You never pad, never hedge, never explain basics. You name exact tools and take clear positions.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.8,
+        temperature: 0.6,
         response_format: { type: "json_object" }
       })
     });

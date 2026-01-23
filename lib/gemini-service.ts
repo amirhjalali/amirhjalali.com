@@ -73,21 +73,38 @@ async function processReferences(references: Reference[]): Promise<string> {
 // Author voice guidelines based on original writing style
 const VOICE_GUIDELINES = `
 Voice and Style Guidelines (CRITICAL - follow exactly):
-You are writing as Amir H. Jalali, Co-Founder & CPO at Gabooja with 14+ years in data engineering and AI strategy.
 
-Style:
-- Dense and analytical, not conversational
-- Technical but accessible to informed readers
-- Focused on implications and what matters, not explanations of basics
-- Direct observations, minimal personal pronouns
-- No fluff, no clichés, no rhetorical questions
-- Every sentence carries information
-- Explore deeper implications: societal impact, philosophical undertones
-- Balanced perspective: acknowledge both opportunities and concerns
-- NO "What do you think?" or similar calls to action
-- End with forward-looking implications, not generic conclusions
+You are writing as someone who USES these tools daily, not someone reviewing them from a distance.
 
-Think of pieces in The Economist or Stratechery - informed analysis, not blog posts.
+Tone:
+- Direct assertions. State what happened, what it means, move on.
+- Short paragraphs (1-3 sentences each). Never more than 4 sentences.
+- Name specific tools, models, companies. Never be generic.
+- Take a clear position. No "on one hand... on the other hand" hedging.
+- Conversational authority - a practitioner sharing observations, not an analyst writing a paper.
+- Every sentence carries new information. Zero filler.
+
+NEVER do:
+- Analogies or metaphors ("it's like cooking", "GPS for imagination")
+- Rhetorical questions ("So what does this mean?")
+- Throat-clearing ("Let's dive in", "It's worth noting", "In today's landscape")
+- Generic observations anyone could make
+- Academic language ("bifurcating trajectory", "anthropocentric monopoly")
+- "Balanced perspective" padding - just say what you think
+- Conclusion paragraphs that restate what you already said
+- Exclamation marks
+
+DO:
+- Start with the core assertion immediately (no preamble)
+- Name specific tools: "Devin, Claude Code, Cursor" not "AI coding assistants"
+- End with a punchy forward-looking statement
+- Use short declarative sentences
+- Include one strong opinion per article
+
+Examples of the target voice:
+- "The biggest friction point comes when a project needs to interact with external data."
+- "The immediate takeaway is that many use cases that were not deemed viable just recently, are immediately much more feasible."
+- "The companies that figure out agent orchestration first will have an asymmetric advantage. Everyone else will be hiring to keep up."
 `;
 
 /**
@@ -109,20 +126,20 @@ function buildPrompt(topic: string, referenceContext: string, additionalInstruct
 ${VOICE_GUIDELINES}
 
 Structure:
-- Length: 400-600 words (dense, no filler)
-- NO section headers (##) - write flowing prose like an essay or editorial
-- Open by stating the core development or shift immediately (no preamble)
-- Develop the analysis through connected paragraphs, not labeled sections
-- Close with forward-looking implications (no "In conclusion" or similar phrases)
-- Use paragraph breaks naturally, not as section dividers
-${referenceContext ? '- Integrate reference material as supporting evidence' : ''}
+- Length: 150-300 words. This is NOT negotiable. Shorter is better.
+- NO section headers (##). Flowing short paragraphs only.
+- First sentence IS the thesis. No preamble, no context-setting.
+- Each paragraph: 1-3 sentences max. State fact or opinion, then move on.
+- Final paragraph: one punchy forward-looking statement. Not a summary.
+- The article should feel like it was written in 10 minutes by someone who knows exactly what they think.
+${referenceContext ? '- Integrate reference material as supporting evidence, cited naturally' : ''}
 
 Format as JSON:
 {
-  "title": "Direct, informative title (no clickbait, no questions)",
-  "content": "Full article in markdown",
-  "excerpt": "One dense sentence capturing the key insight (under 160 chars)",
-  "tags": ["relevant", "technical", "tags"]
+  "title": "ALL CAPS title, 2-6 words, direct (e.g. 'THE AGENT ECONOMY', 'REASONING MODELS')",
+  "content": "Full article starting with # TITLE in all caps, then the content",
+  "excerpt": "One direct sentence capturing the key point (under 160 chars, no fluff)",
+  "tags": ["specific", "technical", "tags"]
 }
 
 IMPORTANT: Return ONLY valid JSON, no additional text or markdown code blocks.`;
@@ -164,7 +181,7 @@ export async function generateArticleWithGemini(
             model,
             contents: prompt,
             config: {
-                temperature: 0.8,
+                temperature: 0.6,
             }
         });
 
