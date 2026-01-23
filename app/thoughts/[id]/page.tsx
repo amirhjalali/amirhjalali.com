@@ -3,6 +3,9 @@ import { Metadata } from 'next'
 import ThoughtPageClient from './ThoughtPageClient'
 import { getArticle, getAllArticleIds, getDraft } from '@/lib/data'
 
+// Force dynamic rendering so DB changes are reflected immediately
+export const dynamic = 'force-dynamic'
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
 
 // Generate static params for all article IDs

@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import { getPublishedArticles } from '@/lib/data'
 import ThoughtsPageClient from './ThoughtsPageClient'
 
-// Revalidate every hour for fresh content
-export const revalidate = 3600
+// Force dynamic rendering so DB changes are reflected immediately
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Thoughts',
