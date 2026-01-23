@@ -1,6 +1,7 @@
 import { AIMetadata } from '@/lib/types';
 import { generateArticleWithGemini, isGeminiAvailable } from '@/lib/gemini-service';
 import { generateImageWithGemini, isGeminiImageAvailable } from '@/lib/gemini-image-service';
+import { generateArticleWithClaude, isClaudeAvailable } from '@/lib/claude-service';
 
 // Topics for article generation - focused on current AI/tech developments
 const TOPICS = [
@@ -66,10 +67,19 @@ interface ArticleContent {
 }
 
 export async function generateArticleContent(options: AIMetadata): Promise<ArticleContent> {
-    const model = options.textModel || 'gpt-5.2';
+    const model = options.textModel || 'claude-opus-4-5-20251101';
 
-    // Use Gemini for gemini models or when references are provided
-    if (model.startsWith('gemini') || (options.references?.length && isGeminiAvailable())) {
+    // Use Claude for claude models (default)
+    if (model.startsWith('claude')) {
+        if (!isClaudeAvailable()) {
+            throw new Error('Anthropic API key not configured. Set ANTHROPIC_API_KEY in your environment.');
+        }
+        console.log(`Using Claude for article generation (model: ${model}, references: ${options.references?.length || 0})`);
+        return generateArticleWithClaude(options);
+    }
+
+    // Use Gemini for gemini models
+    if (model.startsWith('gemini')) {
         if (!isGeminiAvailable()) {
             throw new Error('Gemini API key not configured. Set GEMINI_API_KEY in your environment.');
         }
@@ -140,7 +150,8 @@ export async function generateImage(title: string, options: AIMetadata): Promise
     const topic = options.topic || 'Technology';
     const style = options.imageStyle || 'minimal, sophisticated, dark monochromatic, subtle gradients, cinematic lighting';
     const customPrompt = options.imagePrompt;
-    const model = options.imageModel || 'gpt-image-1.5';
+    const model = options.imageModel || 'gemini-3-pro-image-preview';
+    const resolution = options.imageResolution || '1K';
 
     // Refined prompt for high-quality, minimal aesthetic that matches site design
     const imagePrompt = customPrompt || `Create an elegant, minimalist featured image for a professional tech article about ${topic}.
@@ -153,11 +164,11 @@ The image should feel timeless and complement serif typography on a black backgr
     // Route to Gemini for Gemini image models (Nano Banana Pro)
     if (model.startsWith('gemini')) {
         if (!isGeminiImageAvailable()) {
-            console.warn('Gemini API key not configured. Falling back to DALL-E 3.');
+            console.warn('Gemini API key not configured. Falling back to OpenAI.');
         } else {
-            console.log(`Using Gemini for image generation (model: ${model})`);
+            console.log(`Using Gemini for image generation (model: ${model}, resolution: ${resolution})`);
             // Gemini returns base64 data URI directly - no need to download
-            return generateImageWithGemini(imagePrompt, options);
+            return generateImageWithGemini(imagePrompt, { ...options, imageResolution: resolution });
         }
     }
 
@@ -180,7 +191,7 @@ The image should feel timeless and complement serif typography on a black backgr
             prompt: imagePrompt,
             n: 1,
             size: '1792x1024', // Landscape format (16:9-ish) for better featured image proportions
-            quality: 'hd' // HD quality for professional look
+            quality: 'high'
         })
     });
 
