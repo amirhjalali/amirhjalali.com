@@ -99,7 +99,7 @@ export default function MilestonesPageClient() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-16"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 mb-16"
           >
             {[
               { value: STATS.days, label: 'Days', icon: <span className="text-lg">📅</span> },

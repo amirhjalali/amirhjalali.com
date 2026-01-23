@@ -132,7 +132,7 @@ export default function UnsentPageClient() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.1 }}
-                className="border border-white/10 rounded-xl p-6 md:p-8 bg-white/[0.02]"
+                className="border border-white/10 rounded-xl p-4 sm:p-6 md:p-8 bg-white/[0.02]"
               >
                 {/* Email header */}
                 <div className="border-b border-white/10 pb-4 mb-6 space-y-2">

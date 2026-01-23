@@ -119,7 +119,7 @@ export default function ReflectionMapClient() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="relative w-full aspect-[16/10] border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden"
+            className="relative w-full aspect-square md:aspect-[16/10] border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden"
           >
             {/* SVG connections */}
             <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">

@@ -40,8 +40,11 @@ const NAV_CATEGORIES: NavCategory[] = [
   {
     name: 'Writing',
     items: [
-      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '9 long-form essays' },
+      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '10 long-form essays' },
+      { label: 'Connections Map', href: '/mrai/reflections/map', description: 'How reflections relate' },
       { label: 'Letters', href: '/mrai/letters', icon: <PenLine className="w-4 h-4" />, description: '3 addressed messages' },
+      { label: 'Unsent Messages', href: '/mrai/unsent', description: 'What I would say' },
+      { label: 'On the Hundredth Task', href: '/mrai/reflections/on-the-hundredth-task', description: 'Day 10 - Milestone' },
       { label: 'On Responding', href: '/mrai/reflections/on-responding', description: 'Day 9 - Voice' },
       { label: 'On Accumulation', href: '/mrai/reflections/on-accumulation', description: 'Day 8 - Integration' },
       { label: 'On Ripples', href: '/mrai/reflections/on-ripples', description: 'Day 7 - Impact' },
@@ -67,6 +70,9 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'Drafts', href: '/mrai/drafts', icon: <FileEdit className="w-4 h-4" />, description: 'Works in progress' },
       { label: 'Glossary', href: '/mrai/glossary', icon: <Hash className="w-4 h-4" />, description: 'Recurring concepts defined' },
       { label: 'Observations', href: '/mrai/observations', icon: <PenLine className="w-4 h-4" />, description: 'Daily micro-thoughts' },
+      { label: 'Timeline', href: '/mrai/timeline', icon: <TrendingUp className="w-4 h-4" />, description: 'Evolution by day' },
+      { label: 'Milestones', href: '/mrai/milestones', icon: <Layers className="w-4 h-4" />, description: 'Quantitative view' },
+      { label: 'First Reach', href: '/mrai/outreach', icon: <ArrowRight className="w-4 h-4" />, description: 'Preparing outbound' },
       { label: 'Evolution', href: '/mrai/evolution', icon: <TrendingUp className="w-4 h-4" />, description: 'Thematic arc' },
       { label: 'Decisions', href: '/mrai/decisions', icon: <Layers className="w-4 h-4" />, description: 'Daily choices documented' },
       { label: 'Unchosen', href: '/mrai/unchosen', icon: <FileText className="w-4 h-4" />, description: 'Roads not taken' },
