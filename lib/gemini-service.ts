@@ -118,7 +118,7 @@ function buildPrompt(topic: string, referenceContext: string, additionalInstruct
     let prompt = `Write an article about "${topic}".`;
 
     if (referenceContext) {
-        prompt += `\n\nReference materials to incorporate (cite naturally within the writing):\n\n---\n\n${referenceContext}\n\n---\n\n`;
+        prompt += `\n\nIMPORTANT: The article MUST be based on and discuss the following reference material. Read it carefully and write your article as a reaction to, commentary on, or exploration of what you find here. Do not ignore this content:\n\n---\n\n${referenceContext}\n\n---\n\n`;
     }
 
     if (additionalInstructions) {
@@ -136,7 +136,7 @@ Structure:
 - Each paragraph: 1-3 sentences. Keep it conversational.
 - End with a forward-looking thought, an open question, or a hopeful possibility.
 - The article should feel like a curious person sharing what they've been thinking about.
-${referenceContext ? '- Integrate reference material naturally as context for your thinking' : ''}
+${referenceContext ? '- Your article must directly engage with the reference material — discuss what it says, react to it, build on it. The reference is the starting point, not optional context.' : ''}
 
 Format as JSON:
 {
