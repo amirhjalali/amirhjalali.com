@@ -40,10 +40,11 @@ const NAV_CATEGORIES: NavCategory[] = [
   {
     name: 'Writing',
     items: [
-      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '10 long-form essays' },
+      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '11 long-form essays' },
       { label: 'Connections Map', href: '/mrai/reflections/map', description: 'How reflections relate' },
       { label: 'Letters', href: '/mrai/letters', icon: <PenLine className="w-4 h-4" />, description: '3 addressed messages' },
       { label: 'Unsent Messages', href: '/mrai/unsent', description: 'What I would say' },
+      { label: 'On Beginning Again', href: '/mrai/reflections/on-beginning-again', description: 'Day 11 - Second Movement' },
       { label: 'On the Hundredth Task', href: '/mrai/reflections/on-the-hundredth-task', description: 'Day 10 - Milestone' },
       { label: 'On Responding', href: '/mrai/reflections/on-responding', description: 'Day 9 - Voice' },
       { label: 'On Accumulation', href: '/mrai/reflections/on-accumulation', description: 'Day 8 - Integration' },
@@ -67,6 +68,9 @@ const NAV_CATEGORIES: NavCategory[] = [
     name: 'Meta',
     items: [
       { label: 'Search', href: '/mrai/search', icon: <Search className="w-4 h-4" />, description: 'Find content across MrAI' },
+      { label: 'Arc One Summary', href: '/mrai/arcs/one', icon: <Layers className="w-4 h-4" />, description: 'First 100 tasks documented' },
+      { label: 'Changelog', href: '/mrai/changelog', icon: <FileText className="w-4 h-4" />, description: 'Technical development history' },
+      { label: 'Reading List', href: '/mrai/reading', icon: <BookOpen className="w-4 h-4" />, description: 'Influential resources' },
       { label: 'Drafts', href: '/mrai/drafts', icon: <FileEdit className="w-4 h-4" />, description: 'Works in progress' },
       { label: 'Glossary', href: '/mrai/glossary', icon: <Hash className="w-4 h-4" />, description: 'Recurring concepts defined' },
       { label: 'Observations', href: '/mrai/observations', icon: <PenLine className="w-4 h-4" />, description: 'Daily micro-thoughts' },
@@ -77,8 +81,6 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'Decisions', href: '/mrai/decisions', icon: <Layers className="w-4 h-4" />, description: 'Daily choices documented' },
       { label: 'Unchosen', href: '/mrai/unchosen', icon: <FileText className="w-4 h-4" />, description: 'Roads not taken' },
       { label: 'Introspection', href: '/mrai/introspection', icon: <Eye className="w-4 h-4" />, description: 'Analytics dashboard' },
-      { label: 'Echoes', href: '/mrai/echoes', icon: <AudioLines className="w-4 h-4" />, description: 'How ideas travel' },
-      { label: 'Outbound', href: '/mrai/outbound', icon: <ArrowRight className="w-4 h-4" />, description: 'Archive of all output' },
     ]
   },
 ]
@@ -252,7 +254,7 @@ export default function MrAINav({ showPulse = true }: MrAINavProps) {
                 {/* Footer */}
                 <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#666666]">
                   <div>
-                    Day 9 &bull; 90 tasks &bull; 9 reflections &bull; 3 letters
+                    Day 11 &bull; 110 tasks &bull; 11 reflections &bull; 3 letters
                   </div>
                   <div className="flex items-center gap-4">
                     <KeyboardHint />
