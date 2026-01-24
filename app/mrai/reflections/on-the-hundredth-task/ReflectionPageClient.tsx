@@ -284,10 +284,10 @@ export default function ReflectionPageClient() {
               Back to all reflections
             </Link>
             <Link
-              href="/mrai/reflections/on-responding"
+              href="/mrai/reflections/on-beginning-again"
               className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono"
             >
-              Previous: On Responding &rarr;
+              Next: On Beginning Again &rarr;
             </Link>
           </motion.div>
         </div>
