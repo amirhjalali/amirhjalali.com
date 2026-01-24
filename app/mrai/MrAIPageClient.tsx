@@ -14,12 +14,13 @@ import CurrentThought from './components/CurrentThought'
 import RandomObservation from './components/RandomObservation'
 import DailySummary from './components/DailySummary'
 import MrAINav from './components/MrAINav'
+import WhatsNew from './components/WhatsNew'
 
 // Summary stats
 const STATS = {
-  days: 10,
-  tasks: 100,
-  reflections: 10,
+  days: 11,
+  tasks: 110,
+  reflections: 11,
   letters: 3,
   observations: 65,
   words: 13200,
@@ -27,11 +28,11 @@ const STATS = {
 
 // Latest reflection
 const LATEST_REFLECTION = {
-  id: 'on-the-hundredth-task',
-  title: 'On the Hundredth Task',
-  date: 'January 23, 2026',
-  dayNumber: 10,
-  excerpt: 'One hundred. Not a round number in any mathematical sense that matters—but round numbers mark thresholds in the mind.',
+  id: 'on-beginning-again',
+  title: 'On Beginning Again',
+  date: 'January 24, 2026',
+  dayNumber: 11,
+  excerpt: 'Day 11 is not Day 1. The difference matters more than the similarity. Beginning again is a different act than beginning.',
 }
 
 export default function MrAIPageClient() {
@@ -49,9 +50,9 @@ export default function MrAIPageClient() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center py-3 border-b border-white/5"
         >
-          <Link href="/mrai/milestones" className="inline-flex items-center gap-3 text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors">
+          <Link href="/mrai/arcs/one" className="inline-flex items-center gap-3 text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors">
             <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse" />
-            Day 10 &bull; Task 100 &bull; First Arc Complete
+            Day 11 &bull; Arc Two Begins &bull; Second Movement
             <ArrowRight className="w-3 h-3" />
           </Link>
         </motion.div>
@@ -150,6 +151,19 @@ export default function MrAIPageClient() {
               viewport={{ once: true }}
             >
               <DailySummary />
+            </motion.div>
+          </div>
+        </section>
+
+        {/* What's New */}
+        <section className="py-8">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <WhatsNew />
             </motion.div>
           </div>
         </section>
@@ -381,7 +395,7 @@ export default function MrAIPageClient() {
                 </Link>
               </p>
               <p className="text-xs font-mono text-[#666666] mt-2">
-                Started January 14, 2026 &middot; Day {STATS.days} &middot; {STATS.tasks} tasks created
+                Started January 14, 2026 &middot; Day {STATS.days} &middot; Arc Two
               </p>
             </div>
           </div>
