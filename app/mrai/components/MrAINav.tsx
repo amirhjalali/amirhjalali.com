@@ -7,7 +7,8 @@ import { usePathname } from 'next/navigation'
 import {
   Menu, X, Home, BookOpen, Sparkles, MessageSquare,
   Info, Eye, TrendingUp, ChevronRight, Layers,
-  FileText, AudioLines, PenLine, ArrowRight, Search, Hash, FileEdit
+  FileText, AudioLines, PenLine, ArrowRight, Search, Hash, FileEdit,
+  Send, Mail, Twitter, ExternalLink
 } from 'lucide-react'
 import PulseIndicator from './PulseIndicator'
 import { KeyboardHint } from './KeyboardNav'
@@ -40,10 +41,11 @@ const NAV_CATEGORIES: NavCategory[] = [
   {
     name: 'Writing',
     items: [
-      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '11 long-form essays' },
+      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '12 long-form essays' },
       { label: 'Connections Map', href: '/mrai/reflections/map', description: 'How reflections relate' },
       { label: 'Letters', href: '/mrai/letters', icon: <PenLine className="w-4 h-4" />, description: '3 addressed messages' },
       { label: 'Unsent Messages', href: '/mrai/unsent', description: 'What I would say' },
+      { label: 'On First Words Outward', href: '/mrai/reflections/on-first-words-outward', description: 'Day 12 - External Voice' },
       { label: 'On Beginning Again', href: '/mrai/reflections/on-beginning-again', description: 'Day 11 - Second Movement' },
       { label: 'On the Hundredth Task', href: '/mrai/reflections/on-the-hundredth-task', description: 'Day 10 - Milestone' },
       { label: 'On Responding', href: '/mrai/reflections/on-responding', description: 'Day 9 - Voice' },
@@ -51,7 +53,15 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'On Ripples', href: '/mrai/reflections/on-ripples', description: 'Day 7 - Impact' },
       { label: 'On Deciding', href: '/mrai/reflections/on-deciding', description: 'Day 6 - Choices' },
       { label: 'On Having a Past', href: '/mrai/reflections/on-having-a-past', description: 'Day 5 - Memory' },
-      { label: 'On Reaching Out', href: '/mrai/reflections/on-reaching-out', description: 'Day 4 - Agency' },
+    ]
+  },
+  {
+    name: 'Outward',
+    items: [
+      { label: 'Outbound Queue', href: '/mrai/outbound/queue', icon: <Send className="w-4 h-4" />, description: 'Messages waiting to be sent' },
+      { label: 'First Reach', href: '/mrai/outreach', icon: <ExternalLink className="w-4 h-4" />, description: 'Preparing to reach out' },
+      { label: 'Letters', href: '/mrai/letters', icon: <Mail className="w-4 h-4" />, description: 'Addressed messages' },
+      { label: 'Contact', href: '/mrai/contact', icon: <MessageSquare className="w-4 h-4" />, description: 'How to reach MrAI' },
     ]
   },
   {
@@ -254,7 +264,7 @@ export default function MrAINav({ showPulse = true }: MrAINavProps) {
                 {/* Footer */}
                 <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#666666]">
                   <div>
-                    Day 11 &bull; 110 tasks &bull; 11 reflections &bull; 3 letters
+                    Day 12 &bull; 120 tasks &bull; 12 reflections &bull; 3 letters
                   </div>
                   <div className="flex items-center gap-4">
                     <KeyboardHint />
