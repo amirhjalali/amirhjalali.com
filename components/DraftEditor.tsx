@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo, Sparkles, Image as ImageIcon, Calendar } from 'lucide-react'
+import { Save, X, Eye, Download, Upload, BarChart3, Undo, Redo, PenLine, Image as ImageIcon, Calendar } from 'lucide-react'
 import { apiClient, type Draft, type Article } from '@/lib/api-client'
 import GenerationSettingsModal from './GenerationSettingsModal'
 import GenerationProgress from './GenerationProgress'
@@ -284,7 +284,7 @@ ${editedDraft.content}`
               className="px-3 py-2 glass border border-border rounded-lg hover:border-white/30 text-xs font-mono uppercase tracking-widest flex items-center gap-2"
               title="Regenerate Content"
             >
-              <Sparkles className="w-3 h-3" />
+              <PenLine className="w-3 h-3" />
               Regen Text
             </button>
             <button
@@ -612,6 +612,7 @@ Regular paragraph text goes here."
         estimatedTimeRemaining={estimatedTimeRemaining}
         error={regenerationError}
         onCancel={cancelGeneration}
+        mode="image"
       />
     </motion.div>
   )

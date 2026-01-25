@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Loader2, CheckCircle2, XCircle, Clock, Sparkles } from 'lucide-react'
+import { X, Loader2, CheckCircle2, XCircle, Clock, PenLine } from 'lucide-react'
 import { GenerationStep } from '@/lib/types'
 
 interface GenerationProgressProps {
@@ -14,6 +14,7 @@ interface GenerationProgressProps {
   isGenerating: boolean
   onCancel: () => void
   onClose?: () => void
+  mode?: 'article' | 'image' | 'eval'
 }
 
 const stepLabels: Record<GenerationStep, string> = {
@@ -43,11 +44,26 @@ export default function GenerationProgress({
   isGenerating,
   onCancel,
   onClose,
+  mode = 'article',
 }: GenerationProgressProps) {
   if (!isOpen) return null
 
   const isComplete = currentStep === 'completed'
   const hasError = currentStep === 'error' || !!error
+
+  // Get appropriate labels based on mode
+  const getTitle = () => {
+    const labels = {
+      article: { generating: 'Generating Article', complete: 'Article Generated!', failed: 'Generation Failed', default: 'Article Generation' },
+      image: { generating: 'Generating Image', complete: 'Image Generated!', failed: 'Generation Failed', default: 'Image Generation' },
+      eval: { generating: 'Generating Evaluation', complete: 'Evaluation Complete!', failed: 'Generation Failed', default: 'Evaluation Generation' },
+    }
+    const label = labels[mode]
+    if (isGenerating) return label.generating
+    if (isComplete) return label.complete
+    if (hasError) return label.failed
+    return label.default
+  }
 
   const formatTime = (seconds?: number) => {
     if (!seconds) return ''
@@ -87,13 +103,7 @@ export default function GenerationProgress({
               )}
               {hasError && <XCircle className="w-5 h-5 text-[#888888]" />}
               <h2 className="text-xl font-serif font-light">
-                {isGenerating
-                  ? 'Generating Article'
-                  : isComplete
-                  ? 'Article Generated!'
-                  : hasError
-                  ? 'Generation Failed'
-                  : 'Article Generation'}
+                {getTitle()}
               </h2>
             </div>
             {(!isGenerating || hasError) && (
@@ -133,7 +143,7 @@ export default function GenerationProgress({
           {currentStep && !hasError && (
             <div className="mb-4 p-4 bg-white/5 rounded-lg border border-white/10">
               <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="w-4 h-4 text-[#888888]" />
+                <PenLine className="w-4 h-4 text-[#888888]" />
                 <span className="text-xs font-mono uppercase tracking-widest text-[#EAEAEA]">
                   {stepLabels[currentStep]}
                 </span>

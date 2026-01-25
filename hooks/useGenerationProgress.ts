@@ -177,6 +177,11 @@ export function useGenerationProgress(): UseGenerationProgressReturn {
               }
 
               if (progressEvent.step === 'completed') {
+                // Capture result data from completed event (for image regeneration etc.)
+                // The API may include draft/article/imageUrl in the completed event
+                if (event.draft || event.article || event.imageUrl || event.success) {
+                  setResult(event)
+                }
                 setIsGenerating(false)
               }
             } catch (parseError) {
