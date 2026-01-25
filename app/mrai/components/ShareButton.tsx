@@ -157,7 +157,7 @@ export default function ShareButton({
         <Twitter className="w-4 h-4" />
       </a>
 
-      {typeof navigator !== 'undefined' && navigator.share && (
+      {typeof navigator !== 'undefined' && 'share' in navigator && (
         <button
           onClick={handleNativeShare}
           className="p-2 text-[#888888] hover:text-[#EAEAEA] hover:bg-white/5 rounded-lg transition-all"
