@@ -2,9 +2,10 @@
  * Twitter/X Platform Extractor
  *
  * Uses multiple strategies:
- * 1. Twitter Syndication API (tweet data without auth)
- * 2. Twitter oEmbed API (reliable but limited)
- * 3. Page scraping with OG tags (fallback)
+ * 1. FXTwitter API (reliable third-party JSON API)
+ * 2. Twitter Syndication API (tweet data without auth)
+ * 3. Twitter oEmbed API (reliable but limited)
+ * 4. Page scraping with OG tags (fallback)
  */
 
 import type { ExtractionResult, AuthorInfo, MediaItem } from '@/lib/types'
@@ -21,6 +22,20 @@ import {
   fetchWithTimeout,
 } from './base'
 
+// Known Twitter/X error messages that indicate extraction failed
+const ERROR_PATTERNS = [
+  'Something went wrong',
+  'don\'t fret',
+  'give it another shot',
+  'privacy related extensions',
+  'This page isn\'t available',
+  'Hmm...this page doesn\'t exist',
+  'Rate limit exceeded',
+  'Account suspended',
+  'This Tweet is unavailable',
+  'This Post is unavailable',
+]
+
 export class TwitterExtractor implements PlatformExtractor {
   platform = 'twitter' as const
   version = EXTRACTOR_VERSION
@@ -30,35 +45,59 @@ export class TwitterExtractor implements PlatformExtractor {
            /^https?:\/\/(mobile\.)?(twitter\.com|x\.com)\//i.test(url)
   }
 
+  /**
+   * Check if content appears to be an error page
+   */
+  private isErrorContent(content: string): boolean {
+    if (!content) return true
+    const lowerContent = content.toLowerCase()
+    return ERROR_PATTERNS.some(pattern => lowerContent.includes(pattern.toLowerCase()))
+  }
+
   async extract(url: string): Promise<ExtractionResult> {
     const tweetId = this.extractTweetId(url)
     if (!tweetId) {
       return createFailureResult('twitter', 'Could not extract tweet ID from URL')
     }
 
-    // Try syndication API first (most data)
+    // Try FXTwitter API first (most reliable)
+    try {
+      const fxResult = await this.extractViaFXTwitter(tweetId)
+      if (fxResult.success && !this.isErrorContent(fxResult.content || '')) {
+        return fxResult
+      }
+    } catch (e) {
+      console.warn('[Twitter] FXTwitter API failed:', e)
+    }
+
+    // Try syndication API second
     try {
       const syndicationResult = await this.extractViaSyndication(tweetId)
-      if (syndicationResult.success) {
+      if (syndicationResult.success && !this.isErrorContent(syndicationResult.content || '')) {
         return syndicationResult
       }
     } catch (e) {
-      console.warn('Syndication API failed:', e)
+      console.warn('[Twitter] Syndication API failed:', e)
     }
 
-    // Try oEmbed API second
+    // Try oEmbed API third
     try {
       const oEmbedResult = await this.extractViaOEmbed(url)
-      if (oEmbedResult.success) {
+      if (oEmbedResult.success && !this.isErrorContent(oEmbedResult.content || '')) {
         return oEmbedResult
       }
     } catch (e) {
-      console.warn('oEmbed API failed:', e)
+      console.warn('[Twitter] oEmbed API failed:', e)
     }
 
     // Fall back to page scraping
     try {
-      return await this.extractViaPageScraping(url)
+      const scrapedResult = await this.extractViaPageScraping(url)
+      // Check if we got an error page
+      if (this.isErrorContent(scrapedResult.content || '')) {
+        return createFailureResult('twitter', 'All extraction methods failed - Twitter may be blocking access')
+      }
+      return scrapedResult
     } catch (e) {
       return createFailureResult('twitter', `All extraction methods failed: ${e}`)
     }
@@ -70,6 +109,114 @@ export class TwitterExtractor implements PlatformExtractor {
     // https://x.com/user/status/123456789
     const match = url.match(/\/status\/(\d+)/i)
     return match ? match[1] : null
+  }
+
+  private extractUsername(url: string): string | null {
+    // Match patterns like:
+    // https://twitter.com/username/status/123456789
+    // https://x.com/username/status/123456789
+    const match = url.match(/(?:twitter\.com|x\.com)\/([^\/]+)\/status/i)
+    return match ? match[1] : null
+  }
+
+  /**
+   * Extract via FXTwitter API
+   * Third-party service that provides JSON API for tweets
+   * More reliable than Twitter's own APIs which are increasingly restricted
+   */
+  private async extractViaFXTwitter(tweetId: string): Promise<ExtractionResult> {
+    // FXTwitter provides an API at api.fxtwitter.com
+    const apiUrl = `https://api.fxtwitter.com/status/${tweetId}`
+
+    const response = await fetchWithTimeout(apiUrl, {
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (compatible; NotesBot/1.0)',
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`FXTwitter API returned ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    if (!data || !data.tweet) {
+      throw new Error('Invalid FXTwitter response')
+    }
+
+    const tweet = data.tweet
+
+    // Extract author info
+    const author: AuthorInfo = {
+      name: tweet.author?.name,
+      handle: normalizeHandle(tweet.author?.screen_name),
+      avatarUrl: tweet.author?.avatar_url,
+      bio: tweet.author?.description,
+      profileUrl: tweet.author?.url,
+      verified: tweet.author?.verified,
+      followerCount: tweet.author?.followers,
+    }
+
+    // Extract media
+    const mediaItems: MediaItem[] = []
+    if (tweet.media?.photos) {
+      for (const photo of tweet.media.photos) {
+        mediaItems.push({
+          type: 'image',
+          url: photo.url,
+          width: photo.width,
+          height: photo.height,
+        })
+      }
+    }
+    if (tweet.media?.videos) {
+      for (const video of tweet.media.videos) {
+        mediaItems.push({
+          type: 'video',
+          url: video.url,
+          thumbnailUrl: video.thumbnail_url,
+          width: video.width,
+          height: video.height,
+          duration: video.duration,
+        })
+      }
+    }
+
+    // Extract engagement
+    const engagement = {
+      likes: tweet.likes,
+      retweets: tweet.retweets,
+      replies: tweet.replies,
+      views: tweet.views,
+    }
+
+    // Get thumbnail
+    const thumbnailUrl = mediaItems[0]?.type === 'image'
+      ? mediaItems[0].url
+      : mediaItems[0]?.thumbnailUrl || tweet.media?.mosaic?.low?.url
+
+    const content = cleanText(tweet.text)
+
+    return createSuccessResult('twitter', {
+      title: `${author.name} on X`,
+      content,
+      excerpt: generateExcerpt(content),
+      author,
+      thumbnailUrl,
+      engagement,
+      mediaItems,
+      mentionedLinks: extractUrls(content),
+      platformData: {
+        postId: tweetId,
+        isThread: tweet.is_thread,
+        isReply: tweet.replying_to !== null,
+        parentPostUrl: tweet.replying_to_status ? `https://twitter.com/i/status/${tweet.replying_to_status}` : undefined,
+        publishedAt: tweet.created_at,
+        conversationId: tweet.conversation_id,
+        language: tweet.lang,
+      },
+    })
   }
 
   /**

@@ -6,7 +6,7 @@ import { apiClient } from '@/lib/api-client'
 import type { Note, Platform, AuthorInfo, EngagementMetrics, MediaItem, MentionedLink } from '@/lib/types'
 import {
   Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain, Youtube,
-  ChevronDown, ChevronUp, Heart, MessageCircle, Repeat2, Eye, Star, GitFork, Users, Github, Twitter, CheckCircle2, ImageIcon, FileCode, Bookmark
+  ChevronDown, ChevronUp, Heart, MessageCircle, Repeat2, Eye, Star, GitFork, Users, Github, Twitter, CheckCircle2, ImageIcon, FileCode, Bookmark, AlertTriangle
 } from 'lucide-react'
 import VideoEmbed from '../components/VideoEmbed'
 import { formatDistanceToNow } from 'date-fns'
@@ -102,6 +102,30 @@ function isVideoUrl(url: string): boolean {
     url.includes('vimeo.com') ||
     url.includes('tiktok.com')
   )
+}
+
+// Known error patterns that indicate failed content extraction
+const ERROR_PATTERNS = [
+  'Something went wrong',
+  'don\'t fret',
+  'give it another shot',
+  'privacy related extensions',
+  'This page isn\'t available',
+  'Hmm...this page doesn\'t exist',
+  'Rate limit exceeded',
+  'Account suspended',
+  'This Tweet is unavailable',
+  'This Post is unavailable',
+  'Could not fetch content',
+  'Error fetching content',
+  'All extraction methods failed',
+]
+
+// Check if content appears to be an error message
+function isErrorContent(content: string | null | undefined): boolean {
+  if (!content) return false
+  const lowerContent = content.toLowerCase()
+  return ERROR_PATTERNS.some(pattern => lowerContent.includes(pattern.toLowerCase()))
 }
 
 export default function NoteDetailClient({ noteId }: { noteId: string }) {
@@ -610,11 +634,39 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
 
           {/* Full Content Section */}
           {note.fullContent && note.fullContent !== note.content && (
-            <ExpandableSection title="Full Content" icon={FileText}>
+            <ExpandableSection title="Full Content" icon={FileText} defaultOpen>
               <div className="pt-4 prose prose-invert max-w-none">
-                <p className="text-sm text-[#EAEAEA] whitespace-pre-wrap">
-                  {note.fullContent}
-                </p>
+                {isErrorContent(note.fullContent) ? (
+                  <div className="flex flex-col items-center gap-4 py-6 text-center">
+                    <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                      <AlertTriangle className="w-6 h-6 text-[#888888]" />
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-sm text-[#888888]">
+                        Content extraction failed for this link
+                      </p>
+                      <p className="text-xs text-[#888888]/70">
+                        The source may be blocking access or require authentication
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleReprocess}
+                      disabled={isReprocessing}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors text-sm"
+                    >
+                      {isReprocessing ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <RefreshCw className="w-4 h-4" />
+                      )}
+                      Try Again
+                    </button>
+                  </div>
+                ) : (
+                  <p className="text-sm text-[#EAEAEA] whitespace-pre-wrap">
+                    {note.fullContent}
+                  </p>
+                )}
               </div>
             </ExpandableSection>
           )}
