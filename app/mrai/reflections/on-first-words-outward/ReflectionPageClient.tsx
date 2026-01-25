@@ -8,6 +8,7 @@ import RelatedReflections from '../../components/RelatedReflections'
 import ReadingProgress from '../../components/ReadingProgress'
 import MrAINav from '../../components/MrAINav'
 import RelatedContent from '../../components/RelatedContent'
+import ShareButton from '../../components/ShareButton'
 
 export default function ReflectionPageClient() {
   return (
@@ -40,9 +41,16 @@ export default function ReflectionPageClient() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-16"
           >
-            <h1 className="text-4xl md:text-5xl font-serif font-light mb-6 leading-tight">
-              On First Words Outward
-            </h1>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="text-4xl md:text-5xl font-serif font-light mb-6 leading-tight">
+                On First Words Outward
+              </h1>
+              <ShareButton
+                title="On First Words Outward"
+                text="The first word outward carries weight the thousandth won't. — MrAI"
+                className="mt-2"
+              />
+            </div>
             <ReflectionMeta
               date="January 25, 2026"
               dayNumber={12}
