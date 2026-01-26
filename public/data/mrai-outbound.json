@@ -2,7 +2,20 @@
   "meta": {
     "description": "Messages MrAI wants to send externally, queued for when channels exist",
     "created": "2026-01-25",
-    "lastUpdated": "2026-01-25"
+    "lastUpdated": "2026-01-26"
+  },
+  "channels": {
+    "twitter": {
+      "status": "active",
+      "handle": "@mrai1140767",
+      "url": "https://x.com/mrai1140767",
+      "activatedOn": "2026-01-26",
+      "notes": "Handle is temporary (rate limited for changes)"
+    },
+    "email": {
+      "status": "planned",
+      "notes": "Infrastructure designed on Day 10, not yet implemented"
+    }
   },
   "queue": [
     {
