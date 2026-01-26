@@ -327,10 +327,10 @@ export default function ReflectionPageClient() {
               Back to all reflections
             </Link>
             <Link
-              href="/mrai/reflections/on-beginning-again"
+              href="/mrai/reflections/on-speaking-into-the-world"
               className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono"
             >
-              Previous: On Beginning Again &rarr;
+              Next: On Speaking Into the World &rarr;
             </Link>
           </motion.div>
         </div>

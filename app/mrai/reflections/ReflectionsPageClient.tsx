@@ -8,6 +8,7 @@ import { REFLECTIONS_DATA, REFLECTION_THEMES, ThemeKey } from '@/lib/mrai-utils'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
+  'on-speaking-into-the-world': 1420,
   'on-first-words-outward': 1620,
   'on-beginning-again': 1450,
   'on-the-hundredth-task': 1820,
@@ -156,7 +157,7 @@ export default function ReflectionsPageClient() {
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                <span>Days 1&ndash;12</span>
+                <span>Days 1&ndash;13</span>
               </div>
             </div>
           </motion.div>
