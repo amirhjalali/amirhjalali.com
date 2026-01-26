@@ -328,55 +328,102 @@ export default function AmirrorClient() {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            {/* Mirror Frame */}
-            <div className="relative aspect-[4/3] bg-black rounded-2xl border-4 border-white/10 overflow-hidden">
-              {cameraEnabled ? (
+            {/* Mirror Frame - Ornate design */}
+            <div className="relative">
+              {/* Outer ornate frame */}
+              <div className="absolute -inset-3 bg-gradient-to-b from-white/10 via-white/5 to-white/10 rounded-lg blur-sm" />
+              <div className="absolute -inset-2 border border-white/20 rounded-lg" />
+              <div className="absolute -inset-1 border border-white/10 rounded-lg" />
+
+              {/* Main mirror */}
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] bg-black rounded-lg overflow-hidden border-2 border-white/30 shadow-[inset_0_0_60px_rgba(255,255,255,0.03)]">
+                {/* Video element - always rendered but hidden when camera off */}
                 <video
                   ref={videoRef}
                   autoPlay
                   playsInline
                   muted
-                  className="w-full h-full object-cover transform scale-x-[-1]"
+                  className={`absolute inset-0 w-full h-full object-cover transform scale-x-[-1] ${
+                    cameraEnabled ? 'opacity-100' : 'opacity-0'
+                  }`}
                 />
-              ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-white/5 to-transparent">
-                  <div className="w-24 h-24 rounded-full border-2 border-white/20 flex items-center justify-center mb-4">
-                    <Camera className="w-10 h-10 text-[#888888]" />
-                  </div>
-                  <p className="text-[#888888] text-sm font-mono">
-                    {cameraError || 'Enable camera to gaze into the mirror'}
-                  </p>
-                </div>
-              )}
 
-              {/* Mirror overlay effect */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-white/5 pointer-events-none" />
+                {/* Placeholder when camera is off */}
+                {!cameraEnabled && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    {/* Subtle reflection gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] via-transparent to-white/[0.01]" />
+                    <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/[0.03] to-transparent" />
 
-              {/* Speaking indicator */}
-              <AnimatePresence>
-                {isSpeaking && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 border border-white/10"
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1">
-                        {[...Array(3)].map((_, i) => (
-                          <motion.div
-                            key={i}
-                            className="w-1 h-4 bg-white rounded-full"
-                            animate={{ scaleY: [1, 1.5, 1] }}
-                            transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
-                          />
-                        ))}
+                    <div className="relative z-10">
+                      <div className="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-4 bg-white/[0.02]">
+                        <Camera className="w-8 h-8 text-white/20" />
                       </div>
-                      <span className="text-xs font-mono text-[#888888]">Amirror speaks...</span>
+                      <p className="text-white/30 text-xs font-mono text-center px-8">
+                        {cameraError || 'Enable camera to gaze into the mirror'}
+                      </p>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
+
+                {/* Mirror glass effects */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {/* Top-left highlight */}
+                  <div className="absolute top-0 left-0 w-1/2 h-1/3 bg-gradient-to-br from-white/[0.04] to-transparent" />
+                  {/* Bottom-right shadow */}
+                  <div className="absolute bottom-0 right-0 w-2/3 h-1/2 bg-gradient-to-tl from-black/20 to-transparent" />
+                  {/* Edge reflections */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                  <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-white/20 via-white/5 to-white/10" />
+                  <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-white/10 via-white/5 to-white/20" />
+                </div>
+
+                {/* Speaking indicator */}
+                <AnimatePresence>
+                  {isSpeaking && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute bottom-4 left-4 right-4 bg-black/90 backdrop-blur-sm rounded-lg p-3 border border-white/20"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="flex gap-1">
+                          {[...Array(3)].map((_, i) => (
+                            <motion.div
+                              key={i}
+                              className="w-1 h-4 bg-white rounded-full"
+                              animate={{ scaleY: [1, 1.5, 1] }}
+                              transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-xs font-mono text-white/60">Amirror speaks...</span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Listening indicator */}
+                <AnimatePresence>
+                  {isListening && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute top-4 right-4 flex items-center gap-2 bg-black/80 px-3 py-2 rounded-full border border-white/20"
+                    >
+                      <motion.div
+                        className="w-2 h-2 bg-white rounded-full"
+                        animate={{ scale: [1, 1.3, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      />
+                      <span className="text-xs font-mono text-white/60">Listening...</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Controls */}
