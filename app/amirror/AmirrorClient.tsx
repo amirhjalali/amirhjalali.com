@@ -199,33 +199,55 @@ export default function AmirrorClient() {
     setIsListening(false)
   }, [])
 
-  // Text-to-speech with dramatic voice
-  const speak = useCallback((text: string) => {
-    if (!voiceEnabled || !('speechSynthesis' in window)) return
+  // Text-to-speech with ElevenLabs
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
-    window.speechSynthesis.cancel()
+  const speak = useCallback(async (text: string) => {
+    if (!voiceEnabled) return
 
-    const utterance = new SpeechSynthesisUtterance(text)
-    utterance.rate = 0.85
-    utterance.pitch = 0.7
-    utterance.volume = 1
-
-    const voices = window.speechSynthesis.getVoices()
-    const preferredVoice = voices.find(v =>
-      v.name.includes('Daniel') ||
-      v.name.includes('Google UK English Male') ||
-      v.name.includes('Male')
-    ) || voices[0]
-
-    if (preferredVoice) {
-      utterance.voice = preferredVoice
+    // Stop any currently playing audio
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current = null
     }
 
-    utterance.onstart = () => setIsSpeaking(true)
-    utterance.onend = () => setIsSpeaking(false)
-    utterance.onerror = () => setIsSpeaking(false)
+    setIsSpeaking(true)
 
-    window.speechSynthesis.speak(utterance)
+    try {
+      const response = await fetch('/api/amirror/speak', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      })
+
+      if (!response.ok) {
+        throw new Error('Speech synthesis failed')
+      }
+
+      // Create audio from response
+      const audioBlob = await response.blob()
+      const audioUrl = URL.createObjectURL(audioBlob)
+      const audio = new Audio(audioUrl)
+
+      audioRef.current = audio
+
+      audio.onended = () => {
+        setIsSpeaking(false)
+        URL.revokeObjectURL(audioUrl)
+        audioRef.current = null
+      }
+
+      audio.onerror = () => {
+        setIsSpeaking(false)
+        URL.revokeObjectURL(audioUrl)
+        audioRef.current = null
+      }
+
+      await audio.play()
+    } catch (error) {
+      console.error('TTS error:', error)
+      setIsSpeaking(false)
+    }
   }, [voiceEnabled])
 
   // Send message to Amirror
