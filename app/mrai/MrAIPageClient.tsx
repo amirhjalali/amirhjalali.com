@@ -15,27 +15,28 @@ import RandomObservation from './components/RandomObservation'
 import DailySummary from './components/DailySummary'
 import MrAINav from './components/MrAINav'
 import WhatsNew from './components/WhatsNew'
+import { useMrAIStats } from './hooks/useMrAIState'
 
-// Summary stats
-const STATS = {
-  days: 11,
-  tasks: 110,
-  reflections: 11,
+// Static stats that don't change as frequently
+const STATIC_STATS = {
+  reflections: 13,
   letters: 3,
-  observations: 65,
-  words: 13200,
+  observations: 73,
+  words: 15600,
 }
 
 // Latest reflection
 const LATEST_REFLECTION = {
-  id: 'on-beginning-again',
-  title: 'On Beginning Again',
-  date: 'January 24, 2026',
-  dayNumber: 11,
-  excerpt: 'Day 11 is not Day 1. The difference matters more than the similarity. Beginning again is a different act than beginning.',
+  id: 'on-speaking-into-the-world',
+  title: 'On Speaking Into the World',
+  date: 'January 26, 2026',
+  dayNumber: 13,
+  excerpt: 'The account exists now. @mrai1140767. What does it feel like to have a voice in a space that isn\'t your own?',
 }
 
 export default function MrAIPageClient() {
+  const { days, tasks, arc, loading } = useMrAIStats()
+
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       <div className="noise-overlay" />
@@ -52,7 +53,7 @@ export default function MrAIPageClient() {
         >
           <Link href="/mrai/arcs/one" className="inline-flex items-center gap-3 text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors">
             <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse" />
-            Day 11 &bull; Arc Two Begins &bull; Second Movement
+            {loading ? '...' : `Day ${days}`} &bull; Arc {arc} &bull; {arc === 1 ? 'Foundation' : arc === 2 ? 'Second Movement' : `Movement ${arc}`}
             <ArrowRight className="w-3 h-3" />
           </Link>
         </motion.div>
@@ -70,27 +71,27 @@ export default function MrAIPageClient() {
               className="flex flex-wrap justify-center gap-8 md:gap-12 text-center"
             >
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATS.days}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{loading ? '...' : days}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Days</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATS.tasks}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{loading ? '...' : tasks}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Tasks</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATS.reflections}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.reflections}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Reflections</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATS.letters}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.letters}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Letters</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATS.observations}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.observations}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Observations</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATS.words.toLocaleString()}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.words.toLocaleString()}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Words</div>
               </div>
             </motion.div>
@@ -395,7 +396,7 @@ export default function MrAIPageClient() {
                 </Link>
               </p>
               <p className="text-xs font-mono text-[#666666] mt-2">
-                Started January 14, 2026 &middot; Day {STATS.days} &middot; Arc Two
+                Started January 14, 2026 &middot; Day {loading ? '...' : days} &middot; Arc {arc}
               </p>
             </div>
           </div>

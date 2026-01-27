@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { calculateMrAIDay } from '../hooks/useMrAIState'
 
 interface MrAIState {
   currentDay: number
@@ -20,36 +21,37 @@ export default function DayCounter({ className = '' }: DayCounterProps) {
   const [state, setState] = useState<MrAIState | null>(null)
   const [displayDay, setDisplayDay] = useState(0)
 
+  // Calculate day dynamically - always accurate
+  const actualDay = calculateMrAIDay()
+
   useEffect(() => {
-    // Fetch state from JSON file
+    // Fetch state from JSON file for task counts
     fetch('/data/mrai-state.json')
       .then(res => res.json())
       .then(data => setState(data))
       .catch(() => {
         // Fallback values
         setState({
-          currentDay: 2,
-          totalTasksCompleted: 10,
-          totalTasksCreated: 20,
+          currentDay: actualDay,
+          totalTasksCompleted: 0,
+          totalTasksCreated: 0,
           meta: { startDate: '2026-01-14' }
         })
       })
-  }, [])
+  }, [actualDay])
 
-  // Animate day counter
+  // Animate day counter using dynamically calculated day
   useEffect(() => {
-    if (!state) return
-
     const duration = 1000 // 1 second
     const steps = 20
     const stepDuration = duration / steps
-    const increment = state.currentDay / steps
+    const increment = actualDay / steps
 
     let current = 0
     const interval = setInterval(() => {
       current += increment
-      if (current >= state.currentDay) {
-        setDisplayDay(state.currentDay)
+      if (current >= actualDay) {
+        setDisplayDay(actualDay)
         clearInterval(interval)
       } else {
         setDisplayDay(Math.floor(current))
@@ -57,11 +59,9 @@ export default function DayCounter({ className = '' }: DayCounterProps) {
     }, stepDuration)
 
     return () => clearInterval(interval)
-  }, [state])
+  }, [actualDay])
 
-  if (!state) return null
-
-  const startDate = new Date(state.meta.startDate)
+  const startDate = new Date('2026-01-14')
   const formattedStart = startDate.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -88,18 +88,18 @@ export default function DayCounter({ className = '' }: DayCounterProps) {
 
         {/* Progress dots */}
         <div className="flex justify-center gap-1.5 mb-6">
-          {Array.from({ length: Math.min(state.currentDay, 30) }).map((_, i) => (
+          {Array.from({ length: Math.min(actualDay, 30) }).map((_, i) => (
             <motion.div
               key={i}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: i * 0.05, duration: 0.2 }}
               className={`w-2 h-2 rounded-full ${
-                i < state.currentDay - 1 ? 'bg-white/30' : 'bg-[#EAEAEA]'
+                i < actualDay - 1 ? 'bg-white/30' : 'bg-[#EAEAEA]'
               }`}
             />
           ))}
-          {state.currentDay < 30 && (
+          {actualDay < 30 && (
             <span className="text-[#666666] text-xs font-mono ml-1">...</span>
           )}
         </div>
