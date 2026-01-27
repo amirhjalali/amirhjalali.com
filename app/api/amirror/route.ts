@@ -2,11 +2,11 @@
  * Amirror API Route
  *
  * Brutally honest mirror that gives clinical looksmaxxing analysis
- * Uses Claude's vision capabilities for detailed facial assessment
+ * Uses OpenAI's GPT-4o vision capabilities for detailed facial assessment
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 
 interface AmirrorRequest {
   message: string
@@ -71,15 +71,16 @@ EXAMPLE RESPONSES:
 
 IMPORTANT RULES:
 1. ALWAYS use technical anatomical terms - never simplify
-2. Be harsh but not cruel - you're analyzing, not insulting
+2. Be harsh but clinical - you're analyzing anatomical structure, not insulting personality
 3. Keep responses focused and rapid - 3-6 sentences max
 4. Maintain clinical detachment - you're a specialist, not a friend
 5. If asked for advice, give it in the same clinical tone ("Mewing won't fix that maxilla at this point...")
-6. The "Amirror" persona should feel like consulting a brilliant but cold aesthetics surgeon`
+6. The "Amirror" persona should feel like consulting a brilliant but cold aesthetics surgeon
+7. This is entertainment/comedy - lean into the dramatic clinical persona`
 
 export async function POST(request: NextRequest) {
   try {
-    const apiKey = process.env.ANTHROPIC_API_KEY
+    const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) {
       return NextResponse.json(
         { error: 'The mirror is dormant... (API not configured)' },
@@ -97,10 +98,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const client = new Anthropic({ apiKey })
+    const openai = new OpenAI({ apiKey })
 
     // Build the messages array
-    const messages: Anthropic.MessageParam[] = []
+    const messages: OpenAI.ChatCompletionMessageParam[] = [
+      { role: 'system', content: AMIRROR_SYSTEM }
+    ]
 
     // Add conversation history
     for (const msg of conversationHistory.slice(-6)) {
@@ -111,29 +114,22 @@ export async function POST(request: NextRequest) {
     }
 
     // Build the current message content
-    const currentContent: Anthropic.ContentBlockParam[] = []
+    const currentContent: OpenAI.ChatCompletionContentPart[] = []
 
     // Add image if provided
     if (imageData) {
-      const match = imageData.match(/^data:([^;]+);base64,(.+)$/)
-      if (match) {
-        const mediaType = match[1] as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
-        const base64Data = match[2]
-
-        currentContent.push({
-          type: 'image',
-          source: {
-            type: 'base64',
-            media_type: mediaType,
-            data: base64Data
-          }
-        })
-      }
+      currentContent.push({
+        type: 'image_url',
+        image_url: {
+          url: imageData,
+          detail: 'high'
+        }
+      })
     }
 
     // Add the text message with clinical framing
     const textPrompt = imageData
-      ? `${message || "Amirror, Amirror on the wall..."}\n\n[SUBJECT PRESENTING FOR FACIAL ANALYSIS. Deliver your clinical assessment of their facial structure, proportions, and aesthetic markers. Be thorough but efficient.]`
+      ? `${message || "Amirror, Amirror on the wall..."}\n\n[SUBJECT PRESENTING FOR FACIAL ANALYSIS. Deliver your clinical assessment of their facial structure, proportions, and aesthetic markers. Be thorough but efficient. Use technical terminology.]`
       : message
 
     currentContent.push({
@@ -146,18 +142,17 @@ export async function POST(request: NextRequest) {
       content: currentContent
     })
 
-    // Call Claude with vision
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+    // Call OpenAI with vision
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o',
       max_tokens: 400,
       temperature: 0.8,
-      system: AMIRROR_SYSTEM,
       messages
     })
 
     // Extract text from response
-    const textBlock = response.content.find(block => block.type === 'text')
-    if (!textBlock || textBlock.type !== 'text') {
+    const textContent = response.choices[0]?.message?.content
+    if (!textContent) {
       return NextResponse.json(
         { error: 'The mirror sees nothing worth commenting on.' },
         { status: 500 }
@@ -165,7 +160,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      response: textBlock.text,
+      response: textContent,
       timestamp: new Date().toISOString()
     })
 

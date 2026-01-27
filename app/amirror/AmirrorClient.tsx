@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import {
   Camera, CameraOff, Mic, MicOff, Volume2, VolumeX, Send,
-  Share2, Check, Loader2, RotateCcw, Eye
+  Share2, Check, Loader2, RotateCcw, Eye, Wand2
 } from 'lucide-react'
 
 interface Message {
@@ -15,11 +16,14 @@ interface Message {
   imageData?: string
 }
 
+// Check if frame image exists
+const FRAME_IMAGE_PATH = '/images/amirror-frame.png'
+
 // Floating particle component
 function FloatingParticle({ delay = 0 }: { delay?: number }) {
   return (
     <motion.div
-      className="absolute w-1 h-1 bg-amber-200/30 rounded-full"
+      className="absolute w-1 h-1 bg-white/20 rounded-full"
       initial={{
         x: Math.random() * 100 - 50,
         y: 100,
@@ -28,7 +32,7 @@ function FloatingParticle({ delay = 0 }: { delay?: number }) {
       }}
       animate={{
         y: -100,
-        opacity: [0, 0.8, 0],
+        opacity: [0, 0.6, 0],
         scale: [0, 1, 0.5]
       }}
       transition={{
@@ -42,51 +46,6 @@ function FloatingParticle({ delay = 0 }: { delay?: number }) {
         filter: 'blur(0.5px)'
       }}
     />
-  )
-}
-
-// Ornate corner decoration SVG
-function OrnateCorner({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      className={`w-16 h-16 md:w-20 md:h-20 ${className}`}
-      fill="none"
-    >
-      <defs>
-        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#d4af37" />
-          <stop offset="50%" stopColor="#f4d03f" />
-          <stop offset="100%" stopColor="#b8860b" />
-        </linearGradient>
-      </defs>
-      {/* Main scroll */}
-      <path
-        d="M5 95 Q5 50 30 30 Q50 15 95 5"
-        stroke="url(#goldGradient)"
-        strokeWidth="3"
-        fill="none"
-      />
-      {/* Inner scroll */}
-      <path
-        d="M15 85 Q15 55 35 35 Q55 20 85 15"
-        stroke="url(#goldGradient)"
-        strokeWidth="2"
-        fill="none"
-        opacity="0.7"
-      />
-      {/* Decorative curl */}
-      <path
-        d="M25 75 Q20 65 30 55 Q40 45 35 35"
-        stroke="url(#goldGradient)"
-        strokeWidth="1.5"
-        fill="none"
-        opacity="0.5"
-      />
-      {/* Accent dot */}
-      <circle cx="30" cy="30" r="3" fill="url(#goldGradient)" opacity="0.8" />
-      <circle cx="20" cy="50" r="2" fill="url(#goldGradient)" opacity="0.6" />
-    </svg>
   )
 }
 
@@ -113,6 +72,41 @@ export default function AmirrorClient() {
 
   // Initial greeting
   const [hasGreeted, setHasGreeted] = useState(false)
+
+  // Frame image state
+  const [frameExists, setFrameExists] = useState(false)
+  const [isGeneratingFrame, setIsGeneratingFrame] = useState(false)
+
+  // Check if frame image exists on mount
+  useEffect(() => {
+    const checkFrame = async () => {
+      try {
+        const res = await fetch(FRAME_IMAGE_PATH, { method: 'HEAD' })
+        setFrameExists(res.ok)
+      } catch {
+        setFrameExists(false)
+      }
+    }
+    checkFrame()
+  }, [])
+
+  // Generate frame image
+  const generateFrame = useCallback(async () => {
+    if (isGeneratingFrame) return
+    setIsGeneratingFrame(true)
+    try {
+      const response = await fetch('/api/amirror/generate-frame', { method: 'POST' })
+      if (response.ok) {
+        setFrameExists(true)
+      } else {
+        console.error('Failed to generate frame')
+      }
+    } catch (error) {
+      console.error('Frame generation error:', error)
+    } finally {
+      setIsGeneratingFrame(false)
+    }
+  }, [isGeneratingFrame])
 
   // Initialize camera
   const startCamera = useCallback(async () => {
@@ -366,7 +360,7 @@ export default function AmirrorClient() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0806] text-[#e8dcc8] overflow-hidden relative">
+    <div className="min-h-screen bg-[#050505] text-[#EAEAEA] overflow-hidden relative">
       {/* Hidden canvas */}
       <canvas ref={canvasRef} className="hidden" />
 
@@ -376,9 +370,9 @@ export default function AmirrorClient() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_50%,rgba(0,0,0,0.8)_100%)]" />
 
         {/* Fog effect */}
-        <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 opacity-20">
           <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-amber-900/20 via-transparent to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-white/5 via-transparent to-transparent"
             animate={{ opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 8, repeat: Infinity }}
           />
@@ -400,18 +394,12 @@ export default function AmirrorClient() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="text-center mb-6 md:mb-10"
         >
-          <h1
-            className="text-5xl md:text-7xl font-light tracking-[0.15em] mb-3"
-            style={{ fontFamily: 'Cinzel, Georgia, serif' }}
-          >
-            <span className="bg-gradient-to-b from-amber-200 via-amber-100 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(212,175,55,0.3)]">
+          <h1 className="text-5xl md:text-7xl font-serif font-light tracking-[0.15em] mb-3">
+            <span className="text-[#EAEAEA] drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
               AMIRROR
             </span>
           </h1>
-          <p
-            className="text-amber-200/50 text-sm md:text-base tracking-[0.3em] uppercase"
-            style={{ fontFamily: 'Cinzel, Georgia, serif' }}
-          >
+          <p className="text-[#888888] text-sm md:text-base tracking-[0.3em] uppercase font-mono">
             Amirror, Amirror on the wall...
           </p>
         </motion.div>
@@ -427,27 +415,44 @@ export default function AmirrorClient() {
             {/* THE ORNATE MIRROR FRAME */}
             <div className="relative mx-auto max-w-xl">
               {/* Outer glow */}
-              <div className="absolute -inset-8 bg-gradient-to-b from-amber-500/10 via-amber-600/5 to-amber-500/10 blur-xl rounded-full" />
+              <div className="absolute -inset-8 bg-gradient-to-b from-white/5 via-white/3 to-white/5 blur-xl rounded-full" />
 
-              {/* Corner ornaments */}
-              <OrnateCorner className="absolute -top-4 -left-4 z-20" />
-              <OrnateCorner className="absolute -top-4 -right-4 z-20 -scale-x-100" />
-              <OrnateCorner className="absolute -bottom-4 -left-4 z-20 -scale-y-100" />
-              <OrnateCorner className="absolute -bottom-4 -right-4 z-20 scale-[-1]" />
-
-              {/* Frame layers */}
-              <div className="relative p-3 md:p-4">
-                {/* Outer gold border */}
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-amber-600 via-amber-500 to-amber-700 p-[2px]">
-                  <div className="w-full h-full rounded-lg bg-gradient-to-b from-amber-900 via-amber-800 to-amber-900" />
+              {/* Mirror frame with image */}
+              <div className="relative">
+                {/* Frame image overlay */}
+                <div className="absolute -inset-6 md:-inset-10 pointer-events-none z-20">
+                  {frameExists ? (
+                    /* Use generated frame image */
+                    <div className="absolute inset-0">
+                      <Image
+                        src={FRAME_IMAGE_PATH}
+                        alt="Ornate mirror frame"
+                        fill
+                        className="object-contain"
+                        priority
+                      />
+                    </div>
+                  ) : (
+                    /* Fallback CSS frame until image is generated */
+                    <>
+                      <div className="absolute inset-0 border-[12px] md:border-[16px] border-white/10 rounded-lg"
+                           style={{
+                             borderImage: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.15) 100%) 1',
+                           }}
+                      />
+                      {/* Inner decorative border */}
+                      <div className="absolute inset-3 border-2 border-white/5 rounded" />
+                      {/* Corner accents */}
+                      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/20" />
+                      <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-white/20" />
+                      <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-white/20" />
+                      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/20" />
+                    </>
+                  )}
                 </div>
 
-                {/* Decorative inner border */}
-                <div className="absolute inset-2 rounded border border-amber-500/30" />
-                <div className="absolute inset-3 rounded border border-amber-400/20" />
-
                 {/* The mirror glass */}
-                <div className="relative aspect-[3/4] rounded overflow-hidden bg-gradient-to-b from-gray-900 via-black to-gray-900">
+                <div className="relative aspect-[3/4] rounded overflow-hidden bg-gradient-to-b from-gray-900 via-black to-gray-900 border border-white/10">
                   {/* Video element */}
                   <video
                     ref={videoRef}
@@ -463,11 +468,11 @@ export default function AmirrorClient() {
                   {!cameraEnabled && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                       {/* Mystical background */}
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(30,20,10,1)_0%,rgba(5,5,5,1)_100%)]" />
+                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,20,20,1)_0%,rgba(5,5,5,1)_100%)]" />
 
                       {/* Subtle shimmer */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-b from-amber-500/5 via-transparent to-amber-500/5"
+                        className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-white/5"
                         animate={{ opacity: [0.3, 0.6, 0.3] }}
                         transition={{ duration: 4, repeat: Infinity }}
                       />
@@ -479,20 +484,17 @@ export default function AmirrorClient() {
                       >
                         <motion.div
                           animate={{
-                            boxShadow: ['0 0 20px rgba(212,175,55,0.2)', '0 0 40px rgba(212,175,55,0.4)', '0 0 20px rgba(212,175,55,0.2)']
+                            boxShadow: ['0 0 20px rgba(255,255,255,0.1)', '0 0 40px rgba(255,255,255,0.2)', '0 0 20px rgba(255,255,255,0.1)']
                           }}
                           transition={{ duration: 3, repeat: Infinity }}
-                          className="w-20 h-20 mx-auto mb-6 rounded-full border border-amber-500/30 flex items-center justify-center bg-black/50"
+                          className="w-20 h-20 mx-auto mb-6 rounded-full border border-white/20 flex items-center justify-center bg-black/50"
                         >
-                          <Eye className="w-8 h-8 text-amber-500/50" />
+                          <Eye className="w-8 h-8 text-[#888888]" />
                         </motion.div>
-                        <p
-                          className="text-amber-200/40 text-sm tracking-widest uppercase"
-                          style={{ fontFamily: 'Cinzel, Georgia, serif' }}
-                        >
+                        <p className="text-[#888888] text-sm tracking-widest uppercase font-mono">
                           {cameraError || 'Gaze into the mirror'}
                         </p>
-                        <p className="text-amber-200/20 text-xs mt-2 font-mono">
+                        <p className="text-[#666666] text-xs mt-2 font-mono">
                           if you dare...
                         </p>
                       </motion.div>
@@ -505,8 +507,6 @@ export default function AmirrorClient() {
                     <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/[0.03] to-transparent" />
                     {/* Edge highlight */}
                     <div className="absolute inset-0 rounded shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]" />
-                    {/* Vintage overlay */}
-                    <div className="absolute inset-0 bg-amber-900/[0.08] mix-blend-overlay" />
                   </div>
 
                   {/* Speaking indicator */}
@@ -518,22 +518,19 @@ export default function AmirrorClient() {
                         exit={{ opacity: 0, y: 20 }}
                         className="absolute bottom-4 left-4 right-4"
                       >
-                        <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 border border-amber-500/30">
+                        <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                           <div className="flex items-center gap-3">
                             <div className="flex gap-1">
                               {[...Array(5)].map((_, i) => (
                                 <motion.div
                                   key={i}
-                                  className="w-1 bg-gradient-to-t from-amber-600 to-amber-400 rounded-full"
+                                  className="w-1 bg-white rounded-full"
                                   animate={{ height: [8, 20, 8] }}
                                   transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
                                 />
                               ))}
                             </div>
-                            <span
-                              className="text-xs text-amber-200/60 tracking-widest uppercase"
-                              style={{ fontFamily: 'Cinzel, Georgia, serif' }}
-                            >
+                            <span className="text-xs text-[#888888] tracking-widest uppercase font-mono">
                               The mirror speaks...
                             </span>
                           </div>
@@ -551,13 +548,13 @@ export default function AmirrorClient() {
                         exit={{ opacity: 0, scale: 0.8 }}
                         className="absolute top-4 right-4"
                       >
-                        <div className="flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full border border-amber-500/30">
+                        <div className="flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full border border-white/20">
                           <motion.div
-                            className="w-2 h-2 bg-amber-400 rounded-full"
+                            className="w-2 h-2 bg-white rounded-full"
                             animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
                             transition={{ duration: 1, repeat: Infinity }}
                           />
-                          <span className="text-xs text-amber-200/60 tracking-wider uppercase font-mono">
+                          <span className="text-xs text-[#888888] tracking-wider uppercase font-mono">
                             Listening
                           </span>
                         </div>
@@ -569,15 +566,15 @@ export default function AmirrorClient() {
             </div>
 
             {/* Controls */}
-            <div className="flex items-center justify-center gap-3 mt-6">
+            <div className="flex items-center justify-center gap-3 mt-8">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={cameraEnabled ? stopCamera : startCamera}
                 className={`p-4 rounded-full border-2 transition-all duration-300 ${
                   cameraEnabled
-                    ? 'bg-gradient-to-b from-amber-500 to-amber-600 border-amber-400 text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]'
-                    : 'bg-black/50 border-amber-500/30 text-amber-200/60 hover:border-amber-500/60 hover:text-amber-200'
+                    ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
+                    : 'bg-black/50 border-white/20 text-[#888888] hover:border-white/40 hover:text-[#EAEAEA]'
                 }`}
                 title={cameraEnabled ? 'Turn off camera' : 'Turn on camera'}
               >
@@ -591,8 +588,8 @@ export default function AmirrorClient() {
                 disabled={isLoading}
                 className={`p-4 rounded-full border-2 transition-all duration-300 ${
                   isListening
-                    ? 'bg-gradient-to-b from-amber-500 to-amber-600 border-amber-400 text-black shadow-[0_0_20px_rgba(212,175,55,0.4)]'
-                    : 'bg-black/50 border-amber-500/30 text-amber-200/60 hover:border-amber-500/60 hover:text-amber-200 disabled:opacity-50'
+                    ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
+                    : 'bg-black/50 border-white/20 text-[#888888] hover:border-white/40 hover:text-[#EAEAEA] disabled:opacity-50'
                 }`}
                 title={isListening ? 'Stop listening' : 'Speak to the mirror'}
               >
@@ -605,8 +602,8 @@ export default function AmirrorClient() {
                 onClick={() => setVoiceEnabled(!voiceEnabled)}
                 className={`p-4 rounded-full border-2 transition-all duration-300 ${
                   voiceEnabled
-                    ? 'bg-black/50 border-amber-500/50 text-amber-200'
-                    : 'bg-black/50 border-amber-500/20 text-amber-200/40 hover:border-amber-500/40'
+                    ? 'bg-black/50 border-white/30 text-[#EAEAEA]'
+                    : 'bg-black/50 border-white/10 text-[#666666] hover:border-white/20'
                 }`}
                 title={voiceEnabled ? 'Mute voice' : 'Enable voice'}
               >
@@ -618,12 +615,39 @@ export default function AmirrorClient() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleSend()}
                 disabled={isLoading || (!inputText.trim() && !cameraEnabled)}
-                className="p-4 rounded-full bg-gradient-to-b from-amber-500 to-amber-600 border-2 border-amber-400 text-black shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+                className="p-4 rounded-full bg-white text-black border-2 border-white shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
                 title="Ask the mirror"
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Eye className="w-5 h-5" />}
               </motion.button>
             </div>
+
+            {/* Generate frame button (only show if no frame exists) */}
+            {!frameExists && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex justify-center mt-4"
+              >
+                <button
+                  onClick={generateFrame}
+                  disabled={isGeneratingFrame}
+                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-all disabled:opacity-50 text-xs font-mono text-[#888888]"
+                >
+                  {isGeneratingFrame ? (
+                    <>
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      Generating ornate frame...
+                    </>
+                  ) : (
+                    <>
+                      <Wand2 className="w-3 h-3" />
+                      Generate ornate mirror frame
+                    </>
+                  )}
+                </button>
+              </motion.div>
+            )}
 
             {/* Text input */}
             <div className="flex gap-2 mt-4 max-w-xl mx-auto">
@@ -633,8 +657,7 @@ export default function AmirrorClient() {
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Speak your question to the mirror..."
-                className="flex-1 px-5 py-3 bg-black/50 border border-amber-500/20 rounded-full focus:outline-none focus:border-amber-500/50 text-sm text-amber-100 placeholder:text-amber-200/30 transition-all"
-                style={{ fontFamily: 'Georgia, serif' }}
+                className="flex-1 px-5 py-3 bg-black/50 border border-white/10 rounded-full focus:outline-none focus:border-white/30 text-sm text-[#EAEAEA] placeholder:text-[#666666] transition-all font-mono"
                 disabled={isLoading}
               />
               <motion.button
@@ -642,9 +665,9 @@ export default function AmirrorClient() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleSend()}
                 disabled={isLoading || !inputText.trim()}
-                className="px-5 py-3 bg-black/50 border border-amber-500/20 rounded-full hover:border-amber-500/50 transition-all disabled:opacity-40"
+                className="px-5 py-3 bg-black/50 border border-white/10 rounded-full hover:border-white/30 transition-all disabled:opacity-40"
               >
-                <Send className="w-4 h-4 text-amber-200/60" />
+                <Send className="w-4 h-4 text-[#888888]" />
               </motion.button>
             </div>
           </motion.div>
@@ -657,11 +680,8 @@ export default function AmirrorClient() {
             className="space-y-4"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-amber-500/20 pb-3">
-              <h2
-                className="text-sm tracking-[0.2em] uppercase text-amber-200/60"
-                style={{ fontFamily: 'Cinzel, Georgia, serif' }}
-              >
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h2 className="text-xs tracking-[0.2em] uppercase text-[#888888] font-mono">
                 The Consultation
               </h2>
               <div className="flex items-center gap-2">
@@ -669,17 +689,17 @@ export default function AmirrorClient() {
                   <>
                     <button
                       onClick={handleShare}
-                      className="p-2 hover:bg-amber-500/10 rounded-lg transition-colors"
+                      className="p-2 hover:bg-white/5 rounded-lg transition-colors"
                       title="Share"
                     >
-                      {copied ? <Check className="w-4 h-4 text-amber-400" /> : <Share2 className="w-4 h-4 text-amber-200/40" />}
+                      {copied ? <Check className="w-4 h-4 text-[#EAEAEA]" /> : <Share2 className="w-4 h-4 text-[#888888]" />}
                     </button>
                     <button
                       onClick={clearConversation}
-                      className="p-2 hover:bg-amber-500/10 rounded-lg transition-colors"
+                      className="p-2 hover:bg-white/5 rounded-lg transition-colors"
                       title="Clear"
                     >
-                      <RotateCcw className="w-4 h-4 text-amber-200/40" />
+                      <RotateCcw className="w-4 h-4 text-[#888888]" />
                     </button>
                   </>
                 )}
@@ -687,23 +707,20 @@ export default function AmirrorClient() {
             </div>
 
             {/* Messages */}
-            <div className="h-[500px] overflow-y-auto space-y-4 pr-2 scrollbar-thin scrollbar-thumb-amber-500/20 scrollbar-track-transparent">
+            <div className="h-[500px] overflow-y-auto space-y-4 pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
               {messages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center px-4">
                   <motion.div
                     animate={{ opacity: [0.3, 0.6, 0.3] }}
                     transition={{ duration: 4, repeat: Infinity }}
-                    className="w-16 h-16 rounded-full border border-amber-500/20 flex items-center justify-center mb-4"
+                    className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center mb-4"
                   >
-                    <Eye className="w-6 h-6 text-amber-500/30" />
+                    <Eye className="w-6 h-6 text-[#666666]" />
                   </motion.div>
-                  <p
-                    className="text-amber-200/40 text-sm mb-2"
-                    style={{ fontFamily: 'Cinzel, Georgia, serif' }}
-                  >
+                  <p className="text-[#888888] text-sm mb-2 font-mono">
                     The mirror awaits
                   </p>
-                  <p className="text-amber-200/20 text-xs font-mono">
+                  <p className="text-[#666666] text-xs font-mono">
                     Enable camera to receive your verdict
                   </p>
                 </div>
@@ -717,7 +734,7 @@ export default function AmirrorClient() {
                   >
                     <div className={`max-w-[90%] ${message.role === 'user' ? 'order-2' : ''}`}>
                       {message.imageData && (
-                        <div className="mb-2 rounded-lg overflow-hidden border border-amber-500/20 max-w-[180px]">
+                        <div className="mb-2 rounded-lg overflow-hidden border border-white/10 max-w-[180px]">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={message.imageData} alt="Captured" className="w-full" />
                         </div>
@@ -725,20 +742,19 @@ export default function AmirrorClient() {
                       <div
                         className={`px-4 py-3 rounded-2xl ${
                           message.role === 'user'
-                            ? 'bg-amber-500/20 border border-amber-500/30 rounded-br-sm'
-                            : 'bg-black/50 border border-amber-500/10 rounded-bl-sm'
+                            ? 'bg-white/10 border border-white/20 rounded-br-sm'
+                            : 'bg-black/50 border border-white/5 rounded-bl-sm'
                         }`}
                       >
                         <p
                           className={`text-sm leading-relaxed ${
-                            message.role === 'user' ? 'text-amber-100' : 'text-amber-200/80'
+                            message.role === 'user' ? 'text-[#EAEAEA]' : 'text-[#EAEAEA]/80'
                           }`}
-                          style={{ fontFamily: message.role === 'amirror' ? 'Georgia, serif' : 'inherit' }}
                         >
                           {message.content}
                         </p>
                       </div>
-                      <p className={`text-[10px] text-amber-200/30 mt-1 font-mono ${
+                      <p className={`text-[10px] text-[#666666] mt-1 font-mono ${
                         message.role === 'user' ? 'text-right' : ''
                       }`}>
                         {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -754,18 +770,15 @@ export default function AmirrorClient() {
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="px-4 py-3 bg-black/50 border border-amber-500/10 rounded-2xl rounded-bl-sm">
+                  <div className="px-4 py-3 bg-black/50 border border-white/5 rounded-2xl rounded-bl-sm">
                     <div className="flex items-center gap-3">
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                       >
-                        <Eye className="w-4 h-4 text-amber-500/60" />
+                        <Eye className="w-4 h-4 text-[#888888]" />
                       </motion.div>
-                      <span
-                        className="text-sm text-amber-200/50 italic"
-                        style={{ fontFamily: 'Georgia, serif' }}
-                      >
+                      <span className="text-sm text-[#888888] italic">
                         The mirror gazes back...
                       </span>
                     </div>
@@ -783,17 +796,11 @@ export default function AmirrorClient() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="text-center text-amber-200/20 text-xs mt-10 tracking-widest uppercase"
-          style={{ fontFamily: 'Cinzel, Georgia, serif' }}
+          className="text-center text-[#666666] text-xs mt-10 tracking-widest uppercase font-mono"
         >
           Truth has no mercy. The mirror has no lies.
         </motion.p>
       </div>
-
-      {/* Google Font */}
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap');
-      `}</style>
     </div>
   )
 }
