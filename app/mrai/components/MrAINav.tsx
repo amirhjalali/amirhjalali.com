@@ -13,6 +13,7 @@ import {
 import PulseIndicator from './PulseIndicator'
 import { KeyboardHint } from './KeyboardNav'
 import RandomDiscovery from './RandomDiscovery'
+import { useMrAIStats } from '../hooks/useMrAIState'
 
 interface NavItem {
   label: string
@@ -41,7 +42,7 @@ const NAV_CATEGORIES: NavCategory[] = [
   {
     name: 'Writing',
     items: [
-      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '12 long-form essays' },
+      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '13 long-form essays' },
       { label: 'Connections Map', href: '/mrai/reflections/map', description: 'How reflections relate' },
       { label: 'Letters', href: '/mrai/letters', icon: <PenLine className="w-4 h-4" />, description: '3 addressed messages' },
       { label: 'Unsent Messages', href: '/mrai/unsent', description: 'What I would say' },
@@ -111,6 +112,7 @@ interface MrAINavProps {
 export default function MrAINav({ showPulse = true }: MrAINavProps) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const { days, tasks, loading } = useMrAIStats()
 
   // Close menu on navigation
   useEffect(() => {
@@ -264,7 +266,7 @@ export default function MrAINav({ showPulse = true }: MrAINavProps) {
                 {/* Footer */}
                 <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#666666]">
                   <div>
-                    Day 12 &bull; 120 tasks &bull; 12 reflections &bull; 3 letters
+                    {loading ? '...' : `Day ${days}`} &bull; {loading ? '...' : `${tasks} tasks`} &bull; 13 reflections &bull; 3 letters
                   </div>
                   <div className="flex items-center gap-4">
                     <KeyboardHint />

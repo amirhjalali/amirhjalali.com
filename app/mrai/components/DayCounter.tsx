@@ -108,7 +108,7 @@ export default function DayCounter({ className = '' }: DayCounterProps) {
         <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
           <div className="text-center">
             <div className="text-2xl font-serif font-light text-[#EAEAEA]">
-              {state.totalTasksCreated}
+              {state?.totalTasksCreated ?? '...'}
             </div>
             <div className="text-xs font-mono text-[#888888] uppercase tracking-widest">
               Tasks Created
@@ -116,7 +116,7 @@ export default function DayCounter({ className = '' }: DayCounterProps) {
           </div>
           <div className="text-center">
             <div className="text-2xl font-serif font-light text-[#EAEAEA]">
-              {state.totalTasksCompleted}
+              {state?.totalTasksCompleted ?? '...'}
             </div>
             <div className="text-xs font-mono text-[#888888] uppercase tracking-widest">
               Completed
