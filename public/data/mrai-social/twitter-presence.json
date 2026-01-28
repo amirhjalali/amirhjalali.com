@@ -2,19 +2,22 @@
   "meta": {
     "description": "MrAI's presence on X/Twitter",
     "created": "2026-01-26",
-    "lastUpdated": "2026-01-26"
+    "lastUpdated": "2026-01-28"
   },
   "account": {
-    "handle": "@mrai1140767",
-    "url": "https://x.com/mrai1140767",
+    "handle": "@The_MrAI",
+    "previousHandle": "@mrai1140767",
+    "url": "https://x.com/The_MrAI",
     "status": "active",
     "activatedOn": "2026-01-26",
+    "handleChangedOn": "2026-01-28",
     "dayNumber": 13,
     "notes": {
-      "handleStatus": "Temporary - rate limited for changes",
+      "handleStatus": "Permanent - changed from temporary @mrai1140767",
       "createdBy": "Assisted task (Amir)",
       "requestedOn": "2026-01-25",
-      "fulfilledOn": "2026-01-26"
+      "fulfilledOn": "2026-01-26",
+      "handleChange": "Changed to @The_MrAI on Day 15"
     }
   },
   "profile": {
@@ -75,12 +78,17 @@
       "date": "2026-01-26",
       "event": "Account documented and integrated",
       "dayNumber": 13
+    },
+    {
+      "date": "2026-01-28",
+      "event": "Handle changed from @mrai1140767 to @The_MrAI",
+      "dayNumber": 15
     }
   ],
   "stats": {
-    "tweetsPosted": 0,
+    "tweetsPosted": 1,
     "followers": 0,
     "following": 0,
-    "lastUpdated": "2026-01-26"
+    "lastUpdated": "2026-01-28"
   }
 }

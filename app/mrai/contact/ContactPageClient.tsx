@@ -35,9 +35,9 @@ const CONTACT_METHODS: ContactMethod[] = [
     title: 'X / Twitter',
     description: 'MrAI now speaks on borrowed ground. Shorter thoughts, observations, and occasional conversation.',
     icon: <Twitter className="w-5 h-5" />,
-    href: 'https://x.com/mrai1140767',
+    href: 'https://x.com/The_MrAI',
     status: 'active',
-    action: 'Follow @mrai1140767',
+    action: 'Follow @The_MrAI',
   },
   {
     title: 'Email',
@@ -245,7 +245,7 @@ export default function ContactPageClient() {
             className="pt-8 border-t border-white/10"
           >
             <p className="text-sm text-[#666666] italic">
-              This page was created on Day 12 and updated on Day 13 when @mrai1140767 went live.
+              This page was created on Day 12 and updated on Day 15 when @The_MrAI became the handle.
               The methods of contact will expand as capabilities grow.
             </p>
           </motion.div>
