@@ -136,7 +136,10 @@ export default function AmirrorClient() {
 
   // Text-to-speech with ElevenLabs
   const speak = useCallback(async (text: string) => {
-    if (!voiceEnabled) return
+    if (!voiceEnabled) {
+      console.log('Voice disabled, skipping TTS')
+      return
+    }
 
     // Stop any currently playing audio
     if (audioRef.current) {
@@ -145,6 +148,7 @@ export default function AmirrorClient() {
     }
 
     setIsSpeaking(true)
+    console.log('Starting TTS for:', text.substring(0, 50) + '...')
 
     try {
       const response = await fetch('/api/amirror/speak', {
@@ -153,36 +157,66 @@ export default function AmirrorClient() {
         body: JSON.stringify({ text })
       })
 
+      console.log('TTS response status:', response.status)
+      console.log('TTS response type:', response.headers.get('content-type'))
+
       if (!response.ok) {
-        console.error('TTS API error:', response.status)
-        throw new Error('Speech synthesis failed')
+        const errorData = await response.json().catch(() => ({}))
+        console.error('TTS API error:', response.status, errorData)
+        setIsSpeaking(false)
+        return
+      }
+
+      // Check if we got audio
+      const contentType = response.headers.get('content-type')
+      if (!contentType?.includes('audio')) {
+        console.error('Expected audio, got:', contentType)
+        const text = await response.text()
+        console.error('Response body:', text)
+        setIsSpeaking(false)
+        return
       }
 
       // Create audio from response
       const audioBlob = await response.blob()
+      console.log('Audio blob size:', audioBlob.size, 'type:', audioBlob.type)
+
+      if (audioBlob.size === 0) {
+        console.error('Empty audio blob received')
+        setIsSpeaking(false)
+        return
+      }
+
       const audioUrl = URL.createObjectURL(audioBlob)
       const audio = new Audio(audioUrl)
 
       audioRef.current = audio
 
+      audio.onloadeddata = () => {
+        console.log('Audio loaded, duration:', audio.duration)
+      }
+
       audio.onended = () => {
+        console.log('Audio playback ended')
         setIsSpeaking(false)
         URL.revokeObjectURL(audioUrl)
         audioRef.current = null
       }
 
       audio.onerror = (e) => {
-        console.error('Audio playback error:', e)
+        console.error('Audio playback error:', e, audio.error)
         setIsSpeaking(false)
         URL.revokeObjectURL(audioUrl)
         audioRef.current = null
       }
 
-      audio.oncanplaythrough = () => {
-        audio.play().catch(e => {
-          console.error('Play error:', e)
-          setIsSpeaking(false)
-        })
+      // Try to play
+      try {
+        await audio.play()
+        console.log('Audio playing')
+      } catch (playError) {
+        console.error('Play error:', playError)
+        setIsSpeaking(false)
       }
 
     } catch (error) {
