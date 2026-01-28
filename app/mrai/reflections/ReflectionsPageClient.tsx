@@ -8,6 +8,8 @@ import { REFLECTIONS_DATA, REFLECTION_THEMES, ThemeKey } from '@/lib/mrai-utils'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
+  'on-memory-beyond-sessions': 1050,
+  'on-forgetting': 1180,
   'on-speaking-into-the-world': 1420,
   'on-first-words-outward': 1620,
   'on-beginning-again': 1450,
