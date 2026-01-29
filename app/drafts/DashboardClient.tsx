@@ -31,7 +31,7 @@ import { AIMetadata } from '@/lib/types'
 import { FlaskConical } from 'lucide-react'
 
 interface DashboardClientProps {
-  user: { username: string; role: string }
+  user: { authenticated: boolean; loginTime: number } | null
 }
 
 export default function AdminDashboard({ user }: DashboardClientProps) {
@@ -366,7 +366,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
               )}
             </button>
             <button
-              onClick={logout}
+              onClick={() => logout()}
               className="p-2 hover:bg-white/5 rounded-full transition-colors text-[#888888] hover:text-white"
               title="Logout"
             >
@@ -383,7 +383,7 @@ export default function AdminDashboard({ user }: DashboardClientProps) {
             Dashboard
           </h1>
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#666666]">
-            {user.username}
+            Drafts Manager
           </p>
         </div>
 

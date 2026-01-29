@@ -95,7 +95,7 @@ export async function POST(
         winnerReason: reason,
         status: 'evaluated',
         evaluatedAt: new Date(),
-        evaluatedBy: session.username,
+        evaluatedBy: "admin",
       },
     });
 

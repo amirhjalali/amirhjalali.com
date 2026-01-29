@@ -1,16 +1,18 @@
 'use client'
 
 import { useActionState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Lock, User, StickyNote } from 'lucide-react'
+import { Lock, KeyRound } from 'lucide-react'
+import { Suspense } from 'react'
 import Spotlight from '@/components/Spotlight'
-import { login } from '@/app/actions/auth'
+import { login, LoginState } from '@/app/actions/auth'
 
-const initialState = {
-  error: '',
-}
+const initialState: LoginState = {}
 
-export default function NotesLoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirectTo') || '/notes'
   const [state, formAction, isPending] = useActionState(login, initialState)
 
   return (
@@ -29,37 +31,19 @@ export default function NotesLoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 border border-white/20 mb-4">
-              <StickyNote className="w-8 h-8 text-[#EAEAEA]" />
+              <KeyRound className="w-8 h-8 text-[#EAEAEA]" />
             </div>
             <h1 className="text-3xl font-serif font-light mb-2 text-[#EAEAEA]">
-              Notes Login
+              Sign In
             </h1>
             <p className="text-[#888888] font-mono text-xs uppercase tracking-widest">
-              Sign in to access your notes
+              Enter your password to continue
             </p>
           </div>
 
           {/* Login Form */}
           <form action={formAction} className="space-y-6">
-            <input type="hidden" name="redirectTo" value="/notes" />
-            {/* Username Field */}
-            <div>
-              <label htmlFor="username" className="block text-xs font-mono uppercase tracking-widest mb-2 text-[#888888]">
-                Username
-              </label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#888888]" />
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  className="w-full pl-10 pr-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-[#EAEAEA] placeholder:text-[#888888]/50 transition-all font-mono"
-                  placeholder="Enter username"
-                  required
-                  disabled={isPending}
-                />
-              </div>
-            </div>
+            <input type="hidden" name="redirectTo" value={redirectTo} />
 
             {/* Password Field */}
             <div>
@@ -75,6 +59,7 @@ export default function NotesLoginPage() {
                   className="w-full pl-10 pr-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-[#EAEAEA] placeholder:text-[#888888]/50 transition-all font-mono"
                   placeholder="Enter password"
                   required
+                  autoFocus
                   disabled={isPending}
                 />
               </div>
@@ -110,10 +95,22 @@ export default function NotesLoginPage() {
 
           {/* Footer */}
           <div className="mt-6 text-center text-[10px] font-mono uppercase tracking-widest text-[#888888]">
-            <p>Protected notes area</p>
+            <p>Protected area &bull; 90-day session</p>
           </div>
         </div>
       </motion.div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-[#050505]">
+        <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   )
 }

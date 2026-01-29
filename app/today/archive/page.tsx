@@ -11,7 +11,7 @@ export default async function ArchivePage() {
   const session = await getSession()
 
   if (!session) {
-    redirect('/admin/login?redirectTo=/today/archive')
+    redirect('/login?redirectTo=/today/archive')
   }
 
   return <ArchiveClient />

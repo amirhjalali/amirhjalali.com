@@ -109,10 +109,10 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
               <span className="text-xs text-[#333333]">This article is not published yet</span>
             </div>
             <Link
-              href="/admin"
+              href="/drafts"
               className="text-xs text-[#050505] hover:text-black font-medium underline"
             >
-              Back to Admin
+              Back to Drafts
             </Link>
           </div>
         </motion.div>

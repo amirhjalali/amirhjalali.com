@@ -11,7 +11,7 @@ export default async function TodayPage() {
   const session = await getSession()
 
   if (!session) {
-    redirect('/admin/login?redirectTo=/today')
+    redirect('/login?redirectTo=/today')
   }
 
   return <TodayClient />
