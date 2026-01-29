@@ -2,7 +2,6 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import crypto from 'crypto'
 
 // Password hash from environment (SHA-256)
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || ''
@@ -14,19 +13,23 @@ const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || undefined
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 90 // 90 days
 
 /**
- * Hash a password using SHA-256
+ * Hash a password using SHA-256 (async for Web Crypto API compatibility)
  */
-function hashPassword(password: string): string {
-  return crypto.createHash('sha256').update(password).digest('hex')
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(password)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
 /**
  * Verify password against stored hash or plain text fallback
  */
-function verifyPassword(password: string): boolean {
+async function verifyPassword(password: string): Promise<boolean> {
   // If hash is configured, use hash comparison
   if (ADMIN_PASSWORD_HASH) {
-    const inputHash = hashPassword(password)
+    const inputHash = await hashPassword(password)
     return inputHash === ADMIN_PASSWORD_HASH
   }
   // Fallback to plain text comparison (development only)
@@ -57,7 +60,7 @@ export async function login(prevState: LoginState, formData: FormData): Promise<
     return { error: 'Password is required' }
   }
 
-  if (verifyPassword(password)) {
+  if (await verifyPassword(password)) {
     const cookieStore = await cookies()
     cookieStore.set('admin_session', JSON.stringify({ 
       authenticated: true, 
@@ -105,12 +108,4 @@ export async function getSession(): Promise<Session | null> {
 export async function isAuthenticated(): Promise<boolean> {
   const session = await getSession()
   return !!session?.authenticated
-}
-
-/**
- * Generate a password hash (utility for setting up new password)
- * Usage: Run in Node REPL: hashPassword('your-password')
- */
-export function generatePasswordHash(password: string): string {
-  return hashPassword(password)
 }
