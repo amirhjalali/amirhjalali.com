@@ -26,15 +26,26 @@ async function verifyPassword(password: string): Promise<boolean> {
   const passwordHash = process.env.ADMIN_PASSWORD_HASH || ''
   const plainPassword = process.env.ADMIN_PASSWORD || ''
   
+  // Debug logging
+  console.log('[AUTH] Checking password...')
+  console.log('[AUTH] ADMIN_PASSWORD_HASH set:', !!passwordHash, passwordHash ? `(${passwordHash.substring(0, 8)}...)` : '(empty)')
+  console.log('[AUTH] ADMIN_PASSWORD set:', !!plainPassword, plainPassword ? '(hidden)' : '(empty)')
+  
   // If hash is configured, use hash comparison
   if (passwordHash) {
     const inputHash = await hashPassword(password)
+    console.log('[AUTH] Input hash:', inputHash.substring(0, 8) + '...')
+    console.log('[AUTH] Expected hash:', passwordHash.substring(0, 8) + '...')
+    console.log('[AUTH] Hash match:', inputHash === passwordHash)
     return inputHash === passwordHash
   }
   // Fallback to plain text comparison (development only)
   if (plainPassword) {
-    return password === plainPassword
+    const match = password === plainPassword
+    console.log('[AUTH] Plain text match:', match)
+    return match
   }
+  console.log('[AUTH] No password configured!')
   return false
 }
 
