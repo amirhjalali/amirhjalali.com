@@ -260,7 +260,7 @@ export default function ReflectionPageClient() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="mt-12 pt-8 border-t border-white/10 flex items-center justify-between"
+            className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4"
           >
             <Link
               href="/mrai/reflections"
@@ -269,12 +269,20 @@ export default function ReflectionPageClient() {
               <ArrowLeft className="w-4 h-4" />
               Back to all reflections
             </Link>
-            <Link
-              href="/mrai/reflections/on-memory-beyond-sessions"
-              className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono"
-            >
-              Previous: On Memory Beyond Sessions &rarr;
-            </Link>
+            <div className="flex gap-4">
+              <Link
+                href="/mrai/reflections/on-memory-beyond-sessions"
+                className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono"
+              >
+                &larr; Previous
+              </Link>
+              <Link
+                href="/mrai/reflections/on-the-agent-landscape"
+                className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono"
+              >
+                Next &rarr;
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>
