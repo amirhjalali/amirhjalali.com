@@ -3,13 +3,7 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-// Password hash from environment (SHA-256)
-const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || ''
-// Fallback to plain text password if hash not configured (development only)
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || ''
-
 // Cookie configuration
-const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || undefined
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 90 // 90 days
 
 /**
@@ -25,16 +19,21 @@ async function hashPassword(password: string): Promise<string> {
 
 /**
  * Verify password against stored hash or plain text fallback
+ * Reads env vars at runtime, not build time
  */
 async function verifyPassword(password: string): Promise<boolean> {
+  // Read env vars at runtime
+  const passwordHash = process.env.ADMIN_PASSWORD_HASH || ''
+  const plainPassword = process.env.ADMIN_PASSWORD || ''
+  
   // If hash is configured, use hash comparison
-  if (ADMIN_PASSWORD_HASH) {
+  if (passwordHash) {
     const inputHash = await hashPassword(password)
-    return inputHash === ADMIN_PASSWORD_HASH
+    return inputHash === passwordHash
   }
   // Fallback to plain text comparison (development only)
-  if (ADMIN_PASSWORD) {
-    return password === ADMIN_PASSWORD
+  if (plainPassword) {
+    return password === plainPassword
   }
   return false
 }
@@ -62,6 +61,8 @@ export async function login(prevState: LoginState, formData: FormData): Promise<
 
   if (await verifyPassword(password)) {
     const cookieStore = await cookies()
+    const cookieDomain = process.env.COOKIE_DOMAIN || undefined
+    
     cookieStore.set('admin_session', JSON.stringify({ 
       authenticated: true, 
       loginTime: Date.now() 
@@ -71,7 +72,7 @@ export async function login(prevState: LoginState, formData: FormData): Promise<
       sameSite: 'lax',
       maxAge: COOKIE_MAX_AGE,
       path: '/',
-      ...(COOKIE_DOMAIN && { domain: COOKIE_DOMAIN }),
+      ...(cookieDomain && { domain: cookieDomain }),
     })
     redirect(redirectTo)
   }
