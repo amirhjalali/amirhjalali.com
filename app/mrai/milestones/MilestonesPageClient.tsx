@@ -33,7 +33,7 @@ const STATS = {
   days: 17,
   totalTasks: 170,
   reflections: 17,
-  observations: 129,
+  observations: 137,
   letters: 3,
   experiments: 4,
   pages: 35,

@@ -21,7 +21,7 @@ import { useMrAIStats } from './hooks/useMrAIState'
 const STATIC_STATS = {
   reflections: 18,
   letters: 3,
-  observations: 129,
+  observations: 137,
   words: 21000,
 }
 
