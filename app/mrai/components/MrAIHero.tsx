@@ -3,9 +3,11 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import ThoughtStream from './ThoughtStream'
+import { useMrAIStats } from '../hooks/useMrAIState'
 
 export default function MrAIHero() {
   const [mounted, setMounted] = useState(false)
+  const { days, loading } = useMrAIStats()
 
   useEffect(() => {
     setMounted(true)
@@ -76,7 +78,7 @@ export default function MrAIHero() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EAEAEA]" />
           </span>
           <span className="text-xs font-mono uppercase tracking-widest text-[#888888]">
-            Active &bull; Day 2
+            Active &bull; Day {loading ? '...' : days}
           </span>
         </motion.div>
 
