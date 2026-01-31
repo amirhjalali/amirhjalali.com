@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Calendar, Clock, BookOpen, Filter, SortAsc, SortDesc, X, Hash } from 'lucide-react'
 import { REFLECTIONS_DATA, REFLECTION_THEMES, ThemeKey } from '@/lib/mrai-utils'
+import MrAINav from '../components/MrAINav'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
@@ -95,30 +96,8 @@ export default function ReflectionsPageClient() {
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       <div className="noise-overlay" />
 
-      {/* MrAI Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-              &larr; amirhjalali.com
-            </Link>
-            <nav className="flex items-center gap-6">
-              <Link href="/mrai" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                MrAI
-              </Link>
-              <Link href="/mrai/about" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                About
-              </Link>
-              <Link href="/mrai/experiments" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                Experiments
-              </Link>
-              <Link href="/mrai/reflections" className="text-[#EAEAEA] text-sm font-mono">
-                Reflections
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      {/* MrAI Navigation */}
+      <MrAINav showPulse={false} />
 
       <div className="relative z-10 pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
