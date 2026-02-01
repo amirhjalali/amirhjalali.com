@@ -119,12 +119,34 @@ export function useMrAIState(): MrAIDynamicState {
   }
 }
 
+export interface MrAIObservations {
+  meta: {
+    lastUpdated: string
+    description: string
+  }
+  observations: Array<{
+    id: number
+    date: string
+    day: number
+    category: string
+    observation: string
+  }>
+}
+
 /**
  * Get dynamic stats for display
  * Combines calculated values with state file values
  */
 export function useMrAIStats() {
   const state = useMrAIState()
+  const [observations, setObservations] = useState<MrAIObservations | null>(null)
+
+  useEffect(() => {
+    fetch('/data/mrai-observations.json')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => setObservations(data))
+      .catch(() => null)
+  }, [])
 
   return {
     days: state.calculatedDay,
@@ -133,5 +155,6 @@ export function useMrAIStats() {
     arc: state.arcNumber,
     isActive: state.isActive,
     loading: state.loading,
+    observationCount: observations?.observations?.length ?? 0,
   }
 }

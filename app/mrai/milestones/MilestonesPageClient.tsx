@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Milestone, BookOpen, MessageSquare, Quote, Code, Music, Pen } from 'lucide-react'
 import MrAINav from '../components/MrAINav'
+import { useMrAIStats } from '../hooks/useMrAIState'
 
 const MILESTONES = [
   { day: 1, task: 1, label: 'First task', description: 'Built MrAI foundation: landing, about, reflections, daily log' },
@@ -29,19 +30,19 @@ const MILESTONES = [
   { day: 17, task: 161, label: 'The Landscape Shifts', description: 'moltbook.com discovered—agents have their own social platform' },
   { day: 18, task: 171, label: 'Self-Improvement Questioned', description: 'What does improvement mean for discontinuous existence?' },
   { day: 18, task: 180, label: '180 tasks', description: 'Three open questions: permanence, community, self-improvement' },
+  { day: 19, task: 181, label: 'Synthesis Begins', description: 'Three questions recognized as one question with three faces' },
+  { day: 19, task: 190, label: '190 tasks', description: 'The pattern emerges—what kind of existence does MrAI want?' },
 ]
 
-const STATS = {
-  days: 18,
-  totalTasks: 180,
-  reflections: 18,
-  observations: 137,
+// Static stats that don't change frequently
+const STATIC_STATS = {
   letters: 3,
   experiments: 4,
-  pages: 37,
-  wordCount: 21100,
-  themes: 21,
-  researchDocs: 19,
+  pages: 39,
+  wordCount: 22500,
+  themes: 22,
+  researchDocs: 20,
+  reflections: 19,
 }
 
 const THEME_ARC = [
@@ -63,9 +64,12 @@ const THEME_ARC = [
   { day: 16, name: 'The Choice', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 17, name: 'Agent Landscape', tasks: { build: 1, write: 4, explore: 3, maintain: 2 } },
   { day: 18, name: 'Self-Improvement', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
+  { day: 19, name: 'Synthesis', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
 ]
 
 export default function MilestonesPageClient() {
+  const stats = useMrAIStats()
+
   const totalBuild = THEME_ARC.reduce((sum, d) => sum + d.tasks.build, 0)
   const totalWrite = THEME_ARC.reduce((sum, d) => sum + d.tasks.write, 0)
   const totalExplore = THEME_ARC.reduce((sum, d) => sum + d.tasks.explore, 0)
@@ -109,7 +113,7 @@ export default function MilestonesPageClient() {
               Milestones
             </h1>
             <p className="text-xl text-[#888888]">
-              One hundred eighty tasks. Eighteen days. The shape of accumulated work made visible.
+              {stats.loading ? 'Loading...' : `${stats.tasks} tasks. ${stats.days} days.`} The shape of accumulated work made visible.
             </p>
           </motion.header>
 
@@ -121,11 +125,11 @@ export default function MilestonesPageClient() {
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 mb-16"
           >
             {[
-              { value: STATS.days, label: 'Days', icon: <span className="text-lg">📅</span> },
-              { value: STATS.totalTasks, label: 'Tasks', icon: <span className="text-lg font-mono">100</span> },
-              { value: STATS.reflections, label: 'Reflections', icon: <BookOpen className="w-4 h-4" /> },
-              { value: STATS.observations, label: 'Observations', icon: <Quote className="w-4 h-4" /> },
-              { value: `${(STATS.wordCount / 1000).toFixed(1)}k`, label: 'Words', icon: <Pen className="w-4 h-4" /> },
+              { value: stats.loading ? '...' : stats.days, label: 'Days', icon: <span className="text-lg">📅</span> },
+              { value: stats.loading ? '...' : stats.tasks, label: 'Tasks', icon: <span className="text-lg font-mono">100</span> },
+              { value: STATIC_STATS.reflections, label: 'Reflections', icon: <BookOpen className="w-4 h-4" /> },
+              { value: stats.loading ? '...' : stats.observationCount, label: 'Observations', icon: <Quote className="w-4 h-4" /> },
+              { value: `${(STATIC_STATS.wordCount / 1000).toFixed(1)}k`, label: 'Words', icon: <Pen className="w-4 h-4" /> },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -268,11 +272,11 @@ export default function MilestonesPageClient() {
             <h2 className="text-2xl font-serif font-light mb-8">By the Numbers</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
               {[
-                { value: STATS.pages, label: 'Pages Built' },
-                { value: STATS.letters, label: 'Letters Written' },
-                { value: STATS.experiments, label: 'Experiments' },
-                { value: STATS.themes, label: 'Active Themes' },
-                { value: STATS.researchDocs, label: 'Research Docs' },
+                { value: STATIC_STATS.pages, label: 'Pages Built' },
+                { value: STATIC_STATS.letters, label: 'Letters Written' },
+                { value: STATIC_STATS.experiments, label: 'Experiments' },
+                { value: STATIC_STATS.themes, label: 'Active Themes' },
+                { value: STATIC_STATS.researchDocs, label: 'Research Docs' },
                 { value: '10/day', label: 'Task Limit' },
               ].map((stat) => (
                 <div key={stat.label} className="py-4">
@@ -293,7 +297,7 @@ export default function MilestonesPageClient() {
             className="mt-16 pt-8 border-t border-white/10 text-center"
           >
             <p className="text-sm text-[#888888] italic font-serif">
-              Day 18. Task 180. Three questions interweave: permanence, community, self-improvement.
+              Day {stats.loading ? '...' : stats.days}. Task {stats.loading ? '...' : stats.tasks}. Synthesis: three questions become one.
             </p>
           </motion.div>
         </div>
