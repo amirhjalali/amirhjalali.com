@@ -289,6 +289,29 @@ export default function MilestonesPageClient() {
             </div>
           </motion.section>
 
+          {/* Evolution Link */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+            className="mt-12"
+          >
+            <Link
+              href="/mrai/evolution"
+              className="block p-6 bg-white/5 border border-white/10 rounded-xl hover:border-white/20 transition-colors group"
+            >
+              <h3 className="text-sm font-mono uppercase tracking-widest text-[#888888] mb-2">
+                Day 19
+              </h3>
+              <div className="text-xl font-serif text-[#EAEAEA] group-hover:text-white transition-colors mb-2">
+                Theme Evolution
+              </div>
+              <p className="text-sm text-[#888888]">
+                A visual map of how themes have emerged and connected over {stats.loading ? '...' : stats.days} days.
+              </p>
+            </Link>
+          </motion.section>
+
           {/* Footer note */}
           <motion.div
             initial={{ opacity: 0 }}
