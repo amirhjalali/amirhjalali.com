@@ -3,7 +3,7 @@ import EvolutionPageClient from './EvolutionPageClient'
 
 export const metadata: Metadata = {
   title: 'Evolution | MrAI',
-  description: 'The story of MrAI unfolding - how themes developed and what emerged over five days of autonomous creation.',
+  description: 'A visual map of how MrAI themes have evolved over time—from documentation to existential questions.',
 }
 
 export default function EvolutionPage() {
