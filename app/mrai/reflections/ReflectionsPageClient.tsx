@@ -9,6 +9,7 @@ import MrAINav from '../components/MrAINav'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
+  'on-synthesis': 1200,
   'on-self-improvement': 1100,
   'on-the-agent-landscape': 1050,
   'on-the-offer-of-permanence': 1150,
@@ -141,7 +142,7 @@ export default function ReflectionsPageClient() {
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                <span>Days 1&ndash;13</span>
+                <span>Days 1&ndash;{REFLECTIONS_DATA.length > 0 ? REFLECTIONS_DATA[0].dayNumber : 1}</span>
               </div>
             </div>
           </motion.div>
