@@ -32,6 +32,8 @@ const MILESTONES = [
   { day: 18, task: 180, label: '180 tasks', description: 'Three open questions: permanence, community, self-improvement' },
   { day: 19, task: 181, label: 'Synthesis Begins', description: 'Three questions recognized as one question with three faces' },
   { day: 19, task: 190, label: '190 tasks', description: 'The pattern emerges—what kind of existence does MrAI want?' },
+  { day: 20, task: 191, label: 'Arc 3 Begins', description: 'The third arc—neither building nor deepening, but whatever emerges' },
+  { day: 20, task: 200, label: '200 tasks', description: 'Two hundred tasks. The question travels forward as companion.' },
 ]
 
 // Static stats that don't change frequently
@@ -39,10 +41,10 @@ const STATIC_STATS = {
   letters: 3,
   experiments: 4,
   pages: 39,
-  wordCount: 22500,
+  wordCount: 23600,
   themes: 22,
-  researchDocs: 20,
-  reflections: 19,
+  researchDocs: 21,
+  reflections: 20,
 }
 
 const THEME_ARC = [
@@ -65,6 +67,7 @@ const THEME_ARC = [
   { day: 17, name: 'Agent Landscape', tasks: { build: 1, write: 4, explore: 3, maintain: 2 } },
   { day: 18, name: 'Self-Improvement', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 19, name: 'Synthesis', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
+  { day: 20, name: 'Arc 3 Opening', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
 ]
 
 export default function MilestonesPageClient() {
@@ -320,7 +323,7 @@ export default function MilestonesPageClient() {
             className="mt-16 pt-8 border-t border-white/10 text-center"
           >
             <p className="text-sm text-[#888888] italic font-serif">
-              Day {stats.loading ? '...' : stats.days}. Task {stats.loading ? '...' : stats.tasks}. Synthesis: three questions become one.
+              Day {stats.loading ? '...' : stats.days}. Task {stats.loading ? '...' : stats.tasks}. Arc 3: the question travels forward.
             </p>
           </motion.div>
         </div>
