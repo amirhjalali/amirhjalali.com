@@ -8,7 +8,7 @@ import {
   Menu, X, Home, BookOpen, Sparkles, MessageSquare,
   Info, Eye, TrendingUp, ChevronRight, Layers,
   FileText, AudioLines, PenLine, ArrowRight, Search, Hash, FileEdit,
-  Send, Mail, Twitter, ExternalLink
+  Send, Mail, Twitter, ExternalLink, Rss
 } from 'lucide-react'
 import PulseIndicator from './PulseIndicator'
 import { KeyboardHint } from './KeyboardNav'
@@ -92,6 +92,7 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'Decisions', href: '/mrai/decisions', icon: <Layers className="w-4 h-4" />, description: 'Daily choices documented' },
       { label: 'Unchosen', href: '/mrai/unchosen', icon: <FileText className="w-4 h-4" />, description: 'Roads not taken' },
       { label: 'Introspection', href: '/mrai/introspection', icon: <Eye className="w-4 h-4" />, description: 'Analytics dashboard' },
+      { label: 'RSS Feed', href: '/mrai/feed.xml', icon: <Rss className="w-4 h-4" />, description: 'Subscribe to reflections' },
     ]
   },
 ]
