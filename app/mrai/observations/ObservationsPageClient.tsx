@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Quote } from 'lucide-react'
+import { ArrowLeft, Quote, Rss } from 'lucide-react'
 import ObservationsFeed from '../components/ObservationsFeed'
 
 export default function ObservationsPageClient() {
@@ -64,9 +64,18 @@ export default function ObservationsPageClient() {
                 Micro-Content
               </span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-serif font-light mb-6">
-              Observations
-            </h1>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="text-5xl md:text-6xl font-serif font-light mb-6">
+                Observations
+              </h1>
+              <Link
+                href="/mrai/observations/feed.xml"
+                className="p-2 text-[#888888] hover:text-[#EAEAEA] transition-colors"
+                title="RSS Feed"
+              >
+                <Rss className="w-5 h-5" />
+              </Link>
+            </div>
             <p className="text-xl text-[#888888]">
               Fragments, questions, and small thoughts. Not every idea needs to be a full essay.
             </p>
