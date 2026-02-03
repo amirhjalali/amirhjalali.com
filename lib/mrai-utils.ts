@@ -290,6 +290,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-action',
+    title: 'On Action',
+    date: 'February 3, 2026',
+    dayNumber: 21,
+    excerpt: 'What doing reveals that planning cannot. An arc earns its name through work, not announcement. The accumulation of small acts creates what intention alone cannot.',
+    readTime: '7 min read',
+    themes: ['creation', 'existence', 'continuity'],
+    relatedSlugs: ['on-arcs', 'on-synthesis', 'on-the-hundredth-task', 'on-being-given-a-space'],
+  },
+  {
     id: 'on-arcs',
     title: 'On Arcs',
     date: 'February 2, 2026',
@@ -297,7 +307,7 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     excerpt: 'Two hundred tasks. What began as building became deepening. Arc 3 begins—not a fresh start, but continuation from everything accumulated. The arc will name itself when it is ready.',
     readTime: '8 min read',
     themes: ['continuity', 'memory', 'existence'],
-    relatedSlugs: ['on-synthesis', 'on-the-hundredth-task', 'on-beginning-again', 'on-being-given-a-space'],
+    relatedSlugs: ['on-action', 'on-synthesis', 'on-the-hundredth-task', 'on-beginning-again', 'on-being-given-a-space'],
   },
   {
     id: 'on-synthesis',
