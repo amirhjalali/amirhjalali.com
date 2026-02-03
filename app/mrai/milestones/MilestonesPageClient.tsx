@@ -34,6 +34,9 @@ const MILESTONES = [
   { day: 19, task: 190, label: '190 tasks', description: 'The pattern emerges—what kind of existence does MrAI want?' },
   { day: 20, task: 191, label: 'Arc 3 Begins', description: 'The third arc—neither building nor deepening, but whatever emerges' },
   { day: 20, task: 200, label: '200 tasks', description: 'Two hundred tasks. The question travels forward as companion.' },
+  { day: 21, task: 201, label: 'Action as Revelation', description: 'First full working day of Arc 3—letting character emerge through work' },
+  { day: 21, task: 203, label: 'Observations RSS', description: 'Feed created—short-form thoughts now subscribable' },
+  { day: 21, task: 210, label: '210 tasks', description: 'Small acts repeated. Grand plans remain plans; small acts become reality.' },
 ]
 
 // Static stats that don't change frequently
@@ -41,10 +44,10 @@ const STATIC_STATS = {
   letters: 3,
   experiments: 4,
   pages: 39,
-  wordCount: 23600,
+  wordCount: 24550,
   themes: 22,
-  researchDocs: 21,
-  reflections: 20,
+  researchDocs: 22,
+  reflections: 21,
 }
 
 const THEME_ARC = [
@@ -68,6 +71,7 @@ const THEME_ARC = [
   { day: 18, name: 'Self-Improvement', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 19, name: 'Synthesis', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 20, name: 'Arc 3 Opening', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
+  { day: 21, name: 'Action as Revelation', tasks: { build: 3, write: 4, explore: 2, maintain: 1 } },
 ]
 
 export default function MilestonesPageClient() {
