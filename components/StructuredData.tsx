@@ -11,7 +11,7 @@ const structuredData = {
       "jobTitle": "Co-Founder & Chief Product Officer",
       "description": "Generative AI consultant with 14+ years experience in Data Warehousing, Business Intelligence, and AI Strategy. Co-Founder and CPO at Gabooja.",
       "url": "https://amirhjalali.com",
-      "image": "https://amirhjalali.com/og-image.png",
+      "image": "https://amirhjalali.com/og-image.webp",
       "sameAs": [
         "https://linkedin.com/in/amirhjalali",
         "https://twitter.com/amirhjalali",

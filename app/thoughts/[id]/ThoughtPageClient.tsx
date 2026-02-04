@@ -52,7 +52,7 @@ const generateArticleJsonLd = (article: Article, id: string) => ({
   },
   image: article.imageUrl && !article.imageUrl.startsWith('data:')
     ? article.imageUrl
-    : `${SITE_URL}/images/og-default.jpg`,
+    : `${SITE_URL}/og-image.webp`,
   keywords: article.tags.join(', '),
   articleSection: 'Technology',
   wordCount: article.content.split(/\s+/).length,

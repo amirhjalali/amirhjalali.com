@@ -32,7 +32,7 @@ export default function PortraitReveal() {
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
                 <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-[0.08] grayscale contrast-125">
                     <img
-                        src="/AmirPortraitWebsite.jpg"
+                        src="/AmirPortraitWebsite.webp"
                         alt=""
                         className="w-full h-auto"
                         style={{
@@ -54,7 +54,7 @@ export default function PortraitReveal() {
             >
                 <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-40 grayscale contrast-125">
                     <img
-                        src="/AmirPortraitWebsite.jpg"
+                        src="/AmirPortraitWebsite.webp"
                         alt="Amir H. Jalali"
                         className="w-full h-auto"
                         style={{

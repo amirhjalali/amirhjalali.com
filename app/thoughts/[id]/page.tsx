@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<ThoughtPage
       images: article.imageUrl ? [
         {
           url: article.imageUrl.startsWith('data:')
-            ? `${SITE_URL}/images/og-default.jpg`
+            ? `${SITE_URL}/og-image.webp`
             : article.imageUrl,
           width: 1200,
           height: 630,

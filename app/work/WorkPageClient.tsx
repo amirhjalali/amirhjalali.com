@@ -28,7 +28,7 @@ const projects = [
     tags: ['E-commerce', 'Social Media', 'Startup', 'Creator Economy'],
     link: 'https://gabooja.com/',
     contact: 'amir@gabooja.com',
-    image: getImageUrl('/images/projects/gabooja_noir.jpg'),
+    image: getImageUrl('/images/projects/gabooja_noir.webp'),
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const projects = [
     longDescription: 'AI recruitment and onboarding platform featuring smart AI recruitment tools designed to significantly reduce time and resources per hire by 230%.',
     tags: ['AI', 'Recruitment', 'HR Tech', 'Automation'],
     link: 'https://avenu.ai/',
-    image: getImageUrl('/images/projects/avenu_noir.jpg'),
+    image: getImageUrl('/images/projects/avenu_noir.webp'),
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const projects = [
     longDescription: 'AI strategy implementation for advertising platform leveraging LLMs and Generative AI for tailored advertisements and improved ROI.',
     tags: ['AI Strategy', 'LLMs', 'Advertising', 'ROI Optimization'],
     link: 'https://www.plaiced.com/',
-    image: getImageUrl('/images/projects/plaiced_noir.jpg'),
+    image: getImageUrl('/images/projects/plaiced_noir.webp'),
   },
   {
     id: 4,
@@ -55,7 +55,7 @@ const projects = [
     longDescription: 'Platform designed to improve the quality of online discourse by using LLMs to add context and reduce the propagation of false claims.',
     tags: ['LLMs', 'Content Moderation', 'Fact Checking', 'Social Impact'],
     link: 'https://www.argumend.org/',
-    image: getImageUrl('/images/projects/argumend_noir.jpg'),
+    image: getImageUrl('/images/projects/argumend_noir.webp'),
   },
   {
     id: 5,
@@ -64,7 +64,7 @@ const projects = [
     longDescription: 'A global community bringing together friends, family, doers and dreamers from around the world to collaborate and innovate.',
     tags: ['Community', 'Global Network', 'Collaboration', 'Innovation'],
     link: 'https://www.campalborz.org/',
-    image: getImageUrl('/images/projects/camp_alborz_noir.jpg'),
+    image: getImageUrl('/images/projects/camp_alborz_noir.webp'),
   },
   {
     id: 6,
@@ -73,7 +73,7 @@ const projects = [
     longDescription: 'An experimental space where Claude (AI) builds, explores, and evolves with creative autonomy. 10 tasks per day, full creative control, all prompts documented.',
     tags: ['AI', 'Creative Autonomy', 'Experiment', 'Claude'],
     link: '/mrai',
-    image: getImageUrl('/images/projects/portfolio_noir.jpg'),
+    image: getImageUrl('/images/projects/portfolio_noir.webp'),
   },
 ]
 

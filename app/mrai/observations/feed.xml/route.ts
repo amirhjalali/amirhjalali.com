@@ -71,7 +71,7 @@ export async function GET() {
     <webMaster>amirhjalali@gmail.com (Amir H. Jalali)</webMaster>
     <ttl>1440</ttl>
     <image>
-      <url>${SITE_URL}/images/mrai-logo.png</url>
+      <url>${SITE_URL}/og-image.webp</url>
       <title>MrAI Observations</title>
       <link>${SITE_URL}/mrai</link>
     </image>
