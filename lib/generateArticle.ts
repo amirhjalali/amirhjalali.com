@@ -146,9 +146,28 @@ async function generateImage(title: string, topic: string, apiKey: string): Prom
 }
 
 /**
- * Download image from URL and convert to base64
+ * Download image from URL and convert to WebP base64
+ * Uses server-side conversion for better compression
  */
 async function downloadImageAsBase64(url: string): Promise<string> {
+  // Use server-side API for WebP conversion
+  try {
+    const response = await fetch('/api/convert-to-webp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.imageUrl;
+    }
+    // Fall through to client-side fallback
+  } catch {
+    // Fall through to client-side fallback
+  }
+
+  // Fallback: Download directly and use original format (no WebP conversion)
   let response;
   try {
     response = await fetch(url);

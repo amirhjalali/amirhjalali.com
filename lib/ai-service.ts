@@ -216,9 +216,19 @@ export async function downloadImageAsBase64(url: string): Promise<string> {
     }
 
     const arrayBuffer = await response.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const base64 = buffer.toString('base64');
-    const contentType = response.headers.get('content-type') || 'image/png';
+    const originalBuffer = Buffer.from(arrayBuffer);
 
-    return `data:${contentType};base64,${base64}`;
+    // Convert to WebP for smaller file size
+    try {
+        const sharp = (await import('sharp')).default;
+        const webpBuffer = await sharp(originalBuffer)
+            .webp({ quality: 85 })
+            .toBuffer();
+        return `data:image/webp;base64,${webpBuffer.toString('base64')}`;
+    } catch (_) {
+        // If sharp is not available or conversion fails, use original format
+        const base64 = originalBuffer.toString('base64');
+        const contentType = response.headers.get('content-type') || 'image/png';
+        return `data:${contentType};base64,${base64}`;
+    }
 }

@@ -21,6 +21,14 @@ const { pipeline } = require('stream');
 const { promisify } = require('util');
 const streamPipeline = promisify(pipeline);
 
+// Sharp for WebP conversion
+let sharp;
+try {
+  sharp = require('sharp');
+} catch (e) {
+  console.warn('⚠️  Sharp not installed, images will be saved as PNG');
+}
+
 // Configuration
 const config = {
   openaiKey: process.env.OPENAI_API_KEY,
@@ -303,15 +311,38 @@ Return ONLY a JSON object with:
       fs.mkdirSync(imagesDir, { recursive: true });
     }
 
-    const imageFileName = `ai-${Date.now()}.png`;
-    const imagePath = path.join(imagesDir, imageFileName);
+    const timestamp = Date.now();
 
-    console.log('📥 Downloading image...');
-    await downloadImage(tempImageUrl, imagePath);
-    console.log('✅ Image saved locally');
+    // If sharp is available, convert to WebP for smaller file size
+    if (sharp) {
+      const tempPngPath = path.join(imagesDir, `ai-${timestamp}-temp.png`);
+      const webpFileName = `ai-${timestamp}.webp`;
+      const webpPath = path.join(imagesDir, webpFileName);
 
-    // Return the public path for the image
-    return `/images/thoughts/${imageFileName}`;
+      console.log('📥 Downloading image...');
+      await downloadImage(tempImageUrl, tempPngPath);
+
+      console.log('🔄 Converting to WebP...');
+      await sharp(tempPngPath)
+        .webp({ quality: 85 })
+        .toFile(webpPath);
+
+      // Clean up temp PNG
+      fs.unlinkSync(tempPngPath);
+      console.log('✅ Image saved as WebP');
+
+      return `/images/thoughts/${webpFileName}`;
+    } else {
+      // Fallback to PNG if sharp not available
+      const imageFileName = `ai-${timestamp}.png`;
+      const imagePath = path.join(imagesDir, imageFileName);
+
+      console.log('📥 Downloading image...');
+      await downloadImage(tempImageUrl, imagePath);
+      console.log('✅ Image saved as PNG (sharp not available for WebP conversion)');
+
+      return `/images/thoughts/${imageFileName}`;
+    }
   } catch (error) {
     console.warn('⚠️  Image generation failed:', error.message);
     return '';

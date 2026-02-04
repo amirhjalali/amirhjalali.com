@@ -108,6 +108,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${satoshi.variable} ${cormorant.variable} ${jetbrains.variable}`}>
       <head>
+        {/* Preload critical resources for LCP */}
+        <link rel="preload" href="/AmirPortraitWebsite.webp" as="image" type="image/webp" fetchPriority="high" />
+        <link rel="preload" href="/fonts/Satoshi-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="any" />

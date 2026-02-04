@@ -1,11 +1,13 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, useMotionValue, useMotionTemplate, useSpring } from 'framer-motion'
+import Image from 'next/image'
 
 export default function PortraitReveal() {
     const mouseX = useMotionValue(0)
     const mouseY = useMotionValue(0)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     // Smooth out the mouse movement for the spotlight effect
     const springConfig = { damping: 25, stiffness: 150, mass: 0.5 }
@@ -31,9 +33,14 @@ export default function PortraitReveal() {
             {/* Always visible but very faint, fading out towards top-left */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
                 <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-[0.08] grayscale contrast-125">
-                    <img
+                    <Image
                         src="/AmirPortraitWebsite.webp"
                         alt=""
+                        width={700}
+                        height={933}
+                        priority
+                        fetchPriority="high"
+                        onLoad={() => setIsLoaded(true)}
                         className="w-full h-auto"
                         style={{
                             maskImage: 'linear-gradient(to top left, black 20%, transparent 80%)',
@@ -45,25 +52,29 @@ export default function PortraitReveal() {
 
             {/* Reveal Layer - The "Light" */}
             {/* Only visible under the mouse cursor */}
-            <motion.div
-                className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
-                style={{
-                    maskImage,
-                    WebkitMaskImage: maskImage
-                }}
-            >
-                <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-40 grayscale contrast-125">
-                    <img
-                        src="/AmirPortraitWebsite.webp"
-                        alt="Amir H. Jalali"
-                        className="w-full h-auto"
-                        style={{
-                            maskImage: 'linear-gradient(to top left, black 40%, transparent 90%)',
-                            WebkitMaskImage: 'linear-gradient(to top left, black 40%, transparent 90%)'
-                        }}
-                    />
-                </div>
-            </motion.div>
+            {isLoaded && (
+                <motion.div
+                    className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
+                    style={{
+                        maskImage,
+                        WebkitMaskImage: maskImage
+                    }}
+                >
+                    <div className="absolute bottom-0 right-[-5%] w-[50vw] max-w-[700px] opacity-40 grayscale contrast-125">
+                        <Image
+                            src="/AmirPortraitWebsite.webp"
+                            alt="Amir H. Jalali"
+                            width={700}
+                            height={933}
+                            className="w-full h-auto"
+                            style={{
+                                maskImage: 'linear-gradient(to top left, black 40%, transparent 90%)',
+                                WebkitMaskImage: 'linear-gradient(to top left, black 40%, transparent 90%)'
+                            }}
+                        />
+                    </div>
+                </motion.div>
+            )}
         </>
     )
 }
