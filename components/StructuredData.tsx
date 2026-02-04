@@ -50,7 +50,7 @@ const structuredData = {
       "@id": "https://amirhjalali.com/#organization",
       "name": "Amir H. Jalali Consulting",
       "url": "https://amirhjalali.com",
-      "logo": "https://amirhjalali.com/og-image.png",
+      "logo": "https://amirhjalali.com/og-image.webp",
       "founder": {
         "@id": "https://amirhjalali.com/#person"
       },

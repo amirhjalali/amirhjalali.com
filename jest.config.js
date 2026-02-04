@@ -9,6 +9,9 @@ const config = {
   // Module path aliases (matching tsconfig)
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
+    // Mock ESM packages that Jest can't handle
+    '^@steipete/summarize/content$': '<rootDir>/__mocks__/@steipete/summarize/content.ts',
+    '^@steipete/summarize$': '<rootDir>/__mocks__/@steipete/summarize/index.ts',
   },
 
   // Test file patterns
