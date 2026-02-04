@@ -32,6 +32,8 @@ import { apiClient } from '@/lib/api-client'
 import { formatDistanceToNow } from 'date-fns'
 import ProcessingIndicator from './ProcessingIndicator'
 
+import { Headphones } from 'lucide-react'
+
 const typeIcons: Record<NoteType, typeof LinkIcon> = {
   LINK: LinkIcon,
   TEXT: FileText,
@@ -39,6 +41,7 @@ const typeIcons: Record<NoteType, typeof LinkIcon> = {
   VIDEO: Video,
   PDF: FileType2,
   DOCUMENT: File,
+  AUDIO: Headphones,
 }
 
 const typeLabels: Record<NoteType, string> = {
@@ -48,6 +51,7 @@ const typeLabels: Record<NoteType, string> = {
   VIDEO: 'Video',
   PDF: 'PDF',
   DOCUMENT: 'Document',
+  AUDIO: 'Audio',
 }
 
 // Platform icons and colors
@@ -59,6 +63,7 @@ const platformConfig: Record<Platform | 'default', { icon: typeof LinkIcon; labe
   medium: { icon: FileText, label: 'Medium' },
   substack: { icon: FileText, label: 'Substack' },
   github: { icon: Github, label: 'GitHub' },
+  podcast: { icon: Headphones, label: 'Podcast' },
   news: { icon: FileText, label: 'News' },
   generic: { icon: LinkIcon, label: 'Link' },
   default: { icon: LinkIcon, label: 'Link' },
@@ -130,6 +135,7 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
   }
 
   const isVideoType = note.type === 'VIDEO' || note.sourceType === 'video'
+  const isAudioType = note.type === 'AUDIO' || note.platform === 'podcast' || note.sourceType === 'audio'
   const metadata = note.metadata as any
 
   // Get platform config
@@ -164,8 +170,11 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
   const hasImage = !!imageUrl
 
   // Check if this is a YouTube video with transcript
-  const hasTranscript = metadata?.transcript?.available === true
+  const hasTranscript = metadata?.transcript?.available === true ||
+    (note.platformData as any)?.hasTranscript === true
   const videoDuration = metadata?.video?.duration || metadata?.transcript?.videoDurationFormatted
+  const audioDuration = (note.platformData as any)?.durationFormatted || metadata?.audioDuration
+  const mediaDisplayDuration = videoDuration || audioDuration
 
   // Compact card for list view - now with enrichment data
   if (compact) {
@@ -337,18 +346,22 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
             alt={note.title || 'Note thumbnail'}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          {/* Video play overlay */}
-          {isVideoType && (
+          {/* Video/Audio play overlay */}
+          {(isVideoType || isAudioType) && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/30">
               <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <Play className="w-5 h-5 text-white ml-0.5" />
+                {isAudioType ? (
+                  <Headphones className="w-5 h-5 text-white" />
+                ) : (
+                  <Play className="w-5 h-5 text-white ml-0.5" />
+                )}
               </div>
             </div>
           )}
-          {/* Video duration badge */}
-          {videoDuration && (
+          {/* Duration badge */}
+          {mediaDisplayDuration && (
             <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 rounded text-xs font-mono text-white">
-              {videoDuration}
+              {mediaDisplayDuration}
             </div>
           )}
           {/* Transcript available badge */}

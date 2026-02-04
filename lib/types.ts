@@ -76,11 +76,11 @@ export interface Draft {
 }
 
 // Notes Feature Types
-export type NoteType = 'LINK' | 'TEXT' | 'IMAGE' | 'VIDEO' | 'PDF' | 'DOCUMENT'
+export type NoteType = 'LINK' | 'TEXT' | 'IMAGE' | 'VIDEO' | 'PDF' | 'DOCUMENT' | 'AUDIO'
 export type ProcessStatus = 'PENDING' | 'EXTRACTING' | 'ANALYZING' | 'PROCESSING' | 'INDEXED' | 'COMPLETED' | 'PARTIAL' | 'FAILED'
 
 // Platform types for extractors
-export type Platform = 'twitter' | 'youtube' | 'linkedin' | 'reddit' | 'medium' | 'substack' | 'github' | 'news' | 'generic'
+export type Platform = 'twitter' | 'youtube' | 'linkedin' | 'reddit' | 'medium' | 'substack' | 'github' | 'news' | 'generic' | 'podcast'
 
 // Author information extracted from posts
 export interface AuthorInfo {
@@ -220,6 +220,34 @@ export interface VideoInfo {
     title: string | null
     description: string | null
     duration: string | null
+}
+
+// Transcript segment for synced playback
+export interface TranscriptSegment {
+    text: string
+    startMs: number
+    endMs?: number | null
+}
+
+// Transcript source types (from summarize-core)
+export type TranscriptSource =
+    | 'youtubei'
+    | 'captionTracks'
+    | 'embedded'
+    | 'yt-dlp'
+    | 'podcastTranscript'
+    | 'whisper'
+    | 'apify'
+    | 'html'
+    | 'unavailable'
+    | 'unknown'
+    | 'legacy' // Our existing youtube-transcript library
+
+// Slide extracted from video
+export interface SlideInfo {
+    timestamp: number // seconds
+    imagePath: string
+    ocrText?: string | null
 }
 
 export interface Note {

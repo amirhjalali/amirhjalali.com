@@ -6,7 +6,7 @@ import { apiClient } from '@/lib/api-client'
 import type { Note, Platform, AuthorInfo, EngagementMetrics, MediaItem, MentionedLink } from '@/lib/types'
 import {
   Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain, Youtube,
-  ChevronDown, ChevronUp, Heart, MessageCircle, Repeat2, Eye, Star, GitFork, Users, Github, Twitter, CheckCircle2, ImageIcon, FileCode, Bookmark, AlertTriangle
+  ChevronDown, ChevronUp, Heart, MessageCircle, Repeat2, Eye, Star, GitFork, Users, Github, Twitter, CheckCircle2, ImageIcon, FileCode, Bookmark, AlertTriangle, Headphones
 } from 'lucide-react'
 import VideoEmbed from '../components/VideoEmbed'
 import { formatDistanceToNow } from 'date-fns'
@@ -21,6 +21,7 @@ const platformConfig: Record<Platform | 'default', { icon: typeof LinkIcon; labe
   medium: { icon: FileText, label: 'Medium' },
   substack: { icon: FileText, label: 'Substack' },
   github: { icon: Github, label: 'GitHub' },
+  podcast: { icon: Headphones, label: 'Podcast' },
   news: { icon: FileText, label: 'News' },
   generic: { icon: LinkIcon, label: 'Link' },
   default: { icon: LinkIcon, label: 'Link' },
@@ -80,6 +81,7 @@ const typeIcons: Record<NoteType, typeof LinkIcon> = {
   VIDEO: Video,
   PDF: FileType2,
   DOCUMENT: File,
+  AUDIO: Headphones,
 }
 
 const statusColors: Record<ProcessStatus, string> = {

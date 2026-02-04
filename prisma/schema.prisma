@@ -68,6 +68,7 @@ enum NoteType {
   VIDEO
   PDF
   DOCUMENT
+  AUDIO     // Podcasts and audio content
 }
 
 enum ProcessStatus {
@@ -118,7 +119,7 @@ model Note {
   favicon       String?       // Website favicon
 
   // Platform enrichment
-  platform      String?       // Platform type: twitter, youtube, reddit, etc.
+  platform      String?       // Platform type: twitter, youtube, reddit, podcast, etc.
   thumbnailUrl  String?       // Thumbnail from platform extraction
   author        Json?         // Author info (name, handle, avatar, bio)
   engagement    Json?         // Engagement metrics (likes, shares, comments)
@@ -129,6 +130,12 @@ model Note {
   extractedAt   DateTime?     // When platform extraction happened
   extractionVersion String?   // Version of extractor used
   platformData  Json?         // Platform-specific metadata
+
+  // Enhanced transcript metadata (from summarize-core)
+  transcriptSource    String?   // 'youtubei' | 'apify' | 'whisper' | 'legacy' | etc.
+  transcriptSegments  Json?     // [{text, startMs, endMs}] for timestamped playback
+  slides              Json?     // [{timestamp, imagePath, ocrText}] for video slides
+  audioDuration       Int?      // Duration in seconds for audio/video content
 
   // Rich content
   imageUrl      String?       // Thumbnail or base64 image

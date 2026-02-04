@@ -102,6 +102,19 @@ export const PLATFORM_PATTERNS: Record<Platform, RegExp[]> = {
     /^https?:\/\/(www\.)?github\.com\//i,
     /^https?:\/\/gist\.github\.com\//i,
   ],
+  podcast: [
+    /^https?:\/\/podcasts\.apple\.com\//i,
+    /^https?:\/\/open\.spotify\.com\/(?:show|episode)\//i,
+    /^https?:\/\/podcasts\.google\.com\//i,
+    /^https?:\/\/pca\.st\//i,
+    /^https?:\/\/overcast\.fm\//i,
+    /^https?:\/\/castro\.fm\//i,
+    /^https?:\/\/anchor\.fm\//i,
+    /^https?:\/\/.*\.simplecast\.com\//i,
+    /^https?:\/\/.*\.transistor\.fm\//i,
+    /^https?:\/\/.*\.podbean\.com\//i,
+    /^https?:\/\/.*\.buzzsprout\.com\//i,
+  ],
   news: [], // Detected via domain list, not pattern
   generic: [], // Fallback, handles everything
 }

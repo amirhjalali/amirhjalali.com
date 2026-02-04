@@ -179,6 +179,7 @@ export default function QuickAdd({ onNoteAdded }: { onNoteAdded?: () => void }) 
     VIDEO: 'Video',
     PDF: 'PDF',
     DOCUMENT: 'Document',
+    AUDIO: 'Audio',
   }
 
   return (

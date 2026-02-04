@@ -13,6 +13,7 @@ import { redditExtractor } from './reddit'
 import { linkedinExtractor } from './linkedin'
 import { mediumExtractor, substackExtractor } from './medium'
 import { githubExtractor } from './github'
+import { podcastExtractor } from './podcast'
 import { genericExtractor } from './generic'
 
 // Registry of all platform extractors
@@ -24,6 +25,7 @@ const extractors: PlatformExtractor[] = [
   mediumExtractor,
   substackExtractor,
   githubExtractor,
+  podcastExtractor,
   genericExtractor, // Must be last as fallback
 ]
 

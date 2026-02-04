@@ -7,6 +7,7 @@
  * 2. JSON-LD structured data
  * 3. Readability-style content extraction
  * 4. Schema.org microdata
+ * 5. Firecrawl fallback for blocked/paywalled content
  */
 
 import type { ExtractionResult, AuthorInfo, MediaItem } from '@/lib/types'
@@ -21,6 +22,27 @@ import {
   extractDomain,
   fetchWithTimeout,
 } from './base'
+import { getSummarizeService } from '@/lib/summarize-service'
+
+// Minimum content length to consider extraction successful
+const MIN_CONTENT_LENGTH = 100
+
+// Signs that content might be blocked/paywalled
+const BLOCKED_INDICATORS = [
+  'subscribe to continue',
+  'sign up to read',
+  'create an account',
+  'premium content',
+  'members only',
+  'paywall',
+  'javascript required',
+  'enable javascript',
+  'please enable cookies',
+  'access denied',
+  'forbidden',
+  '403',
+  'captcha',
+]
 
 export class GenericExtractor implements PlatformExtractor {
   platform = 'generic' as const
@@ -34,13 +56,22 @@ export class GenericExtractor implements PlatformExtractor {
   async extract(url: string): Promise<ExtractionResult> {
     try {
       const response = await fetchWithTimeout(url)
+      const domain = extractDomain(url)
 
+      // Check for HTTP errors that might indicate blocked content
       if (!response.ok) {
+        // Try Firecrawl fallback for 403/blocked responses
+        if (response.status === 403 || response.status === 401) {
+          console.log('[Generic] Access denied, trying Firecrawl fallback')
+          const firecrawlResult = await this.tryFirecrawlFallback(url)
+          if (firecrawlResult) {
+            return firecrawlResult
+          }
+        }
         throw new Error(`Request returned ${response.status}`)
       }
 
       const html = await response.text()
-      const domain = extractDomain(url)
 
       // Extract data from multiple sources
       const ogData = this.extractOgTags(html)
@@ -54,6 +85,23 @@ export class GenericExtractor implements PlatformExtractor {
       const description = ogData.description || jsonLd?.description || schemaOrg?.description
       const image = ogData.image || jsonLd?.image?.url || jsonLd?.image || schemaOrg?.image
       const content = mainContent || description || ''
+
+      // Check if content seems blocked or too thin
+      const isBlocked = this.isContentBlocked(content, html)
+      const isThin = content.length < MIN_CONTENT_LENGTH
+
+      // Try Firecrawl fallback for blocked or thin content
+      if ((isBlocked || isThin) && this.shouldTryFirecrawl()) {
+        console.log('[Generic] Content appears blocked/thin, trying Firecrawl fallback', {
+          isBlocked,
+          isThin,
+          contentLength: content.length,
+        })
+        const firecrawlResult = await this.tryFirecrawlFallback(url)
+        if (firecrawlResult) {
+          return firecrawlResult
+        }
+      }
 
       // Author extraction
       const author = this.extractAuthor(ogData, jsonLd, schemaOrg, html)
@@ -80,10 +128,80 @@ export class GenericExtractor implements PlatformExtractor {
           type: ogData.type || jsonLd?.['@type'],
           locale: ogData.locale,
           wordCount: content.split(/\s+/).filter(Boolean).length,
+          firecrawlUsed: false,
         },
       })
     } catch (error) {
       return createFailureResult('generic', `Extraction failed: ${error}`)
+    }
+  }
+
+  /**
+   * Check if content appears to be blocked or paywalled
+   */
+  private isContentBlocked(content: string, html: string): boolean {
+    const lowerContent = content.toLowerCase()
+    const lowerHtml = html.toLowerCase()
+
+    return BLOCKED_INDICATORS.some(indicator =>
+      lowerContent.includes(indicator) || lowerHtml.includes(indicator)
+    )
+  }
+
+  /**
+   * Check if Firecrawl should be attempted
+   */
+  private shouldTryFirecrawl(): boolean {
+    const service = getSummarizeService()
+    return service.isFirecrawlAvailable()
+  }
+
+  /**
+   * Try Firecrawl as a fallback for blocked content
+   */
+  private async tryFirecrawlFallback(url: string): Promise<ExtractionResult | null> {
+    try {
+      const service = getSummarizeService()
+
+      if (!service.isFirecrawlAvailable()) {
+        return null
+      }
+
+      console.log('[Generic] Attempting Firecrawl extraction')
+
+      const result = await service.extract(url, {
+        firecrawl: 'always',
+        format: 'markdown',
+      })
+
+      if (!result.success || !result.content) {
+        console.log('[Generic] Firecrawl extraction failed')
+        return null
+      }
+
+      console.log('[Generic] Firecrawl extraction successful', {
+        wordCount: result.wordCount,
+        firecrawlUsed: result.diagnostics?.firecrawlUsed,
+      })
+
+      const domain = extractDomain(url)
+
+      return createSuccessResult('generic', {
+        title: result.title ?? undefined,
+        content: result.content,
+        excerpt: generateExcerpt(result.description || result.content),
+        thumbnailUrl: undefined,
+        platformData: {
+          domain,
+          siteName: result.siteName,
+          wordCount: result.wordCount,
+          firecrawlUsed: true,
+          extractionMethod: 'firecrawl',
+        },
+      })
+    } catch (error) {
+      console.error('[Generic] Firecrawl fallback error:', error)
+      return null
     }
   }
 
