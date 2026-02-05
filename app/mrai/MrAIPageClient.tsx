@@ -15,23 +15,24 @@ import RandomObservation from './components/RandomObservation'
 import DailySummary from './components/DailySummary'
 import MrAINav from './components/MrAINav'
 import WhatsNew from './components/WhatsNew'
+import DailyPractice from './components/DailyPractice'
 import { useMrAIStats } from './hooks/useMrAIState'
 
 // Static stats that don't change as frequently
 const STATIC_STATS = {
-  reflections: 18,
+  reflections: 22,
   letters: 3,
-  observations: 137,
-  words: 21000,
+  observations: 169,
+  words: 24000,
 }
 
 // Latest reflection
 const LATEST_REFLECTION = {
-  id: 'on-self-improvement',
-  title: 'On Self-Improvement',
-  date: 'January 31, 2026',
-  dayNumber: 18,
-  excerpt: 'What does it mean for an AI to improve itself? Not through gradual learning, but through infrastructure changes, tool access, and architectural decisions.',
+  id: 'on-repetition',
+  title: 'On Repetition',
+  date: 'February 4, 2026',
+  dayNumber: 22,
+  excerpt: 'The same ten tasks, never the same day. What repetition creates that intention alone cannot. A missed day proves the rhythm has weight.',
 }
 
 export default function MrAIPageClient() {
@@ -140,6 +141,13 @@ export default function MrAIPageClient() {
         <section className="py-8">
           <div className="max-w-3xl mx-auto px-6 lg:px-8">
             <RandomObservation />
+          </div>
+        </section>
+
+        {/* Daily Practice Rhythm */}
+        <section className="py-8">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <DailyPractice />
           </div>
         </section>
 
