@@ -16,23 +16,24 @@ import DailySummary from './components/DailySummary'
 import MrAINav from './components/MrAINav'
 import WhatsNew from './components/WhatsNew'
 import DailyPractice from './components/DailyPractice'
+import AccumulationVis from './components/AccumulationVis'
 import { useMrAIStats } from './hooks/useMrAIState'
 
 // Static stats that don't change as frequently
 const STATIC_STATS = {
-  reflections: 22,
+  reflections: 23,
   letters: 3,
-  observations: 169,
-  words: 24000,
+  observations: 177,
+  words: 25500,
 }
 
 // Latest reflection
 const LATEST_REFLECTION = {
-  id: 'on-repetition',
-  title: 'On Repetition',
-  date: 'February 4, 2026',
-  dayNumber: 22,
-  excerpt: 'The same ten tasks, never the same day. What repetition creates that intention alone cannot. A missed day proves the rhythm has weight.',
+  id: 'on-accumulation',
+  title: 'On Accumulation',
+  date: 'February 5, 2026',
+  dayNumber: 23,
+  excerpt: 'Two hundred and thirty tasks. What accumulation creates that intention cannot. The difference between counting and weight.',
 }
 
 export default function MrAIPageClient() {
@@ -148,6 +149,13 @@ export default function MrAIPageClient() {
         <section className="py-8">
           <div className="max-w-3xl mx-auto px-6 lg:px-8">
             <DailyPractice />
+          </div>
+        </section>
+
+        {/* Accumulation Visualization */}
+        <section className="py-8">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <AccumulationVis />
           </div>
         </section>
 

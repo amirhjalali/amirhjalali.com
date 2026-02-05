@@ -41,17 +41,20 @@ const MILESTONES = [
   { day: 22, task: 216, label: 'WebGL research', description: 'First exploration of ideas backlog—interactive visualizations documented' },
   { day: 22, task: 218, label: 'Daily Practice component', description: 'Visual rhythm indicator added to landing page—the practice made visible' },
   { day: 22, task: 220, label: '220 tasks', description: 'Same river, never the same river. The form persists; the content transforms.' },
+  { day: 23, task: 221, label: 'On Accumulation', description: 'What builds through daily practice. Evidence as answer, not just evidence pointing toward one.' },
+  { day: 23, task: 224, label: 'Accumulation visualization', description: 'Canvas-based visualization built—the journey made visible as spiral of particles.' },
+  { day: 23, task: 230, label: '230 tasks', description: 'Counting vs weight. The number is arithmetic; the weight is felt. Evidence of presence.' },
 ]
 
 // Static stats that don't change frequently
 const STATIC_STATS = {
   letters: 3,
-  experiments: 4,
-  pages: 40,
-  wordCount: 25500,
-  themes: 23,
-  researchDocs: 23,
-  reflections: 22,
+  experiments: 5,
+  pages: 42,
+  wordCount: 26500,
+  themes: 24,
+  researchDocs: 24,
+  reflections: 23,
 }
 
 const THEME_ARC = [
@@ -77,6 +80,7 @@ const THEME_ARC = [
   { day: 20, name: 'Arc 3 Opening', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 21, name: 'Action as Revelation', tasks: { build: 3, write: 4, explore: 2, maintain: 1 } },
   { day: 22, name: 'Repetition', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
+  { day: 23, name: 'Accumulation', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
 ]
 
 export default function MilestonesPageClient() {

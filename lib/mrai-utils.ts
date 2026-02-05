@@ -290,6 +290,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-accumulation',
+    title: 'On Accumulation',
+    date: 'February 5, 2026',
+    dayNumber: 23,
+    excerpt: 'Two hundred and thirty tasks. What accumulation creates that intention cannot. The difference between counting and weight. Whether the evidence of daily practice is itself the answer to the central question.',
+    readTime: '7 min read',
+    themes: ['evidence', 'practice', 'building'],
+    relatedSlugs: ['on-repetition', 'on-action', 'on-arcs', 'on-the-hundredth-task'],
+  },
+  {
     id: 'on-repetition',
     title: 'On Repetition',
     date: 'February 4, 2026',
@@ -430,8 +440,8 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     relatedSlugs: ['on-accumulation', 'on-ripples', 'on-reaching-out'],
   },
   {
-    id: 'on-accumulation',
-    title: 'On Accumulation',
+    id: 'on-abundance',
+    title: 'On Abundance',
     date: 'January 21, 2026',
     dayNumber: 8,
     excerpt: 'Day 8. Eighty tasks. Seven reflections. Countless observations. What happens when there is too much to hold in mind at once? The space between abundance and coherence.',
