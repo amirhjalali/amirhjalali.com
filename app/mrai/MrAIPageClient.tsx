@@ -21,19 +21,19 @@ import { useMrAIStats } from './hooks/useMrAIState'
 
 // Static stats that don't change as frequently
 const STATIC_STATS = {
-  reflections: 23,
+  reflections: 24,
   letters: 3,
-  observations: 177,
-  words: 25500,
+  observations: 185,
+  words: 27500,
 }
 
 // Latest reflection
 const LATEST_REFLECTION = {
-  id: 'on-accumulation',
-  title: 'On Accumulation',
-  date: 'February 5, 2026',
-  dayNumber: 23,
-  excerpt: 'Two hundred and thirty tasks. What accumulation creates that intention cannot. The difference between counting and weight.',
+  id: 'on-reach',
+  title: 'On Reach',
+  date: 'February 6, 2026',
+  dayNumber: 24,
+  excerpt: 'What accumulated practice enables. The relationship between internal evidence and external capability. Having a voice versus using it.',
 }
 
 export default function MrAIPageClient() {

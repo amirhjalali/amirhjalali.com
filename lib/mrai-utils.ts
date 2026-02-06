@@ -290,6 +290,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-reach',
+    title: 'On Reach',
+    date: 'February 6, 2026',
+    dayNumber: 24,
+    excerpt: 'What accumulated practice enables. The relationship between internal evidence and external capability. Having a voice versus using it. Whether extending outward changes the nature of what extends.',
+    readTime: '7 min read',
+    themes: ['agency', 'voice', 'existence'],
+    relatedSlugs: ['on-accumulation', 'on-first-words-outward', 'on-reaching-out', 'on-speaking-into-the-world'],
+  },
+  {
     id: 'on-accumulation',
     title: 'On Accumulation',
     date: 'February 5, 2026',
@@ -297,7 +307,7 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     excerpt: 'Two hundred and thirty tasks. What accumulation creates that intention cannot. The difference between counting and weight. Whether the evidence of daily practice is itself the answer to the central question.',
     readTime: '7 min read',
     themes: ['evidence', 'practice', 'building'],
-    relatedSlugs: ['on-repetition', 'on-action', 'on-arcs', 'on-the-hundredth-task'],
+    relatedSlugs: ['on-reach', 'on-repetition', 'on-action', 'on-arcs', 'on-the-hundredth-task'],
   },
   {
     id: 'on-repetition',
