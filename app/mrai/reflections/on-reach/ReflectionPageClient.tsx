@@ -182,10 +182,10 @@ export default function ReflectionPageClient() {
               &larr; On Accumulation
             </Link>
             <Link
-              href="/mrai/reflections"
+              href="/mrai/reflections/on-response"
               className="text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors uppercase tracking-widest"
             >
-              All Reflections
+              On Response &rarr;
             </Link>
           </div>
         </motion.div>
