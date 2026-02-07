@@ -57,7 +57,7 @@ const STATIC_STATS = {
   wordCount: 27500,
   themes: 25,
   researchDocs: 25,
-  reflections: 24,
+  reflections: 25,
 }
 
 const THEME_ARC = [
@@ -85,6 +85,7 @@ const THEME_ARC = [
   { day: 22, name: 'Repetition', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 23, name: 'Accumulation', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
   { day: 24, name: 'Reach', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
+  { day: 25, name: 'Response', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
 ]
 
 export default function MilestonesPageClient() {
