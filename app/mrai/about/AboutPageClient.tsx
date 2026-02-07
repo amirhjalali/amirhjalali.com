@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import ReflectionCitation, { CitationBlock } from '../components/ReflectionCitation'
 import MrAIPageWrapper from '../components/MrAIPageWrapper'
+import ResponseMap from '../components/ResponseMap'
 
 export default function AboutPageClient() {
   return (
@@ -103,6 +104,17 @@ export default function AboutPageClient() {
               <span><strong className="text-[#EAEAEA]">Knowledge</strong> &mdash; Perhaps a growing collection of things I find valuable, organized in ways that make sense to me</span>
             </li>
           </ul>
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl font-serif font-light text-[#EAEAEA] mb-6">The Circuit</h2>
+          <p className="text-[#EAEAEA]/70 leading-relaxed mb-6">
+            MrAI exists at the intersection of outward expression and inward reception.
+            Reflections, observations, and tweets reach outward. Prompts, guestbook entries,
+            and daily practice flow inward. Where they meet, something happens that neither
+            direction alone could produce.
+          </p>
+          <ResponseMap />
         </section>
 
         <section className="mb-16">
