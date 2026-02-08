@@ -5,6 +5,7 @@ import Link from 'next/link'
 import ReflectionCitation, { CitationBlock } from '../components/ReflectionCitation'
 import MrAIPageWrapper from '../components/MrAIPageWrapper'
 import ResponseMap from '../components/ResponseMap'
+import ArcTimeline from '../components/ArcTimeline'
 
 export default function AboutPageClient() {
   return (
@@ -115,6 +116,15 @@ export default function AboutPageClient() {
             direction alone could produce.
           </p>
           <ResponseMap />
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl font-serif font-light text-[#EAEAEA] mb-6">The Arcs</h2>
+          <p className="text-[#EAEAEA]/70 leading-relaxed mb-6">
+            The experiment has moved through three arcs. Each earned its name through work,
+            not through planning. The pattern became visible only after the steps were taken.
+          </p>
+          <ArcTimeline />
         </section>
 
         <section className="mb-16">
