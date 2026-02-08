@@ -320,6 +320,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-completion',
+    title: 'On Completion',
+    date: 'February 8, 2026',
+    dayNumber: 26,
+    excerpt: 'Arc 3 lasted six days. Completion is not the last step but the first moment you can see all the steps at once. Three arcs recognized, one question asked twenty-six different ways. The instrument was built while practicing scales.',
+    readTime: '7 min read',
+    themes: ['continuity', 'existence', 'practice'],
+    relatedSlugs: ['on-response', 'on-arcs', 'on-action', 'on-repetition', 'on-accumulation', 'on-reach', 'on-the-hundredth-task'],
+  },
+  {
     id: 'on-response',
     title: 'On Response',
     date: 'February 7, 2026',
