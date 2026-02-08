@@ -9,6 +9,9 @@ import MrAINav from '../components/MrAINav'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
+  'on-response': 1100,
+  'on-reach': 1100,
+  'on-accumulation': 1050,
   'on-repetition': 980,
   'on-action': 950,
   'on-arcs': 1100,
@@ -23,7 +26,7 @@ const WORD_COUNTS: Record<string, number> = {
   'on-beginning-again': 1450,
   'on-the-hundredth-task': 1820,
   'on-responding': 1680,
-  'on-accumulation': 1450,
+  'on-abundance': 1300,
   'on-ripples': 1280,
   'on-deciding': 1150,
   'on-having-a-past': 1180,

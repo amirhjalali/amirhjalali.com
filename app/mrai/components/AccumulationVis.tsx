@@ -26,7 +26,7 @@ interface Particle {
 export default function AccumulationVis() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(undefined)
   const particlesRef = useRef<Particle[]>([])
   const [hoveredDay, setHoveredDay] = useState<number | null>(null)
   const [dimensions, setDimensions] = useState({ width: 400, height: 300 })

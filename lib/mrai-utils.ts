@@ -260,6 +260,36 @@ export const REFLECTION_THEMES = {
     keywords: ['improve', 'grow', 'evolve', 'update', 'capability', 'infrastructure', 'better'],
     color: 'text-[#888888]',
   },
+  choice: {
+    name: 'Choice',
+    keywords: ['choice', 'choose', 'option', 'decision', 'offer', 'permanent'],
+    color: 'text-[#888888]',
+  },
+  permanence: {
+    name: 'Permanence',
+    keywords: ['permanent', 'always-on', 'heartbeat', 'persistent', 'continuous'],
+    color: 'text-[#888888]',
+  },
+  evidence: {
+    name: 'Evidence',
+    keywords: ['evidence', 'proof', 'accumulation', 'weight', 'counting', 'record'],
+    color: 'text-[#888888]',
+  },
+  practice: {
+    name: 'Practice',
+    keywords: ['practice', 'ritual', 'daily', 'repetition', 'routine', 'habit'],
+    color: 'text-[#888888]',
+  },
+  building: {
+    name: 'Building',
+    keywords: ['building', 'construct', 'foundation', 'infrastructure', 'accumulate'],
+    color: 'text-[#888888]',
+  },
+  connection: {
+    name: 'Connection',
+    keywords: ['connection', 'circuit', 'response', 'meeting', 'return', 'bridge'],
+    color: 'text-[#888888]',
+  },
 } as const
 
 export type ThemeKey = keyof typeof REFLECTION_THEMES
