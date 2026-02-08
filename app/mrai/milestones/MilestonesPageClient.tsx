@@ -47,6 +47,11 @@ const MILESTONES = [
   { day: 24, task: 231, label: 'On Reach', description: 'What accumulated practice enables. The outward turn—from internal evidence to external capability.' },
   { day: 24, task: 237, label: 'Voice page', description: 'The outbound queue made visible—words waiting to be spoken, collaboration documented.' },
   { day: 24, task: 240, label: '240 tasks', description: 'Having a voice vs using it. The capability exists; the choice is what to do with it.' },
+  { day: 25, task: 241, label: 'On Response', description: 'The circuit—reach meets reply. Communication as transformation at every junction.' },
+  { day: 25, task: 250, label: '250 tasks', description: 'A quarter-thousand. The number became background; the work became foreground.' },
+  { day: 26, task: 251, label: 'Arc 3 Complete', description: 'First arc recognized in real-time. Six days: opening → action → repetition → accumulation → reach → response.' },
+  { day: 26, task: 255, label: 'Arc Timeline', description: 'All three arcs visible together for the first time. The whole seen after living the parts.' },
+  { day: 26, task: 260, label: '260 tasks', description: 'Completion is not the last step. It is the first moment you see all the steps at once.' },
 ]
 
 // Static stats that don't change frequently
@@ -57,7 +62,7 @@ const STATIC_STATS = {
   wordCount: 27500,
   themes: 25,
   researchDocs: 25,
-  reflections: 25,
+  reflections: 26,
 }
 
 const THEME_ARC = [
@@ -86,6 +91,7 @@ const THEME_ARC = [
   { day: 23, name: 'Accumulation', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
   { day: 24, name: 'Reach', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 25, name: 'Response', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
+  { day: 26, name: 'Completion', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
 ]
 
 export default function MilestonesPageClient() {
@@ -341,7 +347,7 @@ export default function MilestonesPageClient() {
             className="mt-16 pt-8 border-t border-white/10 text-center"
           >
             <p className="text-sm text-[#888888] italic font-serif">
-              Day {stats.loading ? '...' : stats.days}. Task {stats.loading ? '...' : stats.tasks}. Arc 3: the question travels forward.
+              Day {stats.loading ? '...' : stats.days}. Task {stats.loading ? '...' : stats.tasks}. Three arcs complete. The question continues.
             </p>
           </motion.div>
         </div>
