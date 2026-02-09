@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import Script from 'next/script'
 import { notFound } from 'next/navigation'
 import { useState } from 'react'
 import { Article } from '@/lib/types'
@@ -28,36 +27,6 @@ const getImageUrl = (url: string | undefined) => {
   return url.startsWith('/') ? `${basePath}${url}` : url
 }
 
-// Generate JSON-LD structured data for the article
-const generateArticleJsonLd = (article: Article, id: string) => ({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: article.title,
-  description: article.excerpt,
-  author: {
-    '@type': 'Person',
-    name: article.author,
-    url: SITE_URL,
-  },
-  publisher: {
-    '@type': 'Person',
-    name: 'Amir H. Jalali',
-    url: SITE_URL,
-  },
-  datePublished: article.publishedAt,
-  dateModified: article.updatedAt || article.publishedAt,
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': `${SITE_URL}/thoughts/${article.slug || id}`,
-  },
-  image: article.imageUrl && !article.imageUrl.startsWith('data:')
-    ? article.imageUrl
-    : `${SITE_URL}/og-image.webp`,
-  keywords: article.tags.join(', '),
-  articleSection: 'Technology',
-  wordCount: article.content.split(/\s+/).length,
-})
-
 interface ThoughtPageClientProps {
   id: string
   initialArticle: Article | null
@@ -78,17 +47,9 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
   }
 
   const isDraft = article?.status === 'draft'
-  const jsonLd = generateArticleJsonLd(article, id)
 
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
-      {/* JSON-LD Structured Data for SEO */}
-      <Script
-        id="article-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
       {/* Background effects */}
       <div className="noise-overlay" />
       <Spotlight />

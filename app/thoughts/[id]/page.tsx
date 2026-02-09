@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Script from 'next/script'
 import ThoughtPageClient from './ThoughtPageClient'
+import RelatedArticles from '@/components/RelatedArticles'
 import { getArticle, getAllArticleIds, getDraft } from '@/lib/data'
 
 // Force dynamic rendering so DB changes are reflected immediately
@@ -137,6 +138,9 @@ export default async function ThoughtPage({ params }: { params: Promise<ThoughtP
         {JSON.stringify(articleSchema)}
       </Script>
       <ThoughtPageClient id={id} initialArticle={article} />
+      <div className="relative z-10 px-6 max-w-5xl mx-auto pb-20">
+        <RelatedArticles articleId={article.id} tags={article.tags} />
+      </div>
     </>
   )
 }

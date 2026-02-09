@@ -90,6 +90,65 @@ function transformDraft(draft: PrismaDraft): Article {
     }
 }
 
+export async function getArticlesByTag(tag: string): Promise<Article[]> {
+    try {
+        const articles = await prisma.article.findMany({
+            where: {
+                published: true,
+                publishedAt: { lte: new Date() },
+                tags: { has: tag },
+            },
+            orderBy: { publishedAt: 'desc' },
+        })
+        return articles.map(transformArticle)
+    } catch (error) {
+        console.error('Error fetching articles by tag:', error)
+        return []
+    }
+}
+
+export async function getAllTags(): Promise<string[]> {
+    try {
+        const articles = await prisma.article.findMany({
+            where: {
+                published: true,
+                publishedAt: { lte: new Date() },
+            },
+            select: { tags: true },
+        })
+        const tagSet = new Set<string>()
+        articles.forEach(a => a.tags.forEach(t => tagSet.add(t)))
+        return Array.from(tagSet).sort()
+    } catch (error) {
+        console.error('Error fetching all tags:', error)
+        return []
+    }
+}
+
+export async function getRelatedArticles(articleId: string, tags: string[], limit: number = 3): Promise<Article[]> {
+    try {
+        const articles = await prisma.article.findMany({
+            where: {
+                published: true,
+                publishedAt: { lte: new Date() },
+                id: { not: articleId },
+                tags: { hasSome: tags },
+            },
+            orderBy: { publishedAt: 'desc' },
+        })
+        // Sort by number of shared tags (most relevant first)
+        const scored = articles.map(a => ({
+            article: a,
+            score: a.tags.filter(t => tags.includes(t)).length,
+        }))
+        scored.sort((a, b) => b.score - a.score)
+        return scored.slice(0, limit).map(s => transformArticle(s.article))
+    } catch (error) {
+        console.error('Error fetching related articles:', error)
+        return []
+    }
+}
+
 export async function getDraft(id: string): Promise<Article | null> {
     try {
         const draft = await prisma.draft.findUnique({

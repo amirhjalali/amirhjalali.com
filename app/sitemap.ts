@@ -5,11 +5,11 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all published articles from database
-  let articles: { id: string; slug: string; updatedAt: Date }[] = []
+  let articles: { id: string; slug: string; updatedAt: Date; tags: string[] }[] = []
   try {
     articles = await prisma.article.findMany({
       where: { published: true },
-      select: { id: true, slug: true, updatedAt: true },
+      select: { id: true, slug: true, updatedAt: true, tags: true },
       orderBy: { publishedAt: 'desc' },
     })
   } catch (error) {
@@ -41,5 +41,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticPages, ...articlePages]
+  // Tag archive pages
+  const tagSet = new Set<string>()
+  articles.forEach(a => a.tags.forEach(t => tagSet.add(t)))
+  const tagPages = Array.from(tagSet).map(tag => ({
+    url: `${SITE_URL}/thoughts/tag/${encodeURIComponent(tag.toLowerCase())}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.5,
+  }))
+
+  return [...staticPages, ...articlePages, ...tagPages]
 }
