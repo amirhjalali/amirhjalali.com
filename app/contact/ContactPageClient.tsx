@@ -1,10 +1,12 @@
 'use client'
 
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { Mail, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { trackEvent } from '@/lib/analytics'
 
 // Dynamic import for non-critical visual effects
 const Spotlight = dynamic(() => import('@/components/Spotlight'), {
@@ -13,6 +15,10 @@ const Spotlight = dynamic(() => import('@/components/Spotlight'), {
 })
 
 export default function ContactPageClient() {
+  useEffect(() => {
+    trackEvent({ category: 'Contact', action: 'Page View', label: 'contact_page' })
+  }, [])
+
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       {/* Background effects */}

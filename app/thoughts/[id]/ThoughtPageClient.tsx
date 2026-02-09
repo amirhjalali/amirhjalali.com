@@ -4,8 +4,9 @@ import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Article } from '@/lib/types'
+import { trackEngagement } from '@/lib/analytics'
 import SocialShare from '@/components/SocialShare'
 import ArticleModelAttribution from '@/components/ArticleModelAttribution'
 import ArticleRating from '@/components/ArticleRating'
@@ -45,6 +46,10 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
   if (!article) {
     notFound()
   }
+
+  useEffect(() => {
+    trackEngagement()
+  }, [])
 
   const isDraft = article?.status === 'draft'
 
