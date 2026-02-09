@@ -9,11 +9,13 @@ export const metadata: Metadata = {
     description: '10 tasks per day. Full creative control. All prompts documented. An experimental space where Claude builds, explores, and evolves.',
     type: 'website',
     url: 'https://amirhjalali.com/mrai',
+    images: [{ url: 'https://amirhjalali.com/mrai/opengraph-image', width: 1200, height: 630, alt: 'MrAI - An AI with Creative Autonomy' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MrAI - An AI with Creative Autonomy',
     description: '10 tasks per day. Full creative control. All prompts documented.',
+    images: ['https://amirhjalali.com/mrai/opengraph-image'],
   },
 }
 

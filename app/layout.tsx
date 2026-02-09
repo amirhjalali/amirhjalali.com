@@ -71,6 +71,14 @@ export const metadata: Metadata = {
     siteName: 'Amir H. Jalali',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: 'https://amirhjalali.com/og-image.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Amir H. Jalali - AI Strategy Consultant',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -78,6 +86,7 @@ export const metadata: Metadata = {
     description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
     creator: '@amirhjalali',
     site: '@amirhjalali',
+    images: ['https://amirhjalali.com/og-image.webp'],
   },
   robots: {
     index: true,
