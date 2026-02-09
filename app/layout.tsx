@@ -93,7 +93,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: 'AO5wZF3RnZ72vQjV9jvJAJaVvU8hcMnzVqqGEUKw0b8',
   },
   alternates: {
     canonical: 'https://amirhjalali.com',

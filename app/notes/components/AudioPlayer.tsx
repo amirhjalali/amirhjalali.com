@@ -168,7 +168,7 @@ export default function AudioPlayer({
           {thumbnailUrl ? (
             <img
               src={thumbnailUrl}
-              alt=""
+              alt={`Thumbnail for ${title || 'audio'}`}
               className="w-16 h-16 rounded-lg object-cover border border-white/10"
             />
           ) : (

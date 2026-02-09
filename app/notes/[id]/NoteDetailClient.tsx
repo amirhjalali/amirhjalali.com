@@ -463,7 +463,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={(note as any).author.avatarUrl}
-                          alt=""
+                          alt={(note as any).author.name || 'Author avatar'}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -559,7 +559,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={media.url}
-                        alt=""
+                        alt={note.title || `Media ${i + 1}`}
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -569,7 +569,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={media.thumbnailUrl}
-                            alt=""
+                            alt={`Video thumbnail for ${note.title || 'note'}`}
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -593,7 +593,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={media.url}
-                        alt=""
+                        alt={note.title || `GIF ${i + 1}`}
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -617,7 +617,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
                   >
                     {link.favicon && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={link.favicon} alt="" className="w-4 h-4" />
+                      <img src={link.favicon} alt={link.domain ? `${link.domain} favicon` : 'Link favicon'} className="w-4 h-4" />
                     )}
                     <div className="flex-1 min-w-0">
                       <span className="text-sm text-[#EAEAEA] group-hover:text-white truncate block">
@@ -692,7 +692,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={note.favicon}
-                alt=""
+                alt={note.domain ? `${note.domain} favicon` : 'Site favicon'}
                 className="w-5 h-5 rounded"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none'

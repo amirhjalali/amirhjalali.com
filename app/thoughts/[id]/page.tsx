@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import Script from 'next/script'
 import ThoughtPageClient from './ThoughtPageClient'
 import { getArticle, getAllArticleIds, getDraft } from '@/lib/data'
 
@@ -70,6 +71,47 @@ export async function generateMetadata({ params }: { params: Promise<ThoughtPage
   }
 }
 
+function generateArticleSchema(article: NonNullable<Awaited<ReturnType<typeof getArticle>>>) {
+  const url = `${SITE_URL}/thoughts/${article.slug || article.id}`
+  const wordCount = article.content ? article.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0
+  const imageUrl = article.imageUrl && !article.imageUrl.startsWith('data:')
+    ? article.imageUrl
+    : `${SITE_URL}/og-image.webp`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.excerpt,
+    image: imageUrl,
+    datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
+    wordCount,
+    articleSection: article.tags?.[0] || 'Technology',
+    keywords: article.tags?.join(', '),
+    author: {
+      '@type': 'Person',
+      '@id': 'https://amirhjalali.com/#person',
+      name: article.author,
+      url: 'https://amirhjalali.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://amirhjalali.com/#organization',
+      name: 'Amir H. Jalali Consulting',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/og-image.webp`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+    url,
+  }
+}
+
 export default async function ThoughtPage({ params }: { params: Promise<ThoughtPageParams> }) {
   const { id } = await params
   let article = await getArticle(id)
@@ -83,5 +125,18 @@ export default async function ThoughtPage({ params }: { params: Promise<ThoughtP
     notFound()
   }
 
-  return <ThoughtPageClient id={id} initialArticle={article} />
+  const articleSchema = generateArticleSchema(article)
+
+  return (
+    <>
+      <Script
+        id={`article-schema-${id}`}
+        type="application/ld+json"
+        strategy="afterInteractive"
+      >
+        {JSON.stringify(articleSchema)}
+      </Script>
+      <ThoughtPageClient id={id} initialArticle={article} />
+    </>
+  )
 }

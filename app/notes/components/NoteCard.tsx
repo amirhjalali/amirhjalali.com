@@ -189,13 +189,13 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
         <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
           {imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+            <img src={imageUrl} alt={note.title || 'Note thumbnail'} className="w-full h-full object-cover" />
           ) : author?.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={author.avatarUrl} alt="" className="w-full h-full object-cover" />
+            <img src={author.avatarUrl} alt={author.name || 'Author avatar'} className="w-full h-full object-cover" />
           ) : note.favicon ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={note.favicon} alt="" className="w-6 h-6" />
+            <img src={note.favicon} alt={note.domain ? `${note.domain} favicon` : 'Site favicon'} className="w-6 h-6" />
           ) : (
             <PlatformIcon className="w-5 h-5 text-[#888888]" />
           )}
@@ -415,7 +415,7 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
             {author.avatarUrl && (
               <div className="w-6 h-6 rounded-full overflow-hidden border border-white/10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={author.avatarUrl} alt="" className="w-full h-full object-cover" />
+                <img src={author.avatarUrl} alt={author.name || 'Author avatar'} className="w-full h-full object-cover" />
               </div>
             )}
             <div className="flex items-center gap-1.5 text-xs">
