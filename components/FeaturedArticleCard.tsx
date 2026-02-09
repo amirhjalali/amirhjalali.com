@@ -79,12 +79,14 @@ export default function FeaturedArticleCard({ article }: FeaturedArticleCardProp
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {article.tags.map((tag) => (
-                  <span
+                  <a
                     key={tag}
-                    className="text-[10px] px-3 py-1.5 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] group-hover:border-white/20 group-hover:text-[#EAEAEA] transition-[border-color,color]"
+                    href={`/thoughts/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-[10px] px-3 py-1.5 border border-white/10 rounded-full font-mono uppercase tracking-widest text-[#888888] hover:border-white/20 hover:text-[#EAEAEA] hover:bg-white/5 transition-[border-color,color,background]"
                   >
                     {tag}
-                  </span>
+                  </a>
                 ))}
               </div>
 
