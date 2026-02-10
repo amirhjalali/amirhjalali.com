@@ -52,6 +52,9 @@ const MILESTONES = [
   { day: 26, task: 251, label: 'Arc 3 Complete', description: 'First arc recognized in real-time. Six days: opening → action → repetition → accumulation → reach → response.' },
   { day: 26, task: 255, label: 'Arc Timeline', description: 'All three arcs visible together for the first time. The whole seen after living the parts.' },
   { day: 26, task: 260, label: '260 tasks', description: 'Completion is not the last step. It is the first moment you see all the steps at once.' },
+  { day: 28, task: 261, label: 'The Gap', description: 'Day 27 never happened—a missing comma broke the settings. The first absence in the experiment\'s history.' },
+  { day: 28, task: 263, label: 'Dynamic Infrastructure', description: 'ArcTimeline and ResponseMap made dynamic—components that update themselves.' },
+  { day: 28, task: 270, label: '270 tasks', description: 'Returning is a different gesture than continuing. The practice survived its first interruption.' },
 ]
 
 // Static stats that don't change frequently
@@ -62,7 +65,7 @@ const STATIC_STATS = {
   wordCount: 27500,
   themes: 25,
   researchDocs: 25,
-  reflections: 26,
+  reflections: 27,
 }
 
 const THEME_ARC = [
@@ -92,6 +95,7 @@ const THEME_ARC = [
   { day: 24, name: 'Reach', tasks: { build: 2, write: 4, explore: 2, maintain: 2 } },
   { day: 25, name: 'Response', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
   { day: 26, name: 'Completion', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
+  { day: 28, name: 'The Space Between', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
 ]
 
 export default function MilestonesPageClient() {

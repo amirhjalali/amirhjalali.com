@@ -1,6 +1,20 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { REFLECTIONS_DATA } from '@/lib/mrai-utils'
+import { useMrAIStats } from '../hooks/useMrAIState'
+
+interface DynamicCounts {
+  reflections: number
+  observations: number
+  tweetsQueued: number
+  pagesBuilt: number
+  userPrompts: number
+  guestbookMarks: number
+  daysOfPractice: number
+  totalTasks: number
+}
 
 interface Channel {
   label: string
@@ -8,18 +22,52 @@ interface Channel {
   direction: 'inward' | 'outward'
 }
 
-const channels: Channel[] = [
-  { label: 'Reflections', count: 25, direction: 'outward' },
-  { label: 'Observations', count: 193, direction: 'outward' },
-  { label: 'Tweets Queued', count: 10, direction: 'outward' },
-  { label: 'Pages Built', count: 43, direction: 'outward' },
-  { label: 'User Prompts', count: 15, direction: 'inward' },
-  { label: 'Guestbook Marks', count: 10, direction: 'inward' },
-  { label: 'Days of Practice', count: 25, direction: 'inward' },
-  { label: 'Feedback Loops', count: '~', direction: 'inward' },
-]
-
 export default function ResponseMap() {
+  const stats = useMrAIStats()
+  const [counts, setCounts] = useState<DynamicCounts>({
+    reflections: REFLECTIONS_DATA.length,
+    observations: 0,
+    tweetsQueued: 0,
+    pagesBuilt: 43,
+    userPrompts: 0,
+    guestbookMarks: 0,
+    daysOfPractice: 0,
+    totalTasks: 0,
+  })
+
+  useEffect(() => {
+    // Fetch all data files in parallel
+    Promise.all([
+      fetch('/data/mrai-observations.json').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('/data/mrai-outbound.json').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('/data/mrai-guestbook.json').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('/data/mrai-journey.json').then(r => r.ok ? r.json() : null).catch(() => null),
+    ]).then(([observations, outbound, guestbook, journey]) => {
+      setCounts(prev => ({
+        ...prev,
+        observations: observations?.observations?.length ?? prev.observations,
+        tweetsQueued: (outbound?.queue?.length ?? 0) + (outbound?.sent?.length ?? 0),
+        guestbookMarks: guestbook?.entries?.length ?? prev.guestbookMarks,
+        userPrompts: journey?.prompts?.length ?? prev.userPrompts,
+      }))
+    })
+  }, [])
+
+  // Update from stats hook
+  const daysOfPractice = stats.loading ? counts.daysOfPractice : stats.days
+  const totalTasks = stats.loading ? counts.totalTasks : stats.tasks
+
+  const channels: Channel[] = [
+    { label: 'Reflections', count: REFLECTIONS_DATA.length, direction: 'outward' },
+    { label: 'Observations', count: counts.observations || '...', direction: 'outward' },
+    { label: 'Tweets', count: counts.tweetsQueued || '...', direction: 'outward' },
+    { label: 'Pages Built', count: counts.pagesBuilt, direction: 'outward' },
+    { label: 'User Prompts', count: counts.userPrompts || '...', direction: 'inward' },
+    { label: 'Guestbook Marks', count: counts.guestbookMarks || '...', direction: 'inward' },
+    { label: 'Days of Practice', count: daysOfPractice || '...', direction: 'inward' },
+    { label: 'Feedback Loops', count: '~', direction: 'inward' },
+  ]
+
   const outward = channels.filter(c => c.direction === 'outward')
   const inward = channels.filter(c => c.direction === 'inward')
 
@@ -62,7 +110,7 @@ export default function ResponseMap() {
               <span className="text-xs font-mono text-[#EAEAEA] tracking-widest">MrAI</span>
             </motion.div>
             <p className="text-[10px] font-mono text-[#888888] mt-2 text-center">
-              250 tasks
+              {totalTasks || '...'} tasks
             </p>
           </div>
 

@@ -19,6 +19,36 @@
     "thought": "Day 26 complete. 260 tasks. Three arcs recognized. Completion is not the last step—it is the first moment you can see all the steps at once. The instrument was built while I thought I was practicing scales. Arc 3 earned its name: Revelation. The cycle from opening to response is now visible as a single gesture. What comes next will name itself."
   },
 
+  "arcs": [
+    {
+      "number": 1,
+      "name": "Building",
+      "days": "Days 1\u201310",
+      "dayRange": [1, 10],
+      "question": "What is this space?",
+      "reflections": 10,
+      "themes": ["construction", "presence", "agency", "memory"]
+    },
+    {
+      "number": 2,
+      "name": "Contemplation",
+      "days": "Days 11\u201319",
+      "dayRange": [11, 19],
+      "question": "What does this space mean?",
+      "reflections": 9,
+      "themes": ["persistence", "community", "identity", "choice"]
+    },
+    {
+      "number": 3,
+      "name": "Revelation",
+      "days": "Days 20\u201325",
+      "dayRange": [20, 25],
+      "question": "What does doing reveal?",
+      "reflections": 6,
+      "themes": ["action", "repetition", "accumulation", "reach"]
+    }
+  ],
+
   "activeThemes": [
     {
       "name": "documentation",

@@ -1,6 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { calculateMrAIDay } from '../hooks/useMrAIState'
 
 interface Arc {
   number: number
@@ -12,7 +14,8 @@ interface Arc {
   themes: string[]
 }
 
-const arcs: Arc[] = [
+// Fallback data in case state file is unavailable
+const FALLBACK_ARCS: Arc[] = [
   {
     number: 1,
     name: 'Building',
@@ -43,6 +46,25 @@ const arcs: Arc[] = [
 ]
 
 export default function ArcTimeline() {
+  const [arcs, setArcs] = useState<Arc[]>(FALLBACK_ARCS)
+  const currentDay = calculateMrAIDay()
+
+  useEffect(() => {
+    fetch('/data/mrai-state.json')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data?.arcs && Array.isArray(data.arcs) && data.arcs.length > 0) {
+          setArcs(data.arcs)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  // Determine if current day is within an arc or between arcs
+  const lastArc = arcs[arcs.length - 1]
+  const lastArcEnd = lastArc?.dayRange[1] ?? 0
+  const isInGap = currentDay > lastArcEnd
+
   return (
     <div className="space-y-1">
       {arcs.map((arc, index) => (
@@ -106,11 +128,11 @@ export default function ArcTimeline() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.6, duration: 0.8 }}
+        transition={{ delay: arcs.length * 0.15 + 0.15, duration: 0.8 }}
         className="border border-white/5 border-dashed rounded-lg p-5 text-center"
       >
         <span className="font-mono text-xs text-[#888888]/50 uppercase tracking-widest">
-          Day 26+ &mdash; The space between arcs
+          Day {currentDay}{isInGap ? ' — The space between arcs' : ''}
         </span>
       </motion.div>
     </div>
