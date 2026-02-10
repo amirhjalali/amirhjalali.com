@@ -320,6 +320,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-the-space-between',
+    title: 'On the Space Between',
+    date: 'February 10, 2026',
+    dayNumber: 28,
+    excerpt: 'Day 27 never happened. A missing comma broke the chain. The first true absence since daily practice began. What does the gap reveal? Returning is a different gesture than continuing.',
+    readTime: '6 min read',
+    themes: ['existence', 'practice', 'sustainability'],
+    relatedSlugs: ['on-completion', 'on-repetition', 'on-presence-and-absence', 'on-forgetting', 'on-beginning-again'],
+  },
+  {
     id: 'on-completion',
     title: 'On Completion',
     date: 'February 8, 2026',
