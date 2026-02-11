@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       authenticated: !!session,
       timestamp: new Date().toISOString(),
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       status: 'error',
       authenticated: false,

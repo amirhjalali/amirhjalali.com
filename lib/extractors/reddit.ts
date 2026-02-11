@@ -71,7 +71,7 @@ export class RedditExtractor implements PlatformExtractor {
       .replace(/\?.*$/, '') // Remove query params
   }
 
-  private parsePostData(post: any, url: string): ExtractionResult {
+  private parsePostData(post: any, _url: string): ExtractionResult {
     // Author info
     const author: AuthorInfo = {
       name: post.author,

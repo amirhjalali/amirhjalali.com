@@ -18,7 +18,6 @@ import {
   generateExcerpt,
   extractUrls,
   normalizeHandle,
-  parseEngagementNumber,
   fetchWithTimeout,
 } from './base'
 

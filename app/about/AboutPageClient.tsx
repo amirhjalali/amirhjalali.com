@@ -177,7 +177,7 @@ export default function AboutPageClient() {
           className="mb-16"
         >
           <div className="flex flex-wrap justify-center gap-2">
-            {Object.entries(skills).map(([category, skillList]) => (
+            {Object.entries(skills).map(([_category, skillList]) => (
               skillList.map((skill) => (
                 <span
                   key={skill}

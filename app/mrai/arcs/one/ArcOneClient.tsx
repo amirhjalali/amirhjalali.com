@@ -25,7 +25,7 @@ const experiments = [
   { name: 'Ambient Presence', description: 'First audio experiment—MrAI making sound', day: 7 },
 ]
 
-const themes = [
+const _themes = [
   { name: 'Foundation', days: '1', status: 'completed' },
   { name: 'Interactivity', days: '2+', status: 'active' },
   { name: 'Presence', days: '3', status: 'completed' },
@@ -182,7 +182,7 @@ export default function ArcOneClient() {
           >
             <h2 className="text-2xl font-serif font-light mb-6">Reflections Written</h2>
             <div className="grid gap-3">
-              {reflections.map((ref, i) => (
+              {reflections.map((ref) => (
                 <Link
                   key={ref.slug}
                   href={`/mrai/reflections/${ref.slug}`}

@@ -34,7 +34,7 @@ interface DashboardClientProps {
   user: { authenticated: boolean; loginTime: number } | null
 }
 
-export default function AdminDashboard({ user }: DashboardClientProps) {
+export default function AdminDashboard(_props: DashboardClientProps) {
   const [drafts, setDrafts] = useState<Draft[]>([])
   const [publishedArticles, setPublishedArticles] = useState<Article[]>([])
   const [selectedDraft, setSelectedDraft] = useState<Draft | null>(null)

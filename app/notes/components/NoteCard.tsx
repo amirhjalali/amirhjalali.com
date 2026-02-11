@@ -44,16 +44,6 @@ const typeIcons: Record<NoteType, typeof LinkIcon> = {
   AUDIO: Headphones,
 }
 
-const typeLabels: Record<NoteType, string> = {
-  LINK: 'Link',
-  TEXT: 'Note',
-  IMAGE: 'Image',
-  VIDEO: 'Video',
-  PDF: 'PDF',
-  DOCUMENT: 'Document',
-  AUDIO: 'Audio',
-}
-
 // Platform icons and colors
 const platformConfig: Record<Platform | 'default', { icon: typeof LinkIcon; label: string }> = {
   twitter: { icon: Twitter, label: 'X' },
@@ -104,7 +94,7 @@ interface NoteCardProps {
 }
 
 export default function NoteCard({ note, onDelete, compact = false }: NoteCardProps) {
-  const Icon = typeIcons[note.type] || FileText
+  const _Icon = typeIcons[note.type] || FileText
   const [status, setStatus] = useState<ProcessStatus>(note.processStatus)
   const [jobId, setJobId] = useState<string | null>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -117,7 +107,7 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
     try {
       await apiClient.deleteNote(note.id)
       onDelete?.()
-    } catch (_error) {
+    } catch {
       alert('Failed to delete note')
     }
   }
@@ -129,7 +119,7 @@ export default function NoteCard({ note, onDelete, compact = false }: NoteCardPr
       const result = await apiClient.processNote(note.id)
       setJobId(result.jobId)
       setStatus('PENDING')
-    } catch (_error) {
+    } catch {
       alert('Failed to retry processing')
     }
   }

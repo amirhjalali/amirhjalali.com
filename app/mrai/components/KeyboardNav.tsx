@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Command, Keyboard } from 'lucide-react'
+import { X, Keyboard } from 'lucide-react'
 
 interface KeyboardNavContextType {
   showHelp: boolean

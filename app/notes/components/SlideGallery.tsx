@@ -27,7 +27,7 @@ function formatTimestamp(seconds: number): string {
 
 export default function SlideGallery({
   slides,
-  videoId,
+  videoId: _videoId,
   onSeek,
   className = '',
 }: SlideGalleryProps) {

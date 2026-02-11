@@ -40,7 +40,7 @@ export async function generateEmbeddings(texts: string[]): Promise<EmbeddingResu
     dimensions: EMBEDDING_DIMENSIONS,
   })
 
-  return response.data.map((d, i) => ({
+  return response.data.map((d) => ({
     embedding: d.embedding,
     tokenCount: Math.ceil(response.usage.total_tokens / texts.length),
   }))

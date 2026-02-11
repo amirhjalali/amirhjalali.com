@@ -78,7 +78,7 @@ export default function NoteChat({ notebookId, onClose, isOpen = true }: NoteCha
       if (data.chatId) {
         setChatId(data.chatId)
       }
-    } catch (error) {
+    } catch {
       setMessages(prev => [
         ...prev,
         { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' },

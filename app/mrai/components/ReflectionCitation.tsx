@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { REFLECTIONS_DATA, type ReflectionData } from '@/lib/mrai-utils'
+import { REFLECTIONS_DATA } from '@/lib/mrai-utils'
 import { BookOpen, ExternalLink } from 'lucide-react'
 
 interface ReflectionCitationProps {

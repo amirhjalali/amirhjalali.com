@@ -19,7 +19,6 @@ import {
   EXTRACTOR_VERSION,
   createSuccessResult,
   createFailureResult,
-  cleanText,
   generateExcerpt,
   extractDomain,
   fetchWithTimeout,

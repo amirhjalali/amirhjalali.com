@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { apiClient } from '@/lib/api-client'
-import type { Note, Platform, AuthorInfo, EngagementMetrics, MediaItem, MentionedLink } from '@/lib/types'
+import type { Note, Platform, MediaItem, MentionedLink } from '@/lib/types'
 import {
   Link as LinkIcon, FileText, Image, Video, FileType2, File, ArrowLeft, Trash2, Edit3, Save, X, RefreshCw, Loader2, ExternalLink, Clock, Brain, Youtube,
   ChevronDown, ChevronUp, Heart, MessageCircle, Repeat2, Eye, Star, GitFork, Users, Github, Twitter, CheckCircle2, ImageIcon, FileCode, Bookmark, AlertTriangle, Headphones
@@ -13,7 +13,7 @@ import { formatDistanceToNow } from 'date-fns'
 import type { NoteType, ProcessStatus } from '@/lib/types'
 
 // Platform icons
-const platformConfig: Record<Platform | 'default', { icon: typeof LinkIcon; label: string }> = {
+const _platformConfig: Record<Platform | 'default', { icon: typeof LinkIcon; label: string }> = {
   twitter: { icon: Twitter, label: 'X' },
   youtube: { icon: Youtube, label: 'YouTube' },
   linkedin: { icon: Users, label: 'LinkedIn' },
@@ -170,7 +170,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
       })
       setNote(updated)
       setIsEditing(false)
-    } catch (_error) {
+    } catch {
       alert('Failed to update note')
     }
   }
@@ -181,7 +181,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
     try {
       await apiClient.deleteNote(note.id)
       router.push('/notes')
-    } catch (_error) {
+    } catch {
       alert('Failed to delete note')
     }
   }
@@ -204,7 +204,7 @@ export default function NoteDetailClient({ noteId }: { noteId: string }) {
       // Fetch the updated note
       const updatedNote = await apiClient.getNote(noteId)
       setNote(updatedNote)
-    } catch (_error) {
+    } catch {
       alert('Failed to reprocess note')
     } finally {
       setIsReprocessing(false)

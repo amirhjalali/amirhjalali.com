@@ -17,8 +17,6 @@ const Spotlight = dynamic(() => import('@/components/Spotlight'), {
   loading: () => null
 })
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amirhjalali.com'
-
 // Helper to add basePath to image URLs at render time
 const getImageUrl = (url: string | undefined) => {
   if (!url) return undefined
@@ -36,20 +34,14 @@ interface ThoughtPageClientProps {
 export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageClientProps) {
   const [article] = useState<Article | null>(initialArticle)
 
-  if (!article) {
-    notFound()
-    return null // Ensure we don't render anything else
-  }
-
-
-
-  if (!article) {
-    notFound()
-  }
-
   useEffect(() => {
     trackEngagement()
   }, [])
+
+  if (!article) {
+    notFound()
+    return null
+  }
 
   const isDraft = article?.status === 'draft'
 

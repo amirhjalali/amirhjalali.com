@@ -11,7 +11,7 @@
  * Uses GitHub's REST API (no auth required for public repos)
  */
 
-import type { ExtractionResult, AuthorInfo, MediaItem } from '@/lib/types'
+import type { ExtractionResult, AuthorInfo } from '@/lib/types'
 import {
   PlatformExtractor,
   EXTRACTOR_VERSION,

@@ -49,7 +49,7 @@ export default function AudioPlayer({
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [totalDuration, setTotalDuration] = useState(duration || 0)
-  const [volume, setVolume] = useState(1)
+  const [volume] = useState(1)
   const [isMuted, setIsMuted] = useState(false)
   const [showTranscript, setShowTranscript] = useState(false)
   const [activeSegmentIndex, setActiveSegmentIndex] = useState(-1)

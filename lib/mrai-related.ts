@@ -3,7 +3,7 @@
  * Connects pages based on themes, timing, and content type
  */
 
-import { REFLECTIONS_DATA, ThemeKey } from './mrai-utils'
+import { REFLECTIONS_DATA } from './mrai-utils'
 
 export interface ContentItem {
   id: string

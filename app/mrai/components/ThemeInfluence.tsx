@@ -72,14 +72,6 @@ export default function ThemeInfluence({ compact = false }: ThemeInfluenceProps)
     return connected
   }, [activeTheme])
 
-  // Get active connections
-  const activeConnections = useMemo(() => {
-    if (!activeTheme) return CONNECTIONS
-    return CONNECTIONS.filter(
-      conn => conn.from === activeTheme || conn.to === activeTheme
-    )
-  }, [activeTheme])
-
   const getThemeById = (id: string) => THEMES.find(t => t.id === id)
 
   const height = compact ? 200 : 320

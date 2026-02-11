@@ -189,7 +189,7 @@ export default function DecisionsPageClient() {
 
           {/* Decision entries - newest first */}
           <div className="space-y-4">
-            {days.reverse().map(([key, data], index) => {
+            {days.reverse().map(([key, data]) => {
               const dayNum = parseInt(key.replace('day', ''))
               const isCurrentDay = dayNum === 6 // Today is Day 6
               return (

@@ -37,15 +37,6 @@ function groupTasksByDate(tasks: CompletedTask[]): GroupedTasks[] {
     date.setHours(0, 0, 0, 0)
     const dateKey = date.toISOString()
 
-    let label: string
-    if (date.getTime() === today.getTime()) {
-      label = 'Today'
-    } else if (date.getTime() === yesterday.getTime()) {
-      label = 'Yesterday'
-    } else {
-      label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    }
-
     if (!groups.has(dateKey)) {
       groups.set(dateKey, { date, tasks: [] })
     }

@@ -23,7 +23,7 @@ class APIClient {
       try {
         const errorData = await response.json()
         errorMessage = errorData.error || errorData.message || defaultErrorMessage
-      } catch (e) {
+      } catch {
         errorMessage = `${defaultErrorMessage}: ${response.status} ${response.statusText}`
       }
       throw new Error(errorMessage, { cause: response.status })

@@ -120,7 +120,7 @@ export async function linkNoteToTopics(
 /**
  * Update the note count for a topic
  */
-async function updateTopicNoteCount(topicId: string): Promise<void> {
+async function _updateTopicNoteCount(topicId: string): Promise<void> {
   const count = await prisma.noteTopic.count({
     where: { topicId },
   })

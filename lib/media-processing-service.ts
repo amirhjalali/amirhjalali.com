@@ -40,7 +40,7 @@ export async function downloadAndStoreMedia(
   url: string,
   options: ProcessMediaOptions = {}
 ): Promise<MediaResult> {
-  const opts = { ...DEFAULT_OPTIONS, ...options }
+  const _opts = { ...DEFAULT_OPTIONS, ...options }
 
   try {
     // Download the media
@@ -108,7 +108,7 @@ export async function downloadAndStoreMedia(
  */
 export async function processBase64Image(
   base64Data: string,
-  options: ProcessMediaOptions = {}
+  _options: ProcessMediaOptions = {}
 ): Promise<MediaResult> {
   try {
     // Extract content type from data URI
@@ -296,7 +296,7 @@ export async function processMediaUrl(
   // Download and store external media
   try {
     return await downloadAndStoreMedia(url, options)
-  } catch (error) {
+  } catch {
     // If download fails, return null - caller should handle
     console.warn(`Could not process media: ${url}`)
     return null

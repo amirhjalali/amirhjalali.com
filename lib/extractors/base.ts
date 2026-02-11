@@ -2,7 +2,7 @@
  * Base interface and utilities for platform-specific content extractors
  */
 
-import type { Platform, ExtractionResult, AuthorInfo, EngagementMetrics, MediaItem, MentionedLink } from '@/lib/types'
+import type { Platform, ExtractionResult, MentionedLink } from '@/lib/types'
 
 export const EXTRACTOR_VERSION = '1.0.0'
 

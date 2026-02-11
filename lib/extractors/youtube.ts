@@ -14,7 +14,6 @@ import {
   EXTRACTOR_VERSION,
   createSuccessResult,
   createFailureResult,
-  cleanText,
   generateExcerpt,
   fetchWithTimeout,
 } from './base'

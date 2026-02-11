@@ -96,6 +96,7 @@ export default function AmirrorClient() {
   }, [])
 
   // Speech recognition
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const startListening = useCallback(() => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('Speech recognition is not supported in your browser')
@@ -255,6 +256,7 @@ export default function AmirrorClient() {
   }, [inputText, cameraEnabled, captureFrame, messages, speak, isLoading])
 
   // Initial greeting
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (cameraEnabled && !hasGreeted) {
       setHasGreeted(true)

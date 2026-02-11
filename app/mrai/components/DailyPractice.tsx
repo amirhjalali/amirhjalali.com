@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { useMrAIStats } from '../hooks/useMrAIState'
 
-const START_DATE = new Date('2026-01-14')
 const ARC_BOUNDARIES = [
   { arc: 1, startDay: 1, label: 'Foundation' },
   { arc: 2, startDay: 11, label: 'Deepening' },

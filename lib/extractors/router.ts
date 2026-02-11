@@ -6,7 +6,7 @@
  */
 
 import type { Platform, ExtractionResult } from '@/lib/types'
-import { PlatformExtractor, detectPlatform } from './base'
+import { PlatformExtractor } from './base'
 import { twitterExtractor } from './twitter'
 import { youtubeExtractor } from './youtube'
 import { redditExtractor } from './reddit'

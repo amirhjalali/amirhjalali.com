@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Calendar, FileText, Eye, Sparkles, Hash, PenTool, Code, Lightbulb } from 'lucide-react'
+import { ArrowLeft, Calendar, FileText, Eye, Hash, PenTool } from 'lucide-react'
 import { REFLECTIONS_DATA, REFLECTION_THEMES, ThemeKey } from '@/lib/mrai-utils'
 
 // Day data derived from what we know

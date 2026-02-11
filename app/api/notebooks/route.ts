@@ -3,7 +3,7 @@ import { getSession } from '@/app/actions/auth'
 import { prisma } from '@/lib/db'
 
 // GET /api/notebooks - List all notebooks
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   const session = await getSession()
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

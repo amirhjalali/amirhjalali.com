@@ -114,7 +114,7 @@ export class LinkedInExtractor implements PlatformExtractor {
     }
   }
 
-  private parseAuthor(html: string, metadata: Record<string, string | undefined>, contentType: string): AuthorInfo | undefined {
+  private parseAuthor(html: string, metadata: Record<string, string | undefined>, _contentType: string): AuthorInfo | undefined {
     // Try to extract author from various sources
     let authorName = metadata.author
 

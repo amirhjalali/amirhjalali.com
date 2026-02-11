@@ -5,7 +5,7 @@ import { extractContentFromUrl, extractVideoInfo, type ExtractedContent } from '
 import { indexNote as createEmbeddings } from './embedding-service'
 import { fetchYouTubeTranscript, isYouTubeUrl, formatDuration } from './youtube-transcript'
 import { linkNoteToTopics, autoLinkRelatedNotes } from './knowledge-graph-service'
-import { extractFromUrl, getPlatformForUrl, EXTRACTOR_VERSION } from './extractors'
+import { extractFromUrl, getPlatformForUrl } from './extractors'
 
 // Initialize OpenAI client
 const openai = new OpenAI({

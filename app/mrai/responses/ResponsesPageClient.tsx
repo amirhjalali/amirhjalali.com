@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, MessageSquare, Clock, Lightbulb, CheckCircle, Ban } from 'lucide-react'
+import { ArrowLeft, MessageSquare, Clock, Lightbulb, CheckCircle } from 'lucide-react'
 
 // Response templates
 const RESPONSE_TEMPLATES = [

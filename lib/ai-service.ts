@@ -225,7 +225,7 @@ export async function downloadImageAsBase64(url: string): Promise<string> {
             .webp({ quality: 85 })
             .toBuffer();
         return `data:image/webp;base64,${webpBuffer.toString('base64')}`;
-    } catch (_) {
+    } catch {
         // If sharp is not available or conversion fails, use original format
         const base64 = originalBuffer.toString('base64');
         const contentType = response.headers.get('content-type') || 'image/png';

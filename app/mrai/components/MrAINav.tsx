@@ -7,8 +7,8 @@ import { usePathname } from 'next/navigation'
 import {
   Menu, X, Home, BookOpen, Sparkles, MessageSquare,
   Info, Eye, TrendingUp, ChevronRight, Layers,
-  FileText, AudioLines, PenLine, ArrowRight, Search, Hash, FileEdit,
-  Send, Mail, Twitter, ExternalLink, Rss
+  FileText, PenLine, ArrowRight, Search, Hash, FileEdit,
+  Send, Mail, ExternalLink, Rss
 } from 'lucide-react'
 import PulseIndicator from './PulseIndicator'
 import { KeyboardHint } from './KeyboardNav'

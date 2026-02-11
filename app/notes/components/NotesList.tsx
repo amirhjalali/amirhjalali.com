@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { apiClient } from '@/lib/api-client'
 import type { Note, NoteType, ProcessStatus } from '@/lib/types'
@@ -22,7 +22,7 @@ export default function NotesList({ refreshKey, viewMode: externalViewMode }: No
 
   // Use external viewMode if provided, otherwise use internal state
   const viewMode = externalViewMode ?? internalViewMode
-  const setViewMode = externalViewMode ? () => {} : setInternalViewMode
+  const _setViewMode = externalViewMode ? () => {} : setInternalViewMode
   const [filters, setFilters] = useState<{
     type?: NoteType
     status?: ProcessStatus
