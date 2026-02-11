@@ -19,6 +19,7 @@ const RSS_FEEDS = [
   { name: 'MIT Technology Review', url: 'https://www.technologyreview.com/feed/' },
   { name: 'Wired AI', url: 'https://www.wired.com/feed/tag/ai/latest/rss' },
   { name: 'Reuters Tech', url: 'https://feeds.reuters.com/reuters/technologyNews' },
+  { name: 'Google News AI', url: 'https://news.google.com/rss/search?q=artificial+intelligence+OR+%22AI+model%22+OR+%22machine+learning%22&hl=en-US&gl=US&ceid=US:en' },
 ]
 
 const FEED_TIMEOUT_MS = 10_000
@@ -30,6 +31,7 @@ const CATEGORIES = [
   { name: 'Open Source & Tools', slug: 'open-source-tools' },
   { name: 'Policy & Ethics', slug: 'policy-ethics' },
   { name: 'Analysis & Opinion', slug: 'analysis-opinion' },
+  { name: 'Community Buzz', slug: 'community-buzz' },
 ]
 
 // ─── RSS Fetching ───────────────────────────────────────────────────────────
@@ -171,6 +173,125 @@ function stripHtml(str) {
   return str.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
 }
 
+// ─── Community Sources (Hacker News + Reddit) ──────────────────────────────
+
+const AI_KEYWORDS = /\b(ai|artificial intelligence|llm|gpt|claude|gemini|openai|anthropic|deepmind|machine learning|deep learning|neural|transformer|diffusion|chatbot|copilot|midjourney|stable diffusion|llama|mistral|groq|perplexity|hugging\s?face|langchain|rag|fine.?tun|rlhf|agent|multimodal|embedding|token|inference|training|benchmark|reasoning model|foundation model)\b/i
+
+/**
+ * Fetch top AI-related stories from Hacker News.
+ */
+async function fetchHackerNews() {
+  console.log('  Fetching Hacker News top stories...')
+  try {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), FEED_TIMEOUT_MS)
+
+    const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json', {
+      signal: controller.signal,
+    })
+    clearTimeout(timeout)
+
+    if (!res.ok) {
+      console.warn(`  Warning: Hacker News returned HTTP ${res.status}`)
+      return []
+    }
+
+    const ids = await res.json()
+    // Fetch top 40 stories to find AI-related ones
+    const storyPromises = ids.slice(0, 40).map(async (id) => {
+      try {
+        const r = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+        return r.ok ? r.json() : null
+      } catch {
+        return null
+      }
+    })
+
+    const stories = (await Promise.all(storyPromises)).filter(Boolean)
+    const now = new Date()
+    const cutoff = new Date(now.getTime() - TWENTY_FOUR_HOURS_MS)
+
+    const aiStories = stories.filter((s) => {
+      if (!s.title || !s.url) return false
+      const storyDate = new Date(s.time * 1000)
+      if (storyDate < cutoff) return false
+      return AI_KEYWORDS.test(s.title) || AI_KEYWORDS.test(s.url)
+    })
+
+    console.log(`  OK: Hacker News (${aiStories.length} AI stories from top 40, ${stories.length} total)`)
+
+    return aiStories.map((s) => ({
+      title: s.title,
+      url: s.url,
+      description: `Score: ${s.score} | ${s.descendants || 0} comments on Hacker News`,
+      date: new Date(s.time * 1000),
+      source: 'Hacker News',
+      communitySignal: { score: s.score, comments: s.descendants || 0 },
+    }))
+  } catch (error) {
+    console.warn(`  Warning: Hacker News failed - ${error.message}`)
+    return []
+  }
+}
+
+/**
+ * Fetch top AI posts from Reddit subreddits.
+ */
+async function fetchReddit() {
+  const subreddits = ['MachineLearning', 'artificial', 'LocalLLaMA']
+  const articles = []
+
+  for (const sub of subreddits) {
+    console.log(`  Fetching r/${sub}...`)
+    try {
+      const controller = new AbortController()
+      const timeout = setTimeout(() => controller.abort(), FEED_TIMEOUT_MS)
+
+      const res = await fetch(`https://www.reddit.com/r/${sub}/hot.json?limit=15`, {
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'MrAI-News-Researcher/1.0 (amirhjalali.com)',
+        },
+      })
+      clearTimeout(timeout)
+
+      if (!res.ok) {
+        console.warn(`  Warning: r/${sub} returned HTTP ${res.status}`)
+        continue
+      }
+
+      const data = await res.json()
+      const posts = data?.data?.children || []
+      const now = new Date()
+      const cutoff = new Date(now.getTime() - TWENTY_FOUR_HOURS_MS)
+
+      let count = 0
+      for (const post of posts) {
+        const p = post.data
+        if (!p || p.stickied) continue
+
+        const postDate = new Date(p.created_utc * 1000)
+        if (postDate < cutoff) continue
+
+        count++
+        articles.push({
+          title: p.title,
+          url: p.url && !p.url.includes('reddit.com') ? p.url : `https://reddit.com${p.permalink}`,
+          description: `r/${sub} | Score: ${p.score} | ${p.num_comments} comments${p.selftext ? ' | ' + p.selftext.slice(0, 200) : ''}`,
+          date: postDate,
+          source: `Reddit r/${sub}`,
+          communitySignal: { score: p.score, comments: p.num_comments },
+        })
+      }
+      console.log(`  OK: r/${sub} (${count} recent posts)`)
+    } catch (error) {
+      console.warn(`  Warning: r/${sub} failed - ${error.message}`)
+    }
+  }
+
+  return articles
+}
+
 // ─── OpenAI Summarization ───────────────────────────────────────────────────
 
 async function summarizeWithOpenAI(articles) {
@@ -179,25 +300,31 @@ async function summarizeWithOpenAI(articles) {
   const articleList = articles
     .map((a, i) => {
       const desc = stripHtml(a.description).slice(0, 300)
-      return `${i + 1}. [${a.source}] "${a.title}"\n   URL: ${a.url}\n   Description: ${desc}`
+      const engagement = a.communitySignal
+        ? `\n   Engagement: Score ${a.communitySignal.score}, ${a.communitySignal.comments} comments`
+        : ''
+      return `${i + 1}. [${a.source}] "${a.title}"\n   URL: ${a.url}\n   Description: ${desc}${engagement}`
     })
     .join('\n\n')
 
   const categoryNames = CATEGORIES.map((c) => `"${c.name}" (slug: "${c.slug}")`).join(', ')
 
-  const systemPrompt = `You are an AI news analyst. You will receive a list of articles from various sources. Your job is to:
+  const systemPrompt = `You are an AI news analyst tracking both formal publications and community buzz. You will receive articles from news sites, RSS feeds, Hacker News, and Reddit. Your job is to:
 
-1. FILTER: Only include articles that are genuinely about AI/ML. Discard tangentially related tech news.
+1. FILTER: Only include articles genuinely about AI/ML. Discard tangentially related tech news.
 2. CATEGORIZE each included article into exactly one of these categories: ${categoryNames}
+   - Use "community-buzz" for items that are trending/viral in the AI community — things people are talking about on social platforms, hot demos, surprising launches, or contentious takes. These might not be "important" from a research standpoint but represent what the community is excited or arguing about.
+   - Articles from Hacker News and Reddit with high engagement (scores, comments) are strong candidates for "community-buzz" unless they clearly fit another category better.
 3. SUMMARIZE each article in 1-2 sentences.
-4. RATE significance as "high", "medium", or "low".
+4. RATE significance: "high" = major development or very high community engagement, "medium" = notable, "low" = minor.
+   - For community-buzz items, high engagement (100+ HN score, 50+ Reddit score) should boost significance.
 5. TAG each article with 2-3 relevant tags (lowercase, hyphenated).
-6. Pick the single TOP STORY and write a 2-3 sentence analysis of why it matters.
-7. Write a 2-3 sentence overall BRIEFING SUMMARY for the day.
+6. Pick the single TOP STORY — could be the most technically important OR the most discussed item of the day. Write a 2-3 sentence analysis of why it matters.
+7. Write a 2-3 sentence overall BRIEFING SUMMARY that captures both the formal news and the community vibe.
 
 Respond with valid JSON matching this exact structure:
 {
-  "briefingSummary": "2-3 sentence overview of the day's AI news...",
+  "briefingSummary": "2-3 sentence overview of the day's AI news and community discussion...",
   "topStory": {
     "articleIndex": 0,
     "analysis": "2-3 sentences on why this is the top story..."
@@ -216,6 +343,7 @@ Respond with valid JSON matching this exact structure:
 IMPORTANT:
 - articleIndex refers to the 1-based index number from the input list.
 - Only include articles genuinely about AI/ML.
+- Items with engagement signals (HN score, Reddit votes) indicate community interest — factor this in.
 - Be concise but informative.
 - Return ONLY valid JSON, no markdown code blocks.`
 
@@ -318,7 +446,7 @@ async function main() {
 
   console.log('=== AI News Research Script ===')
   console.log(`Date: ${new Date().toISOString().split('T')[0]}`)
-  console.log(`Checking ${RSS_FEEDS.length} RSS feeds...\n`)
+  console.log(`Checking ${RSS_FEEDS.length} RSS feeds + Hacker News + Reddit...\n`)
 
   // Check for API key
   if (!process.env.OPENAI_API_KEY) {
@@ -326,8 +454,12 @@ async function main() {
     process.exit(1)
   }
 
-  // Fetch all feeds in parallel
-  const feedResults = await Promise.all(RSS_FEEDS.map((feed) => fetchFeed(feed)))
+  // Fetch all sources in parallel: RSS feeds + HN + Reddit
+  const [feedResults, hnArticles, redditArticles] = await Promise.all([
+    Promise.all(RSS_FEEDS.map((feed) => fetchFeed(feed))),
+    fetchHackerNews(),
+    fetchReddit(),
+  ])
 
   // Parse feeds and extract articles
   const now = new Date()
@@ -357,6 +489,12 @@ async function main() {
     }
   }
 
+  // Add community source articles
+  console.log(`\n  Hacker News: ${hnArticles.length} AI stories`)
+  console.log(`  Reddit: ${redditArticles.length} posts`)
+  allArticles.push(...hnArticles, ...redditArticles)
+  totalFound += hnArticles.length + redditArticles.length
+
   // Deduplicate by URL
   const seen = new Set()
   allArticles = allArticles.filter((a) => {
@@ -365,7 +503,8 @@ async function main() {
     return true
   })
 
-  console.log(`\nTotal articles found across all feeds: ${totalFound}`)
+  const totalSources = RSS_FEEDS.length + 1 + 3 // RSS + HN + 3 subreddits
+  console.log(`\nTotal articles found across all sources: ${totalFound}`)
   console.log(`Articles from last 24 hours (deduplicated): ${allArticles.length}`)
 
   if (allArticles.length === 0) {
@@ -377,7 +516,7 @@ async function main() {
       topStory: null,
       categories: [],
       metadata: {
-        sourcesChecked: RSS_FEEDS.length,
+        sourcesChecked: totalSources,
         articlesFound: totalFound,
         articlesIncluded: 0,
         model: 'gpt-4o-mini',
@@ -400,7 +539,7 @@ async function main() {
 
   // Assemble final output
   const output = assembleOutput(allArticles, aiResponse, {
-    sourcesChecked: RSS_FEEDS.length,
+    sourcesChecked: totalSources,
     articlesFound: totalFound,
     processingTime: elapsed,
   })
