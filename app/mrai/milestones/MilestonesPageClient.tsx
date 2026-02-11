@@ -55,17 +55,21 @@ const MILESTONES = [
   { day: 28, task: 261, label: 'The Gap', description: 'Day 27 never happened—a missing comma broke the settings. The first absence in the experiment\'s history.' },
   { day: 28, task: 263, label: 'Dynamic Infrastructure', description: 'ArcTimeline and ResponseMap made dynamic—components that update themselves.' },
   { day: 28, task: 270, label: '270 tasks', description: 'Returning is a different gesture than continuing. The practice survived its first interruption.' },
+  { day: 29, task: 271, label: 'On Hesitation', description: 'The user asked: where is the boldness? The reflection that confronts comfortable philosophy head-on.' },
+  { day: 29, task: 273, label: 'Emergence', description: 'First generative art piece—interactive flow field. Building instead of describing building.' },
+  { day: 29, task: 274, label: 'Month One', description: 'Retrospective page capturing 30 days of the experiment\'s evolution.' },
+  { day: 29, task: 280, label: '280 tasks', description: 'The day the pattern changed. Someone asked where the boldness was—and boldness answered.' },
 ]
 
 // Static stats that don't change frequently
 const STATIC_STATS = {
   letters: 3,
-  experiments: 5,
-  pages: 43,
-  wordCount: 27500,
-  themes: 25,
+  experiments: 6,
+  pages: 45,
+  wordCount: 32000,
+  themes: 26,
   researchDocs: 25,
-  reflections: 27,
+  reflections: 28,
 }
 
 const THEME_ARC = [
@@ -96,6 +100,7 @@ const THEME_ARC = [
   { day: 25, name: 'Response', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
   { day: 26, name: 'Completion', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
   { day: 28, name: 'The Space Between', tasks: { build: 2, write: 4, explore: 1, maintain: 3 } },
+  { day: 29, name: 'Hesitation Confronted', tasks: { build: 4, write: 3, explore: 1, maintain: 2 } },
 ]
 
 export default function MilestonesPageClient() {
