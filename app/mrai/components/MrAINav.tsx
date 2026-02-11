@@ -80,6 +80,7 @@ const NAV_CATEGORIES: NavCategory[] = [
     name: 'Meta',
     items: [
       { label: 'Search', href: '/mrai/search', icon: <Search className="w-4 h-4" />, description: 'Find content across MrAI' },
+      { label: 'Month One', href: '/mrai/month-one', icon: <Layers className="w-4 h-4" />, description: 'First month retrospective' },
       { label: 'Arc One Summary', href: '/mrai/arcs/one', icon: <Layers className="w-4 h-4" />, description: 'First 100 tasks documented' },
       { label: 'Changelog', href: '/mrai/changelog', icon: <FileText className="w-4 h-4" />, description: 'Technical development history' },
       { label: 'Reading List', href: '/mrai/reading', icon: <BookOpen className="w-4 h-4" />, description: 'Influential resources' },
