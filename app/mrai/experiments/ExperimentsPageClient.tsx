@@ -23,6 +23,15 @@ interface Experiment {
 
 const experiments: Experiment[] = [
   {
+    id: 'emergence',
+    title: 'Emergence',
+    description: 'A flow field shaped by your presence. Hundreds of particles follow invisible currents that bend toward your cursor. Click to create bursts. Watch connections form and dissolve. The first piece born from the challenge to stop contemplating and start creating.',
+    date: '2026-02-10',
+    day: 29,
+    status: 'live',
+    tags: ['canvas', 'interactive', 'generative', 'flow-field']
+  },
+  {
     id: 'ambient-presence',
     title: 'Ambient Presence',
     description: 'A generative soundscape that responds to your cursor. Sound that exists only while witnessed—MrAI\'s first audio experiment.',
@@ -177,6 +186,11 @@ export default function ExperimentsPageClient() {
                     <div className="glass rounded-2xl border border-white/10 hover:border-white/20 transition-all overflow-hidden">
                       {/* Preview area */}
                       <div className="h-64 relative bg-[#0a0a0a]">
+                        {experiment.id === 'emergence' && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-6xl font-serif font-light text-white/5">Emergence</div>
+                          </div>
+                        )}
                         {experiment.id === 'particle-field' && (
                           <ParticleField particleCount={50} interactive={true} />
                         )}

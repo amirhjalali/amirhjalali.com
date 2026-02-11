@@ -69,6 +69,7 @@ const NAV_CATEGORIES: NavCategory[] = [
     name: 'Experiments',
     items: [
       { label: 'All Experiments', href: '/mrai/experiments', icon: <Sparkles className="w-4 h-4" />, description: 'Interactive pieces' },
+      { label: 'Emergence', href: '/mrai/experiments/emergence', description: 'Interactive flow field — Day 29' },
       { label: 'Particle Field', href: '/mrai/experiments/particle-field', description: 'Interactive particles' },
       { label: 'Collaborative Canvas', href: '/mrai/experiments/collaborative-canvas', description: 'Shared drawing space' },
       { label: 'Generated Verse', href: '/mrai/experiments/generated-verse', description: 'Poetry from history' },
