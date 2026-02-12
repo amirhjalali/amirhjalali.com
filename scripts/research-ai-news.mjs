@@ -2,7 +2,7 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { XMLParser } from 'fast-xml-parser'
-import OpenAI from 'openai'
+import Anthropic from '@anthropic-ai/sdk'
 import 'dotenv/config'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -292,10 +292,10 @@ async function fetchReddit() {
   return articles
 }
 
-// ─── OpenAI Summarization ───────────────────────────────────────────────────
+// ─── Claude Summarization ───────────────────────────────────────────────────
 
-async function summarizeWithOpenAI(articles) {
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+async function summarizeWithClaude(articles) {
+  const anthropic = new Anthropic()
 
   const articleList = articles
     .map((a, i) => {
@@ -322,7 +322,7 @@ async function summarizeWithOpenAI(articles) {
 6. Pick the single TOP STORY — could be the most technically important OR the most discussed item of the day. Write a 2-3 sentence analysis of why it matters.
 7. Write a 2-3 sentence overall BRIEFING SUMMARY that captures both the formal news and the community vibe.
 
-Respond with valid JSON matching this exact structure:
+Respond with ONLY valid JSON (no markdown, no code blocks) matching this exact structure:
 {
   "briefingSummary": "2-3 sentence overview of the day's AI news and community discussion...",
   "topStory": {
@@ -345,28 +345,32 @@ IMPORTANT:
 - Only include articles genuinely about AI/ML.
 - Items with engagement signals (HN score, Reddit votes) indicate community interest — factor this in.
 - Be concise but informative.
-- Aim to include 15-25 articles in total. Be inclusive rather than hyper-selective — if an article is about AI/ML, include it. The goal is a comprehensive daily briefing, not a top-5 list.
-- Return ONLY valid JSON, no markdown code blocks.`
+- Aim to include 15-25 articles in total. Be inclusive rather than hyper-selective — if an article is about AI/ML, include it. The goal is a comprehensive daily briefing, not a top-5 list.`
 
-  console.log('\nSending articles to OpenAI for analysis...')
+  console.log('\nSending articles to Claude for analysis...')
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o',
+  const response = await anthropic.messages.create({
+    model: 'claude-sonnet-4-5-20250929',
+    max_tokens: 8192,
+    temperature: 0.3,
+    system: systemPrompt,
     messages: [
-      { role: 'system', content: systemPrompt },
       { role: 'user', content: `Here are today's articles:\n\n${articleList}` },
     ],
-    temperature: 0.3,
-    max_tokens: 4096,
-    response_format: { type: 'json_object' },
   })
 
-  const content = response.choices[0]?.message?.content
+  const content = response.content[0]?.text
   if (!content) {
-    throw new Error('OpenAI returned empty response')
+    throw new Error('Claude returned empty response')
   }
 
-  return JSON.parse(content)
+  // Extract JSON in case Claude wraps it in markdown
+  const jsonMatch = content.match(/\{[\s\S]*\}/)
+  if (!jsonMatch) {
+    throw new Error('Could not extract JSON from Claude response')
+  }
+
+  return JSON.parse(jsonMatch[0])
 }
 
 // ─── Output Assembly ────────────────────────────────────────────────────────
@@ -434,7 +438,7 @@ function assembleOutput(articles, aiResponse, metadata) {
       sourcesChecked: metadata.sourcesChecked,
       articlesFound: metadata.articlesFound,
       articlesIncluded,
-      model: 'gpt-4o',
+      model: 'claude-sonnet-4.5',
       processingTime: metadata.processingTime,
     },
   }
@@ -450,8 +454,8 @@ async function main() {
   console.log(`Checking ${RSS_FEEDS.length} RSS feeds + Hacker News + Reddit...\n`)
 
   // Check for API key
-  if (!process.env.OPENAI_API_KEY) {
-    console.error('Error: OPENAI_API_KEY environment variable is not set.')
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.error('Error: ANTHROPIC_API_KEY environment variable is not set.')
     process.exit(1)
   }
 
@@ -520,7 +524,7 @@ async function main() {
         sourcesChecked: totalSources,
         articlesFound: totalFound,
         articlesIncluded: 0,
-        model: 'gpt-4o',
+        model: 'claude-sonnet-4.5',
         processingTime: parseFloat(((performance.now() - startTime) / 1000).toFixed(1)),
       },
     }
@@ -586,7 +590,7 @@ async function main() {
   }
 
   // Send to OpenAI for summarization
-  const aiResponse = await summarizeWithOpenAI(filteredArticles)
+  const aiResponse = await summarizeWithClaude(filteredArticles)
 
   const elapsed = parseFloat(((performance.now() - startTime) / 1000).toFixed(1))
   console.log(`\nOpenAI analysis complete. Processing time: ${elapsed}s`)

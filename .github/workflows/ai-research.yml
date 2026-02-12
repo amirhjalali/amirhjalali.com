@@ -30,7 +30,7 @@ jobs:
       - name: Run AI research script
         run: node scripts/research-ai-news.mjs
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: Commit and push results
         run: |
