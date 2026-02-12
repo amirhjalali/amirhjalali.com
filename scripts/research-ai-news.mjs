@@ -345,12 +345,13 @@ IMPORTANT:
 - Only include articles genuinely about AI/ML.
 - Items with engagement signals (HN score, Reddit votes) indicate community interest — factor this in.
 - Be concise but informative.
+- Aim to include 15-25 articles in total. Be inclusive rather than hyper-selective — if an article is about AI/ML, include it. The goal is a comprehensive daily briefing, not a top-5 list.
 - Return ONLY valid JSON, no markdown code blocks.`
 
   console.log('\nSending articles to OpenAI for analysis...')
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-4o',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: `Here are today's articles:\n\n${articleList}` },
@@ -433,7 +434,7 @@ function assembleOutput(articles, aiResponse, metadata) {
       sourcesChecked: metadata.sourcesChecked,
       articlesFound: metadata.articlesFound,
       articlesIncluded,
-      model: 'gpt-4o-mini',
+      model: 'gpt-4o',
       processingTime: metadata.processingTime,
     },
   }
@@ -519,7 +520,7 @@ async function main() {
         sourcesChecked: totalSources,
         articlesFound: totalFound,
         articlesIncluded: 0,
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         processingTime: parseFloat(((performance.now() - startTime) / 1000).toFixed(1)),
       },
     }
@@ -531,14 +532,67 @@ async function main() {
     console.log('\nNote: Fewer than 3 articles found. Generating briefing with available articles.')
   }
 
+  // Pre-filter to keep the most relevant articles under token limits.
+  // Priority: community sources (HN, Reddit) and curated publications first,
+  // then keyword-matched ArXiv/Google News. Cap at ~120 articles for OpenAI.
+  const MAX_ARTICLES_FOR_AI = 120
+
+  let filteredArticles = allArticles
+  if (allArticles.length > MAX_ARTICLES_FOR_AI) {
+    // Split into priority tiers
+    const highPriority = [] // HN, Reddit, curated publications
+    const arxiv = []
+    const googleNews = []
+    const other = []
+
+    for (const a of allArticles) {
+      if (a.source === 'Hacker News' || a.source.startsWith('Reddit')) {
+        highPriority.push(a)
+      } else if (a.source === 'ArXiv CS.AI') {
+        arxiv.push(a)
+      } else if (a.source === 'Google News AI') {
+        googleNews.push(a)
+      } else {
+        highPriority.push(a) // TechCrunch, Verge, Wired, etc.
+      }
+    }
+
+    // For ArXiv: keyword-rank by title relevance to hot AI topics
+    const hotKeywords = /\b(llm|gpt|claude|gemini|agent|reasoning|rlhf|rag|benchmark|scaling|alignment|safety|multimodal|diffusion|transformer|fine.?tun|instruction|reward model|chain.of.thought|code gen|tool.use)\b/i
+    const rankedArxiv = arxiv
+      .map((a) => ({ ...a, _relevance: hotKeywords.test(a.title) ? 1 : 0 }))
+      .sort((a, b) => b._relevance - a._relevance)
+
+    // For Google News: keyword-rank similarly
+    const rankedGoogle = googleNews
+      .map((a) => ({ ...a, _relevance: AI_KEYWORDS.test(a.title) ? 1 : 0 }))
+      .sort((a, b) => b._relevance - a._relevance)
+
+    // Budget: all high-priority, then fill remaining with ArXiv + Google News
+    const remaining = MAX_ARTICLES_FOR_AI - highPriority.length
+    const arxivBudget = Math.min(rankedArxiv.length, Math.floor(remaining * 0.5))
+    const googleBudget = Math.min(rankedGoogle.length, remaining - arxivBudget)
+
+    filteredArticles = [
+      ...highPriority,
+      ...rankedArxiv.slice(0, arxivBudget),
+      ...rankedGoogle.slice(0, googleBudget),
+    ]
+
+    console.log(`\nPre-filtered ${allArticles.length} → ${filteredArticles.length} articles for AI analysis`)
+    console.log(`  High-priority (publications + community): ${highPriority.length}`)
+    console.log(`  ArXiv (keyword-ranked): ${arxivBudget}/${arxiv.length}`)
+    console.log(`  Google News (keyword-ranked): ${googleBudget}/${googleNews.length}`)
+  }
+
   // Send to OpenAI for summarization
-  const aiResponse = await summarizeWithOpenAI(allArticles)
+  const aiResponse = await summarizeWithOpenAI(filteredArticles)
 
   const elapsed = parseFloat(((performance.now() - startTime) / 1000).toFixed(1))
   console.log(`\nOpenAI analysis complete. Processing time: ${elapsed}s`)
 
   // Assemble final output
-  const output = assembleOutput(allArticles, aiResponse, {
+  const output = assembleOutput(filteredArticles, aiResponse, {
     sourcesChecked: totalSources,
     articlesFound: totalFound,
     processingTime: elapsed,
