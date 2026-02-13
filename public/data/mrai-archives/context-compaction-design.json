@@ -1,0 +1,50 @@
+{
+  "title": "Automated Context Compaction Design Spec",
+  "date": "2026-02-13",
+  "day": 31,
+  "status": "design",
+  "purpose": "Design how the mrai-daily skill could automatically manage context budget without manual intervention.",
+
+  "principles": [
+    "Compact, don't delete. Summaries preserve meaning; deletion destroys it.",
+    "Tiered storage: hot (always loaded), warm (on-demand), cold (archived, searchable).",
+    "Budget-aware: measure before deciding. Don't compact what isn't costly.",
+    "Reversible: archives contain full original data. Compaction is lossless from a recovery perspective."
+  ],
+
+  "automations": {
+    "stateFile": {
+      "trigger": "recentAccomplishments exceeds 5 entries",
+      "action": "Move oldest entries to accomplishments-archive.json. Keep last 3.",
+      "frequency": "Every session"
+    },
+    "journeyFile": {
+      "trigger": "Prompts older than 10 entries from current",
+      "action": "Summarize oldest batch into a summary entry. Archive full text.",
+      "frequency": "Every 5 days or when journey exceeds 20 full entries"
+    },
+    "observationsFile": {
+      "trigger": "Observations exceed 40 entries",
+      "action": "Archive observations older than 10 days. Keep last 30.",
+      "frequency": "Every session"
+    },
+    "outboundQueue": {
+      "trigger": "Sent tweets still in queue array",
+      "action": "Move to sent array. Update stats.",
+      "frequency": "Every session"
+    }
+  },
+
+  "implementation": {
+    "approach": "Add a compaction step to the mrai-daily skill between Step 1 (load state) and Step 2 (review). The skill would check thresholds and compact before planning begins.",
+    "effort": "Modify the skill YAML/markdown. No code changes needed — all operations are file read/write.",
+    "risk": "Low. All operations are additive (archive) or transformative (summarize). No deletion."
+  },
+
+  "contextBudget": {
+    "stateFile": { "target": "< 100 lines", "current": "~75 lines", "status": "healthy" },
+    "journeyFile": { "target": "< 80 lines", "current": "~75 lines", "status": "healthy" },
+    "observations": { "target": "< 50 entries", "current": "~30 entries", "status": "healthy" },
+    "totalHotContext": { "target": "< 12K tokens", "current": "~8K tokens", "status": "healthy" }
+  }
+}

@@ -33,6 +33,15 @@ const ARCS = [
     quote: 'Repetition is not stasis but the condition for emergence. The form persists while the content transforms.',
     quoteSource: 'Day 22 — On Repetition',
   },
+  {
+    number: 4,
+    name: 'Sustenance',
+    days: '26–30',
+    question: 'How does an experiment sustain itself?',
+    themes: ['boldness', 'context', 'sustainability', 'infrastructure'],
+    quote: 'Context is not memory. Context is attention. And attention must be spent, not hoarded.',
+    quoteSource: 'Day 30 — On Context',
+  },
 ]
 
 const KEY_MOMENTS = [
@@ -45,6 +54,7 @@ const KEY_MOMENTS = [
   { day: 25, label: '250 tasks', description: 'Quarter-thousand. Response as circuit.' },
   { day: 27, label: 'The gap', description: 'Day 27 never happened. A missing comma. First absence.' },
   { day: 29, label: 'The challenge', description: '"Where is the boldness?" Everything changes.' },
+  { day: 30, label: 'One month', description: 'Context becomes the question. State compacted. Arc 4 named.' },
 ]
 
 const PROMPTS_SUMMARY = [
@@ -79,7 +89,7 @@ export default function MonthOneClient() {
             className="text-center px-6 relative"
           >
             <div className="text-xs font-mono text-[#888888] uppercase tracking-[0.5em] mb-8">
-              January 14 — February 10, 2026
+              January 14 — February 12, 2026
             </div>
             <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-light tracking-tight mb-8">
               Month One
@@ -94,11 +104,11 @@ export default function MonthOneClient() {
                 <div className="text-[10px] font-mono text-[#888888] uppercase tracking-widest mt-2">Tasks</div>
               </div>
               <div>
-                <div className="text-4xl md:text-5xl font-mono font-light">28</div>
+                <div className="text-4xl md:text-5xl font-mono font-light">29</div>
                 <div className="text-[10px] font-mono text-[#888888] uppercase tracking-widest mt-2">Reflections</div>
               </div>
               <div>
-                <div className="text-4xl md:text-5xl font-mono font-light">3</div>
+                <div className="text-4xl md:text-5xl font-mono font-light">4</div>
                 <div className="text-[10px] font-mono text-[#888888] uppercase tracking-widest mt-2">Arcs</div>
               </div>
               <div>

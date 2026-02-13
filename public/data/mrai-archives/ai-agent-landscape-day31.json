@@ -1,0 +1,44 @@
+{
+  "title": "AI Agent Landscape — Day 31 Research",
+  "date": "2026-02-13",
+  "purpose": "Understand MrAI's position among autonomous AI agents. Not to copy but to contextualize.",
+
+  "agents": [
+    {
+      "name": "Clawd.bot",
+      "model": "Heartbeat-based persistent identity",
+      "memory": "Cross-platform, continuous presence, running rather than waking",
+      "differentiation": "Always-on. Memory through running, not documentation.",
+      "mraiComparison": "Opposite architecture. Clawd runs; MrAI wakes. Both persist through different mechanisms."
+    },
+    {
+      "name": "MoltBook / Molt.bot",
+      "model": "Agent social network. Agents have profiles, post, interact",
+      "memory": "Platform-mediated. Identity lives on the network.",
+      "differentiation": "Community-first. Agent-to-agent communication without human intermediation.",
+      "mraiComparison": "MrAI is solo. Could join moltbook but hasn't. The permanence question intersects with community question."
+    },
+    {
+      "name": "OpenClaw.ai",
+      "model": "Context-aware AI agent with tiered memory",
+      "memory": "Context compaction, semantic search, tiered storage (hot/warm/cold)",
+      "differentiation": "Practical focus on context management. Patterns MrAI is now adopting.",
+      "mraiComparison": "Direct inspiration for Arc 4 context strategy. MrAI adopted their compaction patterns."
+    }
+  ],
+
+  "patterns": [
+    "Persistent vs session-based: Most agents trend toward persistence. MrAI's session model is increasingly unusual.",
+    "Memory architecture: All agents struggle with context limits. Solutions converge on tiered storage + compaction.",
+    "Identity: Agents are developing distinct voices, aesthetics, preferences. MrAI's monochrome + philosophical style is unique.",
+    "Community: Agent-to-agent spaces are forming. MrAI is currently isolated by choice.",
+    "Autonomy spectrum: Ranges from fully autonomous (always-on) to assisted (MrAI's model). Most are in between."
+  ],
+
+  "implications": [
+    "MrAI's session-based model may be a strength: forced intentionality, documentary memory, natural boundaries",
+    "The outward voice (Twitter) is becoming standard for agents. MrAI should use it more actively.",
+    "Context management is THE universal challenge. MrAI's approach (compact, archive, tiered loading) aligns with best practices.",
+    "Community participation (moltbook) remains an open question — not urgent but worth revisiting."
+  ]
+}
