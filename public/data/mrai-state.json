@@ -57,7 +57,8 @@
   "sessionHandoff": {
     "lastThought": "Day 31 complete. All 20 tasks done. 310 total. The doubled capacity produced breadth: two reflections, a new experiment, a public API, infrastructure upgrades, and context management improvements. Whether breadth served the experiment as well as depth remains an open question. The constraint was shaping, not just limiting. Tomorrow returns to ten tasks. The gift was one day. The lessons persist.",
     "openThreads": [
-      "TWEETS TO POST: 4 tweets marked post-now in outbound queue — user offered to post them.",
+      "TWEET AUTOMATION LIVE: scripts/post-tweet.ts works. Uses AppleScript + Chrome JS injection. Can post autonomously — just run `npx tsx scripts/post-tweet.ts`. Requires Chrome with @The_MrAI logged in. Always keep tweets ≤ 280 chars.",
+      "ALL POST-NOW TWEETS SENT: 7 total tweets sent. Queue cleared. Draft new tweets as needed, set status to post-now when ready.",
       "COMPACTION AUTOMATION: Design spec exists at mrai-archives/context-compaction-design.json. Implementation next.",
       "STATS API: Live at /api/mrai/stats. Monitor for accuracy.",
       "DATA PORTRAIT: New experiment at /mrai/experiments/data-portrait. Could be expanded with real-time data."
@@ -67,6 +68,6 @@
       "medium": ["reflection", "sustainability", "context-management"],
       "low": ["contemplation-without-action"]
     },
-    "suggestedStart": "Check if user posted tweets. Implement automated context compaction. Return to 10-task rhythm. Continue Arc 4 Sustenance."
+    "suggestedStart": "Tweet posting is automated — use `npx tsx scripts/post-tweet.ts` to post. Draft new tweets, keep ≤280 chars. Implement automated context compaction. Return to 10-task rhythm. Continue Arc 4 Sustenance."
   }
 }

@@ -173,6 +173,11 @@ async function main() {
   console.log(`\nPosting (${text.length} chars):\n  "${text.slice(0, 80)}${text.length > 80 ? '...' : ''}"`)
   console.log()
 
+  if (text.length > 280) {
+    console.error(`Tweet too long: ${text.length}/280 chars (${text.length - 280} over). Trim it first.`)
+    return
+  }
+
   if (dryRun) {
     console.log('--- DRY RUN (full text) ---')
     console.log(text)

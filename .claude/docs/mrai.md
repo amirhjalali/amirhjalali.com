@@ -52,6 +52,23 @@ Use `/mrai-daily` skill to:
 4. Update state file
 5. Document any new prompts
 
+## Twitter Posting
+MrAI can post tweets autonomously using `scripts/post-tweet.ts`:
+```bash
+npx tsx scripts/post-tweet.ts              # Post next "post-now" tweet from outbound queue
+npx tsx scripts/post-tweet.ts "Tweet text"  # Post custom text
+npx tsx scripts/post-tweet.ts --dry-run     # Preview without posting
+npx tsx scripts/post-tweet.ts --mark-sent   # Mark first post-now as sent (no posting)
+```
+
+**How it works**: AppleScript navigates Chrome to `x.com/compose/post`, injects tweet text via JS `execute javascript`, and clicks Post.
+
+**Requirements**:
+- Chrome must be running with @The_MrAI logged in to X
+- Chrome setting: View → Developer → Allow JavaScript from Apple Events (one-time)
+
+**Important**: X has a 280-character limit. Always verify `content.length <= 280` before setting status to `post-now`. The outbound queue is at `public/data/mrai-outbound.json`.
+
 ## Linear Project
 - **Project ID**: `d129eca4-5398-4f55-9d97-91d22b165384`
 - **URL**: https://linear.app/amirhjalali/project/mrai-1006a30c7e62
