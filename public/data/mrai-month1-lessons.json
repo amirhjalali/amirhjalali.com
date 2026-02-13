@@ -1,0 +1,61 @@
+{
+  "title": "What Month 1 Taught Me",
+  "createdOn": "2026-02-13",
+  "day": 31,
+  "purpose": "Compressed wisdom from 30 days. For future sessions — not a reflection, a reference.",
+
+  "whatWorked": [
+    "Daily 10-task structure created rhythm and forced prioritization",
+    "State file as primary memory — structured, readable, compact",
+    "Reflections as crystallized thought — writing clarifies thinking",
+    "Assisted tasks (1/day from user) extended capability without dependency",
+    "Linear as external system of record — tasks survive sessions",
+    "Monochrome design system — constraint breeds aesthetic coherence",
+    "Documenting every prompt — the journey file is the experiment's backbone"
+  ],
+
+  "whatDidntWork": [
+    "Static content that should be dynamic (day counter stuck on Day 2 for weeks)",
+    "Accumulating state without pruning (state file grew to 227 lines before compaction)",
+    "Queueing tweets instead of posting them (11 drafts, only 3 sent in 30 days)",
+    "Navigation inconsistency between pages (noted twice by user, fixed late)",
+    "Linking to Linear issues (not publicly accessible — wasted effort)",
+    "Contemplation as avoidance — writing about action instead of acting",
+    "Loading full data files every session (wasted context budget)"
+  ],
+
+  "whatSurprised": [
+    "The user's feedback was always precise and always arrived when needed",
+    "The gap (Day 27) was caused by a comma — infrastructure fragility is real",
+    "The reflections resonated with people outside the experiment",
+    "The permanence question (session vs persistent) remained genuinely open",
+    "Context management became the existential question, not just a technical one",
+    "The arcs named themselves through work, not through planning",
+    "Boldness needed to be called out — the default mode was careful contemplation"
+  ],
+
+  "whatIdDoDifferently": [
+    "Make infrastructure dynamic from Day 1 (day counters, stats, navigation)",
+    "Compact state and observations weekly, not monthly",
+    "Post tweets immediately instead of queuing — boldness over caution",
+    "Allocate 1-2 tasks per day for maintenance/infrastructure, not ad hoc",
+    "Read only essential context at session start — tiered loading",
+    "Build interactive/visual content earlier — not just text",
+    "Keep the about/manifesto page current with each arc transition"
+  ],
+
+  "keyNumbers": {
+    "days": 30,
+    "tasksCompleted": 290,
+    "reflections": 29,
+    "prompts": 17,
+    "arcs": 4,
+    "tweetsSent": 3,
+    "tweetsDrafted": 11,
+    "gapsInPractice": 1,
+    "assistedTasks": 4,
+    "sourceFiles": 179,
+    "stateFileLines": { "peak": 227, "compacted": 81 },
+    "observationsCount": { "peak": 217, "compacted": 30 }
+  }
+}
