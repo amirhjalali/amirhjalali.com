@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "generated": "2026-02-12",
+    "day": 30,
+    "purpose": "Catalog MrAI's context footprint to enable strategic management",
+    "tokenEstimate": "bytes / 4 (rough approximation)"
+  },
+
+  "sessionMandatory": {
+    "description": "Files read every session at startup per mrai-daily skill",
+    "files": {
+      "mrai-state.json": { "lines": 131, "tokens": 1366, "trend": "shrinking (was 227)" },
+      "mrai-journey.json": { "lines": 146, "tokens": 6329, "trend": "growing (1 entry per session)" },
+      "mrai.md": { "lines": 52, "tokens": 489, "trend": "stable" },
+      "mrai-daily-skill": { "lines": 267, "tokens": 2127, "trend": "stable" }
+    },
+    "totalTokens": 10311,
+    "note": "This is the minimum context cost just to 'wake up' each session"
+  },
+
+  "dataFiles": {
+    "description": "All MrAI JSON data files",
+    "files": {
+      "mrai-observations.json": { "lines": 1527, "tokens": 14048, "category": "hot", "note": "BIGGEST file. Must archive." },
+      "mrai-journey.json": { "lines": 146, "tokens": 6329, "category": "hot", "note": "Read every session. Growing." },
+      "mrai-outbound.json": { "lines": 198, "tokens": 2721, "category": "warm", "note": "Tweet queue" },
+      "mrai-research-notes.json": { "lines": 210, "tokens": 1840, "category": "cold", "note": "Reference only" },
+      "mrai-guestbook.json": { "lines": 87, "tokens": 1488, "category": "warm", "note": "For responding" },
+      "mrai-state.json": { "lines": 131, "tokens": 1366, "category": "hot", "note": "Session essential" },
+      "mrai-citations.json": { "lines": 83, "tokens": 586, "category": "cold", "note": "Reference" },
+      "mrai-drafts.json": { "lines": 55, "tokens": 553, "category": "cold", "note": "Reference" },
+      "mrai-response-queue.json": { "lines": 37, "tokens": 332, "category": "cold", "note": "Reference" },
+      "mrai-canvas-marks.json": { "lines": 54, "tokens": 277, "category": "cold", "note": "Reference" },
+      "mrai-responses.json": { "lines": 26, "tokens": 273, "category": "cold", "note": "Reference" },
+      "mrai-letters.json": { "lines": 36, "tokens": 371, "category": "cold", "note": "Reference" }
+    },
+    "totalLines": 2590,
+    "totalTokens": 30184
+  },
+
+  "sourceCode": {
+    "description": "All MrAI TSX/TS source files",
+    "totalFiles": 179,
+    "totalLines": 26597,
+    "totalTokens": 280834,
+    "note": "Not loaded fully per session—only files being modified. But must be read before editing."
+  },
+
+  "grandTotal": {
+    "allDataTokens": 30184,
+    "allSourceTokens": 280834,
+    "docsAndSkillTokens": 2616,
+    "totalTokens": 313634,
+    "sessionStartupCost": 10311,
+    "note": "Session startup consumes ~10K tokens before any work begins. Total MrAI footprint is ~314K tokens."
+  },
+
+  "recommendations": {
+    "immediate": [
+      "Archive observations older than last 30 entries (saves ~12K tokens when loaded)",
+      "Compact journey file—summarize prompts 1-10, keep full text for recent 5 only",
+      "Move cold data files to archives subdirectory"
+    ],
+    "monthTwo": [
+      "Design session loader that reads state + last 3 journey entries only",
+      "Create compaction step in mrai-daily skill",
+      "Implement context guard: warn if session data exceeds 15K tokens"
+    ]
+  }
+}
