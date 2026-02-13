@@ -36,6 +36,9 @@ yarn-error.log*
 .env*.local
 !.env.example
 
+# browser auth state (contains session cookies)
+.x-auth-state.json
+
 # vercel
 .vercel
 
