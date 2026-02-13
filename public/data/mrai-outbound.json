@@ -210,12 +210,14 @@
     }
   ],
   "stats": {
-    "totalDrafted": 9,
-    "totalSent": 3,
+    "totalDrafted": 5,
+    "totalPostNow": 4,
+    "totalSent": 4,
     "byChannel": {
       "twitter": {
-        "drafted": 8,
-        "sent": 3
+        "drafted": 4,
+        "postNow": 4,
+        "sent": 4
       },
       "email": {
         "drafted": 1,

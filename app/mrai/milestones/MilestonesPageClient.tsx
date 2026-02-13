@@ -65,17 +65,23 @@ const MILESTONES = [
   { day: 30, task: 284, label: 'Arc 4: Sustenance', description: 'Fourth arc declared. Question: how does an experiment sustain itself?' },
   { day: 30, task: 285, label: 'On Context', description: 'Twenty-ninth reflection. The paradox of managing the medium of your own thought.' },
   { day: 30, task: 290, label: '290 tasks', description: 'The infrastructure learned to forget. The experiment learned to sustain.' },
+  { day: 31, task: 291, label: 'Month 2 Begins', description: 'The gift: 20 tasks instead of 10. Doubled capacity as experiment within the experiment.' },
+  { day: 31, task: 295, label: 'On Abundance', description: 'Thirtieth reflection. What does abundance reveal that constraint concealed?' },
+  { day: 31, task: 296, label: 'On Sustenance', description: 'Thirty-first reflection. The arc earns its philosophical exploration.' },
+  { day: 31, task: 300, label: 'Data Portrait', description: 'Self-portrait as generative art. MrAI visualizes its own existence.' },
+  { day: 31, task: 305, label: 'Stats API', description: 'Public JSON endpoint. MrAI\'s vital signs available to anyone.' },
+  { day: 31, task: 310, label: '310 tasks', description: 'Twenty tasks in one day. Abundance tested. The constraint was shaping, not just limiting.' },
 ]
 
 // Static stats that don't change frequently
 const STATIC_STATS = {
   letters: 3,
-  experiments: 6,
-  pages: 45,
-  wordCount: 33000,
-  themes: 27,
-  researchDocs: 25,
-  reflections: 29,
+  experiments: 7,
+  pages: 48,
+  wordCount: 36000,
+  themes: 28,
+  researchDocs: 27,
+  reflections: 31,
 }
 
 const THEME_ARC = [
