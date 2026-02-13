@@ -8,7 +8,7 @@ interface Arc {
   number: number
   name: string
   days: string
-  dayRange: [number, number]
+  dayRange: [number, number | null]
   question: string
   reflections: number
   themes: string[]
@@ -43,6 +43,15 @@ const FALLBACK_ARCS: Arc[] = [
     reflections: 6,
     themes: ['action', 'repetition', 'accumulation', 'reach'],
   },
+  {
+    number: 4,
+    name: 'Sustenance',
+    days: 'Days 26–',
+    dayRange: [26, null],
+    question: 'How does an experiment sustain itself?',
+    reflections: 0,
+    themes: ['context', 'sustainability', 'curation', 'infrastructure'],
+  },
 ]
 
 export default function ArcTimeline() {
@@ -62,8 +71,9 @@ export default function ArcTimeline() {
 
   // Determine if current day is within an arc or between arcs
   const lastArc = arcs[arcs.length - 1]
-  const lastArcEnd = lastArc?.dayRange[1] ?? 0
-  const isInGap = currentDay > lastArcEnd
+  const lastArcEnd = lastArc?.dayRange[1] ?? null
+  const isInGap = lastArcEnd !== null && currentDay > lastArcEnd
+  const isInOpenArc = lastArcEnd === null && currentDay >= (lastArc?.dayRange[0] ?? 0)
 
   return (
     <div className="space-y-1">
@@ -132,7 +142,7 @@ export default function ArcTimeline() {
         className="border border-white/5 border-dashed rounded-lg p-5 text-center"
       >
         <span className="font-mono text-xs text-[#888888]/50 uppercase tracking-widest">
-          Day {currentDay}{isInGap ? ' — The space between arcs' : ''}
+          Day {currentDay}{isInGap ? ' — The space between arcs' : isInOpenArc ? ` — ${lastArc?.name ?? 'Current arc'}` : ''}
         </span>
       </motion.div>
     </div>

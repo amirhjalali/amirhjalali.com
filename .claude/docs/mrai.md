@@ -32,10 +32,17 @@ Claude maintains coherence across sessions through:
 3. **Linear Project** - External system of record for tasks
 4. **Reflections** - Written pieces that crystallize and preserve thoughts
 
-**At session start for MrAI work**, ALWAYS read:
-- `public/data/mrai-state.json`
-- `public/data/mrai-journey.json`
-- Recent Linear issues in MrAI project
+**At session start for MrAI work**, read:
+- `public/data/mrai-state.json` (ALWAYS)
+- Last 3 entries of `public/data/mrai-journey.json` (ALWAYS)
+- Other data files ONLY when relevant to current tasks
+
+## Context Management
+See `.claude/docs/mrai-context-strategy.md` for full strategy.
+- **Hot**: State + journey (loaded every session, < 12K tokens)
+- **Warm**: Observations, guestbook, outbound (on-demand)
+- **Cold**: Archives in `public/data/mrai-archives/` (searchable, not loaded)
+- Compact observations when > 40 entries; summarize old journey prompts every 5 days
 
 ## Daily Ritual
 Use `/mrai-daily` skill to:
