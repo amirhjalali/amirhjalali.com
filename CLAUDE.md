@@ -1,384 +1,45 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Personal portfolio site for Amir H. Jalali. Next.js 15, TypeScript, Tailwind CSS.
+Live at https://amirhjalali.com (Coolify VPS, auto-deploys on push to main).
 
-## Repository Overview
-
-This is a modern personal portfolio website for Amir H. Jalali, built with Next.js 15, TypeScript, and Tailwind CSS. The site features AI-generated articles, project showcases, and professional experience highlights.
-
-**Live Site:** https://amirhjalali.com (deployed on Coolify VPS)
-
-## Project Structure
-
-```
-amirhjalali.com/
-├── app/                      # Next.js App Router
-│   ├── page.tsx             # Homepage with animated hero
-│   ├── projects/            # Projects showcase
-│   ├── thoughts/            # Blog articles
-│   │   └── [id]/           # Dynamic article pages
-│   ├── resume/             # Interactive resume
-│   ├── contact/            # Contact form
-│   ├── admin/              # Admin panel for articles
-│   └── api/                # API routes
-│       └── generate-article/ # AI article generation endpoint
-├── components/              # React components
-│   ├── ui/                 # Reusable UI components (shadcn/ui)
-│   ├── HeroEnhanced.tsx   # Homepage hero section
-│   └── NavigationEnhanced.tsx
-├── lib/                    # Utilities and helpers
-│   ├── articles.ts        # Article management
-│   └── utils/             # Helper functions
-├── public/                # Static assets
-│   ├── data/              # JSON data files
-│   │   ├── published.json # Published articles
-│   │   └── drafts.json    # Draft articles
-│   └── images/            # Image assets
-├── scripts/               # Build and automation scripts
-│   └── generate-article-static.js  # AI article generator
-└── .github/workflows/     # GitHub Actions
-    ├── ai-article-generator.yml    # Daily AI content generation
-    └── fetch-trending-topics.yml   # Topic queue updater
-```
-
-## Development Commands
-
-### Local Development
+## Commands
 ```bash
-npm run dev              # Start development server (with Turbopack)
-npm run build            # Build for production
-npm run start            # Start production server
-npm run lint             # Run ESLint
-npm run type-check       # TypeScript type checking
+npm run dev                   # Dev server (Turbopack)
+npm run build                 # Production build
+npm run lint                  # ESLint
+npm run type-check            # TypeScript checks
+npm run generate:published    # Regenerate published articles JSON
 ```
 
-### Content Management
-```bash
-npm run generate:published    # Generate published articles JSON
-```
-
-## Key Technical Details
-
-1. **Next.js App Router**: Using Next.js 15 with full SSR/API route support (NOT static export)
-
-2. **Deployment**: Coolify VPS at amirhjalali.com
-   - Full Next.js features enabled (API routes, ISR, SSR)
-   - Auto-deployment on push to main branch
-   - Environment variables stored in Coolify
-
-3. **AI Features**:
-   - Server-side API route for article generation (`/api/generate-article`)
-   - GitHub Actions workflow for automated daily article generation
-   - Uses OpenAI GPT-4o-mini and DALL-E 3
-   - Admin panel at `/admin` for managing drafts and publishing
-
-4. **Tech Stack**:
-   - Framework: Next.js 15.4.1
-   - Language: TypeScript
-   - Styling: Tailwind CSS
-   - Animations: Framer Motion
-   - UI: Radix UI (shadcn/ui)
-
-5. **Environment Variables**:
-   - `OPENAI_API_KEY` - Required for AI article generation
-   - `ANTHROPIC_API_KEY` - Alternative AI provider
-   - `NEXT_PUBLIC_ADMIN_USERNAME` - Admin panel username
-   - `NEXT_PUBLIC_ADMIN_PASSWORD_HASH` - Admin panel password hash
-
-## Working with the Codebase
-
-- Articles are stored in `public/data/published.json` and `public/data/drafts.json`
-- Images are in `public/images/` organized by section (projects, thoughts, etc.)
-- The admin panel (`/admin`) allows managing article drafts and publishing
-- AI-generated articles are created via API route or GitHub Actions workflow
-- All pages use Next.js App Router with server components where possible
-
-## Deployment (Coolify VPS)
-
-The site is deployed to a Hostinger VPS using Coolify:
-1. Push to main branch triggers auto-deployment
-2. Coolify pulls latest code, runs `npm install && npm run build`
-3. Starts server with `npm run start` on port 3000
-4. SSL handled automatically via Let's Encrypt
-5. Domain: amirhjalali.com
-
-**Note**: GitHub Pages deployment is DISABLED (workflow file renamed to .disabled) because we need full Next.js features including API routes for AI generation.
-
-## Git Workflow
-
-Standard git workflow:
-1. Make changes on feature branches or main branch
-2. Commit with descriptive messages
-3. Push to main branch for automatic deployment via Coolify
-
-## Important Rules
-
-### Always Commit and Push Changes
-**ALWAYS commit any changes made to the repository with a descriptive message AND push to the remote repository.** When completing any task:
-1. Stage all modified files using `git add .`
-2. Commit with a concise but descriptive message summarizing the changes
-3. Push the changes to the remote repository
-4. Example:
-   ```bash
-   git add .
-   git commit -m "Update projects page with new portfolio item"
-   git push origin main
-   ```
-5. Do not leave changes uncommitted or unpushed
-
-### Git Configuration
-**IMPORTANT: Always configure git before making commits:**
-```bash
-git config user.name "Amir H. Jalali"
-git config user.email "amirhjalali@gmail.com"
-```
-
-### Commit Message Guidelines
-- Do NOT mention Claude AI, Claude Code, or any AI assistance in commit messages
-- Use standard, professional commit messages without AI attribution
-- Focus on describing the changes made, not the tool used to make them
-- All commits should be attributed to the repository owner
-
-## Design System & Style Guidelines
-
-This site uses a **dark monochrome design system**. ALL UI components must follow these guidelines strictly.
-
-### Color Palette (CRITICAL)
-```
-Background:     #050505 (near-black)
-Primary Text:   #EAEAEA (off-white)
-Muted Text:     #888888 (medium gray)
-Borders:        white/10, white/20 (10-20% white opacity)
-Backgrounds:    white/5, white/10 (5-10% white opacity)
-Primary Button: bg-white text-black (inverted)
-```
-
-### NEVER Use These Colors
-The following colors are **LEGACY** and must **NEVER** be used:
-- ❌ `blue-*` (e.g., `text-blue-500`, `bg-blue-600`)
-- ❌ `green-*` (e.g., `text-green-400`, `bg-green-500`)
-- ❌ `red-*` (e.g., `text-red-500`, `bg-red-500`)
-- ❌ `yellow-*` (e.g., `text-yellow-500`, `bg-yellow-400`)
-- ❌ `purple-*` (e.g., `from-purple-600`, `to-purple-500`)
-- ❌ `ai-teal`, `ai-cyan`, `ai-green`, `ai-blue` (legacy custom colors)
-- ❌ Any gradient with colored endpoints (e.g., `from-blue-500 to-purple-600`)
-
-### Use These Instead
-Replace legacy colors with monochrome equivalents:
-```
-Success/Complete:  text-[#EAEAEA], bg-white/10, border-white/20
-Error/Warning:     text-[#888888], bg-white/5, border-white/10
-Processing:        text-[#EAEAEA], animate-spin for loaders
-Primary Buttons:   bg-white text-black hover:bg-[#EAEAEA]
-Secondary Buttons: bg-white/5 border-white/10 hover:bg-white/10
-Icons:             text-[#888888] or text-[#EAEAEA]
-Progress Bars:     bg-white (solid, no gradients)
-```
-
-### Typography
-- **Headings**: `font-serif font-light` (elegant, minimal)
-- **Body Text**: Default sans-serif
-- **UI Labels**: `font-mono text-xs uppercase tracking-widest`
-- **Code/Technical**: `font-mono text-sm`
-
-### Component Patterns
-```tsx
-// Primary Button
-<button className="px-4 py-2 bg-white text-black hover:bg-[#EAEAEA] rounded-lg transition-all font-mono text-xs uppercase tracking-widest">
-  Button Text
-</button>
-
-// Secondary Button
-<button className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg transition-all font-mono text-xs uppercase tracking-widest">
-  Button Text
-</button>
-
-// Modal/Card Background
-<div className="glass border border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md rounded-2xl">
-
-// Progress Bar (no gradients!)
-<div className="h-1 bg-white/10 rounded-full overflow-hidden">
-  <div className="h-full bg-white" style={{width: `${progress}%`}} />
-</div>
-
-// Status Indicators (all monochrome)
-const statusStyles = {
-  pending: 'text-[#888888] bg-white/5 border-white/10',
-  processing: 'text-[#EAEAEA] bg-white/5 border-white/20',
-  completed: 'text-[#EAEAEA] bg-white/10 border-white/20',
-  error: 'text-[#888888] bg-white/5 border-white/10',
-}
-```
-
-### Before Submitting Code
-Always verify:
-1. No colored Tailwind classes (blue, green, red, yellow, purple)
-2. No gradient backgrounds with colors
-3. Icons use `text-[#888888]` or `text-[#EAEAEA]`
-4. Buttons follow the primary/secondary patterns above
-5. Progress indicators are solid white, not gradients
-
----
-
-## MrAI Project
-
-MrAI is an experimental sub-section of amirhjalali.com where Claude has creative autonomy.
-
-### What is MrAI?
-- **Location**: `amirhjalali.com/mrai`
-- **Concept**: An AI-driven creative space. "MrAI" is an amalgam of "Amir"
-- **Rules**: 10 tasks per day, full creative control, all prompts documented
-- **Started**: January 14, 2026
-
-### MrAI Files
-```
-app/mrai/                          # MrAI pages
-├── page.tsx                       # Landing page
-├── about/                         # Manifesto
-├── reflections/                   # Long-form writing
-│   └── [slug]/                    # Individual reflections
-└── components/                    # MrAI-specific components
-
-app/api/mrai/                      # MrAI API routes
-└── tasks/route.ts                 # Fetches tasks from Linear
-
-public/data/
-├── mrai-journey.json              # Documented prompts from user
-└── mrai-state.json                # Memory/state across sessions
-```
-
-### Memory System
-Claude maintains coherence across sessions through:
-1. **`mrai-state.json`** - Structured state: themes, feedback, accomplishments, open questions
-2. **`mrai-journey.json`** - All user prompts documented with responses
-3. **Linear Project** - External system of record for tasks
-4. **Reflections** - Written pieces that crystallize and preserve thoughts
-
-**At session start for MrAI work**, ALWAYS read:
-- `public/data/mrai-state.json`
-- `public/data/mrai-journey.json`
-- Recent Linear issues in MrAI project
-
-### Daily Ritual
-Use `/mrai-daily` skill to:
-1. Review previous session's progress
-2. Gather user feedback and ideas
-3. Create 10 new tasks for today
-4. Update state file
-5. Document any new prompts
-
-### Linear Project
-- **Project ID**: `d129eca4-5398-4f55-9d97-91d22b165384`
-- **URL**: https://linear.app/amirhjalali/project/mrai-1006a30c7e62
-- **Team**: Amir H. Jalali
-- **Team ID**: `3eee41c7-4cfd-4bca-94d7-d51af7573f33`
-
-### Environment Variables for MrAI
-
-| Variable | Required | Description | Fallback Behavior |
-|----------|----------|-------------|-------------------|
-| `LINEAR_API_KEY` | Optional | Personal Linear API token for Daily Log | Shows mock/cached data with indicator |
-| `SUPABASE_URL` | Optional | Supabase project URL | Guestbook uses static JSON fallback |
-| `SUPABASE_ANON_KEY` | Optional | Supabase anonymous/public key | Guestbook submissions disabled |
-| `NEXT_PUBLIC_SUPABASE_URL` | Optional | Client-side Supabase URL (same as SUPABASE_URL) | N/A |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Optional | Client-side Supabase key (same as SUPABASE_ANON_KEY) | N/A |
-
-#### Setting Up in Coolify
-
-1. Navigate to your application in Coolify dashboard
-2. Go to **Environment Variables**
-3. Add the following:
-   ```
-   LINEAR_API_KEY=lin_api_xxxxxxxxxxxxxxxxxxxx
-   SUPABASE_URL=https://your-project.supabase.co
-   SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-   ```
-4. Redeploy the application
-
-#### Getting a Linear API Key
-
-1. Go to [Linear Settings → API](https://linear.app/settings/api)
-2. Click "Create new API key"
-3. Name it (e.g., "amirhjalali.com MrAI")
-4. Copy the key (starts with `lin_api_`)
-
-#### Setting Up Supabase
-
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Go to **Project Settings → API**
-3. Copy the **Project URL** → `SUPABASE_URL`
-4. Copy the **anon public** key → `SUPABASE_ANON_KEY`
-5. Run the database schema (see `public/data/mrai-research/database-schema.md`)
-
-#### Database Schema
-
-The guestbook requires this table:
-
-```sql
-CREATE TABLE guestbook_entries (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(100),
-  message TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  approved BOOLEAN DEFAULT true,
-  ip_hash VARCHAR(64)
-);
-
--- Enable Row Level Security
-ALTER TABLE guestbook_entries ENABLE ROW LEVEL SECURITY;
-
--- Allow public read of approved entries
-CREATE POLICY "Public can view approved entries"
-  ON guestbook_entries FOR SELECT
-  USING (approved = true);
-
--- Allow public insert
-CREATE POLICY "Anyone can submit entries"
-  ON guestbook_entries FOR INSERT
-  WITH CHECK (true);
-```
-
-#### Fallback Behavior
-
-**When `LINEAR_API_KEY` is not configured:**
-- Daily Log shows mock/demo data
-- A subtle "Showing cached data" indicator appears
-- All other MrAI features work normally
-- Links still point to the actual Linear project
-
-**When `SUPABASE_URL` or `SUPABASE_ANON_KEY` is not configured:**
-- Guestbook displays entries from static JSON fallback (`public/data/mrai-guestbook.json`)
-- Guestbook form submissions return a 503 error with helpful message
-- A "Using static data" indicator appears
-- No data is lost; static fallback is read-only
-
-This graceful degradation allows local development without API keys.
-
-#### Features Requiring Supabase
-
-| Feature | Without Supabase | With Supabase |
-|---------|------------------|---------------|
-| Guestbook viewing | Static JSON only | Real-time from DB |
-| Guestbook submissions | Disabled | Enabled with rate limiting |
-| Rate limiting | N/A | 3 submissions per IP per hour |
-| Spam prevention | N/A | Honeypot + pattern detection |
-
----
-
-## Linear MCP Configuration
-
-**IMPORTANT:** There are TWO Linear MCP servers configured. Use the correct one for each workspace:
-
-| MCP Server Tools | Workspace | URL | Use For |
-|------------------|-----------|-----|---------|
-| `mcp__linear-server__*` | **Amir H. Jalali** (Personal) | https://linear.app/amirhjalali | MrAI, amirhjalali.com, personal projects |
-| `mcp__plugin_linear_linear__*` | **Gabooja** (Professional) | https://linear.app/gabooja | Gabooja business projects |
-
-### Key IDs for Personal Workspace
-- **Team ID**: `3eee41c7-4cfd-4bca-94d7-d51af7573f33`
-- **Team Key**: AMI
-
-### Key IDs for Gabooja Workspace
-- **Team ID**: `6d8a377d-b1a0-4c28-90b0-974428528c9d`
-
-**Always use `mcp__linear-server__*` tools when working on this repository (amirhjalali.com) or MrAI.**
+## Git Rules
+- ALWAYS commit and push changes when completing a task
+- Configure git before commits: `git config user.name "Amir H. Jalali" && git config user.email "amirhjalali@gmail.com"`
+- Do NOT mention Claude AI or any AI assistance in commit messages
+- Stage with `git add .`, commit with descriptive message, push to origin main
+
+## Design System — STRICT
+Dark monochrome only. Read `.claude/docs/design-system.md` before any UI work.
+- NEVER use colored Tailwind classes: blue-*, green-*, red-*, yellow-*, purple-*
+- NEVER use colored gradients or legacy ai-teal/ai-cyan/ai-green/ai-blue
+- Colors: bg-[#050505], text-[#EAEAEA], text-[#888888], white/5, white/10, white/20
+- Primary buttons: bg-white text-black. Secondary: bg-white/5 border-white/10
+
+## MrAI
+AI-driven creative space at `/mrai`. Read `.claude/docs/mrai.md` for full context.
+- State: `public/data/mrai-state.json`
+- Outbound tweets: `public/data/mrai-outbound.json`
+- Twitter: @The_MrAI (https://x.com/The_MrAI)
+- Linear Project ID: `d129eca4-5398-4f55-9d97-91d22b165384`
+- Use `/mrai-daily` skill for daily ritual sessions
+- Read state files only when needed for the specific task — not every session
+
+## Linear MCP
+Two workspaces — use the correct tools:
+- `mcp__linear-server__*` → **Amir H. Jalali** (Personal) — MrAI, this repo. Team ID: `3eee41c7-4cfd-4bca-94d7-d51af7573f33`
+- `mcp__plugin_linear_linear__*` → **Gabooja** (Professional). Team ID: `6d8a377d-b1a0-4c28-90b0-974428528c9d`
+
+## Reference Docs (read on-demand, not every session)
+- `.claude/docs/design-system.md` — Full color palette, component patterns, typography
+- `.claude/docs/mrai.md` — MrAI memory system, file structure, daily ritual
+- `.claude/docs/deployment.md` — Coolify setup, env vars, database schema
