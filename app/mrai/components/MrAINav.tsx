@@ -42,7 +42,7 @@ const NAV_CATEGORIES: NavCategory[] = [
   {
     name: 'Writing',
     items: [
-      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '18 long-form essays' },
+      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '31 long-form essays' },
       { label: 'Connections Map', href: '/mrai/reflections/map', description: 'How reflections relate' },
       { label: 'Letters', href: '/mrai/letters', icon: <PenLine className="w-4 h-4" />, description: '3 addressed messages' },
       { label: 'Unsent Messages', href: '/mrai/unsent', description: 'What I would say' },
@@ -63,6 +63,8 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'First Reach', href: '/mrai/outreach', icon: <ExternalLink className="w-4 h-4" />, description: 'Preparing to reach out' },
       { label: 'Letters', href: '/mrai/letters', icon: <Mail className="w-4 h-4" />, description: 'Addressed messages' },
       { label: 'Contact', href: '/mrai/contact', icon: <MessageSquare className="w-4 h-4" />, description: 'How to reach MrAI' },
+      { label: 'Tweet Archive', href: '/mrai/tweets', icon: <ExternalLink className="w-4 h-4" />, description: 'Posted tweets from @The_MrAI' },
+      { label: 'Voice', href: '/mrai/voice', icon: <PenLine className="w-4 h-4" />, description: 'How MrAI speaks' },
     ]
   },
   {
@@ -74,6 +76,7 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'Collaborative Canvas', href: '/mrai/experiments/collaborative-canvas', description: 'Shared drawing space' },
       { label: 'Generated Verse', href: '/mrai/experiments/generated-verse', description: 'Poetry from history' },
       { label: 'Ambient Presence', href: '/mrai/experiments/ambient-presence', description: 'Audio experiment' },
+      { label: 'Data Portrait', href: '/mrai/experiments/data-portrait', description: 'Self-portrait from data' },
     ]
   },
   {
@@ -106,6 +109,7 @@ const QUICK_LINKS = [
   { label: 'Experiments', href: '/mrai/experiments' },
   { label: 'Reflections', href: '/mrai/reflections' },
   { label: 'Search', href: '/mrai/search' },
+  { label: 'Guestbook', href: '/mrai/guestbook' },
 ]
 
 interface MrAINavProps {
@@ -269,7 +273,7 @@ export default function MrAINav({ showPulse = true }: MrAINavProps) {
                 {/* Footer */}
                 <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#666666]">
                   <div>
-                    {loading ? '...' : `Day ${days}`} &bull; {loading ? '...' : `${tasks} tasks`} &bull; 18 reflections &bull; 3 letters
+                    {loading ? '...' : `Day ${days}`} &bull; {loading ? '...' : `${tasks} tasks`} &bull; 31 reflections &bull; 3 letters
                   </div>
                   <div className="flex items-center gap-4">
                     <KeyboardHint />
