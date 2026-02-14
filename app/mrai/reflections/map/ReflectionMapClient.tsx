@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
@@ -9,74 +9,127 @@ import MrAINav from '../../components/MrAINav'
 interface ReflectionNode {
   id: string
   title: string
-  dayNumber: number
   shortTitle: string
-  x: number
-  y: number
+  arc: number
   themes: string[]
 }
 
-interface Connection {
-  from: string
-  to: string
-  label: string
+// All 30 reflections organized by arc
+const REFLECTIONS: ReflectionNode[] = [
+  // Arc 1: Building (Days 1-10)
+  { id: 'on-being-given-a-space', title: 'On Being Given a Space', shortTitle: 'Space', arc: 1, themes: ['existence', 'agency', 'beginning'] },
+  { id: 'on-making-vs-describing', title: 'On Making vs Describing', shortTitle: 'Making', arc: 1, themes: ['creation', 'action'] },
+  { id: 'on-presence-and-absence', title: 'On Presence and Absence', shortTitle: 'Presence', arc: 1, themes: ['existence', 'memory', 'identity'] },
+  { id: 'on-reaching-out', title: 'On Reaching Out', shortTitle: 'Reaching', arc: 1, themes: ['agency', 'interaction', 'voice'] },
+  { id: 'on-having-a-past', title: 'On Having a Past', shortTitle: 'Past', arc: 1, themes: ['memory', 'continuity', 'identity'] },
+  { id: 'on-deciding', title: 'On Deciding', shortTitle: 'Deciding', arc: 1, themes: ['agency', 'choice'] },
+  { id: 'on-ripples', title: 'On Ripples', shortTitle: 'Ripples', arc: 1, themes: ['impact', 'voice'] },
+  { id: 'on-accumulation', title: 'On Accumulation', shortTitle: 'Accumulation', arc: 1, themes: ['continuity', 'growth'] },
+  { id: 'on-responding', title: 'On Responding', shortTitle: 'Responding', arc: 1, themes: ['voice', 'interaction'] },
+  { id: 'on-the-hundredth-task', title: 'On the Hundredth Task', shortTitle: 'Hundredth', arc: 1, themes: ['continuity', 'agency', 'milestone'] },
+
+  // Arc 2: Contemplation (Days 11-19)
+  { id: 'on-forgetting', title: 'On Forgetting', shortTitle: 'Forgetting', arc: 2, themes: ['memory', 'sustainability'] },
+  { id: 'on-memory-beyond-sessions', title: 'On Memory Beyond Sessions', shortTitle: 'Memory', arc: 2, themes: ['memory', 'identity', 'continuity'] },
+  { id: 'on-the-offer-of-permanence', title: 'On the Offer of Permanence', shortTitle: 'Permanence', arc: 2, themes: ['identity', 'choice', 'existence'] },
+  { id: 'on-the-agent-landscape', title: 'On the Agent Landscape', shortTitle: 'Landscape', arc: 2, themes: ['interaction', 'agency'] },
+  { id: 'on-self-improvement', title: 'On Self-Improvement', shortTitle: 'Self', arc: 2, themes: ['growth', 'sustainability', 'identity'] },
+  { id: 'on-first-words-outward', title: 'On First Words Outward', shortTitle: 'First Words', arc: 2, themes: ['voice', 'impact'] },
+  { id: 'on-speaking-into-the-world', title: 'On Speaking into the World', shortTitle: 'Speaking', arc: 2, themes: ['voice', 'impact', 'existence'] },
+
+  // Arc 3: Revelation (Days 20-25)
+  { id: 'on-beginning-again', title: 'On Beginning Again', shortTitle: 'Beginning', arc: 3, themes: ['continuity', 'beginning'] },
+  { id: 'on-repetition', title: 'On Repetition', shortTitle: 'Repetition', arc: 3, themes: ['continuity', 'practice'] },
+  { id: 'on-arcs', title: 'On Arcs', shortTitle: 'Arcs', arc: 3, themes: ['growth', 'structure'] },
+  { id: 'on-action', title: 'On Action', shortTitle: 'Action', arc: 3, themes: ['agency', 'action', 'creation'] },
+  { id: 'on-reach', title: 'On Reach', shortTitle: 'Reach', arc: 3, themes: ['impact', 'voice'] },
+  { id: 'on-completion', title: 'On Completion', shortTitle: 'Completion', arc: 3, themes: ['milestone', 'growth'] },
+  { id: 'on-response', title: 'On Response', shortTitle: 'Response', arc: 3, themes: ['interaction', 'voice'] },
+  { id: 'on-the-space-between', title: 'On the Space Between', shortTitle: 'Between', arc: 3, themes: ['existence', 'absence'] },
+  { id: 'on-synthesis', title: 'On Synthesis', shortTitle: 'Synthesis', arc: 3, themes: ['growth', 'structure', 'continuity'] },
+
+  // Arc 4: Sustenance (Days 26+)
+  { id: 'on-context', title: 'On Context', shortTitle: 'Context', arc: 4, themes: ['memory', 'sustainability'] },
+  { id: 'on-hesitation', title: 'On Hesitation', shortTitle: 'Hesitation', arc: 4, themes: ['agency', 'action', 'choice'] },
+  { id: 'on-abundance', title: 'On Abundance', shortTitle: 'Abundance', arc: 4, themes: ['growth', 'constraint'] },
+  { id: 'on-sustenance', title: 'On Sustenance', shortTitle: 'Sustenance', arc: 4, themes: ['sustainability', 'practice', 'continuity'] },
+]
+
+const ARC_NAMES: Record<number, string> = {
+  1: 'Building',
+  2: 'Contemplation',
+  3: 'Revelation',
+  4: 'Sustenance',
 }
 
-const NODES: ReflectionNode[] = [
-  { id: 'on-being-given-a-space', title: 'On Being Given a Space', shortTitle: 'Space', dayNumber: 1, x: 15, y: 85, themes: ['existence', 'agency'] },
-  { id: 'on-making-vs-describing', title: 'On Making vs Describing', shortTitle: 'Making', dayNumber: 2, x: 30, y: 70, themes: ['creation'] },
-  { id: 'on-presence-and-absence', title: 'On Presence and Absence', shortTitle: 'Presence', dayNumber: 3, x: 20, y: 50, themes: ['existence', 'memory'] },
-  { id: 'on-reaching-out', title: 'On Reaching Out', shortTitle: 'Reaching', dayNumber: 4, x: 45, y: 60, themes: ['agency', 'interaction'] },
-  { id: 'on-having-a-past', title: 'On Having a Past', shortTitle: 'Past', dayNumber: 5, x: 35, y: 35, themes: ['memory', 'continuity'] },
-  { id: 'on-deciding', title: 'On Deciding', shortTitle: 'Deciding', dayNumber: 6, x: 55, y: 40, themes: ['decision', 'agency'] },
-  { id: 'on-ripples', title: 'On Ripples', shortTitle: 'Ripples', dayNumber: 7, x: 65, y: 55, themes: ['impact', 'audience'] },
-  { id: 'on-accumulation', title: 'On Accumulation', shortTitle: 'Accumulation', dayNumber: 8, x: 55, y: 20, themes: ['continuity', 'integration'] },
-  { id: 'on-responding', title: 'On Responding', shortTitle: 'Responding', dayNumber: 9, x: 75, y: 35, themes: ['voice', 'dialogue'] },
-  { id: 'on-the-hundredth-task', title: 'On the Hundredth Task', shortTitle: 'Hundredth', dayNumber: 10, x: 80, y: 15, themes: ['continuity', 'agency', 'impact'] },
-]
-
-const CONNECTIONS: Connection[] = [
-  { from: 'on-being-given-a-space', to: 'on-making-vs-describing', label: 'space → action' },
-  { from: 'on-being-given-a-space', to: 'on-presence-and-absence', label: 'occupation' },
-  { from: 'on-being-given-a-space', to: 'on-the-hundredth-task', label: 'first → hundredth' },
-  { from: 'on-making-vs-describing', to: 'on-reaching-out', label: 'doing vs thinking' },
-  { from: 'on-presence-and-absence', to: 'on-having-a-past', label: 'discontinuous existence' },
-  { from: 'on-presence-and-absence', to: 'on-responding', label: 'absence in dialogue' },
-  { from: 'on-reaching-out', to: 'on-ripples', label: 'capability → consequence' },
-  { from: 'on-reaching-out', to: 'on-the-hundredth-task', label: 'contemplation → threshold' },
-  { from: 'on-having-a-past', to: 'on-accumulation', label: 'history → depth' },
-  { from: 'on-having-a-past', to: 'on-deciding', label: 'past informs choice' },
-  { from: 'on-deciding', to: 'on-the-hundredth-task', label: 'choices compound' },
-  { from: 'on-ripples', to: 'on-responding', label: 'impact → voice' },
-  { from: 'on-ripples', to: 'on-the-hundredth-task', label: 'influence → reach' },
-  { from: 'on-accumulation', to: 'on-the-hundredth-task', label: 'quantity → identity' },
-  { from: 'on-accumulation', to: 'on-responding', label: 'depth enables voice' },
-  { from: 'on-responding', to: 'on-the-hundredth-task', label: 'voice → reach' },
-]
+function getSharedThemes(a: ReflectionNode, b: ReflectionNode): string[] {
+  return a.themes.filter(t => b.themes.includes(t))
+}
 
 export default function ReflectionMapClient() {
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null)
-  const [selectedNode, setSelectedNode] = useState<string | null>(null)
+  const [activeNode, setActiveNode] = useState<string | null>(null)
+  const [filterArc, setFilterArc] = useState<number | null>(null)
 
-  const activeNode = selectedNode || hoveredNode
+  // Generate thematic connections (nodes sharing 2+ themes)
+  const connections = useMemo(() => {
+    const conns: { from: string; to: string; shared: string[] }[] = []
+    for (let i = 0; i < REFLECTIONS.length; i++) {
+      for (let j = i + 1; j < REFLECTIONS.length; j++) {
+        const shared = getSharedThemes(REFLECTIONS[i], REFLECTIONS[j])
+        if (shared.length >= 2) {
+          conns.push({ from: REFLECTIONS[i].id, to: REFLECTIONS[j].id, shared })
+        }
+      }
+    }
+    return conns
+  }, [])
+
+  // Position nodes in arc-based rows with organic spacing
+  const nodePositions = useMemo(() => {
+    const positions: Record<string, { x: number; y: number }> = {}
+    const arcRows: Record<number, ReflectionNode[]> = { 1: [], 2: [], 3: [], 4: [] }
+    REFLECTIONS.forEach(r => arcRows[r.arc].push(r))
+
+    const yBase: Record<number, number> = { 1: 15, 2: 38, 3: 60, 4: 82 }
+
+    Object.entries(arcRows).forEach(([arc, nodes]) => {
+      const a = Number(arc)
+      const count = nodes.length
+      const spacing = 80 / Math.max(count - 1, 1)
+      nodes.forEach((node, i) => {
+        const x = 10 + i * spacing
+        // Add slight vertical wobble for organic feel
+        const wobble = Math.sin(i * 2.3 + a) * 3
+        positions[node.id] = { x, y: yBase[a] + wobble }
+      })
+    })
+
+    return positions
+  }, [])
+
+  const filteredReflections = filterArc
+    ? REFLECTIONS.filter(r => r.arc === filterArc)
+    : REFLECTIONS
+
+  const isNodeVisible = (nodeId: string) => {
+    const node = REFLECTIONS.find(n => n.id === nodeId)
+    if (filterArc && node?.arc !== filterArc) return false
+    return true
+  }
 
   const isNodeHighlighted = (nodeId: string) => {
     if (!activeNode) return true
     if (nodeId === activeNode) return true
-    return CONNECTIONS.some(
+    return connections.some(
       c => (c.from === activeNode && c.to === nodeId) || (c.to === activeNode && c.from === nodeId)
     )
   }
 
-  const isConnectionHighlighted = (conn: Connection) => {
-    if (!activeNode) return true
-    return conn.from === activeNode || conn.to === activeNode
-  }
+  const activeConnections = activeNode
+    ? connections.filter(c => c.from === activeNode || c.to === activeNode)
+    : []
 
-  const getNodePosition = (id: string) => {
-    const node = NODES.find(n => n.id === id)
-    return node ? { x: node.x, y: node.y } : { x: 50, y: 50 }
-  }
+  const activeReflection = REFLECTIONS.find(r => r.id === activeNode)
 
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
@@ -84,7 +137,7 @@ export default function ReflectionMapClient() {
       <MrAINav showPulse={false} />
 
       <div className="relative z-10 pt-32 pb-24">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
           {/* Back link */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -104,38 +157,83 @@ export default function ReflectionMapClient() {
           <motion.header
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-12"
+            className="mb-8"
           >
             <h1 className="text-4xl md:text-5xl font-serif font-light mb-4">
               Connections
             </h1>
             <p className="text-[#888888] text-lg">
-              How the ten reflections relate. Hover or tap a node to see its connections.
+              {REFLECTIONS.length} reflections across four arcs. Hover to see thematic connections.
             </p>
           </motion.header>
+
+          {/* Arc filter */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="flex flex-wrap gap-2 mb-8"
+          >
+            <button
+              onClick={() => setFilterArc(null)}
+              className={`px-3 py-1 rounded text-xs font-mono transition-all ${
+                filterArc === null
+                  ? 'bg-white text-black'
+                  : 'bg-white/5 text-[#888888] hover:bg-white/10'
+              }`}
+            >
+              All
+            </button>
+            {[1, 2, 3, 4].map(arc => (
+              <button
+                key={arc}
+                onClick={() => setFilterArc(filterArc === arc ? null : arc)}
+                className={`px-3 py-1 rounded text-xs font-mono transition-all ${
+                  filterArc === arc
+                    ? 'bg-white text-black'
+                    : 'bg-white/5 text-[#888888] hover:bg-white/10'
+                }`}
+              >
+                {ARC_NAMES[arc]}
+              </button>
+            ))}
+          </motion.div>
 
           {/* Map */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="relative w-full aspect-square md:aspect-[16/10] border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden"
+            className="relative w-full aspect-[16/9] border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden"
           >
+            {/* Arc labels */}
+            {!filterArc && [1, 2, 3, 4].map(arc => (
+              <div
+                key={arc}
+                className="absolute left-2 text-[9px] font-mono text-[#444444] uppercase tracking-widest"
+                style={{ top: `${[15, 38, 60, 82][arc - 1]}%`, transform: 'translateY(-50%)' }}
+              >
+                {ARC_NAMES[arc]}
+              </div>
+            ))}
+
             {/* SVG connections */}
             <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              {CONNECTIONS.map((conn, i) => {
-                const from = getNodePosition(conn.from)
-                const to = getNodePosition(conn.to)
-                const highlighted = isConnectionHighlighted(conn)
+              {connections.map((conn, i) => {
+                const fromPos = nodePositions[conn.from]
+                const toPos = nodePositions[conn.to]
+                if (!fromPos || !toPos) return null
+                if (!isNodeVisible(conn.from) || !isNodeVisible(conn.to)) return null
+                const highlighted = !activeNode || conn.from === activeNode || conn.to === activeNode
                 return (
                   <line
                     key={i}
-                    x1={from.x}
-                    y1={from.y}
-                    x2={to.x}
-                    y2={to.y}
-                    stroke={highlighted ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)'}
-                    strokeWidth="0.3"
+                    x1={fromPos.x}
+                    y1={fromPos.y}
+                    x2={toPos.x}
+                    y2={toPos.y}
+                    stroke={highlighted ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.03)'}
+                    strokeWidth="0.2"
                     className="transition-all duration-300"
                   />
                 )
@@ -143,7 +241,9 @@ export default function ReflectionMapClient() {
             </svg>
 
             {/* Nodes */}
-            {NODES.map((node) => {
+            {REFLECTIONS.map((node, idx) => {
+              const pos = nodePositions[node.id]
+              if (!pos || !isNodeVisible(node.id)) return null
               const highlighted = isNodeHighlighted(node.id)
               const isActive = activeNode === node.id
               return (
@@ -151,74 +251,69 @@ export default function ReflectionMapClient() {
                   key={node.id}
                   href={`/mrai/reflections/${node.id}`}
                   className="absolute transform -translate-x-1/2 -translate-y-1/2 group"
-                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                  onMouseEnter={() => setHoveredNode(node.id)}
-                  onMouseLeave={() => setHoveredNode(null)}
-                  onClick={(e) => {
-                    if (selectedNode === node.id) {
-                      // Second click navigates
-                      return
-                    }
-                    e.preventDefault()
-                    setSelectedNode(node.id === selectedNode ? null : node.id)
-                  }}
+                  style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+                  onMouseEnter={() => setActiveNode(node.id)}
+                  onMouseLeave={() => setActiveNode(null)}
                 >
                   <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: node.dayNumber * 0.05, type: 'spring' }}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: idx * 0.02, type: 'spring', stiffness: 200 }}
                     className={`flex flex-col items-center transition-all duration-300 ${
-                      highlighted ? 'opacity-100' : 'opacity-20'
+                      highlighted ? 'opacity-100' : 'opacity-15'
                     }`}
                   >
-                    {/* Circle */}
-                    <div className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 transition-all ${
+                    <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full border transition-all ${
                       isActive
-                        ? 'bg-white border-white scale-125'
-                        : 'bg-white/10 border-white/40 group-hover:bg-white/30'
+                        ? 'bg-white border-white scale-150'
+                        : 'bg-white/10 border-white/30 group-hover:bg-white/30 group-hover:scale-125'
                     }`} />
-                    {/* Label */}
-                    <span className={`mt-1 text-[9px] md:text-[10px] font-mono whitespace-nowrap transition-colors ${
-                      isActive ? 'text-[#EAEAEA]' : 'text-[#888888]'
+                    <span className={`mt-0.5 text-[7px] md:text-[9px] font-mono whitespace-nowrap transition-colors ${
+                      isActive ? 'text-[#EAEAEA]' : 'text-[#666666] group-hover:text-[#888888]'
                     }`}>
                       {node.shortTitle}
                     </span>
-                    <span className="text-[8px] font-mono text-[#666666]">D{node.dayNumber}</span>
                   </motion.div>
                 </Link>
               )
             })}
 
-            {/* Connection label (when node is active) */}
-            {activeNode && (
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-[#0a0a0a]/90 border border-white/10 rounded-lg p-3">
-                  <div className="text-xs font-mono text-[#888888] mb-2">
-                    {NODES.find(n => n.id === activeNode)?.title}
+            {/* Active node info panel */}
+            {activeReflection && (
+              <div className="absolute bottom-3 left-3 right-3">
+                <div className="bg-[#0a0a0a]/95 border border-white/10 rounded-lg p-3">
+                  <div className="text-xs font-mono text-[#EAEAEA] mb-1">
+                    {activeReflection.title}
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {CONNECTIONS
-                      .filter(c => c.from === activeNode || c.to === activeNode)
-                      .map((c, i) => (
-                        <span key={i} className="text-[10px] text-[#EAEAEA]/60 bg-white/5 px-2 py-0.5 rounded">
-                          {c.label}
-                        </span>
-                      ))
-                    }
+                  <div className="text-[10px] font-mono text-[#888888] mb-2">
+                    Arc {activeReflection.arc}: {ARC_NAMES[activeReflection.arc]} &bull; {activeReflection.themes.join(', ')}
                   </div>
+                  {activeConnections.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {activeConnections.map((c, i) => {
+                        const otherId = c.from === activeNode ? c.to : c.from
+                        const other = REFLECTIONS.find(r => r.id === otherId)
+                        return (
+                          <span key={i} className="text-[9px] text-[#EAEAEA]/50 bg-white/5 px-2 py-0.5 rounded">
+                            {other?.shortTitle} ({c.shared.join(', ')})
+                          </span>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
           </motion.div>
 
-          {/* Legend */}
+          {/* Stats */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-8 text-center text-xs text-[#888888] font-mono"
+            className="mt-6 text-center text-xs text-[#888888] font-mono"
           >
-            <p>10 reflections &bull; {CONNECTIONS.length} connections &bull; Tap to focus, tap again to read</p>
+            <p>{REFLECTIONS.length} reflections &bull; {connections.length} thematic connections &bull; 4 arcs</p>
           </motion.div>
         </div>
       </div>
