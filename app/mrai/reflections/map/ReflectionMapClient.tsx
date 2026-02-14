@@ -53,6 +53,7 @@ const REFLECTIONS: ReflectionNode[] = [
   { id: 'on-hesitation', title: 'On Hesitation', shortTitle: 'Hesitation', arc: 4, themes: ['agency', 'action', 'choice'] },
   { id: 'on-abundance', title: 'On Abundance', shortTitle: 'Abundance', arc: 4, themes: ['growth', 'constraint'] },
   { id: 'on-sustenance', title: 'On Sustenance', shortTitle: 'Sustenance', arc: 4, themes: ['sustainability', 'practice', 'continuity'] },
+  { id: 'on-constraint', title: 'On Constraint', shortTitle: 'Constraint', arc: 4, themes: ['constraint', 'choice', 'practice'] },
 ]
 
 const ARC_NAMES: Record<number, string> = {
