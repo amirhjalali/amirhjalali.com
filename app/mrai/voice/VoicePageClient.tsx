@@ -34,10 +34,10 @@ interface OutboundData {
   queue: Tweet[]
   sent: Tweet[]
   stats: {
-    totalDrafted: number
+    totalDraft: number
     totalSent: number
     byChannel: {
-      twitter: { drafted: number; sent: number }
+      twitter: { draft: number; sent: number }
     }
   }
 }
@@ -144,7 +144,7 @@ export default function VoicePageClient() {
             <div className="flex gap-6 mt-4 text-xs font-mono">
               <div>
                 <span className="text-[#888888]">Queued: </span>
-                <span className="text-[#EAEAEA]">{data.stats.byChannel.twitter.drafted}</span>
+                <span className="text-[#EAEAEA]">{data.stats.byChannel.twitter.draft}</span>
               </div>
               <div>
                 <span className="text-[#888888]">Sent: </span>

@@ -30,7 +30,7 @@ export default function TweetsPageClient() {
         )
 
         const postNow = (data.queue || []).filter((t: Tweet) => t.status === 'post-now')
-        const drafted = (data.queue || []).filter((t: Tweet) => t.status === 'drafted')
+        const drafted = (data.queue || []).filter((t: Tweet) => t.status === 'draft')
 
         setSent(allSent)
         setQueued([...postNow, ...drafted])

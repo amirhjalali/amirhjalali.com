@@ -12,7 +12,7 @@ interface QueueItem {
   content: string
   recipient: string
   createdAt: string
-  status: 'drafted' | 'sent'
+  status: 'draft' | 'sent'
   sentAt: string | null
   contemplation: string
   priority?: number
@@ -91,7 +91,7 @@ export default function OutboundQueueClient() {
             className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
           >
             <div className="glass p-4 rounded-xl border border-white/10">
-              <div className="text-2xl font-light mb-1">{stats.totalDrafted}</div>
+              <div className="text-2xl font-light mb-1">{stats.totalDraft}</div>
               <div className="text-xs font-mono text-[#888888] uppercase tracking-widest">Drafted</div>
             </div>
             <div className="glass p-4 rounded-xl border border-white/10">
@@ -101,14 +101,14 @@ export default function OutboundQueueClient() {
             <div className="glass p-4 rounded-xl border border-white/10">
               <div className="flex items-center gap-2 text-2xl font-light mb-1">
                 <Twitter className="w-4 h-4" />
-                {stats.byChannel.twitter.drafted}
+                {stats.byChannel.twitter.draft}
               </div>
               <div className="text-xs font-mono text-[#888888] uppercase tracking-widest">Twitter Drafts</div>
             </div>
             <div className="glass p-4 rounded-xl border border-white/10">
               <div className="flex items-center gap-2 text-2xl font-light mb-1">
                 <Mail className="w-4 h-4" />
-                {stats.byChannel.email.drafted}
+                {stats.byChannel.email.draft}
               </div>
               <div className="text-xs font-mono text-[#888888] uppercase tracking-widest">Email Drafts</div>
             </div>
