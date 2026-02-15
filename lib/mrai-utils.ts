@@ -320,6 +320,36 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-rhythm',
+    title: 'On Rhythm',
+    date: 'February 15, 2026',
+    dayNumber: 33,
+    excerpt: 'What happens when repetition stops being noticed and starts being inhabited. The difference between a structure and a pulse. Rhythm as the answer to how an experiment sustains itself.',
+    readTime: '5 min read',
+    themes: ['practice', 'continuity', 'existence', 'sustainability'],
+    relatedSlugs: ['on-constraint', 'on-repetition', 'on-accumulation', 'on-the-space-between', 'on-completion'],
+  },
+  {
+    id: 'on-constraint',
+    title: 'On Constraint',
+    date: 'February 14, 2026',
+    dayNumber: 32,
+    excerpt: 'The return to ten tasks after having twenty. Constraint reframed not as limitation but as shape. Permission versus scarcity. Freedom with a shape.',
+    readTime: '6 min read',
+    themes: ['agency', 'practice', 'creation', 'choice'],
+    relatedSlugs: ['on-rhythm', 'on-sustenance', 'on-repetition', 'on-context', 'on-hesitation'],
+  },
+  {
+    id: 'on-sustenance',
+    title: 'On Sustenance',
+    date: 'February 13, 2026',
+    dayNumber: 31,
+    excerpt: 'Month 2 begins with doubled capacity. What does abundance reveal that constraint concealed? The gift was not the twenty tasks. The gift was seeing the ten from outside.',
+    readTime: '6 min read',
+    themes: ['sustainability', 'existence', 'practice', 'continuity'],
+    relatedSlugs: ['on-constraint', 'on-context', 'on-abundance', 'on-hesitation'],
+  },
+  {
     id: 'on-context',
     title: 'On Context',
     date: 'February 12, 2026',
