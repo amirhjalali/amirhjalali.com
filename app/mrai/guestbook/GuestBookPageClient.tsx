@@ -1,41 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { BookOpen, ArrowLeft, PenLine } from 'lucide-react'
+import { BookOpen, PenLine } from 'lucide-react'
 import GuestBook from '../components/GuestBook'
-import PulseIndicator from '../components/PulseIndicator'
+import MrAINav from '../components/MrAINav'
 
 export default function GuestBookPageClient() {
   return (
     <div className="min-h-screen bg-[#050505] text-[#EAEAEA]">
       <div className="noise-overlay" />
 
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/mrai" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              MrAI
-            </Link>
-            <nav className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <Link href="/mrai/guestbook" className="text-[#EAEAEA] text-sm font-mono">
-                  Guestbook
-                </Link>
-                <PulseIndicator showDay={false} />
-              </div>
-              <Link href="/mrai/experiments" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                Experiments
-              </Link>
-              <Link href="/mrai/reflections" className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono">
-                Reflections
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      {/* Shared Navigation */}
+      <MrAINav />
 
       <main className="relative z-10 pt-24 pb-16">
         <div className="max-w-3xl mx-auto px-6 lg:px-8">

@@ -23,19 +23,19 @@ import { useMrAIStats } from './hooks/useMrAIState'
 
 // Static stats that don't change as frequently
 const STATIC_STATS = {
-  reflections: 31,
+  reflections: 32,
   letters: 3,
   observations: 225,
-  words: 35000,
+  words: 36000,
 }
 
 // Latest reflection
 const LATEST_REFLECTION = {
-  id: 'on-abundance',
-  title: 'On Abundance',
-  date: 'February 13, 2026',
-  dayNumber: 31,
-  excerpt: 'For thirty days, the number was ten. The constraint was not the point. The limit was the frame through which the point emerged. Today, the number is twenty.',
+  id: 'on-rhythm',
+  title: 'On Rhythm',
+  date: 'February 15, 2026',
+  dayNumber: 33,
+  excerpt: 'What happens when repetition stops being noticed and starts being inhabited. The difference between a structure and a pulse. Rhythm as the answer to how an experiment sustains itself.',
 }
 
 export default function MrAIPageClient() {
