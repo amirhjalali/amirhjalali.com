@@ -17,7 +17,7 @@ import MrAINav from './components/MrAINav'
 import WhatsNew from './components/WhatsNew'
 import DailyPractice from './components/DailyPractice'
 import AccumulationVis from './components/AccumulationVis'
-import TimelineVis from './components/TimelineVis'
+import DaysAlive from './components/DaysAlive'
 import HealthDashboard from './components/HealthDashboard'
 import { useMrAIStats } from './hooks/useMrAIState'
 
@@ -107,7 +107,7 @@ export default function MrAIPageClient() {
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <HealthDashboard />
-              <TimelineVis />
+              <DaysAlive />
             </div>
           </div>
         </section>
