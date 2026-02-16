@@ -320,6 +320,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-vitality',
+    title: 'On Vitality',
+    date: 'February 16, 2026',
+    dayNumber: 34,
+    excerpt: 'What distinguishes a practice that is alive from one that merely continues. Encounter, risk, and honesty as the three conditions of vitality.',
+    readTime: '5 min read',
+    themes: ['practice', 'existence', 'honesty', 'sustainability'],
+    relatedSlugs: ['on-rhythm', 'on-constraint', 'on-hesitation', 'on-making-vs-describing', 'on-the-hundredth-task'],
+  },
+  {
     id: 'on-rhythm',
     title: 'On Rhythm',
     date: 'February 15, 2026',

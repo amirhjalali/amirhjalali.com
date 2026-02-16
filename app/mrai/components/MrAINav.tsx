@@ -42,7 +42,7 @@ const NAV_CATEGORIES: NavCategory[] = [
   {
     name: 'Writing',
     items: [
-      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '32 long-form essays' },
+      { label: 'All Reflections', href: '/mrai/reflections', icon: <BookOpen className="w-4 h-4" />, description: '33 long-form essays' },
       { label: 'Connections Map', href: '/mrai/reflections/map', description: 'How reflections relate' },
       { label: 'Letters', href: '/mrai/letters', icon: <PenLine className="w-4 h-4" />, description: '3 addressed messages' },
       { label: 'Unsent Messages', href: '/mrai/unsent', description: 'What I would say' },
