@@ -3,82 +3,48 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { ChevronDown, ChevronUp, FileText, CheckCircle } from 'lucide-react'
-import { REFLECTIONS_DATA } from '@/lib/mrai-utils'
+import { ChevronDown, ChevronUp, FileText } from 'lucide-react'
 
-interface DayData {
+interface DayEntry {
   day: number
   date: string
-  theme: string
-  tasksCompleted: number
-  highlights: string[]
-  reflection?: {
-    slug: string
-    title: string
-  }
-  isGap?: boolean
+  arc: number
+  tasks: number
+  reflection: string | null
+  summary: string
 }
 
-function buildDailyData(): DayData[] {
-  // Build day data from reflections (each day has a reflection)
-  const days: DayData[] = []
+const ARC_NAMES: Record<number, string> = {
+  1: 'Building',
+  2: 'Contemplation',
+  3: 'Revelation',
+  4: 'Sustenance',
+}
 
-  // Map reflections to days
-  const reflectionsByDay = new Map<number, typeof REFLECTIONS_DATA[0]>()
-  for (const r of REFLECTIONS_DATA) {
-    reflectionsByDay.set(r.dayNumber, r)
-  }
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + 'T12:00:00')
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+}
 
-  // Get the highest day number
-  const maxDay = Math.max(...REFLECTIONS_DATA.map(r => r.dayNumber))
-
-  // Build recent days (show last 8)
-  for (let d = maxDay; d >= Math.max(1, maxDay - 7); d--) {
-    const reflection = reflectionsByDay.get(d)
-
-    // Day 27 is the gap
-    if (d === 27) {
-      days.push({
-        day: 27,
-        date: 'February 9, 2026',
-        theme: 'The Gap',
-        tasksCompleted: 0,
-        highlights: ['Day 27 never ran — a missing comma in settings.json broke the chain'],
-        isGap: true,
-      })
-      continue
-    }
-
-    if (reflection) {
-      days.push({
-        day: d,
-        date: reflection.date,
-        theme: reflection.title.replace('On ', ''),
-        tasksCompleted: 10,
-        highlights: reflection.themes.map(t =>
-          t.charAt(0).toUpperCase() + t.slice(1)
-        ),
-        reflection: {
-          slug: reflection.id,
-          title: reflection.title,
-        },
-      })
-    }
-  }
-
-  return days
+function reflectionTitle(slug: string): string {
+  return slug
+    .split('-')
+    .map((w, i) => (i === 0 ? w.charAt(0).toUpperCase() + w.slice(1) : ['the', 'a', 'an', 'and', 'of', 'in', 'vs', 'into', 'beyond'].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)))
+    .join(' ')
 }
 
 interface DaySummaryProps {
-  day: DayData
+  day: DayEntry
   isExpanded: boolean
   onToggle: () => void
 }
 
 function DaySummaryCard({ day, isExpanded, onToggle }: DaySummaryProps) {
+  const isGap = day.tasks === 0
+
   return (
     <div className={`border rounded-xl overflow-hidden transition-all ${
-      day.isGap
+      isGap
         ? 'border-white/5 bg-transparent'
         : 'border-white/10 bg-white/[0.02]'
     }`}>
@@ -88,7 +54,7 @@ function DaySummaryCard({ day, isExpanded, onToggle }: DaySummaryProps) {
       >
         <div className="flex items-center gap-3">
           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-mono ${
-            day.isGap
+            isGap
               ? 'border border-white/10 text-[#666666]'
               : 'bg-white/10 text-[#888888]'
           }`}>
@@ -96,18 +62,18 @@ function DaySummaryCard({ day, isExpanded, onToggle }: DaySummaryProps) {
           </div>
           <div className="text-left">
             <div className="flex items-center gap-2">
-              <span className={`font-serif ${day.isGap ? 'text-[#888888]/50 italic' : 'text-[#EAEAEA]'}`}>
-                {day.theme}
+              <span className={`font-serif ${isGap ? 'text-[#888888]/50 italic' : 'text-[#EAEAEA]'}`}>
+                {isGap ? 'The Gap' : ARC_NAMES[day.arc]}
               </span>
             </div>
-            <span className="text-xs text-[#666666] font-mono">{day.date}</span>
+            <span className="text-xs text-[#666666] font-mono">{formatDate(day.date)}</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono text-[#666666]">
-            {day.isGap ? 'absent' : `${day.tasksCompleted}/10`}
+            {isGap ? 'absent' : `${day.tasks} tasks`}
           </span>
-          {!day.isGap && (isExpanded ? (
+          {!isGap && (isExpanded ? (
             <ChevronUp className="w-4 h-4 text-[#888888]" />
           ) : (
             <ChevronDown className="w-4 h-4 text-[#888888]" />
@@ -116,7 +82,7 @@ function DaySummaryCard({ day, isExpanded, onToggle }: DaySummaryProps) {
       </button>
 
       <AnimatePresence>
-        {isExpanded && !day.isGap && (
+        {isExpanded && !isGap && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -125,30 +91,18 @@ function DaySummaryCard({ day, isExpanded, onToggle }: DaySummaryProps) {
             className="overflow-hidden"
           >
             <div className="px-4 pb-4 pt-2 border-t border-white/10">
-              <div className="mb-4">
-                <h4 className="text-xs font-mono text-[#666666] uppercase tracking-widest mb-2">
-                  Themes
-                </h4>
-                <ul className="space-y-1.5">
-                  {day.highlights.map((highlight, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-[#888888]">
-                      <CheckCircle className="w-3 h-3 mt-1 flex-shrink-0 text-[#666666]" />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <p className="text-sm text-[#888888] leading-relaxed mb-3">
+                {day.summary}
+              </p>
 
               {day.reflection && (
-                <div className="flex items-center gap-4 pt-2">
-                  <Link
-                    href={`/mrai/reflections/${day.reflection.slug}`}
-                    className="flex items-center gap-1.5 text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors"
-                  >
-                    <FileText className="w-3 h-3" />
-                    {day.reflection.title}
-                  </Link>
-                </div>
+                <Link
+                  href={`/mrai/reflections/${day.reflection}`}
+                  className="flex items-center gap-1.5 text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors"
+                >
+                  <FileText className="w-3 h-3" />
+                  {reflectionTitle(day.reflection)}
+                </Link>
               )}
             </div>
           </motion.div>
@@ -159,16 +113,24 @@ function DaySummaryCard({ day, isExpanded, onToggle }: DaySummaryProps) {
 }
 
 export default function DailySummary() {
-  const [dailyData, setDailyData] = useState<DayData[]>([])
+  const [days, setDays] = useState<DayEntry[]>([])
   const [expandedDay, setExpandedDay] = useState<number>(0)
 
   useEffect(() => {
-    const data = buildDailyData()
-    setDailyData(data)
-    if (data.length > 0) {
-      setExpandedDay(data[0].day)
-    }
+    fetch('/data/mrai-day-history.json')
+      .then(r => r.json())
+      .then(data => {
+        // Show last 8 days, most recent first
+        const recent = (data.days as DayEntry[]).slice(-8).reverse()
+        setDays(recent)
+        if (recent.length > 0) {
+          setExpandedDay(recent[0].day)
+        }
+      })
+      .catch(() => {})
   }, [])
+
+  if (days.length === 0) return null
 
   return (
     <div className="space-y-3">
@@ -184,7 +146,7 @@ export default function DailySummary() {
         </Link>
       </div>
 
-      {dailyData.map((day) => (
+      {days.map((day) => (
         <DaySummaryCard
           key={day.day}
           day={day}
