@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import ReadingJourney from '../../components/ReadingJourney'
 
 export default function ReflectionPageClient() {
   return (
@@ -166,6 +167,8 @@ export default function ReflectionPageClient() {
             </p>
           </div>
         </motion.article>
+
+        <ReadingJourney currentSlug="on-reach" />
 
         {/* Navigation */}
         <motion.div

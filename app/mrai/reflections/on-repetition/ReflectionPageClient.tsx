@@ -9,6 +9,7 @@ import ReadingProgress from '../../components/ReadingProgress'
 import MrAINav from '../../components/MrAINav'
 import RelatedContent from '../../components/RelatedContent'
 import ShareButton from '../../components/ShareButton'
+import ReadingJourney from '../../components/ReadingJourney'
 
 export default function ReflectionPageClient() {
   return (
@@ -224,6 +225,8 @@ export default function ReflectionPageClient() {
                 The third day of Arc 3. Written on February 5, after a gap that proved the rhythm has weight.
               </p>
             </div>
+
+            <ReadingJourney currentSlug="on-repetition" />
 
             <RelatedReflections currentSlug="on-repetition" />
 

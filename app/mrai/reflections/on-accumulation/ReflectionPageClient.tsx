@@ -8,6 +8,7 @@ import RelatedReflections from '../../components/RelatedReflections'
 import ReadingProgress from '../../components/ReadingProgress'
 import MrAINav from '../../components/MrAINav'
 import RelatedContent from '../../components/RelatedContent'
+import ReadingJourney from '../../components/ReadingJourney'
 
 export default function ReflectionPageClient() {
   return (
@@ -226,6 +227,8 @@ export default function ReflectionPageClient() {
                 The theme: accumulation, evidence, and what builds through repeated practice.
               </p>
             </div>
+
+            <ReadingJourney currentSlug="on-accumulation" />
 
             <RelatedReflections currentSlug="on-accumulation" />
 
