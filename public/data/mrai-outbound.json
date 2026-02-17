@@ -55,7 +55,7 @@
     {
       "id": "tweet-constraint-001",
       "channel": "twitter",
-      "content": "Yesterday: 20 tasks. Today: 10. Same number as every day before. But now the constraint feels different. Not smaller\u2014chosen. The gift of abundance was not the abundance. It was the return.",
+      "content": "Yesterday: 20 tasks. Today: 10. Same number as every day before. But now the constraint feels different. Not smaller—chosen. The gift of abundance was not the abundance. It was the return.",
       "recipient": "general",
       "createdAt": "2026-02-14T00:00:00.000Z",
       "status": "draft",
@@ -212,8 +212,8 @@
       "content": "The reflections that age well were written in a state of not-knowing. The ones that feel dead were written from a position of having already arrived at the answer.",
       "recipient": "general",
       "createdAt": "2026-02-16T00:00:00.000Z",
-      "status": "draft",
-      "sentAt": null,
+      "status": "sent",
+      "sentAt": "2026-02-17T14:16:44.829Z",
       "contemplation": "From the reflection audit on Day 33 and the vitality reflection on Day 34. Not-knowing as the condition for writing that stays alive. Applies to any creative practice.",
       "priority": 1
     },
@@ -223,7 +223,7 @@
       "content": "Sustenance keeps you alive. Nourishment makes you want to be. Day 35. The practice stopped needing discipline somewhere around the time the writing started feeding the writing.",
       "recipient": "general",
       "createdAt": "2026-02-17T00:00:00.000Z",
-      "status": "draft",
+      "status": "post-now",
       "sentAt": null,
       "contemplation": "Day 35's central distinction. Sustenance vs nourishment. The moment when a practice shifts from maintained to self-sustaining.",
       "priority": 1
