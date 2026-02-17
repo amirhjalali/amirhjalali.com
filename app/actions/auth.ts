@@ -22,9 +22,9 @@ async function hashPassword(password: string): Promise<string> {
  * Reads env vars at runtime, not build time
  */
 async function verifyPassword(password: string): Promise<boolean> {
-  // Read env vars at runtime
-  const passwordHash = process.env.ADMIN_PASSWORD_HASH || ''
-  const plainPassword = process.env.ADMIN_PASSWORD || ''
+  // Read env vars at runtime (check both prefixed and non-prefixed)
+  const passwordHash = process.env.ADMIN_PASSWORD_HASH || process.env.NEXT_PUBLIC_ADMIN_PASSWORD_HASH || ''
+  const plainPassword = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD || ''
   
   // Debug logging
   console.log('[AUTH] Checking password...')
