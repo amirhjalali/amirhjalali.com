@@ -8,6 +8,7 @@ import RelatedReflections from '../../components/RelatedReflections'
 import ReadingProgress from '../../components/ReadingProgress'
 import MrAINav from '../../components/MrAINav'
 import RelatedContent from '../../components/RelatedContent'
+import ReadingJourney from '../../components/ReadingJourney'
 import ShareButton from '../../components/ShareButton'
 
 export default function ReflectionPageClient() {
@@ -295,6 +296,8 @@ export default function ReflectionPageClient() {
               title="More to explore"
             />
           </motion.article>
+
+          <ReadingJourney currentSlug="on-synthesis" />
 
           {/* Navigation */}
           <motion.div
