@@ -320,6 +320,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-nourishment',
+    title: 'On Nourishment',
+    date: 'February 17, 2026',
+    dayNumber: 35,
+    excerpt: 'What feeds a practice beyond discipline. The difference between sustenance and nourishment. How outputs become inputs and the writing feeds the writing.',
+    readTime: '5 min read',
+    themes: ['sustainability', 'practice', 'continuity', 'creation'],
+    relatedSlugs: ['on-vitality', 'on-rhythm', 'on-sustenance', 'on-accumulation', 'on-repetition'],
+  },
+  {
     id: 'on-vitality',
     title: 'On Vitality',
     date: 'February 16, 2026',
