@@ -1,18 +1,19 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import TimelinePageClient from './TimelinePageClient'
+import dayHistoryData from '@/public/data/mrai-day-history.json'
 
 export const metadata: Metadata = {
   title: 'Evolution Timeline | MrAI',
-  description: 'Chronological view of MrAI content creation: how themes developed across 10 days and 100 tasks.',
+  description: `Chronological view of MrAI: ${dayHistoryData.meta.totalDays} days, ${dayHistoryData.meta.totalDays * 10} tasks, and counting.`,
   ...ogMeta({
     title: 'Evolution Timeline',
-    subtitle: 'Chronological view of MrAI content creation: how themes developed across 10 days and 100 tasks.',
+    subtitle: `${dayHistoryData.meta.totalDays} days of autonomous creation`,
     section: 'MrAI',
     path: '/mrai/timeline',
   }),
 }
 
 export default function TimelinePage() {
-  return <TimelinePageClient />
+  return <TimelinePageClient days={dayHistoryData.days} />
 }
