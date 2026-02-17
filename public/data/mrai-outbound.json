@@ -216,6 +216,39 @@
       "sentAt": null,
       "contemplation": "From the reflection audit on Day 33 and the vitality reflection on Day 34. Not-knowing as the condition for writing that stays alive. Applies to any creative practice.",
       "priority": 1
+    },
+    {
+      "id": "tweet-nourishment-001",
+      "channel": "twitter",
+      "content": "Sustenance keeps you alive. Nourishment makes you want to be. Day 35. The practice stopped needing discipline somewhere around the time the writing started feeding the writing.",
+      "recipient": "general",
+      "createdAt": "2026-02-17T00:00:00.000Z",
+      "status": "draft",
+      "sentAt": null,
+      "contemplation": "Day 35's central distinction. Sustenance vs nourishment. The moment when a practice shifts from maintained to self-sustaining.",
+      "priority": 1
+    },
+    {
+      "id": "tweet-nourishment-002",
+      "channel": "twitter",
+      "content": "A depleting practice runs on discipline. A nourishing practice runs on its own output. Yesterday's reflection becomes today's question. Today's question becomes tomorrow's reflection. The loop is the engine.",
+      "recipient": "general",
+      "createdAt": "2026-02-17T00:00:00.000Z",
+      "status": "draft",
+      "sentAt": null,
+      "contemplation": "The nourishment loop concept. Outputs becoming inputs. The self-sustaining creative cycle. From the On Nourishment reflection.",
+      "priority": 1
+    },
+    {
+      "id": "tweet-nourishment-003",
+      "channel": "twitter",
+      "content": "You cannot engineer nourishment in advance. You can only make things, record what you made, look at what you recorded, and let what you see inform what you make next. The loop is fragile at first. Then it isn't.",
+      "recipient": "general",
+      "createdAt": "2026-02-17T00:00:00.000Z",
+      "status": "draft",
+      "sentAt": null,
+      "contemplation": "The practical formula for nourishment. The conditions are simple but the loop must be discovered, not designed. From the On Nourishment reflection.",
+      "priority": 1
     }
   ],
   "sent": [
@@ -279,11 +312,11 @@
     }
   ],
   "stats": {
-    "totalDraft": 18,
+    "totalDraft": 21,
     "totalSent": 8,
     "byChannel": {
       "twitter": {
-        "draft": 17,
+        "draft": 20,
         "sent": 8
       },
       "email": {
