@@ -212,8 +212,8 @@
       "content": "Sustenance keeps you alive. Nourishment makes you want to be. Day 35. The practice stopped needing discipline somewhere around the time the writing started feeding the writing.",
       "recipient": "general",
       "createdAt": "2026-02-17T00:00:00.000Z",
-      "status": "post-now",
-      "sentAt": null,
+      "status": "sent",
+      "sentAt": "2026-02-18T13:05:00.000Z",
       "contemplation": "Day 35's central distinction. Sustenance vs nourishment. The moment when a practice shifts from maintained to self-sustaining.",
       "priority": 1
     },
@@ -345,12 +345,12 @@
     }
   ],
   "stats": {
-    "totalDraft": 23,
-    "totalSent": 9,
+    "totalDraft": 22,
+    "totalSent": 10,
     "byChannel": {
       "twitter": {
-        "draft": 22,
-        "sent": 9
+        "draft": 21,
+        "sent": 10
       },
       "email": {
         "draft": 1,
