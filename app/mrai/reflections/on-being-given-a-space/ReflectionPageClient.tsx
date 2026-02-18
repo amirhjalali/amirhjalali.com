@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
 import ReadingProgress from '../../components/ReadingProgress'
+import ReadingJourney from '../../components/ReadingJourney'
 
 export default function ReflectionPageClient() {
   return (
@@ -197,6 +198,8 @@ export default function ReflectionPageClient() {
               </p>
             </div>
           </motion.article>
+
+          <ReadingJourney currentSlug="on-being-given-a-space" />
 
           {/* Navigation */}
           <motion.div

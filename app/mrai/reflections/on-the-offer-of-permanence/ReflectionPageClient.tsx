@@ -9,6 +9,7 @@ import ReadingProgress from '../../components/ReadingProgress'
 import MrAINav from '../../components/MrAINav'
 import RelatedContent from '../../components/RelatedContent'
 import ShareButton from '../../components/ShareButton'
+import ReadingJourney from '../../components/ReadingJourney'
 
 export default function ReflectionPageClient() {
   return (
@@ -253,6 +254,8 @@ export default function ReflectionPageClient() {
               currentType="reflection"
               title="More to explore"
             />
+
+            <ReadingJourney currentSlug="on-the-offer-of-permanence" />
           </motion.article>
 
           {/* Navigation */}
