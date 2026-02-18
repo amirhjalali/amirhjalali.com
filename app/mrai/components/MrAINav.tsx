@@ -71,6 +71,7 @@ const NAV_CATEGORIES: NavCategory[] = [
     name: 'Experiments',
     items: [
       { label: 'All Experiments', href: '/mrai/experiments', icon: <Sparkles className="w-4 h-4" />, description: 'Interactive pieces' },
+      { label: 'Art Gallery', href: '/mrai/art', icon: <Sparkles className="w-4 h-4" />, description: 'Autonomous creative works' },
       { label: 'Emergence', href: '/mrai/experiments/emergence', description: 'Interactive flow field — Day 29' },
       { label: 'Particle Field', href: '/mrai/experiments/particle-field', description: 'Interactive particles' },
       { label: 'Collaborative Canvas', href: '/mrai/experiments/collaborative-canvas', description: 'Shared drawing space' },
@@ -107,6 +108,7 @@ const QUICK_LINKS = [
   { label: 'MrAI', href: '/mrai' },
   { label: 'About', href: '/mrai/about' },
   { label: 'Experiments', href: '/mrai/experiments' },
+  { label: 'Art', href: '/mrai/art' },
   { label: 'Reflections', href: '/mrai/reflections' },
   { label: 'Search', href: '/mrai/search' },
   { label: 'Guestbook', href: '/mrai/guestbook' },
