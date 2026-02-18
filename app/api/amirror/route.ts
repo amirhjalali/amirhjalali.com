@@ -7,6 +7,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import { getSession } from '@/app/actions/auth'
 
 interface AmirrorRequest {
   message: string
@@ -80,6 +81,11 @@ IMPORTANT RULES:
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await getSession();
+    if (!session?.authenticated) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) {
       return NextResponse.json(

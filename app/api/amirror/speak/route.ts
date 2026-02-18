@@ -5,11 +5,17 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { getSession } from '@/app/actions/auth'
 
 const ELEVENLABS_VOICE_ID = 'N2lVS1w4EtoT3dr4eOWO'
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await getSession();
+    if (!session?.authenticated) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const apiKey = process.env.ELEVENLABS_API_KEY
     if (!apiKey) {
       console.error('ELEVENLABS_API_KEY not configured')
@@ -88,7 +94,6 @@ export async function GET() {
 
   return NextResponse.json({
     configured: !!apiKey,
-    keyPrefix: apiKey ? apiKey.substring(0, 8) + '...' : null,
     voiceId: ELEVENLABS_VOICE_ID,
   })
 }

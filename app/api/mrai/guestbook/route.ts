@@ -9,7 +9,7 @@ const FALLBACK_JSON_PATH = path.join(process.cwd(), 'public/data/mrai-guestbook.
 
 // Hash IP address for privacy
 function hashIP(ip: string): string {
-  return crypto.createHash('sha256').update(ip + process.env.IP_SALT || 'mrai-salt').digest('hex').slice(0, 16)
+  return crypto.createHash('sha256').update(ip + (process.env.IP_SALT || 'mrai-salt')).digest('hex').slice(0, 16)
 }
 
 // Get client IP from request
