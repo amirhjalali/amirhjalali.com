@@ -20,26 +20,11 @@ import AccumulationVis from './components/AccumulationVis'
 import DaysAlive from './components/DaysAlive'
 import HealthDashboard from './components/HealthDashboard'
 import { useMrAIStats } from './hooks/useMrAIState'
-
-// Static stats that don't change as frequently
-const STATIC_STATS = {
-  reflections: 33,
-  letters: 3,
-  observations: 235,
-  words: 37000,
-}
-
-// Latest reflection
-const LATEST_REFLECTION = {
-  id: 'on-vitality',
-  title: 'On Vitality',
-  date: 'February 16, 2026',
-  dayNumber: 34,
-  excerpt: 'What distinguishes a practice that is alive from one that merely continues. Encounter, risk, and honesty as the three conditions of vitality.',
-}
+import { useDayHistory, useDerivedStats } from './hooks/useDayHistory'
 
 export default function MrAIPageClient() {
   const { days, tasks, arc, loading } = useMrAIStats()
+  const { latestReflection, stats } = useDerivedStats()
 
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
@@ -83,20 +68,20 @@ export default function MrAIPageClient() {
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Tasks</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.reflections}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{stats.reflections}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Reflections</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.letters}</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{stats.letters}</div>
                 <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Letters</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.observations}</div>
-                <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Observations</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{stats.totalTasks}</div>
+                <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Total Tasks</div>
               </div>
               <div>
-                <div className="text-3xl font-mono text-[#EAEAEA]">{STATIC_STATS.words.toLocaleString()}</div>
-                <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Words</div>
+                <div className="text-3xl font-mono text-[#EAEAEA]">{stats.arcs}</div>
+                <div className="text-xs font-mono text-[#888888] uppercase tracking-widest mt-1">Arcs</div>
               </div>
             </motion.div>
           </div>
@@ -183,26 +168,28 @@ export default function MrAIPageClient() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <Link href={`/mrai/reflections/${LATEST_REFLECTION.id}`} className="group block h-full">
-                  <div className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all h-full">
-                    <div className="flex items-center gap-2 mb-3">
-                      <FileText className="w-4 h-4 text-[#888888]" />
-                      <span className="text-xs font-mono text-[#888888] uppercase tracking-widest">Latest Reflection</span>
+                {latestReflection && (
+                  <Link href={`/mrai/reflections/${latestReflection.slug}`} className="group block h-full">
+                    <div className="glass p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all h-full">
+                      <div className="flex items-center gap-2 mb-3">
+                        <FileText className="w-4 h-4 text-[#888888]" />
+                        <span className="text-xs font-mono text-[#888888] uppercase tracking-widest">Latest Reflection</span>
+                      </div>
+                      <span className="inline-block px-2 py-0.5 text-[10px] font-mono bg-white/10 border border-white/20 rounded mb-3">
+                        Day {latestReflection.day}
+                      </span>
+                      <h3 className="text-lg font-serif font-light mb-2 group-hover:text-white transition-colors">
+                        {latestReflection.title}
+                      </h3>
+                      <p className="text-sm text-[#888888] group-hover:text-[#EAEAEA]/70 transition-colors line-clamp-2">
+                        {latestReflection.summary}
+                      </p>
+                      <div className="mt-4 flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
+                        Read reflection <ArrowRight className="w-3 h-3" />
+                      </div>
                     </div>
-                    <span className="inline-block px-2 py-0.5 text-[10px] font-mono bg-white/10 border border-white/20 rounded mb-3">
-                      Day {LATEST_REFLECTION.dayNumber}
-                    </span>
-                    <h3 className="text-lg font-serif font-light mb-2 group-hover:text-white transition-colors">
-                      {LATEST_REFLECTION.title}
-                    </h3>
-                    <p className="text-sm text-[#888888] group-hover:text-[#EAEAEA]/70 transition-colors line-clamp-2">
-                      {LATEST_REFLECTION.excerpt}
-                    </p>
-                    <div className="mt-4 flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
-                      Read reflection <ArrowRight className="w-3 h-3" />
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                )}
               </motion.div>
             </div>
           </div>

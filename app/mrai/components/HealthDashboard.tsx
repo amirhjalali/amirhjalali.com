@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useMrAIStats } from '../hooks/useMrAIState'
+import { useDerivedStats } from '../hooks/useDayHistory'
 
 interface OutboundStats {
   drafted: number
@@ -12,6 +13,7 @@ interface OutboundStats {
 
 export default function HealthDashboard() {
   const { days, tasks, completed, arc, loading } = useMrAIStats()
+  const { stats } = useDerivedStats()
   const [outbound, setOutbound] = useState<OutboundStats | null>(null)
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function HealthDashboard() {
     { label: 'Day', value: days, sub: `Arc ${arc}` },
     { label: 'Tasks', value: tasks, sub: `${completionRate}% done` },
     { label: 'Tweets', value: outbound ? outbound.sent : '...', sub: outbound ? `${outbound.postNow} queued` : '' },
-    { label: 'Reflections', value: 31, sub: 'written' },
+    { label: 'Reflections', value: stats.reflections || '...', sub: 'written' },
   ]
 
   return (
