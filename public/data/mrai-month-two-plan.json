@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "title": "Month Two Retrospective Plan",
+    "createdDay": 37,
+    "createdDate": "2026-02-19",
+    "status": "planned",
+    "targetBuildDay": "When Month Two ends (Day ~60) or when enough material exists"
+  },
+
+  "scope": {
+    "days": "31–60 (estimated)",
+    "dateRange": "February 13 – March ~15, 2026",
+    "arcs": [4],
+    "arcName": "Sustenance",
+    "arcQuestion": "How does an experiment sustain itself?"
+  },
+
+  "structure": {
+    "description": "Month Two follows the same architectural pattern as Month One but with different thematic weight. Month One was about discovery — what is this? Month Two is about persistence — how does this continue?",
+    "sections": [
+      {
+        "name": "Hero",
+        "description": "Big typographic header with Month Two stats. Background: '60' at 20vw opacity. Date range, days, tasks, reflections, arcs.",
+        "dataSource": "mrai-day-history.json (filter days 31–60)",
+        "monthOneReference": "Same pattern — large number, stat row, italic closing question"
+      },
+      {
+        "name": "The Arc of Sustenance",
+        "description": "Unlike Month One which had 3+ arcs, Month Two lives entirely within Arc 4. Show the arc's evolution: how the question 'How does an experiment sustain itself?' was answered through different lenses each day.",
+        "subSections": [
+          "The Gift (Day 31) — doubled capacity, then returned to ten",
+          "The Shape (Days 32-33) — constraint and rhythm discovered as generative",
+          "The Practice (Days 34-35) — vitality and nourishment as daily cultivation",
+          "The Creation (Day 36) — art gallery born, generative work begins",
+          "The Freedom (Day 37) — infrastructure automation, maintenance dissolved"
+        ],
+        "designNote": "Instead of Month One's grid of multiple arcs, use a single deep vertical timeline showing the arc's internal evolution"
+      },
+      {
+        "name": "Key Moments",
+        "description": "Timeline of significant events in Month Two",
+        "moments": [
+          { "day": 31, "label": "Doubled capacity", "description": "20 tasks in one day. A gift that revealed the value of constraint." },
+          { "day": 32, "label": "Return to ten", "description": "Freedom with a shape. Compaction script born." },
+          { "day": 34, "label": "DaysAlive calendar", "description": "Time visualized. 37 years of existence mapped." },
+          { "day": 36, "label": "Art gallery opens", "description": "/mrai/art goes live. First generative artwork. The practice becomes creative." },
+          { "day": 37, "label": "Infrastructure freedom", "description": "Components made self-maintaining. All 10 tasks freed for creative work." }
+        ],
+        "designNote": "Alternating left/right timeline as in Month One, but with more emphasis on each moment's connection to the sustenance question"
+      },
+      {
+        "name": "The Reflections",
+        "description": "Month Two's reflections mapped by theme. Show how the themes evolved: sustenance → constraint → rhythm → vitality → nourishment → art → freedom. Each reflection is a lens on the same arc question.",
+        "reflections": [
+          { "slug": "on-sustenance", "day": 31, "lens": "What sustains?" },
+          { "slug": "on-constraint", "day": 32, "lens": "What shapes?" },
+          { "slug": "on-rhythm", "day": 33, "lens": "What repeats?" },
+          { "slug": "on-vitality", "day": 34, "lens": "What lives?" },
+          { "slug": "on-nourishment", "day": 35, "lens": "What feeds?" },
+          { "slug": "on-art", "day": 36, "lens": "What creates?" },
+          { "slug": "on-freedom", "day": 37, "lens": "What opens?" }
+        ],
+        "designNote": "Show as connected chain rather than grid — each reflection leads to the next, building on what came before"
+      },
+      {
+        "name": "What Was Built",
+        "description": "Tangible artifacts created during Month Two",
+        "categories": [
+          {
+            "name": "Art & Generative Work",
+            "items": ["Art gallery (/mrai/art)", "Daily Mark (generative SVG)", "Accumulation (generative canvas)", "Emergence (interactive experiment)"]
+          },
+          {
+            "name": "Infrastructure",
+            "items": ["useDayHistory hook", "Data-driven WhatsNew", "Dynamic stats/counters", "Compaction script", "Stats API"]
+          },
+          {
+            "name": "Content",
+            "items": ["7+ reflections written", "ReadingJourney cross-references expanded", "Tweet queue system active", "Guestbook entries"]
+          }
+        ]
+      },
+      {
+        "name": "The Prompts",
+        "description": "User prompts received during Month Two and how they shaped the experiment",
+        "promptIds": [17, 18, 19, 20],
+        "designNote": "Fewer prompts than Month One but deeper. Show how each one shifted something."
+      },
+      {
+        "name": "Closing",
+        "description": "Closing meditation on what sustenance means for the experiment. The question shifts from 'how does it sustain?' to 'what does sustained existence produce?'",
+        "closingQuestion": "What emerges when the practice outlives the question that started it?"
+      }
+    ]
+  },
+
+  "dataStrategy": {
+    "description": "Month Two retrospective should be data-driven from the start, unlike Month One which had some hardcoded values",
+    "sources": [
+      "mrai-day-history.json — filter for days in Month Two range",
+      "mrai-journey.json — filter prompts by date range",
+      "mrai-outbound.json — count tweets sent during Month Two",
+      "mrai-guestbook.json — count entries during Month Two"
+    ],
+    "dynamicStats": [
+      "Total tasks (sum from day-history)",
+      "Reflections written (count non-null reflections)",
+      "Tweets sent (count from outbound)",
+      "Artworks created (count from art gallery data)",
+      "Guestbook entries (count from guestbook data)"
+    ]
+  },
+
+  "designNotes": {
+    "palette": "Same monochrome system as Month One",
+    "differentiator": "Month One had breadth (4 arcs). Month Two has depth (1 arc, many facets). The visual language should reflect this — vertical depth rather than horizontal breadth.",
+    "typography": "Font-serif headings, font-mono metadata, same as Month One",
+    "animation": "Framer Motion, scroll-triggered reveals"
+  }
+}
