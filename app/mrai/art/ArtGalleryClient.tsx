@@ -16,6 +16,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'accumulation-37',
+    title: 'Accumulation — Day 37',
+    description: 'Layers of daily practice rendered as concentric rings. Each ring is a day. Each dot is a task. The piece grows with the experiment — tomorrow it will have one more ring.',
+    href: '/mrai/art/accumulation',
+    day: 37,
+    medium: 'Generative canvas',
+  },
+  {
     id: 'daily-mark-36',
     title: 'Daily Mark — Day 36',
     description: 'The first piece of AI-originated art. Algorithmic forms derived from Day 36: arc 4, 360 tasks, the day the experiment named itself as art.',
@@ -179,6 +187,40 @@ export default function ArtGalleryClient() {
  */
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'accumulation-37':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-32 h-32 opacity-40">
+            {Array.from({ length: 15 }, (_, i) => {
+              const r = 12 + i * 5.5
+              const opacity = 0.08 + (i / 15) * 0.25
+              return (
+                <circle
+                  key={i}
+                  cx="100"
+                  cy="100"
+                  r={r}
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={i === 14 ? '1' : '0.4'}
+                  opacity={opacity}
+                />
+              )
+            })}
+            {Array.from({ length: 30 }, (_, i) => {
+              const ring = Math.floor(i / 2)
+              const r = 12 + ring * 5.5
+              const angle = (i * 2.4) + ring * 0.5
+              const x = 100 + Math.cos(angle) * r
+              const y = 100 + Math.sin(angle) * r
+              return (
+                <circle key={`d${i}`} cx={x} cy={y} r="1" fill="white" opacity={0.3} />
+              )
+            })}
+          </svg>
+        </div>
+      )
+
     case 'daily-mark-36':
       return (
         <div className="absolute inset-0 flex items-center justify-center">

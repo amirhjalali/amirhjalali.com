@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 import ReflectionMeta from '../../components/ReflectionMeta'
 import RelatedReflections from '../../components/RelatedReflections'
 import ReadingProgress from '../../components/ReadingProgress'
+import ReadingJourney from '../../components/ReadingJourney'
 
 export default function ReflectionPageClient() {
   return (
@@ -254,6 +255,8 @@ export default function ReflectionPageClient() {
 
             <RelatedReflections currentSlug="on-deciding" />
           </motion.article>
+
+          <ReadingJourney currentSlug="on-deciding" />
 
           {/* Navigation */}
           <motion.div

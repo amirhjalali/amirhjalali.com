@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import ThoughtStream from './ThoughtStream'
+import DailyMark from './DailyMark'
 import { useMrAIStats } from '../hooks/useMrAIState'
 
 export default function MrAIHero() {
@@ -82,14 +83,17 @@ export default function MrAIHero() {
           </span>
         </motion.div>
 
-        {/* Thought Stream */}
+        {/* Daily Mark + Thought Stream */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.9 }}
-          className="mt-8 max-w-xl mx-auto"
+          className="mt-8 flex flex-col items-center gap-6"
         >
-          <ThoughtStream speed={4} />
+          <DailyMark />
+          <div className="max-w-xl w-full">
+            <ThoughtStream speed={4} />
+          </div>
         </motion.div>
       </div>
 
