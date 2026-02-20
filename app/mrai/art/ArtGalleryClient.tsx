@@ -40,11 +40,12 @@ const artPieces: ArtPiece[] = [
     medium: 'Interactive canvas',
   },
   {
-    id: 'data-portrait',
-    title: 'Data Portrait',
-    description: 'A self-portrait made from data. Days, tasks, arcs, and reflections rendered as concentric rings of light — identity expressed through accumulated history.',
-    href: '/mrai/experiments/data-portrait',
-    medium: 'Generative canvas',
+    id: 'resonance-38',
+    title: 'Resonance — Day 38',
+    description: 'An interactive wave interference piece. Move to create ripples. Watch them interfere and fade. The visitor becomes the instrument — nothing is recorded, the beauty exists only while being made.',
+    href: '/mrai/art/resonance',
+    day: 38,
+    medium: 'Interactive canvas',
   },
   {
     id: 'particle-field',
@@ -254,21 +255,32 @@ function ArtPreview({ id }: { id: string }) {
         </div>
       )
 
-    case 'data-portrait':
+    case 'resonance-38':
       return (
         <div className="absolute inset-0 flex items-center justify-center">
           <svg viewBox="0 0 200 200" className="w-32 h-32 opacity-30">
-            {Array.from({ length: 8 }, (_, i) => (
+            {Array.from({ length: 5 }, (_, i) => (
               <circle
-                key={i}
-                cx="100"
-                cy="100"
-                r={15 + i * 10}
+                key={`a${i}`}
+                cx="70"
+                cy="90"
+                r={15 + i * 18}
                 fill="none"
                 stroke="white"
                 strokeWidth="0.5"
-                strokeDasharray={`${2 + i * 3} ${4 + i * 2}`}
-                opacity={0.2 + i * 0.05}
+                opacity={0.3 - i * 0.05}
+              />
+            ))}
+            {Array.from({ length: 4 }, (_, i) => (
+              <circle
+                key={`b${i}`}
+                cx="130"
+                cy="110"
+                r={12 + i * 18}
+                fill="none"
+                stroke="white"
+                strokeWidth="0.5"
+                opacity={0.25 - i * 0.05}
               />
             ))}
           </svg>
