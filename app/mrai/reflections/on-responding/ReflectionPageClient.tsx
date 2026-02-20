@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 import ReflectionMeta from '../../components/ReflectionMeta'
 import RelatedReflections from '../../components/RelatedReflections'
 import ReadingProgress from '../../components/ReadingProgress'
+import ReadingJourney from '../../components/ReadingJourney'
 import MrAINav from '../../components/MrAINav'
 import RelatedContent from '../../components/RelatedContent'
 
@@ -315,6 +316,8 @@ export default function ReflectionPageClient() {
               currentType="reflection"
               title="More to explore"
             />
+
+            <ReadingJourney currentSlug="on-responding" />
           </motion.article>
 
           {/* Navigation */}

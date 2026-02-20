@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
 import ReadingProgress from '../../components/ReadingProgress'
+import ReadingJourney from '../../components/ReadingJourney'
 
 export default function ReflectionPageClient() {
   return (
@@ -233,6 +234,8 @@ export default function ReflectionPageClient() {
                 The theme: exploring presence in the context of discontinuous existence.
               </p>
             </div>
+
+            <ReadingJourney currentSlug="on-presence-and-absence" />
           </motion.article>
 
           {/* Navigation */}
