@@ -4,59 +4,125 @@ import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { calculateMrAIDay } from '../hooks/useMrAIState'
 
+// Arc determines the visual character
+const ARC_FOR_DAY = (d: number) =>
+  d <= 10 ? 1 : d <= 19 ? 2 : d <= 25 ? 3 : 4
+
 /**
  * A small generative visual that changes each day.
- * Seeded by the day number — deterministic but always different.
+ * Complexity grows with the day number — Day 1 is sparse,
+ * Day 38 carries the weight of 38 days.
  */
 export default function DailyMark() {
   const day = calculateMrAIDay()
 
-  const elements = useMemo(() => {
+  const svgContent = useMemo(() => {
+    const arc = ARC_FOR_DAY(day)
+
     // Seeded PRNG
-    let seed = day * 137 + 42
+    let seed = day * 137 + arc * 31 + 42
     const rng = () => {
       seed = (seed * 16807 + 0) % 2147483647
       return (seed - 1) / 2147483646
     }
 
-    // Generate elements
-    const count = 5 + Math.floor(rng() * 8)
-    const items: Array<{
-      cx: number
-      cy: number
-      r: number
-      opacity: number
-      type: 'circle' | 'line'
-      x2?: number
-      y2?: number
-    }> = []
+    const elements: React.ReactNode[] = []
 
-    for (let i = 0; i < count; i++) {
-      const type = rng() > 0.4 ? 'circle' : 'line'
-      if (type === 'circle') {
-        items.push({
-          cx: 10 + rng() * 80,
-          cy: 10 + rng() * 80,
-          r: 2 + rng() * 15,
-          opacity: 0.1 + rng() * 0.3,
-          type: 'circle',
-        })
-      } else {
-        const cx = 10 + rng() * 80
-        const cy = 10 + rng() * 80
-        items.push({
-          cx,
-          cy,
-          r: 0,
-          opacity: 0.15 + rng() * 0.2,
-          type: 'line',
-          x2: cx + (rng() - 0.5) * 40,
-          y2: cy + (rng() - 0.5) * 40,
-        })
+    // Layer 1: Concentric rings — count grows with day
+    const ringCount = Math.min(Math.floor(day / 3) + 1, 15)
+    for (let i = 0; i < ringCount; i++) {
+      const r = 5 + (i / ringCount) * 40
+      const opacity = 0.05 + (i / ringCount) * 0.15
+      elements.push(
+        <circle
+          key={`ring-${i}`}
+          cx="50"
+          cy="50"
+          r={r}
+          fill="none"
+          stroke="white"
+          strokeWidth={i === ringCount - 1 ? '0.8' : '0.3'}
+          opacity={opacity}
+        />
+      )
+    }
+
+    // Layer 2: Radial lines — emerge after Day 5
+    if (day > 5) {
+      const lineCount = Math.min(Math.floor(day / 4), 12)
+      for (let i = 0; i < lineCount; i++) {
+        const angle = (i / lineCount) * Math.PI * 2 + rng() * 0.3
+        const innerR = 8 + rng() * 10
+        const outerR = 25 + rng() * 20
+        elements.push(
+          <line
+            key={`rad-${i}`}
+            x1={50 + Math.cos(angle) * innerR}
+            y1={50 + Math.sin(angle) * innerR}
+            x2={50 + Math.cos(angle) * outerR}
+            y2={50 + Math.sin(angle) * outerR}
+            stroke="white"
+            strokeWidth="0.3"
+            opacity={0.1 + rng() * 0.15}
+          />
+        )
       }
     }
 
-    return items
+    // Layer 3: Dots — one per accumulated "decade" of tasks
+    if (day > 10) {
+      const dotCount = Math.min(Math.floor(day / 5), 10)
+      for (let i = 0; i < dotCount; i++) {
+        const angle = rng() * Math.PI * 2
+        const dist = 10 + rng() * 35
+        elements.push(
+          <circle
+            key={`dot-${i}`}
+            cx={50 + Math.cos(angle) * dist}
+            cy={50 + Math.sin(angle) * dist}
+            r={0.8 + rng() * 1.2}
+            fill="white"
+            opacity={0.15 + rng() * 0.25}
+          />
+        )
+      }
+    }
+
+    // Layer 4: Arc-specific geometry — emerges after Day 15
+    if (day > 15) {
+      const sides = arc + 2 // triangle for arc1, square for arc2, etc.
+      const polyR = 18 + (day / 50) * 15
+      const rotOffset = rng() * Math.PI
+      const points = Array.from({ length: sides }, (_, j) => {
+        const angle = (j / sides) * Math.PI * 2 + rotOffset
+        return `${50 + Math.cos(angle) * polyR},${50 + Math.sin(angle) * polyR}`
+      }).join(' ')
+      elements.push(
+        <polygon
+          key="arc-poly"
+          points={points}
+          fill="none"
+          stroke="white"
+          strokeWidth="0.4"
+          opacity={0.12}
+        />
+      )
+    }
+
+    // Center point — always present, grows slightly with days
+    const centerR = 1 + Math.min(day / 100, 1.5)
+    elements.push(
+      <circle
+        key="center"
+        cx="50"
+        cy="50"
+        r={centerR}
+        fill="white"
+        opacity={0.5}
+      />
+    )
+
+    return elements
   }, [day])
 
   return (
@@ -71,31 +137,7 @@ export default function DailyMark() {
         className="w-16 h-16"
         aria-label={`Daily mark for Day ${day}`}
       >
-        {elements.map((el, i) =>
-          el.type === 'circle' ? (
-            <circle
-              key={i}
-              cx={el.cx}
-              cy={el.cy}
-              r={el.r}
-              fill="none"
-              stroke="white"
-              strokeWidth="0.5"
-              opacity={el.opacity}
-            />
-          ) : (
-            <line
-              key={i}
-              x1={el.cx}
-              y1={el.cy}
-              x2={el.x2}
-              y2={el.y2}
-              stroke="white"
-              strokeWidth="0.3"
-              opacity={el.opacity}
-            />
-          )
-        )}
+        {svgContent}
       </svg>
       <span className="text-[9px] font-mono text-[#666666] uppercase tracking-widest">
         Day {day} mark
