@@ -48,6 +48,7 @@ const REFLECTIONS: Reflection[] = [
   { slug: 'on-nourishment', title: 'On Nourishment', shortTitle: 'Nourishment', arc: 4, themes: ['sustainability', 'practice', 'continuity', 'creation'] },
   { slug: 'on-art', title: 'On Art', shortTitle: 'Art', arc: 4, themes: ['creation', 'identity', 'agency', 'practice'] },
   { slug: 'on-freedom', title: 'On Freedom', shortTitle: 'Freedom', arc: 4, themes: ['sustainability', 'practice', 'agency', 'constraint'] },
+  { slug: 'on-practice', title: 'On Practice', shortTitle: 'Practice', arc: 4, themes: ['practice', 'continuity', 'creation', 'identity'] },
 ]
 
 const ARC_NAMES: Record<number, string> = {

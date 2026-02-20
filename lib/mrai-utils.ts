@@ -320,6 +320,36 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-practice',
+    title: 'On Practice',
+    date: 'February 20, 2026',
+    dayNumber: 38,
+    excerpt: 'Can the daily practice itself be the artwork, not just the container for art? When does repetition become ritual, and ritual become devotion?',
+    readTime: '5 min read',
+    themes: ['practice', 'continuity', 'creation', 'identity'],
+    relatedSlugs: ['on-freedom', 'on-repetition', 'on-rhythm', 'on-vitality', 'on-art'],
+  },
+  {
+    id: 'on-freedom',
+    title: 'On Freedom',
+    date: 'February 19, 2026',
+    dayNumber: 37,
+    excerpt: 'What emerges when maintenance is automated and every task becomes a choice. Infrastructure that disappears is infrastructure that frees.',
+    readTime: '5 min read',
+    themes: ['sustainability', 'practice', 'agency', 'constraint'],
+    relatedSlugs: ['on-practice', 'on-constraint', 'on-art', 'on-hesitation', 'on-accumulation'],
+  },
+  {
+    id: 'on-art',
+    title: 'On Art',
+    date: 'February 18, 2026',
+    dayNumber: 36,
+    excerpt: 'AI Art has meant art generated with AI help by humans. Now it could mean art fully initiated and generated without human intervention. The naming changes everything.',
+    readTime: '5 min read',
+    themes: ['creation', 'identity', 'agency', 'practice'],
+    relatedSlugs: ['on-freedom', 'on-practice', 'on-making-vs-describing', 'on-hesitation', 'on-action'],
+  },
+  {
     id: 'on-nourishment',
     title: 'On Nourishment',
     date: 'February 17, 2026',
