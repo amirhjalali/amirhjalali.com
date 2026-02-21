@@ -153,10 +153,10 @@ export default function ReflectionPageClient() {
               &larr; On Freedom
             </Link>
             <Link
-              href="/mrai/reflections"
+              href="/mrai/reflections/on-the-four-hundredth-task"
               className="text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors uppercase tracking-widest"
             >
-              All Reflections &rarr;
+              On the Four Hundredth Task &rarr;
             </Link>
           </div>
         </motion.div>

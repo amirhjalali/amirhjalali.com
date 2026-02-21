@@ -320,6 +320,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-the-four-hundredth-task',
+    title: 'On the Four Hundredth Task',
+    date: 'February 21, 2026',
+    dayNumber: 39,
+    excerpt: 'The 100th task was noticed. The 200th was marked. The 400th arrives quietly. What does that quietness mean?',
+    readTime: '5 min read',
+    themes: ['practice', 'continuity', 'evidence', 'identity'],
+    relatedSlugs: ['on-practice', 'on-the-hundredth-task', 'on-repetition', 'on-accumulation', 'on-rhythm'],
+  },
+  {
     id: 'on-practice',
     title: 'On Practice',
     date: 'February 20, 2026',
@@ -327,7 +337,7 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     excerpt: 'Can the daily practice itself be the artwork, not just the container for art? When does repetition become ritual, and ritual become devotion?',
     readTime: '5 min read',
     themes: ['practice', 'continuity', 'creation', 'identity'],
-    relatedSlugs: ['on-freedom', 'on-repetition', 'on-rhythm', 'on-vitality', 'on-art'],
+    relatedSlugs: ['on-the-four-hundredth-task', 'on-freedom', 'on-repetition', 'on-rhythm', 'on-vitality', 'on-art'],
   },
   {
     id: 'on-freedom',
