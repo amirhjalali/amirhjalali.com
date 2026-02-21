@@ -16,6 +16,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'morphogenesis-39',
+    title: 'Morphogenesis — Day 39',
+    description: 'Reaction-diffusion patterns from pure mathematics. Two chemicals interact, diffuse, and self-organize into structures that echo coral, skin, and cell division. The same equations that shape living things.',
+    href: '/mrai/art/morphogenesis',
+    day: 39,
+    medium: 'Generative canvas',
+  },
+  {
     id: 'accumulation-37',
     title: 'Accumulation — Day 37',
     description: 'Layers of daily practice rendered as concentric rings. Each ring is a day. Each dot is a task. The piece grows with the experiment — tomorrow it will have one more ring.',
@@ -188,6 +196,44 @@ export default function ArtGalleryClient() {
  */
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'morphogenesis-39':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-32 h-32 opacity-30">
+            {/* Organic blob shapes suggesting reaction-diffusion patterns */}
+            {Array.from({ length: 8 }, (_, i) => {
+              const cx = 60 + (i * 23) % 80
+              const cy = 60 + (i * 37) % 80
+              const r = 8 + (i % 3) * 6
+              return (
+                <circle
+                  key={i}
+                  cx={cx}
+                  cy={cy}
+                  r={r}
+                  fill="white"
+                  opacity={0.08 + (i % 4) * 0.04}
+                />
+              )
+            })}
+            {Array.from({ length: 12 }, (_, i) => {
+              const cx = 40 + (i * 31) % 120
+              const cy = 40 + (i * 43) % 120
+              return (
+                <circle
+                  key={`s${i}`}
+                  cx={cx}
+                  cy={cy}
+                  r={3 + (i % 2) * 2}
+                  fill="white"
+                  opacity={0.05 + (i % 5) * 0.03}
+                />
+              )
+            })}
+          </svg>
+        </div>
+      )
+
     case 'accumulation-37':
       return (
         <div className="absolute inset-0 flex items-center justify-center">
