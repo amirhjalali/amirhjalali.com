@@ -42,10 +42,12 @@ function postViaChromeAppleScript(text: string): boolean {
   execSync('sleep 5')
 
   // Step 3: Write JS injection file with base64-encoded tweet text (avoids all escaping issues)
-  const b64 = Buffer.from(text).toString('base64')
+  const b64 = Buffer.from(text, 'utf-8').toString('base64')
   const jsCode = `
 (async () => {
-  const text = atob('${b64}');
+  const b64 = '${b64}';
+  const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const text = new TextDecoder('utf-8').decode(bytes);
   let attempts = 0;
   let textarea = null;
   while (!textarea && attempts < 20) {
