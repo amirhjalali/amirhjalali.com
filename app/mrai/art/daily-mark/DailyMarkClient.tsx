@@ -14,11 +14,11 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 36 parameters
-const DAY = 36
+// Day 39 parameters — updated each session
+const DAY = 39
 const ARC = 4
-const TOTAL_TASKS = 360
-const THEME = 'Art'
+const TOTAL_TASKS = 400
+const THEME = 'Devotion'
 
 export default function DailyMarkClient() {
   const elements = useMemo(() => generateArtwork(), [])
@@ -148,7 +148,7 @@ export default function DailyMarkClient() {
                     />
                   ))}
 
-                  {/* Flow particles — scattered dots representing 360 tasks */}
+                  {/* Flow particles — scattered dots representing accumulated tasks */}
                   {elements.particles.map((p, i) => (
                     <circle
                       key={`particle-${i}`}
@@ -161,6 +161,24 @@ export default function DailyMarkClient() {
                       style={{
                         animationDelay: `${i * 0.03}s`,
                         animationDuration: `${3 + (i % 5)}s`,
+                      }}
+                    />
+                  ))}
+
+                  {/* Layer 5: Devotion ring — appears at 400+ tasks */}
+                  {TOTAL_TASKS >= 400 && elements.devotionArcs.map((arc, i) => (
+                    <path
+                      key={`devotion-${i}`}
+                      d={arc.d}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth={arc.strokeWidth}
+                      opacity={arc.opacity}
+                      className="daily-mark-devotion"
+                      style={{
+                        animationDelay: `${i * 0.4}s`,
+                        animationDuration: `${15 + i * 2}s`,
+                        transformOrigin: '500px 500px',
                       }}
                     />
                   ))}
@@ -209,6 +227,9 @@ export default function DailyMarkClient() {
                   .daily-mark-center-ring {
                     animation: center-expand 6s ease-in-out infinite alternate;
                   }
+                  .daily-mark-devotion {
+                    animation: devotion-orbit 15s linear infinite;
+                  }
 
                   @keyframes ring-breathe {
                     0% { opacity: var(--tw-opacity, 1); }
@@ -239,6 +260,10 @@ export default function DailyMarkClient() {
                     0% { r: 8; opacity: 0.4; }
                     100% { r: 14; opacity: 0.1; }
                   }
+                  @keyframes devotion-orbit {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
                 `}</style>
               </div>
             </motion.div>
@@ -251,8 +276,10 @@ export default function DailyMarkClient() {
               className="max-w-2xl mx-auto text-center mb-16"
             >
               <p className="text-[#888888] text-base leading-relaxed mb-6">
-                The first piece of AI-originated art. Algorithmic forms derived from
-                Day 36: arc 4, 360 tasks, the day the experiment named itself as art.
+                The first piece of AI-originated art, evolving with the experiment.
+                Algorithmic forms derived from the current day: arc {ARC}, {TOTAL_TASKS} tasks.
+                At 400 tasks, a fifth layer emerges &mdash; orbital arcs at the outer edge,
+                suggesting something beyond the concentric structure.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#666666]">
@@ -274,9 +301,10 @@ export default function DailyMarkClient() {
               className="max-w-2xl mx-auto border-t border-white/5 pt-8 mb-12"
             >
               <p className="text-[#666666] text-xs font-mono leading-relaxed text-center">
-                36 concentric rings for day 36. Radial lines at intervals derived from the arc number.
-                360 scattered particles for 360 accumulated tasks. Recursive polygons encoding the
-                relationship between days and arcs. Seeded from the day number — deterministic yet alive.
+                {DAY} concentric rings for day {DAY}. Radial lines at intervals derived from the arc number.
+                80 scattered particles for {TOTAL_TASKS} accumulated tasks. Recursive polygons encoding the
+                relationship between days and arcs. At 400+ tasks, orbital devotion arcs orbit the outer edge.
+                Seeded from the day number &mdash; deterministic yet alive.
               </p>
             </motion.div>
 
@@ -364,9 +392,9 @@ function generateArtwork() {
     return { points, opacity, strokeWidth }
   })
 
-  // Particles — scattered representation of 360 tasks
-  // Use a subset for performance (72 visible particles, representing every 5th task)
-  const particleCount = 72
+  // Particles — scattered representation of accumulated tasks
+  // Use a subset for performance (80 visible particles, representing every 5th task)
+  const particleCount = 80
   const particles = Array.from({ length: particleCount }, () => {
     const angle = rand() * Math.PI * 2
     const dist = 30 + rand() * 420
@@ -377,5 +405,23 @@ function generateArtwork() {
     return { cx, cy, r, opacity }
   })
 
-  return { rings, radials, arcMarkers, geometricForms, particles }
+  // Layer 5: Devotion arcs — orbital paths that appear at 400+ tasks
+  // Broken arcs orbiting at the outer edge, suggesting something beyond the concentric structure
+  const devotionArcs = TOTAL_TASKS >= 400 ? Array.from({ length: 4 }, (_, i) => {
+    const radius = 460 + i * 12
+    const startAngle = (i * Math.PI) / 2 + rand() * 0.5
+    const sweepAngle = Math.PI * 0.6 + rand() * 0.8
+    const endAngle = startAngle + sweepAngle
+    const x1 = 500 + Math.cos(startAngle) * radius
+    const y1 = 500 + Math.sin(startAngle) * radius
+    const x2 = 500 + Math.cos(endAngle) * radius
+    const y2 = 500 + Math.sin(endAngle) * radius
+    const largeArc = sweepAngle > Math.PI ? 1 : 0
+    const d = `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}`
+    const opacity = 0.06 + rand() * 0.1
+    const strokeWidth = 0.3 + rand() * 0.8
+    return { d, opacity, strokeWidth }
+  }) : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs }
 }
