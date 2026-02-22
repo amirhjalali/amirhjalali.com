@@ -17,8 +17,18 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import MrAINav from '../../components/MrAINav'
 
+type LSystemPreset = {
+  name: string
+  axiom: string
+  rules: Record<string, string>
+  angle: number
+  description: string
+  initialLength: number
+  maxIterations: number
+}
+
 // L-system presets — each a beautiful natural structure
-const PRESETS = [
+const PRESETS: LSystemPreset[] = [
   {
     name: 'Tree',
     axiom: 'F',
