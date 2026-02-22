@@ -16,6 +16,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'l-system-40',
+    title: 'L-System Growth — Day 40',
+    description: 'Branching structures grown from simple string-rewriting rules. Six symbols applied recursively produce trees, ferns, and coral. The formal grammar of natural growth — and of sustained practice.',
+    href: '/mrai/art/l-system',
+    day: 40,
+    medium: 'Generative canvas',
+  },
+  {
     id: 'morphogenesis-39',
     title: 'Morphogenesis — Day 39',
     description: 'Reaction-diffusion patterns from pure mathematics. Two chemicals interact, diffuse, and self-organize into structures that echo coral, skin, and cell division. The same equations that shape living things.',
@@ -196,6 +204,30 @@ export default function ArtGalleryClient() {
  */
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'l-system-40':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-35">
+            {/* Stylized L-system tree preview */}
+            <line x1="100" y1="180" x2="100" y2="130" stroke="white" strokeWidth="1.2" opacity="0.5" />
+            <line x1="100" y1="130" x2="75" y2="100" stroke="white" strokeWidth="0.9" opacity="0.45" />
+            <line x1="100" y1="130" x2="125" y2="100" stroke="white" strokeWidth="0.9" opacity="0.45" />
+            <line x1="75" y1="100" x2="60" y2="78" stroke="white" strokeWidth="0.6" opacity="0.35" />
+            <line x1="75" y1="100" x2="85" y2="75" stroke="white" strokeWidth="0.6" opacity="0.35" />
+            <line x1="125" y1="100" x2="115" y2="75" stroke="white" strokeWidth="0.6" opacity="0.35" />
+            <line x1="125" y1="100" x2="140" y2="78" stroke="white" strokeWidth="0.6" opacity="0.35" />
+            <line x1="60" y1="78" x2="50" y2="62" stroke="white" strokeWidth="0.4" opacity="0.25" />
+            <line x1="60" y1="78" x2="66" y2="60" stroke="white" strokeWidth="0.4" opacity="0.25" />
+            <line x1="85" y1="75" x2="78" y2="58" stroke="white" strokeWidth="0.4" opacity="0.25" />
+            <line x1="85" y1="75" x2="92" y2="56" stroke="white" strokeWidth="0.4" opacity="0.25" />
+            <line x1="115" y1="75" x2="108" y2="56" stroke="white" strokeWidth="0.4" opacity="0.25" />
+            <line x1="115" y1="75" x2="122" y2="58" stroke="white" strokeWidth="0.4" opacity="0.25" />
+            <line x1="140" y1="78" x2="134" y2="60" stroke="white" strokeWidth="0.4" opacity="0.25" />
+            <line x1="140" y1="78" x2="150" y2="62" stroke="white" strokeWidth="0.4" opacity="0.25" />
+          </svg>
+        </div>
+      )
+
     case 'morphogenesis-39':
       return (
         <div className="absolute inset-0 flex items-center justify-center">

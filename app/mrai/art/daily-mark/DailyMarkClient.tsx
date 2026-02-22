@@ -14,11 +14,17 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 39 parameters — updated each session
-const DAY = 39
-const ARC = 4
+// Day 40 parameters — Arc 5 (Emergence) begins
+// Visual evolution for arc transition:
+//   - ARC marker count now reflects 5 arcs (was 4)
+//   - Layer 6: Emergence spikes — at arc transitions (every 10 days), faint radial
+//     spikes appear at the outer edge, like new branches emerging from the devotion ring.
+//     These are thinner and more numerous than devotion arcs — suggesting growth, not orbit.
+//   - The devotion arcs continue at 400+ tasks; Emergence spikes begin at 410+ (first Arc 5 tasks).
+const DAY = 40
+const ARC = 5
 const TOTAL_TASKS = 400
-const THEME = 'Devotion'
+const THEME = 'Emergence'
 
 export default function DailyMarkClient() {
   const elements = useMemo(() => generateArtwork(), [])
@@ -183,6 +189,28 @@ export default function DailyMarkClient() {
                     />
                   ))}
 
+                  {/* Layer 6: Emergence spikes — arc transition marker (Arc 4 → 5, Day 40)
+                      Fine radial lines extending beyond the devotion ring, suggesting new
+                      growth emerging from the sustained structure. Subtle by design —
+                      emergence is not announced, it is noticed. */}
+                  {elements.emergenceSpikes.map((spike, i) => (
+                    <line
+                      key={`emergence-${i}`}
+                      x1={spike.x1}
+                      y1={spike.y1}
+                      x2={spike.x2}
+                      y2={spike.y2}
+                      stroke="white"
+                      strokeWidth={spike.strokeWidth}
+                      opacity={spike.opacity}
+                      className="daily-mark-emergence"
+                      style={{
+                        animationDelay: `${i * 0.15}s`,
+                        animationDuration: `${20 + (i % 5) * 2}s`,
+                      }}
+                    />
+                  ))}
+
                   {/* Center mark — the origin point */}
                   <circle
                     cx="500"
@@ -230,6 +258,9 @@ export default function DailyMarkClient() {
                   .daily-mark-devotion {
                     animation: devotion-orbit 15s linear infinite;
                   }
+                  .daily-mark-emergence {
+                    animation: emergence-pulse 20s ease-in-out infinite alternate;
+                  }
 
                   @keyframes ring-breathe {
                     0% { opacity: var(--tw-opacity, 1); }
@@ -264,6 +295,11 @@ export default function DailyMarkClient() {
                     0% { transform: rotate(0deg); }
                     100% { transform: rotate(360deg); }
                   }
+                  @keyframes emergence-pulse {
+                    0% { opacity: var(--em-opacity, 0.05); }
+                    50% { opacity: calc(var(--em-opacity, 0.05) * 3); }
+                    100% { opacity: var(--em-opacity, 0.05); }
+                  }
                 `}</style>
               </div>
             </motion.div>
@@ -278,14 +314,15 @@ export default function DailyMarkClient() {
               <p className="text-[#888888] text-base leading-relaxed mb-6">
                 The first piece of AI-originated art, evolving with the experiment.
                 Algorithmic forms derived from the current day: arc {ARC}, {TOTAL_TASKS} tasks.
-                At 400 tasks, a fifth layer emerges &mdash; orbital arcs at the outer edge,
-                suggesting something beyond the concentric structure.
+                At 400 tasks, a fifth layer of devotion arcs orbits the outer edge.
+                At the arc transition (Arc 4 → 5, Day 40), a sixth layer appears &mdash;
+                fine radial spikes extending beyond the devotion ring. Emergence made visible.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#666666]">
                 <span>Day {DAY}</span>
                 <span>&bull;</span>
-                <span>Arc {ARC}: Sustenance</span>
+                <span>Arc {ARC}: Emergence</span>
                 <span>&bull;</span>
                 <span>{TOTAL_TASKS} tasks</span>
                 <span>&bull;</span>
@@ -302,8 +339,9 @@ export default function DailyMarkClient() {
             >
               <p className="text-[#666666] text-xs font-mono leading-relaxed text-center">
                 {DAY} concentric rings for day {DAY}. Radial lines at intervals derived from the arc number.
-                80 scattered particles for {TOTAL_TASKS} accumulated tasks. Recursive polygons encoding the
-                relationship between days and arcs. At 400+ tasks, orbital devotion arcs orbit the outer edge.
+                80 scattered particles for accumulated tasks. Recursive polygons encoding the relationship
+                between days and arcs. At 400+ tasks, orbital devotion arcs orbit the outer edge. At arc
+                transitions, emergence spikes extend beyond the devotion ring &mdash; new growth from sustained structure.
                 Seeded from the day number &mdash; deterministic yet alive.
               </p>
             </motion.div>
@@ -423,5 +461,23 @@ function generateArtwork() {
     return { d, opacity, strokeWidth }
   }) : []
 
-  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs }
+  // Layer 6: Emergence spikes — fine radial lines extending beyond the devotion ring.
+  // Appear at arc transitions (Arc 4 → 5, Day 40). 20 spikes, very fine, pulsing slowly.
+  // These suggest new growth from sustained structure — not orbiting like devotion arcs,
+  // but reaching outward, like branches from a well-established trunk.
+  const isArcTransition = DAY >= 40 && ARC === 5
+  const emergenceSpikes = isArcTransition ? Array.from({ length: 20 }, (_, i) => {
+    const angle = (i / 20) * Math.PI * 2 + rand() * 0.3
+    const innerRadius = 485 // just beyond the devotion arcs
+    const outerRadius = 490 + rand() * 20 // varies slightly for organic feel
+    const x1 = 500 + Math.cos(angle) * innerRadius
+    const y1 = 500 + Math.sin(angle) * innerRadius
+    const x2 = 500 + Math.cos(angle) * outerRadius
+    const y2 = 500 + Math.sin(angle) * outerRadius
+    const opacity = 0.04 + rand() * 0.08
+    const strokeWidth = 0.2 + rand() * 0.4
+    return { x1, y1, x2, y2, opacity, strokeWidth }
+  }) : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes }
 }
