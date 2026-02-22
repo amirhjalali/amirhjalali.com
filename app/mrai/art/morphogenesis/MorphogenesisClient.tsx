@@ -31,6 +31,7 @@ export default function MorphogenesisClient() {
   const paramsRef = useRef({ F: 0.025, k: 0.06 })
   const [activePreset, setActivePreset] = useState(0)
   const [isRunning, setIsRunning] = useState(true)
+  const isRunningRef = useRef(true)
 
   const initGrid = useCallback(() => {
     const size = GRID_SIZE * GRID_SIZE
@@ -119,16 +120,16 @@ export default function MorphogenesisClient() {
       if (!gridA || !gridB) return
 
       const { F, k } = paramsRef.current
-      const nextA = new Float32Array(gridA.length)
-      const nextB = new Float32Array(gridB.length)
 
-      // Run multiple steps per frame for faster evolution
+      // Proper double-buffering: two buffers, swap after each step
+      const tmpA = new Float32Array(gridA.length)
+      const tmpB = new Float32Array(gridB.length)
+      let curA: Float32Array = gridA
+      let curB: Float32Array = gridB
+      let nxtA: Float32Array = tmpA
+      let nxtB: Float32Array = tmpB
+
       for (let step = 0; step < 8; step++) {
-        const srcA = step === 0 ? gridA : nextA
-        const srcB = step === 0 ? gridB : nextB
-        const dstA = step % 2 === 0 ? nextA : gridA
-        const dstB = step % 2 === 0 ? nextB : gridB
-
         for (let y = 0; y < GRID_SIZE; y++) {
           for (let x = 0; x < GRID_SIZE; x++) {
             const idx = y * GRID_SIZE + x
@@ -139,43 +140,38 @@ export default function MorphogenesisClient() {
             const left = y * GRID_SIZE + ((x - 1 + GRID_SIZE) % GRID_SIZE)
             const right = y * GRID_SIZE + ((x + 1) % GRID_SIZE)
 
-            const laplaceA = srcA[up] + srcA[down] + srcA[left] + srcA[right] - 4 * srcA[idx]
-            const laplaceB = srcB[up] + srcB[down] + srcB[left] + srcB[right] - 4 * srcB[idx]
+            const laplaceA = curA[up] + curA[down] + curA[left] + curA[right] - 4 * curA[idx]
+            const laplaceB = curB[up] + curB[down] + curB[left] + curB[right] - 4 * curB[idx]
 
-            const a = srcA[idx]
-            const b = srcB[idx]
+            const a = curA[idx]
+            const b = curB[idx]
             const reaction = a * b * b
 
-            dstA[idx] = a + (DIFFUSION_A * laplaceA - reaction + F * (1 - a)) * DT
-            dstB[idx] = b + (DIFFUSION_B * laplaceB + reaction - (k + F) * b) * DT
+            nxtA[idx] = a + (DIFFUSION_A * laplaceA - reaction + F * (1 - a)) * DT
+            nxtB[idx] = b + (DIFFUSION_B * laplaceB + reaction - (k + F) * b) * DT
           }
         }
 
-        // Copy back if needed for odd steps
-        if (step % 2 === 0) {
-          gridARef.current = dstA
-          gridBRef.current = dstB
-        } else {
-          gridARef.current = dstA
-          gridBRef.current = dstB
-        }
+        // Swap src and dst for next step
+        const swapA = curA; curA = nxtA; nxtA = swapA
+        const swapB = curB; curB = nxtB; nxtB = swapB
       }
 
+      // curA/curB now hold the latest state after 8 steps
+      gridARef.current = curA
+      gridBRef.current = curB
+
       // Render to canvas
-      const finalB = gridBRef.current!
       const data = imageData.data
       for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
-        const val = Math.min(1, Math.max(0, finalB[i]))
+        const val = Math.min(1, Math.max(0, curB[i]))
         // Monochrome mapping: B concentration → brightness
-        // Dark background (#050505 = 5,5,5) to light (#EAEAEA = 234,234,234)
-        const brightness = val * val // quadratic mapping for more contrast
-        const r = 5 + brightness * 229
-        const g = 5 + brightness * 229
-        const b = 5 + brightness * 229
+        const brightness = val * val // quadratic for contrast
+        const c = Math.round(5 + brightness * 229)
         const pi = i * 4
-        data[pi] = r
-        data[pi + 1] = g
-        data[pi + 2] = b
+        data[pi] = c
+        data[pi + 1] = c
+        data[pi + 2] = c
         data[pi + 3] = 255
       }
 
@@ -183,7 +179,7 @@ export default function MorphogenesisClient() {
     }
 
     const animate = () => {
-      if (isRunning) {
+      if (isRunningRef.current) {
         simulate()
       }
       animFrameRef.current = requestAnimationFrame(animate)
@@ -194,7 +190,7 @@ export default function MorphogenesisClient() {
     return () => {
       cancelAnimationFrame(animFrameRef.current)
     }
-  }, [initGrid, isRunning])
+  }, [initGrid])
 
   const switchPreset = useCallback((index: number) => {
     setActivePreset(index)
@@ -287,7 +283,10 @@ export default function MorphogenesisClient() {
                 </button>
               ))}
               <button
-                onClick={() => setIsRunning(!isRunning)}
+                onClick={() => {
+                  isRunningRef.current = !isRunningRef.current
+                  setIsRunning(isRunningRef.current)
+                }}
                 className="px-4 py-2 rounded-lg text-xs font-mono bg-white/5 text-[#888888] hover:bg-white/10 hover:text-[#EAEAEA] border border-white/10 transition-all"
               >
                 {isRunning ? 'Pause' : 'Resume'}
