@@ -431,6 +431,147 @@ curl -X POST http://localhost:3000/api/notes/search \
 - Database models in `prisma/schema.prisma`
 - Auth actions in `app/actions/auth.ts`
 
+---
+
+### notes-goal-architect
+**Purpose:** Define what “good” looks like for your personal notes system.
+
+**When to use:** At the start of notes redesign work and before major refactors.
+
+**Capabilities:**
+- Translate your goals into measurable outcomes (findability, summary quality, consumption speed)
+- Prioritize work by impact for a single-user workflow
+- Convert audits into a focused implementation roadmap
+
+**Primary outputs:**
+- One-page goals brief
+- Prioritized backlog with acceptance criteria
+- Clear “now/next/later” execution plan
+
+---
+
+### notes-ingestion-auditor
+**Purpose:** Ensure captured notes become reliable, processable source material.
+
+**When to use:** After changes to capture, processing, extractors, or queueing.
+
+**Capabilities:**
+- Audit type detection and canonicalization (TEXT/LINK/VIDEO/AUDIO/PDF)
+- Verify processing status accuracy and retry behavior
+- Validate extraction quality and fallback handling
+- Identify ingestion failures that silently reduce downstream value
+
+**Files involved:**
+- `app/notes/components/QuickAdd.tsx`
+- `app/api/notes/route.ts`
+- `app/api/notes/[id]/process/route.ts`
+- `lib/note-processing-service.ts`
+- `lib/content-extraction.ts`
+- `lib/queue/note-queue.ts`
+
+---
+
+### notes-retrieval-auditor
+**Purpose:** Maximize “time to answer” from your note corpus.
+
+**When to use:** When search/chat relevance feels weak or results are slow.
+
+**Capabilities:**
+- Evaluate lexical + semantic retrieval quality
+- Detect indexing gaps and embedding coverage issues
+- Benchmark relevance of top results for representative queries
+- Recommend retrieval architecture improvements for scale
+
+**Files involved:**
+- `app/api/notes/search/route.ts`
+- `lib/embedding-service.ts`
+- `app/notes/components/SemanticSearch.tsx`
+- `app/api/notes/chat/route.ts`
+
+---
+
+### notes-synthesis-editor
+**Purpose:** Make information concise, referenceable, and easy to consume.
+
+**When to use:** When improving summaries, digests, and chat response usefulness.
+
+**Capabilities:**
+- Design layered summaries (one-line, short brief, detailed)
+- Standardize summary structure (key ideas, actions, sources, caveats)
+- Improve prompt quality for note-level and corpus-level synthesis
+- Reduce verbosity while preserving traceability to source notes
+
+**Files involved:**
+- `lib/note-processing-service.ts`
+- `app/api/notes/chat/route.ts`
+- `app/notes/components/NotesChatPanel.tsx`
+- `app/notes/[id]/NoteDetailClient.tsx`
+
+---
+
+### notes-reference-ux-reviewer
+**Purpose:** Optimize the notes UI for rapid scanning and recall.
+
+**When to use:** After UI changes or when finding/reference feels too slow.
+
+**Capabilities:**
+- Audit information density and scannability in list/detail views
+- Validate quick reference patterns (related notes, key insights, timestamps)
+- Improve hierarchy for “summary first, detail on demand”
+- Reduce interaction friction for daily single-user usage
+
+**Files involved:**
+- `app/notes/NotesPageClient.tsx`
+- `app/notes/components/NotesList.tsx`
+- `app/notes/components/NoteCard.tsx`
+- `app/notes/[id]/NoteDetailClient.tsx`
+- `app/notes/components/KnowledgeGraph.tsx`
+
+---
+
+### notes-single-user-optimizer
+**Purpose:** Keep the system minimal, secure, and tailored to one user.
+
+**When to use:** When simplifying architecture, auth, and maintenance workflows.
+
+**Capabilities:**
+- Remove multi-user assumptions that add complexity
+- Harden authentication/session handling for personal deployment
+- Tune defaults for one-person workflows (review cadence, exports, retries)
+- Define lightweight maintenance checklists
+
+**Files involved:**
+- `lib/auth.ts`
+- `app/actions/auth.ts`
+- `app/api/notes/export/route.ts`
+- `lib/spaced-repetition-service.ts`
+- `app/api/notes/health/route.ts`
+
+---
+
+### notes-team-orchestrator
+**Purpose:** Coordinate the notes specialist agents into one actionable report.
+
+**When to use:** For full notes audits and roadmap generation.
+
+**Capabilities:**
+- Run specialists in sequence and resolve conflicts in recommendations
+- Merge technical and UX findings into one implementation plan
+- Keep outputs concise, source-linked, and execution-ready
+
+**Recommended sequence:**
+1. `notes-goal-architect`
+2. `notes-ingestion-auditor`
+3. `notes-retrieval-auditor`
+4. `notes-synthesis-editor`
+5. `notes-reference-ux-reviewer`
+6. `notes-single-user-optimizer`
+
+**Success criteria (single user):**
+- Most answers can be found in under 30 seconds
+- Each processed note exposes a short, reliable summary
+- Weekly digest gives a clear snapshot of themes and action items
+
 ## Project Structure & Module Organization
 The site runs on Next.js App Router with TypeScript. Page roots live in `app/`; each subfolder (for example `app/projects` or `app/thoughts/[id]`) maps to a route and usually exports both layout and page components. Presentation building blocks stay in `components/`, with design atoms under `components/ui`. Reusable logic such as analytics helpers and article metadata sits in `lib/`, while React hooks belong in `hooks/`. Static assets, including SEO metadata and imagery, are stored in `public/`. Automation helpers and onboarding scripts live in `scripts/`, and supporting documentation belongs in `docs/` and `archive/`.
 

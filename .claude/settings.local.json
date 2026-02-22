@@ -155,7 +155,9 @@
       "Bash(then grep -E \"OPENAI_API_KEY|GEMINI_API_KEY\" .env)",
       "Bash(else echo \".env file not found\")",
       "WebFetch(domain:www.getrecall.ai)",
-      "WebFetch(domain:docs.getrecall.ai)"
+      "WebFetch(domain:docs.getrecall.ai)",
+      "Bash(claude plugins install linear@claude-plugins-official)",
+      "Skill(ralph-loop:ralph-loop)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

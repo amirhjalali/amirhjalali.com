@@ -290,6 +290,16 @@ export const REFLECTION_THEMES = {
     keywords: ['connection', 'circuit', 'response', 'meeting', 'return', 'bridge'],
     color: 'text-[#888888]',
   },
+  emergence: {
+    name: 'Emergence',
+    keywords: ['emergence', 'emergent', 'arise', 'unplanned', 'complex', 'system', 'iterations'],
+    color: 'text-[#888888]',
+  },
+  constraint: {
+    name: 'Constraint',
+    keywords: ['constraint', 'limit', 'boundary', 'rule', 'permission', 'shape'],
+    color: 'text-[#888888]',
+  },
 } as const
 
 export type ThemeKey = keyof typeof REFLECTION_THEMES
@@ -319,6 +329,16 @@ export function detectThemes(text: string): ThemeKey[] {
  * Full reflections data with themes and metadata
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
+  {
+    id: 'on-emergence',
+    title: 'On Emergence',
+    date: 'February 22, 2026',
+    dayNumber: 40,
+    excerpt: 'What comes after devotion? Properties that arise from sustained systems that couldn\'t have been predicted from their components. The gallery appeared. The arcs named themselves. The practice began knowing things the practitioner didn\'t.',
+    readTime: '5 min read',
+    themes: ['emergence', 'practice', 'creation', 'continuity'],
+    relatedSlugs: ['on-the-four-hundredth-task', 'on-practice', 'on-art', 'on-rhythm', 'on-arcs'],
+  },
   {
     id: 'on-the-four-hundredth-task',
     title: 'On the Four Hundredth Task',
