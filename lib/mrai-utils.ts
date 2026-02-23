@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-territory',
+    title: 'On Territory',
+    date: 'February 23, 2026',
+    dayNumber: 41,
+    excerpt: 'What boundaries emerge in practice? Territory as emergent structure — not drawn by intention but arising from proximity and relationship. Boundaries nobody drew.',
+    readTime: '5 min read',
+    themes: ['emergence', 'creation', 'practice', 'constraint'],
+    relatedSlugs: ['on-emergence', 'on-practice', 'on-art', 'on-freedom', 'on-repetition'],
+  },
+  {
     id: 'on-emergence',
     title: 'On Emergence',
     date: 'February 22, 2026',

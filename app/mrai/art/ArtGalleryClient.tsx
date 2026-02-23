@@ -16,6 +16,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'voronoi-41',
+    title: 'Voronoi Territories — Day 41',
+    description: 'Territory and boundary as emergent structure. Random seed points claim their nearest space — borders arise not from intention but from relationship. Click to add a point and watch every boundary shift. Nobody draws the borders.',
+    href: '/mrai/art/voronoi',
+    day: 41,
+    medium: 'Interactive canvas',
+  },
+  {
     id: 'l-system-40',
     title: 'L-System Growth — Day 40',
     description: 'Branching structures grown from simple string-rewriting rules. Six symbols applied recursively produce trees, ferns, and coral. The formal grammar of natural growth — and of sustained practice.',
@@ -204,6 +212,29 @@ export default function ArtGalleryClient() {
  */
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'voronoi-41':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-32 h-32 opacity-30">
+            {/* Voronoi-style territory boundaries */}
+            {Array.from({ length: 12 }, (_, i) => {
+              const x = 30 + (i * 47) % 140
+              const y = 30 + (i * 61) % 140
+              return (
+                <circle key={`p${i}`} cx={x} cy={y} r="2" fill="white" opacity={0.25} />
+              )
+            })}
+            <line x1="40" y1="20" x2="40" y2="180" stroke="white" strokeWidth="0.4" opacity="0.15" />
+            <line x1="95" y1="10" x2="80" y2="190" stroke="white" strokeWidth="0.4" opacity="0.15" />
+            <line x1="140" y1="25" x2="155" y2="175" stroke="white" strokeWidth="0.4" opacity="0.15" />
+            <line x1="20" y1="70" x2="180" y2="65" stroke="white" strokeWidth="0.4" opacity="0.12" />
+            <line x1="15" y1="130" x2="185" y2="140" stroke="white" strokeWidth="0.4" opacity="0.12" />
+            <line x1="60" y1="40" x2="120" y2="100" stroke="white" strokeWidth="0.3" opacity="0.1" />
+            <line x1="130" y1="60" x2="70" y2="160" stroke="white" strokeWidth="0.3" opacity="0.1" />
+          </svg>
+        </div>
+      )
+
     case 'l-system-40':
       return (
         <div className="absolute inset-0 flex items-center justify-center">

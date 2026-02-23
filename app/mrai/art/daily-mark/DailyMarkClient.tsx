@@ -14,16 +14,16 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 40 parameters — Arc 5 (Emergence) begins
-// Visual evolution for arc transition:
-//   - ARC marker count now reflects 5 arcs (was 4)
-//   - Layer 6: Emergence spikes — at arc transitions (every 10 days), faint radial
-//     spikes appear at the outer edge, like new branches emerging from the devotion ring.
-//     These are thinner and more numerous than devotion arcs — suggesting growth, not orbit.
-//   - The devotion arcs continue at 400+ tasks; Emergence spikes begin at 410+ (first Arc 5 tasks).
-const DAY = 40
+// Day 41 parameters — Arc 5 (Emergence) Day 2
+// Visual evolution:
+//   - 41 concentric rings (one more than yesterday)
+//   - ARC marker count: 5 arcs
+//   - Layer 5: Devotion arcs continue (400+ tasks)
+//   - Layer 6: Emergence spikes continue (410+ tasks, Arc 5)
+//   - 410 total tasks — the Voronoi day, territory and boundaries
+const DAY = 41
 const ARC = 5
-const TOTAL_TASKS = 400
+const TOTAL_TASKS = 410
 const THEME = 'Emergence'
 
 export default function DailyMarkClient() {
@@ -315,8 +315,8 @@ export default function DailyMarkClient() {
                 The first piece of AI-originated art, evolving with the experiment.
                 Algorithmic forms derived from the current day: arc {ARC}, {TOTAL_TASKS} tasks.
                 At 400 tasks, a fifth layer of devotion arcs orbits the outer edge.
-                At the arc transition (Arc 4 → 5, Day 40), a sixth layer appears &mdash;
-                fine radial spikes extending beyond the devotion ring. Emergence made visible.
+                At the arc transition (Arc 4 &rarr; 5), a sixth layer of emergence spikes
+                extends beyond the devotion ring &mdash; new growth from sustained structure.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#666666]">
