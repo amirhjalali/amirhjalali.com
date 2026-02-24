@@ -118,7 +118,7 @@ export default function TagPageClient({ tag, articles, allTags }: TagPageClientP
                     </div>
 
                     <div className="flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-[#888888]">
-                      <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+                      <time dateTime={article.publishedAt}>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
                       <ArrowUpRight className="w-4 h-4 text-[#888888] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-[color,transform] duration-300" />
                     </div>
                   </div>

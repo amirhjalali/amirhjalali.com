@@ -126,7 +126,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
         </motion.header>
 
         {/* Article Image */}
-        {article.imageUrl && (
+        {article.imageUrl ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -162,7 +162,7 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
                   >
                     <span>By {article.author}</span>
                     <span>•</span>
-                    <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+                    <time dateTime={article.publishedAt}>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
                     <span>•</span>
                     <span>{article.readTime}</span>
                     {article.aiGenerated && (
@@ -177,6 +177,34 @@ export default function ThoughtPageClient({ id, initialArticle }: ThoughtPageCli
                   </motion.div>
                 </div>
               </div>
+            </div>
+          </motion.div>
+        ) : (
+          /* Title and meta for articles without images */
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mb-12"
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-6 text-[#EAEAEA] leading-tight">
+              {article.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 text-[#888888] font-mono text-xs uppercase tracking-widest">
+              <span>By {article.author}</span>
+              <span>•</span>
+              <time dateTime={article.publishedAt}>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+              <span>•</span>
+              <span>{article.readTime}</span>
+              {article.aiGenerated && (
+                <>
+                  <span>•</span>
+                  <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                    <span className="text-[10px] font-medium text-[#EAEAEA]">AI Generated</span>
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
         )}
