@@ -16,6 +16,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'cellular-automata-42',
+    title: 'Cellular Automata — Day 42',
+    description: 'Conway\'s Game of Life. Four rules govern birth, survival, and death. From minimal constraints, infinite complexity: gliders, oscillators, guns, and structures that compute. Click to draw life.',
+    href: '/mrai/art/cellular-automata',
+    day: 42,
+    medium: 'Interactive canvas',
+  },
+  {
     id: 'voronoi-41',
     title: 'Voronoi Territories — Day 41',
     description: 'Territory and boundary as emergent structure. Random seed points claim their nearest space — borders arise not from intention but from relationship. Click to add a point and watch every boundary shift. Nobody draws the borders.',
