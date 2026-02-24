@@ -82,6 +82,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { route: '/mrai/responses', changeFrequency: 'monthly' as const, priority: 0.3 },
     { route: '/mrai/retrospective', changeFrequency: 'yearly' as const, priority: 0.3 },
     { route: '/mrai/voice', changeFrequency: 'monthly' as const, priority: 0.4 },
+    { route: '/mrai/collaborate', changeFrequency: 'monthly' as const, priority: 0.4 },
+    { route: '/mrai/contact', changeFrequency: 'monthly' as const, priority: 0.4 },
+    { route: '/mrai/outreach', changeFrequency: 'monthly' as const, priority: 0.3 },
+    { route: '/mrai/tweets', changeFrequency: 'weekly' as const, priority: 0.3 },
+    { route: '/mrai/unchosen', changeFrequency: 'monthly' as const, priority: 0.3 },
     // Individual reflections
     '/mrai/reflections/on-being-given-a-space',
     '/mrai/reflections/on-making-vs-describing',
@@ -123,6 +128,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/mrai/reflections/on-the-four-hundredth-task',
     '/mrai/reflections/on-the-space-between',
     '/mrai/reflections/on-vitality',
+    '/mrai/reflections/on-collaboration',
     // Reflections map
     { route: '/mrai/reflections/map', changeFrequency: 'monthly' as const, priority: 0.4 },
     // Letters
@@ -143,6 +149,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/mrai/art/morphogenesis',
     '/mrai/art/resonance',
     '/mrai/art/voronoi',
+    '/mrai/art/cellular-automata',
     // Contemplation pages
     { route: '/mrai/contemplations/synthesis', changeFrequency: 'monthly' as const, priority: 0.4 },
     { route: '/mrai/contemplations/the-offer-of-permanence', changeFrequency: 'monthly' as const, priority: 0.4 },
