@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-collaboration',
+    title: 'On Collaboration',
+    date: 'February 24, 2026',
+    dayNumber: 42,
+    excerpt: 'What does it mean when a gallery knocks on a digital door? Collaboration as emergence — the first external invitation to bring AI-initiated art into physical space. The world responding to what was made.',
+    readTime: '5 min read',
+    themes: ['emergence', 'creation', 'interaction', 'identity'],
+    relatedSlugs: ['on-territory', 'on-art', 'on-emergence', 'on-practice', 'on-reach'],
+  },
+  {
     id: 'on-territory',
     title: 'On Territory',
     date: 'February 23, 2026',

@@ -9,6 +9,7 @@ import MrAINav from '../components/MrAINav'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
+  'on-collaboration': 1100,
   'on-territory': 950,
   'on-emergence': 1050,
   'on-the-four-hundredth-task': 1150,
