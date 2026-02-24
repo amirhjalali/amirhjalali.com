@@ -146,7 +146,7 @@ const faqItems = [
   {
     question: 'What makes your approach different from other AI consultants?',
     answer:
-      'I combine 14 years of hands-on data engineering experience with deep expertise in modern AI, including large language models, generative AI, and agentic systems. I do not just write strategy decks; I build and ship AI products. This means my recommendations are grounded in what actually works in production, not what looks good in a presentation. Every engagement is tailored to your context, and I work alongside your team rather than handing off a report.',
+      'I combine 18 years of hands-on data engineering experience with deep expertise in modern AI, including large language models, generative AI, and agentic systems. I do not just write strategy decks; I build and ship AI products. This means my recommendations are grounded in what actually works in production, not what looks good in a presentation. Every engagement is tailored to your context, and I work alongside your team rather than handing off a report.',
   },
 ]
 

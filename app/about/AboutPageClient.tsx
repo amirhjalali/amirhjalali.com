@@ -47,7 +47,7 @@ const experience = [
     title: 'Independent Consultant',
     company: 'Data & AI',
     period: '2012 – Present',
-    description: '14+ years delivering data warehouse implementations, BI solutions, and AI strategy for Fortune 500 companies.',
+    description: '18+ years delivering data warehouse implementations, BI solutions, and AI strategy for Fortune 500 companies.',
     skills: ['Data Architecture', 'ETL/ELT', 'Enterprise Integration'],
     type: 'work'
   },

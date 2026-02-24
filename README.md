@@ -4,7 +4,7 @@ A modern, responsive portfolio website showcasing AI consulting expertise, data 
 
 ## 🌟 Overview
 
-This is the personal portfolio website for Amir H. Jalali, an AI Consultant and Data Engineering Expert with 14+ years of experience. The site features a dynamic, animated interface with a focus on AI and technology content.
+This is the personal portfolio website for Amir H. Jalali, an AI Consultant and Data Engineering Expert with 18+ years of experience. The site features a dynamic, animated interface with a focus on AI and technology content.
 
 **Live Site**: [amirhjalali.com](https://amirhjalali.com)
 

@@ -6,10 +6,10 @@ import { getPublishedArticles } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Amir H. Jalali - AI Strategy Consultant',
-  description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence. Helping organizations navigate the AI transformation.',
+  description: 'AI Strategy Consultant with 18+ years experience in Generative AI, Data Engineering, and Business Intelligence. Helping organizations navigate the AI transformation.',
   openGraph: {
     title: 'Amir H. Jalali - AI Strategy Consultant',
-    description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
+    description: 'AI Strategy Consultant with 18+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
     type: 'website',
     url: 'https://amirhjalali.com',
     siteName: 'Amir H. Jalali',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Amir H. Jalali - AI Strategy Consultant',
-    description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
+    description: 'AI Strategy Consultant with 18+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
   },
   alternates: {
     canonical: 'https://amirhjalali.com',
@@ -68,7 +68,7 @@ export default async function Home() {
             Helping organizations turn AI ambition into working systems.
           </h2>
           <p className="text-lg text-[#888888] max-w-3xl leading-relaxed">
-            With over 14 years in data engineering and AI strategy, I help teams navigate
+            With over 18 years in data engineering and AI strategy, I help teams navigate
             the shift from traditional analytics to generative AI — designing LLM solutions,
             building data infrastructure, and developing implementation roadmaps that
             deliver measurable results.

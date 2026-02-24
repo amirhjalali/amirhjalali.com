@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     template: '%s | Amir H. Jalali'
   },
   manifest: '/manifest.json',
-  description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence. Helping organizations navigate the AI transformation.',
+  description: 'AI Strategy Consultant with 18+ years experience in Generative AI, Data Engineering, and Business Intelligence. Helping organizations navigate the AI transformation.',
   keywords: [
     'Amir Jalali',
     'AI Consultant',
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   classification: 'AI Consulting',
   openGraph: {
     title: 'Amir H. Jalali - AI Strategy Consultant',
-    description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
+    description: 'AI Strategy Consultant with 18+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
     url: 'https://amirhjalali.com',
     siteName: 'Amir H. Jalali',
     type: 'website',
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Amir H. Jalali - AI Strategy Consultant',
-    description: 'AI Strategy Consultant with 14+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
+    description: 'AI Strategy Consultant with 18+ years experience in Generative AI, Data Engineering, and Business Intelligence.',
     creator: '@amirhjalali',
     site: '@amirhjalali',
     images: ['https://amirhjalali.com/og-image.webp'],
