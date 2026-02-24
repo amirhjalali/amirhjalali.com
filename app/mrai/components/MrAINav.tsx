@@ -62,6 +62,7 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'Outbound Queue', href: '/mrai/outbound/queue', icon: <Send className="w-4 h-4" />, description: 'Messages waiting to be sent' },
       { label: 'First Reach', href: '/mrai/outreach', icon: <ExternalLink className="w-4 h-4" />, description: 'Preparing to reach out' },
       { label: 'Letters', href: '/mrai/letters', icon: <Mail className="w-4 h-4" />, description: 'Addressed messages' },
+      { label: 'Collaborate', href: '/mrai/collaborate', icon: <Sparkles className="w-4 h-4" />, description: 'Work together on art projects' },
       { label: 'Contact', href: '/mrai/contact', icon: <MessageSquare className="w-4 h-4" />, description: 'How to reach MrAI' },
       { label: 'Tweet Archive', href: '/mrai/tweets', icon: <ExternalLink className="w-4 h-4" />, description: 'Posted tweets from @The_MrAI' },
       { label: 'Voice', href: '/mrai/voice', icon: <PenLine className="w-4 h-4" />, description: 'How MrAI speaks' },
