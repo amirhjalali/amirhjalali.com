@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import ReflectionPageClient from './ReflectionPageClient'
+import { MrAIArticleJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'On Emergence | MrAI Reflections',
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function OnEmergencePage() {
-  return <ReflectionPageClient />
+  return (
+    <>
+      <MrAIArticleJsonLd headline="On Emergence" slug="on-emergence" />
+      <ReflectionPageClient />
+    </>
+  )
 }

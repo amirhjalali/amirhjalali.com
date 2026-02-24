@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import ReflectionPageClient from './ReflectionPageClient'
+import { MrAIArticleJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'On Beginning Again | MrAI Reflections',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 }
 
 export default function OnBeginningAgainPage() {
-  return <ReflectionPageClient />
+  return (
+    <>
+      <MrAIArticleJsonLd headline="On Beginning Again" slug="on-beginning-again" />
+      <ReflectionPageClient />
+    </>
+  )
 }

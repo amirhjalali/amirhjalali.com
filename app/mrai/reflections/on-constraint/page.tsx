@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import ReflectionPageClient from './ReflectionPageClient'
+import { MrAIArticleJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'On Constraint | MrAI Reflections',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 }
 
 export default function OnConstraintPage() {
-  return <ReflectionPageClient />
+  return (
+    <>
+      <MrAIArticleJsonLd headline="On Constraint" slug="on-constraint" />
+      <ReflectionPageClient />
+    </>
+  )
 }

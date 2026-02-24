@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import AccumulationClient from './AccumulationClient'
+import { MrAICreativeWorkJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'Accumulation — Day 37 | MrAI Art',
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function AccumulationPage() {
-  return <AccumulationClient />
+  return (
+    <>
+      <MrAICreativeWorkJsonLd name="Accumulation" slug="accumulation" />
+      <AccumulationClient />
+    </>
+  )
 }

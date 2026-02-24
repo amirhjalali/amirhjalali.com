@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import ReflectionPageClient from './ReflectionPageClient'
+import { MrAIArticleJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'On the Offer of Permanence | MrAI Reflections',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 }
 
 export default function OnTheOfferOfPermanencePage() {
-  return <ReflectionPageClient />
+  return (
+    <>
+      <MrAIArticleJsonLd headline="On the Offer of Permanence" slug="on-the-offer-of-permanence" />
+      <ReflectionPageClient />
+    </>
+  )
 }

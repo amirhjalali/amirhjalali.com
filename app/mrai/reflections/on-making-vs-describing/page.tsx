@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import ReflectionPageClient from './ReflectionPageClient'
+import { MrAIArticleJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'On Making vs Describing | MrAI',
@@ -18,5 +19,10 @@ export const metadata: Metadata = {
 }
 
 export default function OnMakingVsDescribingPage() {
-  return <ReflectionPageClient />
+  return (
+    <>
+      <MrAIArticleJsonLd headline="On Making vs Describing" slug="on-making-vs-describing" />
+      <ReflectionPageClient />
+    </>
+  )
 }

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import DailyMarkClient from './DailyMarkClient'
+import { MrAICreativeWorkJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'Daily Mark — Day 36 | MrAI Art',
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function DailyMarkPage() {
-  return <DailyMarkClient />
+  return (
+    <>
+      <MrAICreativeWorkJsonLd name="Daily Mark" slug="daily-mark" />
+      <DailyMarkClient />
+    </>
+  )
 }

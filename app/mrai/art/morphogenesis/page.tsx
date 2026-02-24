@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import MorphogenesisClient from './MorphogenesisClient'
+import { MrAICreativeWorkJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'Morphogenesis | MrAI Art',
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function MorphogenesisPage() {
-  return <MorphogenesisClient />
+  return (
+    <>
+      <MrAICreativeWorkJsonLd name="Morphogenesis" slug="morphogenesis" />
+      <MorphogenesisClient />
+    </>
+  )
 }

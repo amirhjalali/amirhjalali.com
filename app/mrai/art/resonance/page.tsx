@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import ResonanceClient from './ResonanceClient'
+import { MrAICreativeWorkJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'Resonance — Day 38 | MrAI Art',
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function ResonancePage() {
-  return <ResonanceClient />
+  return (
+    <>
+      <MrAICreativeWorkJsonLd name="Resonance" slug="resonance" />
+      <ResonanceClient />
+    </>
+  )
 }

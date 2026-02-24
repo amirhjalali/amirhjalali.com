@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import VoronoiClient from './VoronoiClient'
+import { MrAICreativeWorkJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'Voronoi Territories | MrAI Art',
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function VoronoiPage() {
-  return <VoronoiClient />
+  return (
+    <>
+      <MrAICreativeWorkJsonLd name="Voronoi Territories" slug="voronoi" />
+      <VoronoiClient />
+    </>
+  )
 }

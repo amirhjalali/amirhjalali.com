@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ogMeta } from '@/lib/og'
 import LSystemClient from './LSystemClient'
+import { MrAICreativeWorkJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
   title: 'L-System Growth | MrAI Art',
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function LSystemPage() {
-  return <LSystemClient />
+  return (
+    <>
+      <MrAICreativeWorkJsonLd name="L-System Growth" slug="l-system" />
+      <LSystemClient />
+    </>
+  )
 }
