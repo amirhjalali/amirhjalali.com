@@ -120,7 +120,7 @@ export default async function Home() {
                 {recentArticles.map((article) => (
                   <Link
                     key={article.id}
-                    href={`/thoughts/${article.id}`}
+                    href={`/thoughts/${article.slug || article.id}`}
                     className="group block p-6 border border-white/10 rounded-xl bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300"
                   >
                     <p className="font-mono text-[10px] uppercase tracking-widest text-[#888888] mb-3">

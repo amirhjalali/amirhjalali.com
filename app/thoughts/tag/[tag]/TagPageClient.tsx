@@ -72,7 +72,7 @@ export default function TagPageClient({ tag, articles, allTags }: TagPageClientP
               whileTap={{ scale: 0.98 }}
               className="group relative h-full"
             >
-              <Link href={`/thoughts/${article.id}`} className="block h-full">
+              <Link href={`/thoughts/${article.slug || article.id}`} className="block h-full">
                 <article className="relative border border-white/10 rounded-xl overflow-hidden bg-transparent hover:bg-white/[0.03] transition-[background,border-color,box-shadow] duration-500 h-full flex flex-col backdrop-blur-md hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
                   {article.imageUrl && (
                     <div className="relative h-48 overflow-hidden border-b border-white/5">

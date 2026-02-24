@@ -25,7 +25,7 @@ export default function FeaturedArticleCard({ article }: FeaturedArticleCardProp
       className="group"
     >
       <Link
-        href={`/thoughts/${article.id}`}
+        href={`/thoughts/${article.slug || article.id}`}
         aria-label={`Read article: ${article.title}`}
         className="block"
       >

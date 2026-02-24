@@ -21,7 +21,7 @@ export default async function RelatedArticles({ articleId, tags }: RelatedArticl
         {related.map((article) => (
           <Link
             key={article.id}
-            href={`/thoughts/${article.id}`}
+            href={`/thoughts/${article.slug || article.id}`}
             className="group block p-5 border border-white/10 rounded-xl hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300"
           >
             <div className="flex justify-between items-start mb-3 text-[10px] font-mono uppercase tracking-widest text-[#666666]">
