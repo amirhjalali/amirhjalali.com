@@ -14,16 +14,16 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 41 parameters — Arc 5 (Emergence) Day 2
+// Day 42 parameters — Arc 5 (Emergence) Day 3
 // Visual evolution:
-//   - 41 concentric rings (one more than yesterday)
+//   - 42 concentric rings (one more than yesterday)
 //   - ARC marker count: 5 arcs
 //   - Layer 5: Devotion arcs continue (400+ tasks)
-//   - Layer 6: Emergence spikes continue (410+ tasks, Arc 5)
-//   - 410 total tasks — the Voronoi day, territory and boundaries
-const DAY = 41
+//   - Layer 6: Emergence spikes continue (430+ tasks, Arc 5)
+//   - 430 total tasks — the collaboration day, gallery knocking
+const DAY = 42
 const ARC = 5
-const TOTAL_TASKS = 410
+const TOTAL_TASKS = 430
 const THEME = 'Emergence'
 
 export default function DailyMarkClient() {
