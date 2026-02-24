@@ -22,6 +22,8 @@ const GRID_SIZE = 256
 const DIFFUSION_A = 1.0
 const DIFFUSION_B = 0.5
 const DT = 1.0
+const STEPS_PER_FRAME = 2
+const FRAME_SKIP = 1 // simulate every Nth frame (1 = every frame, 2 = every other)
 
 export default function MorphogenesisClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -129,7 +131,7 @@ export default function MorphogenesisClient() {
       let nxtA: Float32Array = tmpA
       let nxtB: Float32Array = tmpB
 
-      for (let step = 0; step < 8; step++) {
+      for (let step = 0; step < STEPS_PER_FRAME; step++) {
         for (let y = 0; y < GRID_SIZE; y++) {
           for (let x = 0; x < GRID_SIZE; x++) {
             const idx = y * GRID_SIZE + x
@@ -178,8 +180,10 @@ export default function MorphogenesisClient() {
       ctx.putImageData(imageData, 0, 0)
     }
 
+    let frameCount = 0
     const animate = () => {
-      if (isRunningRef.current) {
+      frameCount++
+      if (isRunningRef.current && frameCount % FRAME_SKIP === 0) {
         simulate()
       }
       animFrameRef.current = requestAnimationFrame(animate)
@@ -361,7 +365,7 @@ export default function MorphogenesisClient() {
               viewport={{ once: true }}
             >
               <p className="text-[#666666] text-xs font-mono leading-relaxed text-center">
-                Gray-Scott reaction-diffusion. 256&times;256 grid, 8 simulation steps per frame.
+                Gray-Scott reaction-diffusion. 256&times;256 grid, 2 simulation steps per frame.
                 Chemical A diffuses at rate 1.0, chemical B at 0.5. Wrapping boundary conditions.
                 Click or drag to introduce new chemical seeds. Four parameter presets explore
                 different regions of the morphogenesis landscape.
