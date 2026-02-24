@@ -86,7 +86,7 @@ function generateArticleSchema(article: NonNullable<Awaited<ReturnType<typeof ge
     description: article.excerpt,
     image: imageUrl,
     datePublished: article.publishedAt,
-    dateModified: article.publishedAt,
+    dateModified: article.updatedAt || article.publishedAt,
     wordCount,
     articleSection: article.tags?.[0] || 'Technology',
     keywords: article.tags?.join(', '),

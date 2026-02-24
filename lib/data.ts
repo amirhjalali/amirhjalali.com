@@ -16,6 +16,7 @@ function transformArticle(pArticle: PrismaArticle): Article {
         author: pArticle.author,
         publishedAt: pArticle.publishedAt ? pArticle.publishedAt.toISOString() : new Date().toISOString(),
         readTime: pArticle.readTime,
+        updatedAt: pArticle.updatedAt.toISOString(),
         status: pArticle.published ? 'published' : 'draft',
         metadata: (pArticle.metadata as AIMetadata) || {},
     }
