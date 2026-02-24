@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { route: '/thoughts', changeFrequency: 'daily' as const, priority: 0.8 },
     { route: '/about', changeFrequency: 'monthly' as const, priority: 0.7 },
     { route: '/contact', changeFrequency: 'monthly' as const, priority: 0.9 },
+    { route: '/services/ai-strategy', changeFrequency: 'monthly' as const, priority: 0.9 },
     // /notes excluded — private content, disallowed in robots.txt
   ]
 
