@@ -57,6 +57,18 @@ const nextConfig = {
       },
     ];
   },
+
+  // Redirect www to non-www (canonical domain) — prevents duplicate indexing
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.amirhjalali.com' }],
+        destination: 'https://amirhjalali.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
