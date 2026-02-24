@@ -39,19 +39,19 @@ export const EVAL_TEXT_MODELS: Record<string, EvalModelConfig> = {
     supportsImages: false,
   },
   // Anthropic Models
-  'claude-opus-4.5': {
-    id: 'claude-opus-4.5',
+  'claude-opus-4.6': {
+    id: 'claude-opus-4.6',
     provider: 'anthropic',
-    name: 'Claude Opus 4.5',
-    model: 'claude-opus-4-5-20251101',
+    name: 'Claude Opus 4.6',
+    model: 'claude-opus-4-6',
     description: 'Anthropic\'s most capable model for complex tasks',
     supportsImages: false,
   },
-  'claude-sonnet-4.5': {
-    id: 'claude-sonnet-4.5',
+  'claude-sonnet-4.6': {
+    id: 'claude-sonnet-4.6',
     provider: 'anthropic',
-    name: 'Claude Sonnet 4.5',
-    model: 'claude-sonnet-4-5-20250929',
+    name: 'Claude Sonnet 4.6',
+    model: 'claude-sonnet-4-6',
     description: 'Best balance of intelligence, speed, and cost',
     supportsImages: false,
   },

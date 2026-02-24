@@ -125,7 +125,7 @@ export async function generateArticleWithClaude(
     const topic = options.topic || 'Technology and Innovation';
     const model = options.textModel?.startsWith('claude')
         ? options.textModel
-        : 'claude-opus-4-5-20251101';
+        : 'claude-opus-4-6';
 
     // Process references if provided
     const referenceContext = await processReferences(options.references || []);

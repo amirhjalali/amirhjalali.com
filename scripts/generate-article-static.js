@@ -418,7 +418,7 @@ Return ONLY the JSON object, no other text.`;
   };
 
   const postData = {
-    model: 'claude-opus-4-5-20251101',
+    model: 'claude-opus-4-6',
     max_tokens: 4096,
     temperature: 0.8,
     messages: [
@@ -604,7 +604,7 @@ async function main() {
     let modelUsed;
     if (config.useAnthropic) {
       articleData = await generateWithAnthropic(topic);
-      modelUsed = 'claude-opus-4.5';
+      modelUsed = 'claude-opus-4.6';
     } else {
       articleData = await generateWithOpenAI(topic);
       modelUsed = 'gpt-5.2';

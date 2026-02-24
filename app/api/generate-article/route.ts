@@ -32,6 +32,9 @@ interface GeneratedArticleData {
   tags?: string[];
 }
 
+// Allow up to 5 minutes for article + image generation (avoids Cloudflare 524 timeout)
+export const maxDuration = 300;
+
 export async function POST(request: NextRequest) {
   const session = await getSession()
   const authHeader = request.headers.get('authorization');

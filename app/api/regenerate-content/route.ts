@@ -4,6 +4,8 @@ import { getSession } from '@/app/actions/auth';
 import { generateArticleContent } from '@/lib/ai-service';
 import { AIMetadata } from '@/lib/types';
 
+export const maxDuration = 300;
+
 export async function POST(request: NextRequest) {
     const session = await getSession()
     if (!session) {

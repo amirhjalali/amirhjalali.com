@@ -71,7 +71,7 @@ interface ArticleContent {
 }
 
 export async function generateArticleContent(options: AIMetadata): Promise<ArticleContent> {
-    const model = options.textModel || 'claude-opus-4-5-20251101';
+    const model = options.textModel || 'claude-opus-4-6';
 
     // Use Claude for claude models (default)
     if (model.startsWith('claude')) {

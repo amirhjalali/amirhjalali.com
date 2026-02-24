@@ -19,7 +19,7 @@ export default function EvalGeneratorModal({
 }: EvalGeneratorModalProps) {
   const [topic, setTopic] = useState('')
   const [modelA, setModelA] = useState('gpt-5.2')
-  const [modelB, setModelB] = useState('claude-opus-4.5')
+  const [modelB, setModelB] = useState('claude-opus-4.6')
   const [imageModel, setImageModel] = useState('dall-e-3')
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
