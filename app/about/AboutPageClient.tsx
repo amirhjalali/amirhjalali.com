@@ -145,7 +145,7 @@ export default function AboutPageClient() {
             </MagneticWrapper>
             <MagneticWrapper magneticStrength={0.4}>
               <a
-                href="mailto:amirhjalali@gmail.com"
+                href="mailto:amir@amirhjalali.com"
                 className="flex flex-col items-center gap-2 text-[#888888] hover:text-[#EAEAEA] transition-colors group"
               >
                 <span className="p-3 border border-white/10 rounded-full group-hover:bg-white/5 group-hover:border-white/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-[transform,background,border-color,box-shadow] duration-300">

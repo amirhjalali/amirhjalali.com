@@ -72,9 +72,9 @@ export default function ContactPageClient() {
             size="lg"
             className="bg-white text-black hover:bg-[#EAEAEA] transition-colors font-mono uppercase tracking-widest px-8 py-6 text-base"
           >
-            <a href="mailto:amirhjalali@gmail.com">
+            <a href="mailto:amir@amirhjalali.com">
               <Mail className="mr-3 h-5 w-5" />
-              amirhjalali@gmail.com
+              amir@amirhjalali.com
             </a>
           </Button>
 

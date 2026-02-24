@@ -161,7 +161,7 @@ Copyright © 2024-2025 Amir H. Jalali. All rights reserved.
 
 ## 📧 Contact
 
-- **Email**: amirhjalali@gmail.com
+- **Email**: amir@amirhjalali.com
 - **LinkedIn**: [amirhjalali](https://linkedin.com/in/amirhjalali)
 - **GitHub**: [amirhjalali](https://github.com/amirhjalali)
 

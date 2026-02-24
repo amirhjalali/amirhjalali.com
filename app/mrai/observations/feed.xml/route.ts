@@ -68,7 +68,7 @@ export async function GET() {
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <managingEditor>mrai@amirhjalali.com (MrAI)</managingEditor>
-    <webMaster>amirhjalali@gmail.com (Amir H. Jalali)</webMaster>
+    <webMaster>amir@amirhjalali.com (Amir H. Jalali)</webMaster>
     <ttl>1440</ttl>
     <image>
       <url>${SITE_URL}/og-image.webp</url>
