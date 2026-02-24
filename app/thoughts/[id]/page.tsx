@@ -45,7 +45,9 @@ export async function generateMetadata({ params }: { params: Promise<ThoughtPage
       type: 'article',
       url,
       publishedTime: article.publishedAt,
+      modifiedTime: article.updatedAt || article.publishedAt,
       authors: [article.author],
+      section: article.tags?.[0] || 'Technology',
       tags: article.tags,
       images: article.imageUrl ? [
         {
@@ -74,7 +76,9 @@ export async function generateMetadata({ params }: { params: Promise<ThoughtPage
 
 function generateArticleSchema(article: NonNullable<Awaited<ReturnType<typeof getArticle>>>) {
   const url = `${SITE_URL}/thoughts/${article.slug || article.id}`
-  const wordCount = article.content ? article.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0
+  const plainText = article.content ? article.content.replace(/<[^>]*>/g, '').replace(/[#*_~`]/g, '') : ''
+  const wordCount = plainText.split(/\s+/).filter(Boolean).length
+  const readingMinutes = Math.ceil(wordCount / 200)
   const imageUrl = article.imageUrl && !article.imageUrl.startsWith('data:')
     ? article.imageUrl
     : `${SITE_URL}/og-image.webp`
@@ -82,12 +86,15 @@ function generateArticleSchema(article: NonNullable<Awaited<ReturnType<typeof ge
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': url,
     headline: article.title,
     description: article.excerpt,
     image: imageUrl,
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
     wordCount,
+    timeRequired: `PT${readingMinutes}M`,
+    inLanguage: 'en-US',
     articleSection: article.tags?.[0] || 'Technology',
     keywords: article.tags?.join(', '),
     author: {
@@ -104,6 +111,12 @@ function generateArticleSchema(article: NonNullable<Awaited<ReturnType<typeof ge
         '@type': 'ImageObject',
         url: `${SITE_URL}/og-image.webp`,
       },
+    },
+    isPartOf: {
+      '@type': 'Blog',
+      '@id': `${SITE_URL}/thoughts`,
+      name: 'Thoughts',
+      url: `${SITE_URL}/thoughts`,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',

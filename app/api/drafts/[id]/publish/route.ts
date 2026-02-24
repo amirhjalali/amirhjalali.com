@@ -4,11 +4,19 @@ import { prisma } from '@/lib/db'
 import { getSession } from '@/app/actions/auth'
 
 function slugify(text: string): string {
-  return text
+  // Remove common filler words for cleaner, more SEO-friendly slugs
+  const fillerWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'is', 'it', 'so', 'up'])
+  const words = text
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .split(/\s+/)
+    .filter(w => w.length > 0 && !fillerWords.has(w))
+
+  return words
+    .join('-')
+    .replace(/-{2,}/g, '-')
     .replace(/^-|-$/g, '')
-    .substring(0, 100)
+    .substring(0, 80)
 }
 
 function calculateReadTime(content: string): string {
