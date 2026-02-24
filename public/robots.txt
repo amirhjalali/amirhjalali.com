@@ -1,12 +1,80 @@
 # robots.txt for amirhjalali.com
 
+# ============================================
+# Default rules for all crawlers
+# ============================================
 User-agent: *
 Allow: /
-
-# Sitemaps
-Sitemap: https://amirhjalali.com/sitemap.xml
-
-# Disallow admin and API areas
 Disallow: /admin
 Disallow: /api
 Disallow: /notes
+
+# ============================================
+# AI search engine crawlers — explicitly allowed
+# ============================================
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+# OpenAI / ChatGPT
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+# Apple
+User-agent: Applebot
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+# Microsoft / Bing
+User-agent: BingPreview
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+# Google AI / extended crawlers
+User-agent: GoogleOther
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+# Common Crawl (training data for many AI models)
+User-agent: CCBot
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /notes
+
+# ============================================
+# Sitemap
+# ============================================
+Sitemap: https://amirhjalali.com/sitemap.xml
