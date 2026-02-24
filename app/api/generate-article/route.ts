@@ -67,10 +67,11 @@ export async function POST(request: NextRequest) {
       // Generate article content
       const articleData = await generateArticleContent(options);
 
-      // Generate image
+      // Generate image with article context for content-aware imagery
       const imageUrl = await generateImage(articleData.title, {
         ...options,
-        topic: options.topic // Ensure topic is passed if set
+        topic: options.topic || articleData.tags?.[0],
+        excerpt: articleData.excerpt,
       });
 
       // Download image as base64 (only if it's not already a data URI)
@@ -146,7 +147,8 @@ export async function POST(request: NextRequest) {
 
         imageUrl = await generateImage(articleData.title, {
           ...options,
-          topic: options.topic
+          topic: options.topic || articleData.tags?.[0],
+          excerpt: articleData.excerpt,
         });
 
         // Step 4: Downloading image (85%) - only if needed

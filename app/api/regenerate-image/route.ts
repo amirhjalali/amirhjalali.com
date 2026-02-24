@@ -33,11 +33,13 @@ export async function POST(request: NextRequest) {
 
             const title = draft?.title || article?.title || 'Untitled';
             const topic = options.topic || (draft?.metadata as any)?.topic || (article?.metadata as any)?.topic || 'Technology';
+            const excerpt = draft?.excerpt || article?.excerpt || '';
 
-            // Generate image
+            // Generate image with article context
             const imageUrl = await generateImage(title, {
                 ...options,
-                topic
+                topic,
+                excerpt,
             });
 
             // Download image as base64 (only if it's not already a data URI)
@@ -100,6 +102,7 @@ export async function POST(request: NextRequest) {
 
             const title = draft?.title || article?.title || 'Untitled';
             const topic = options.topic || (draft?.metadata as any)?.topic || (article?.metadata as any)?.topic || 'Technology';
+            const excerpt = draft?.excerpt || article?.excerpt || '';
 
             // Step 2: Generating image (20%)
             sseStream.sendEvent(controller, {
@@ -111,7 +114,8 @@ export async function POST(request: NextRequest) {
 
             imageUrl = await generateImage(title, {
                 ...options,
-                topic
+                topic,
+                excerpt,
             });
 
             // Step 3: Downloading image (60%) - only if needed

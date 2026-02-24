@@ -103,10 +103,10 @@ export async function generateArticleContent(options: AIMetadata): Promise<Artic
 ${VOICE_GUIDELINES}
 
 Structure:
-- Length: 800-2000 words. Aim for substantive essays, not social media posts.
+- Length: 400-800 words. Concise but substantive — every sentence earns its place.
 - NO section headers (##). Flowing short paragraphs only.
 - Start with what you've observed or what's happening - set the scene briefly then explore.
-- Each paragraph: 1-4 sentences. Keep it conversational but develop ideas fully.
+- Each paragraph: 1-3 sentences. Keep it tight and conversational.
 - Use specific data points, company names, research findings to ground your observations.
 - End with a forward-looking thought, an open question, or genuine ambivalence.
 - The article should feel like a practitioner who builds with these tools daily, sharing hard-won observations.
@@ -152,20 +152,33 @@ Format as JSON:
     return JSON.parse(data.choices[0].message.content);
 }
 
-export async function generateImage(title: string, options: AIMetadata): Promise<string> {
+export async function generateImage(title: string, options: AIMetadata & { excerpt?: string }): Promise<string> {
     const topic = options.topic || 'Technology';
-    const style = options.imageStyle || 'minimal, sophisticated, dark monochromatic, subtle gradients, cinematic lighting';
+    const style = options.imageStyle || 'editorial photography, cinematic lighting, dark monochromatic';
     const customPrompt = options.imagePrompt;
     const model = options.imageModel || 'gemini-3-pro-image-preview';
     const resolution = options.imageResolution || '1K';
 
-    // Refined prompt for high-quality, minimal aesthetic that matches site design
-    const imagePrompt = customPrompt || `Create an elegant, minimalist featured image for a professional tech article about ${topic}.
-Visual style: ${style}.
-Design direction: Ultra-minimal composition with dark background (black or very dark gray), subtle depth through lighting and gradients, sophisticated and professional aesthetic.
-Avoid: bright colors, busy geometric patterns, stock photo look.
-Think: Apple product photography, architectural minimalism, high-end editorial design.
-The image should feel timeless and complement serif typography on a black background.`;
+    // Build content context from available article data
+    const contextLine = options.excerpt
+        ? `\nArticle summary: ${options.excerpt}`
+        : '';
+
+    // Content-aware prompt: use title, topic, and excerpt to create images that relate to the article
+    const imagePrompt = customPrompt || `Create a featured image for an article titled "${title}" about ${topic}.${contextLine}
+
+The image should visually represent the specific subject matter — not abstract shapes.
+Think editorially: if this were a New York Times or Wired feature, what photograph or illustration would accompany this piece?
+Use a real-world visual metaphor or scene that connects to the article's theme.
+
+Visual constraints:
+- Dark background (black or very dark gray) with cinematic lighting
+- ${style}
+- No text, no words, no UI elements, no logos
+- No abstract geometric patterns or generic tech imagery
+- The image should tell a story related to "${topic}"
+
+Think: Wired magazine photography, Bloomberg editorial imagery, cinematic documentary stills.`;
 
     // Route to Gemini for Gemini image models (Nano Banana Pro)
     if (model.startsWith('gemini')) {

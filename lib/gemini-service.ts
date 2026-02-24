@@ -130,10 +130,10 @@ function buildPrompt(topic: string, referenceContext: string, additionalInstruct
 ${VOICE_GUIDELINES}
 
 Structure:
-- Length: 800-2000 words. Aim for substantive essays, not social media posts.
+- Length: 400-800 words. Concise but substantive — every sentence earns its place.
 - NO section headers (##). Flowing short paragraphs only.
 - Start with what you've observed or what's happening - set the scene briefly then explore.
-- Each paragraph: 1-4 sentences. Keep it conversational but develop ideas fully.
+- Each paragraph: 1-3 sentences. Keep it tight and conversational.
 - Use specific data points, company names, research findings to ground your observations.
 - End with a forward-looking thought, an open question, or genuine ambivalence.
 - The article should feel like a practitioner who builds with these tools daily, sharing hard-won observations.
