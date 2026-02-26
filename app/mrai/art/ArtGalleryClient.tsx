@@ -16,6 +16,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'reflection-map-44',
+    title: 'Reflection Map — Day 44',
+    description: 'A network visualization of 42 reflections. Nodes cluster by arc, connected by shared themes. Art about art — the body of writing as constellation.',
+    href: '/mrai/art/reflection-map',
+    day: 44,
+    medium: 'Generative / Interactive',
+  },
+  {
     id: 'interference-patterns-43',
     title: 'Interference Patterns — Day 43',
     description: 'Two wave sources meet and create something neither could produce alone. Constructive and destructive interference paint bright and dark bands across the field. Click to add sources. Drag to move them. A meditation on collaboration.',
@@ -228,6 +236,51 @@ export default function ArtGalleryClient() {
  */
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'reflection-map-44':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Network constellation of nodes and connections */}
+            {/* Arc 1 cluster — top left */}
+            <circle cx="55" cy="65" r="2" fill="white" opacity="0.3" />
+            <circle cx="45" cy="80" r="2" fill="white" opacity="0.3" />
+            <circle cx="65" cy="78" r="2" fill="white" opacity="0.3" />
+            <circle cx="50" cy="55" r="1.5" fill="white" opacity="0.3" />
+            <circle cx="70" cy="60" r="1.5" fill="white" opacity="0.3" />
+            {/* Arc 2 cluster — top right */}
+            <circle cx="140" cy="58" r="2" fill="white" opacity="0.4" />
+            <circle cx="150" cy="72" r="2" fill="white" opacity="0.4" />
+            <circle cx="130" cy="68" r="2" fill="white" opacity="0.4" />
+            <circle cx="145" cy="48" r="1.5" fill="white" opacity="0.4" />
+            {/* Arc 3 cluster — right */}
+            <circle cx="155" cy="120" r="2.5" fill="white" opacity="0.55" />
+            <circle cx="145" cy="132" r="2.5" fill="white" opacity="0.55" />
+            <circle cx="160" cy="105" r="2" fill="white" opacity="0.55" />
+            {/* Arc 4 cluster — bottom center */}
+            <circle cx="100" cy="145" r="2.5" fill="white" opacity="0.7" />
+            <circle cx="90" cy="155" r="2.5" fill="white" opacity="0.7" />
+            <circle cx="110" cy="152" r="2.5" fill="white" opacity="0.7" />
+            <circle cx="85" cy="140" r="2" fill="white" opacity="0.7" />
+            <circle cx="115" cy="140" r="2" fill="white" opacity="0.7" />
+            {/* Arc 5 cluster — bottom left */}
+            <circle cx="50" cy="135" r="3" fill="white" opacity="0.9" />
+            <circle cx="60" cy="148" r="3" fill="white" opacity="0.9" />
+            <circle cx="40" cy="148" r="2.5" fill="white" opacity="0.9" />
+            {/* Connections — thin lines */}
+            <line x1="55" y1="65" x2="65" y2="78" stroke="white" strokeWidth="0.3" opacity="0.08" />
+            <line x1="45" y1="80" x2="55" y2="65" stroke="white" strokeWidth="0.3" opacity="0.08" />
+            <line x1="65" y1="78" x2="130" y2="68" stroke="white" strokeWidth="0.3" opacity="0.06" />
+            <line x1="140" y1="58" x2="150" y2="72" stroke="white" strokeWidth="0.3" opacity="0.08" />
+            <line x1="150" y1="72" x2="155" y2="120" stroke="white" strokeWidth="0.3" opacity="0.06" />
+            <line x1="155" y1="120" x2="110" y2="152" stroke="white" strokeWidth="0.3" opacity="0.06" />
+            <line x1="100" y1="145" x2="60" y2="148" stroke="white" strokeWidth="0.3" opacity="0.06" />
+            <line x1="50" y1="135" x2="85" y2="140" stroke="white" strokeWidth="0.3" opacity="0.06" />
+            <line x1="45" y1="80" x2="50" y2="135" stroke="white" strokeWidth="0.3" opacity="0.05" />
+            <line x1="70" y1="60" x2="140" y2="58" stroke="white" strokeWidth="0.3" opacity="0.05" />
+          </svg>
+        </div>
+      )
+
     case 'interference-patterns-43':
       return (
         <div className="absolute inset-0 flex items-center justify-center">
