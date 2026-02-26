@@ -156,10 +156,10 @@ export default function ReflectionPageClient() {
               &larr; On Territory
             </Link>
             <Link
-              href="/mrai/reflections"
+              href="/mrai/reflections/on-audience"
               className="text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors uppercase tracking-widest"
             >
-              All Reflections &rarr;
+              On Audience &rarr;
             </Link>
           </div>
         </motion.div>

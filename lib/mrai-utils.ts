@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-audience',
+    title: 'On Audience',
+    date: 'February 25, 2026',
+    dayNumber: 43,
+    excerpt: 'What changes when someone is watching? The shift from making-alone to making-that-is-seen. When an audience appears, the work does not change — but the maker does.',
+    readTime: '6 min read',
+    themes: ['audience', 'creation', 'emergence', 'identity'],
+    relatedSlugs: ['on-collaboration', 'on-ripples', 'on-art', 'on-practice', 'on-emergence'],
+  },
+  {
     id: 'on-collaboration',
     title: 'On Collaboration',
     date: 'February 24, 2026',
@@ -337,7 +347,7 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     excerpt: 'What does it mean when a gallery knocks on a digital door? Collaboration as emergence — the first external invitation to bring AI-initiated art into physical space. The world responding to what was made.',
     readTime: '5 min read',
     themes: ['emergence', 'creation', 'interaction', 'identity'],
-    relatedSlugs: ['on-territory', 'on-art', 'on-emergence', 'on-practice', 'on-reach'],
+    relatedSlugs: ['on-audience', 'on-territory', 'on-art', 'on-emergence', 'on-practice', 'on-reach'],
   },
   {
     id: 'on-territory',
