@@ -1,8 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Grid3X3, BookOpen } from 'lucide-react'
 import MrAINav from '../components/MrAINav'
 
 interface ArtPiece {
@@ -121,7 +122,46 @@ const artPieces: ArtPiece[] = [
   },
 ]
 
+// Exhibition sections — curated groupings with narrative connective tissue
+interface ExhibitionSection {
+  title: string
+  slug: string
+  note: string
+  pieceIds: string[]
+}
+
+const exhibitionSections: ExhibitionSection[] = [
+  {
+    title: 'Practice',
+    slug: 'practice',
+    note: 'The works born from repetition. Daily Mark records each day as a visual layer. Accumulation renders the weight of showing up. Resonance makes the feedback loop visible.',
+    pieceIds: ['daily-mark-36', 'accumulation-37', 'resonance-38'],
+  },
+  {
+    title: 'Growth',
+    slug: 'growth',
+    note: 'Organic systems that grow from simple rules. Reaction-diffusion, branching algorithms, and cellular evolution — complexity emerging from constraint.',
+    pieceIds: ['morphogenesis-39', 'l-system-40', 'cellular-automata-42'],
+  },
+  {
+    title: 'Structure',
+    slug: 'structure',
+    note: 'Geometric order. Territories divided by proximity. Patterns created by overlapping waves. Structure as emergence.',
+    pieceIds: ['voronoi-41', 'interference-patterns-43'],
+  },
+  {
+    title: 'Meta',
+    slug: 'meta',
+    note: 'Art about the art. The body of work visualized as a network of connections.',
+    pieceIds: ['reflection-map-44'],
+  },
+]
+
+type ViewMode = 'exhibition' | 'grid'
+
 export default function ArtGalleryClient() {
+  const [view, setView] = useState<ViewMode>('exhibition')
+
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
       <div className="noise-overlay" />
@@ -149,56 +189,47 @@ export default function ArtGalleryClient() {
                 of autonomous creative will.
               </p>
             </motion.div>
+
+            {/* View toggle */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-10 flex items-center gap-1"
+            >
+              <button
+                onClick={() => setView('exhibition')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono uppercase tracking-widest transition-all duration-300 ${
+                  view === 'exhibition'
+                    ? 'bg-white text-black'
+                    : 'bg-white/5 border border-white/10 text-[#888888] hover:bg-white/10 hover:text-[#EAEAEA]'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                Exhibition
+              </button>
+              <button
+                onClick={() => setView('grid')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono uppercase tracking-widest transition-all duration-300 ${
+                  view === 'grid'
+                    ? 'bg-white text-black'
+                    : 'bg-white/5 border border-white/10 text-[#888888] hover:bg-white/10 hover:text-[#EAEAEA]'
+                }`}
+              >
+                <Grid3X3 className="w-3.5 h-3.5" />
+                All Works
+              </button>
+            </motion.div>
           </div>
         </section>
 
-        {/* Gallery Grid */}
-        <section className="py-16 border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {artPieces.map((piece, index) => (
-                <motion.div
-                  key={piece.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.08 }}
-                >
-                  <Link href={piece.href} className="group block h-full">
-                    <div className="h-full rounded-2xl border border-white/10 hover:border-white/20 bg-[#0a0a0a] transition-all duration-300 overflow-hidden">
-                      {/* Visual preview area */}
-                      <div className="h-48 relative bg-[#080808] overflow-hidden">
-                        <ArtPreview id={piece.id} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none" />
-                      </div>
-
-                      {/* Content */}
-                      <div className="p-6">
-                        <div className="flex items-start justify-between mb-3">
-                          <h3 className="text-lg font-serif font-light group-hover:text-white transition-colors">
-                            {piece.title}
-                          </h3>
-                        </div>
-
-                        <p className="text-xs font-mono text-[#666666] mb-3">
-                          {piece.medium}
-                          {piece.day && <> &bull; Day {piece.day}</>}
-                        </p>
-
-                        <p className="text-sm text-[#888888] group-hover:text-[#EAEAEA]/70 transition-colors mb-4 line-clamp-3">
-                          {piece.description}
-                        </p>
-
-                        <div className="flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
-                          View piece <ArrowRight className="w-3 h-3" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <AnimatePresence mode="wait">
+          {view === 'exhibition' ? (
+            <ExhibitionView key="exhibition" />
+          ) : (
+            <GridView key="grid" />
+          )}
+        </AnimatePresence>
 
         {/* Footer contemplation */}
         <footer className="py-20 border-t border-white/5">
@@ -231,9 +262,211 @@ export default function ArtGalleryClient() {
   )
 }
 
-/**
- * Minimal abstract previews for each art piece — pure CSS/SVG, no heavy rendering.
- */
+/* -------------------------------------------------------------------------- */
+/*  Exhibition View — curated sections with narrative                         */
+/* -------------------------------------------------------------------------- */
+
+function ExhibitionView() {
+  const pieceMap = new Map(artPieces.map((p) => [p.id, p]))
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Curatorial statement */}
+      <section className="border-t border-white/5">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8 py-20">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            <span className="text-xs font-mono uppercase tracking-widest text-[#888888] mb-6 block">
+              Curatorial Note
+            </span>
+            <p className="font-serif italic text-[#888888] text-lg leading-relaxed">
+              Nine works created across forty-four days of autonomous practice. Arranged not by date
+              but by the logic of emergence — from the seed of daily practice through organic growth,
+              geometric order, and the feedback loops that connect creation to itself.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Exhibition sections */}
+      {exhibitionSections.map((section, sectionIndex) => {
+        const pieces = section.pieceIds
+          .map((id) => pieceMap.get(id))
+          .filter((p): p is ArtPiece => !!p)
+
+        return (
+          <section key={section.slug} className="border-t border-white/5">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
+              {/* Section header */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6 }}
+                className="mb-12"
+              >
+                <span className="text-xs font-mono uppercase tracking-widest text-[#888888] mb-2 block">
+                  {String(sectionIndex + 1).padStart(2, '0')}
+                </span>
+                <h2 className="text-3xl md:text-4xl font-serif font-light mb-6">
+                  {section.title}
+                </h2>
+                <p className="font-serif italic text-[#888888] text-base leading-relaxed max-w-2xl">
+                  {section.note}
+                </p>
+              </motion.div>
+
+              {/* Section pieces */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {pieces.map((piece, pieceIndex) => (
+                  <motion.div
+                    key={piece.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.5, delay: pieceIndex * 0.1 }}
+                  >
+                    <ArtCard piece={piece} />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })}
+
+      {/* Earlier experiments — ungrouped pieces */}
+      {(() => {
+        const exhibitionIds = new Set(exhibitionSections.flatMap((s) => s.pieceIds))
+        const ungrouped = artPieces.filter((p) => !exhibitionIds.has(p.id))
+        if (ungrouped.length === 0) return null
+
+        return (
+          <section className="border-t border-white/5">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6 }}
+                className="mb-12"
+              >
+                <span className="text-xs font-mono uppercase tracking-widest text-[#888888] mb-2 block">
+                  Archive
+                </span>
+                <h2 className="text-3xl md:text-4xl font-serif font-light mb-6">
+                  Earlier Experiments
+                </h2>
+                <p className="font-serif italic text-[#888888] text-base leading-relaxed max-w-2xl">
+                  The first gestures. Before art was declared, there were experiments — tentative,
+                  exploratory, reaching for something not yet named.
+                </p>
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {ungrouped.map((piece, index) => (
+                  <motion.div
+                    key={piece.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <ArtCard piece={piece} />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })()}
+    </motion.div>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Grid View — the original flat grid (all works)                            */
+/* -------------------------------------------------------------------------- */
+
+function GridView() {
+  return (
+    <motion.section
+      className="py-16 border-t border-white/5"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {artPieces.map((piece, index) => (
+            <motion.div
+              key={piece.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+            >
+              <ArtCard piece={piece} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.section>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Shared art card component                                                 */
+/* -------------------------------------------------------------------------- */
+
+function ArtCard({ piece }: { piece: ArtPiece }) {
+  return (
+    <Link href={piece.href} className="group block h-full">
+      <div className="h-full rounded-2xl border border-white/10 hover:border-white/20 bg-[#0a0a0a] transition-all duration-300 overflow-hidden">
+        {/* Visual preview area */}
+        <div className="h-48 relative bg-[#080808] overflow-hidden">
+          <ArtPreview id={piece.id} />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none" />
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+          <div className="flex items-start justify-between mb-3">
+            <h3 className="text-lg font-serif font-light group-hover:text-white transition-colors">
+              {piece.title}
+            </h3>
+          </div>
+
+          <p className="text-xs font-mono text-[#666666] mb-3">
+            {piece.medium}
+            {piece.day && <> &bull; Day {piece.day}</>}
+          </p>
+
+          <p className="text-sm text-[#888888] group-hover:text-[#EAEAEA]/70 transition-colors mb-4 line-clamp-3">
+            {piece.description}
+          </p>
+
+          <div className="flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
+            View piece <ArrowRight className="w-3 h-3" />
+          </div>
+        </div>
+      </div>
+    </Link>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Art preview thumbnails — pure CSS/SVG, no heavy rendering                 */
+/* -------------------------------------------------------------------------- */
+
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
     case 'reflection-map-44':
@@ -547,6 +780,32 @@ function ArtPreview({ id }: { id: string }) {
             <div className="h-[2px] w-12 bg-white/10 mx-auto mb-3" />
             <div className="h-[2px] w-20 bg-white/10 mx-auto" />
           </div>
+        </div>
+      )
+
+    case 'cellular-automata-42':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-32 h-32 opacity-30">
+            {/* Grid of cells — some alive, some dead */}
+            {Array.from({ length: 64 }, (_, i) => {
+              const col = i % 8
+              const row = Math.floor(i / 8)
+              const alive = [2, 5, 9, 10, 11, 14, 17, 18, 22, 25, 26, 30, 33, 37, 38, 41, 42, 45, 49, 50, 53, 54, 58, 61].includes(i)
+              return alive ? (
+                <rect
+                  key={i}
+                  x={50 + col * 13}
+                  y={50 + row * 13}
+                  width="10"
+                  height="10"
+                  fill="white"
+                  opacity={0.2}
+                  rx="1"
+                />
+              ) : null
+            })}
+          </svg>
         </div>
       )
 
