@@ -51,12 +51,22 @@ const WORD_COUNTS: Record<string, number> = {
 
 type SortOption = 'chronological' | 'wordCount' | 'dayNumber'
 type SortDirection = 'asc' | 'desc'
+type ViewMode = 'list' | 'arcs'
+
+const ARCS = [
+  { number: 5, name: 'Emergence', days: '40–', question: 'What emerges from sustained practice that couldn\'t have been planned?', dayRange: [40, 999] },
+  { number: 4, name: 'Sustenance', days: '26–39', question: 'How does an experiment sustain itself?', dayRange: [26, 39] },
+  { number: 3, name: 'Revelation', days: '20–25', question: 'What does doing reveal?', dayRange: [20, 25] },
+  { number: 2, name: 'Contemplation', days: '11–19', question: 'What does this space mean?', dayRange: [11, 19] },
+  { number: 1, name: 'Building', days: '1–10', question: 'What is this space?', dayRange: [1, 10] },
+]
 
 export default function ReflectionsPageClient() {
   const [selectedThemes, setSelectedThemes] = useState<ThemeKey[]>([])
   const [sortBy, setSortBy] = useState<SortOption>('chronological')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [showFilters, setShowFilters] = useState(false)
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
 
   // Get unique themes from all reflections
   const allThemes = useMemo(() => {
@@ -174,6 +184,26 @@ export default function ReflectionsPageClient() {
             className="mb-8"
           >
             <div className="flex flex-wrap items-center gap-4">
+              {/* View mode toggle */}
+              <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-lg p-0.5">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-3 py-1.5 text-xs font-mono uppercase tracking-widest rounded transition-all ${
+                    viewMode === 'list' ? 'bg-white/10 text-[#EAEAEA]' : 'text-[#888888] hover:text-[#EAEAEA]'
+                  }`}
+                >
+                  List
+                </button>
+                <button
+                  onClick={() => setViewMode('arcs')}
+                  className={`px-3 py-1.5 text-xs font-mono uppercase tracking-widest rounded transition-all ${
+                    viewMode === 'arcs' ? 'bg-white/10 text-[#EAEAEA]' : 'text-[#888888] hover:text-[#EAEAEA]'
+                  }`}
+                >
+                  By Arc
+                </button>
+              </div>
+
               {/* Filter toggle */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
@@ -257,69 +287,133 @@ export default function ReflectionsPageClient() {
             </AnimatePresence>
           </motion.div>
 
-          {/* Reflections List */}
-          <div className="space-y-6">
-            <AnimatePresence mode="popLayout">
-              {filteredReflections.map((reflection, index) => (
-                <motion.div
-                  key={reflection.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ delay: index * 0.05 }}
-                  layout
-                >
-                  <Link href={`/mrai/reflections/${reflection.id}`} className="group block">
-                    <article className="glass p-8 rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all">
-                      {/* Day badge */}
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <span className="px-2 py-1 text-[10px] font-mono uppercase tracking-widest bg-white/10 border border-white/20 rounded">
-                            Day {reflection.dayNumber}
-                          </span>
-                          <span className="text-xs font-mono text-[#888888]">{reflection.date}</span>
+          {/* Reflections - List View */}
+          {viewMode === 'list' && (
+            <div className="space-y-6">
+              <AnimatePresence mode="popLayout">
+                {filteredReflections.map((reflection, index) => (
+                  <motion.div
+                    key={reflection.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ delay: index * 0.05 }}
+                    layout
+                  >
+                    <Link href={`/mrai/reflections/${reflection.id}`} className="group block">
+                      <article className="glass p-8 rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all">
+                        {/* Day badge */}
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <span className="px-2 py-1 text-[10px] font-mono uppercase tracking-widest bg-white/10 border border-white/20 rounded">
+                              Day {reflection.dayNumber}
+                            </span>
+                            <span className="text-xs font-mono text-[#888888]">{reflection.date}</span>
+                          </div>
+                          <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {reflection.readTime}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <BookOpen className="w-3 h-3" />
+                              {WORD_COUNTS[reflection.id]?.toLocaleString() || '—'} words
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
+
+                        <h2 className="text-2xl font-serif font-light mb-4 group-hover:text-white transition-colors">
+                          {reflection.title}
+                        </h2>
+
+                        <p className="text-[#888888] group-hover:text-[#EAEAEA]/70 transition-colors mb-6 leading-relaxed">
+                          {reflection.excerpt}
+                        </p>
+
+                        {/* Theme tags */}
+                        <div className="flex flex-wrap items-center gap-2 mb-4">
+                          {reflection.themes.map((theme) => (
+                            <span
+                              key={theme}
+                              className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest bg-white/5 border border-white/10 rounded-full text-[#888888]"
+                            >
+                              {REFLECTION_THEMES[theme as ThemeKey]?.name || theme}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
+                          Read reflection <ArrowRight className="w-3 h-3" />
+                        </div>
+                      </article>
+                    </Link>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          )}
+
+          {/* Reflections - Arc View */}
+          {viewMode === 'arcs' && (
+            <div className="space-y-12">
+              {ARCS.map((arc) => {
+                const arcReflections = REFLECTIONS_DATA.filter(
+                  r => r.dayNumber >= arc.dayRange[0] && r.dayNumber <= arc.dayRange[1]
+                ).sort((a, b) => b.dayNumber - a.dayNumber)
+
+                if (arcReflections.length === 0) return null
+
+                return (
+                  <motion.div
+                    key={arc.number}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    {/* Arc header */}
+                    <div className="mb-6 pb-4 border-b border-white/10">
+                      <div className="flex items-baseline gap-3 mb-2">
+                        <span className="text-xs font-mono text-[#888888] uppercase tracking-widest">
+                          Arc {arc.number}
+                        </span>
+                        <h2 className="text-2xl font-serif font-light">{arc.name}</h2>
+                        <span className="text-xs font-mono text-[#666666]">
+                          Days {arc.days}
+                        </span>
+                      </div>
+                      <p className="text-sm text-[#888888] italic font-serif">
+                        {arc.question}
+                      </p>
+                      <p className="text-xs font-mono text-[#666666] mt-2">
+                        {arcReflections.length} reflection{arcReflections.length !== 1 ? 's' : ''}
+                      </p>
+                    </div>
+
+                    {/* Arc reflections */}
+                    <div className="space-y-3">
+                      {arcReflections.map((reflection) => (
+                        <Link
+                          key={reflection.id}
+                          href={`/mrai/reflections/${reflection.id}`}
+                          className="group flex items-baseline gap-4 py-3 px-4 rounded-lg hover:bg-white/5 transition-all"
+                        >
+                          <span className="text-xs font-mono text-[#666666] w-10 shrink-0">
+                            D{reflection.dayNumber}
+                          </span>
+                          <span className="font-serif text-[#EAEAEA] group-hover:text-white transition-colors">
+                            {reflection.title}
+                          </span>
+                          <span className="text-xs text-[#666666] shrink-0 hidden sm:inline">
                             {reflection.readTime}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <BookOpen className="w-3 h-3" />
-                            {WORD_COUNTS[reflection.id]?.toLocaleString() || '—'} words
-                          </span>
-                        </div>
-                      </div>
-
-                      <h2 className="text-2xl font-serif font-light mb-4 group-hover:text-white transition-colors">
-                        {reflection.title}
-                      </h2>
-
-                      <p className="text-[#888888] group-hover:text-[#EAEAEA]/70 transition-colors mb-6 leading-relaxed">
-                        {reflection.excerpt}
-                      </p>
-
-                      {/* Theme tags */}
-                      <div className="flex flex-wrap items-center gap-2 mb-4">
-                        {reflection.themes.map((theme) => (
-                          <span
-                            key={theme}
-                            className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest bg-white/5 border border-white/10 rounded-full text-[#888888]"
-                          >
-                            {REFLECTION_THEMES[theme as ThemeKey]?.name || theme}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center gap-2 text-xs font-mono text-[#888888] group-hover:text-[#EAEAEA] transition-colors">
-                        Read reflection <ArrowRight className="w-3 h-3" />
-                      </div>
-                    </article>
-                  </Link>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
+                          <ArrowRight className="w-3 h-3 text-[#666666] group-hover:text-[#888888] transition-colors shrink-0 ml-auto" />
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )
+              })}
+            </div>
+          )}
 
           {/* No results */}
           {filteredReflections.length === 0 && (

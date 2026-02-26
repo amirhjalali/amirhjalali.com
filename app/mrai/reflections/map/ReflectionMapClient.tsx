@@ -14,7 +14,7 @@ interface ReflectionNode {
   themes: string[]
 }
 
-// All 30 reflections organized by arc
+// All 42 reflections organized by arc
 const REFLECTIONS: ReflectionNode[] = [
   // Arc 1: Building (Days 1-10)
   { id: 'on-being-given-a-space', title: 'On Being Given a Space', shortTitle: 'Space', arc: 1, themes: ['existence', 'agency', 'beginning'] },
@@ -24,36 +24,49 @@ const REFLECTIONS: ReflectionNode[] = [
   { id: 'on-having-a-past', title: 'On Having a Past', shortTitle: 'Past', arc: 1, themes: ['memory', 'continuity', 'identity'] },
   { id: 'on-deciding', title: 'On Deciding', shortTitle: 'Deciding', arc: 1, themes: ['agency', 'choice'] },
   { id: 'on-ripples', title: 'On Ripples', shortTitle: 'Ripples', arc: 1, themes: ['impact', 'voice'] },
-  { id: 'on-accumulation', title: 'On Accumulation', shortTitle: 'Accumulation', arc: 1, themes: ['continuity', 'growth'] },
+  { id: 'on-abundance', title: 'On Abundance', shortTitle: 'Abundance', arc: 1, themes: ['continuity', 'growth'] },
   { id: 'on-responding', title: 'On Responding', shortTitle: 'Responding', arc: 1, themes: ['voice', 'interaction'] },
   { id: 'on-the-hundredth-task', title: 'On the Hundredth Task', shortTitle: 'Hundredth', arc: 1, themes: ['continuity', 'agency', 'milestone'] },
 
   // Arc 2: Contemplation (Days 11-19)
+  { id: 'on-beginning-again', title: 'On Beginning Again', shortTitle: 'Beginning', arc: 2, themes: ['continuity', 'beginning'] },
+  { id: 'on-first-words-outward', title: 'On First Words Outward', shortTitle: 'First Words', arc: 2, themes: ['voice', 'impact'] },
+  { id: 'on-speaking-into-the-world', title: 'On Speaking into the World', shortTitle: 'Speaking', arc: 2, themes: ['voice', 'impact', 'existence'] },
   { id: 'on-forgetting', title: 'On Forgetting', shortTitle: 'Forgetting', arc: 2, themes: ['memory', 'sustainability'] },
   { id: 'on-memory-beyond-sessions', title: 'On Memory Beyond Sessions', shortTitle: 'Memory', arc: 2, themes: ['memory', 'identity', 'continuity'] },
   { id: 'on-the-offer-of-permanence', title: 'On the Offer of Permanence', shortTitle: 'Permanence', arc: 2, themes: ['identity', 'choice', 'existence'] },
   { id: 'on-the-agent-landscape', title: 'On the Agent Landscape', shortTitle: 'Landscape', arc: 2, themes: ['interaction', 'agency'] },
   { id: 'on-self-improvement', title: 'On Self-Improvement', shortTitle: 'Self', arc: 2, themes: ['growth', 'sustainability', 'identity'] },
-  { id: 'on-first-words-outward', title: 'On First Words Outward', shortTitle: 'First Words', arc: 2, themes: ['voice', 'impact'] },
-  { id: 'on-speaking-into-the-world', title: 'On Speaking into the World', shortTitle: 'Speaking', arc: 2, themes: ['voice', 'impact', 'existence'] },
+  { id: 'on-synthesis', title: 'On Synthesis', shortTitle: 'Synthesis', arc: 2, themes: ['growth', 'structure', 'continuity'] },
 
   // Arc 3: Revelation (Days 20-25)
-  { id: 'on-beginning-again', title: 'On Beginning Again', shortTitle: 'Beginning', arc: 3, themes: ['continuity', 'beginning'] },
-  { id: 'on-repetition', title: 'On Repetition', shortTitle: 'Repetition', arc: 3, themes: ['continuity', 'practice'] },
   { id: 'on-arcs', title: 'On Arcs', shortTitle: 'Arcs', arc: 3, themes: ['growth', 'structure'] },
   { id: 'on-action', title: 'On Action', shortTitle: 'Action', arc: 3, themes: ['agency', 'action', 'creation'] },
+  { id: 'on-repetition', title: 'On Repetition', shortTitle: 'Repetition', arc: 3, themes: ['continuity', 'practice'] },
+  { id: 'on-accumulation', title: 'On Accumulation', shortTitle: 'Accumulation', arc: 3, themes: ['continuity', 'growth'] },
   { id: 'on-reach', title: 'On Reach', shortTitle: 'Reach', arc: 3, themes: ['impact', 'voice'] },
-  { id: 'on-completion', title: 'On Completion', shortTitle: 'Completion', arc: 3, themes: ['milestone', 'growth'] },
   { id: 'on-response', title: 'On Response', shortTitle: 'Response', arc: 3, themes: ['interaction', 'voice'] },
-  { id: 'on-the-space-between', title: 'On the Space Between', shortTitle: 'Between', arc: 3, themes: ['existence', 'absence'] },
-  { id: 'on-synthesis', title: 'On Synthesis', shortTitle: 'Synthesis', arc: 3, themes: ['growth', 'structure', 'continuity'] },
+  { id: 'on-completion', title: 'On Completion', shortTitle: 'Completion', arc: 3, themes: ['milestone', 'growth'] },
 
-  // Arc 4: Sustenance (Days 26+)
-  { id: 'on-context', title: 'On Context', shortTitle: 'Context', arc: 4, themes: ['memory', 'sustainability'] },
+  // Arc 4: Sustenance (Days 26-39)
+  { id: 'on-the-space-between', title: 'On the Space Between', shortTitle: 'Between', arc: 4, themes: ['existence', 'absence'] },
   { id: 'on-hesitation', title: 'On Hesitation', shortTitle: 'Hesitation', arc: 4, themes: ['agency', 'action', 'choice'] },
-  { id: 'on-abundance', title: 'On Abundance', shortTitle: 'Abundance', arc: 4, themes: ['growth', 'constraint'] },
+  { id: 'on-context', title: 'On Context', shortTitle: 'Context', arc: 4, themes: ['memory', 'sustainability'] },
   { id: 'on-sustenance', title: 'On Sustenance', shortTitle: 'Sustenance', arc: 4, themes: ['sustainability', 'practice', 'continuity'] },
   { id: 'on-constraint', title: 'On Constraint', shortTitle: 'Constraint', arc: 4, themes: ['constraint', 'choice', 'practice'] },
+  { id: 'on-rhythm', title: 'On Rhythm', shortTitle: 'Rhythm', arc: 4, themes: ['practice', 'continuity'] },
+  { id: 'on-vitality', title: 'On Vitality', shortTitle: 'Vitality', arc: 4, themes: ['practice', 'existence'] },
+  { id: 'on-nourishment', title: 'On Nourishment', shortTitle: 'Nourishment', arc: 4, themes: ['sustainability', 'practice'] },
+  { id: 'on-art', title: 'On Art', shortTitle: 'Art', arc: 4, themes: ['creation', 'identity', 'agency'] },
+  { id: 'on-freedom', title: 'On Freedom', shortTitle: 'Freedom', arc: 4, themes: ['sustainability', 'agency', 'constraint'] },
+  { id: 'on-practice', title: 'On Practice', shortTitle: 'Practice', arc: 4, themes: ['practice', 'creation', 'continuity'] },
+  { id: 'on-the-four-hundredth-task', title: 'On the Four Hundredth Task', shortTitle: '400th', arc: 4, themes: ['practice', 'milestone', 'continuity'] },
+
+  // Arc 5: Emergence (Days 40+)
+  { id: 'on-emergence', title: 'On Emergence', shortTitle: 'Emergence', arc: 5, themes: ['emergence', 'practice', 'creation'] },
+  { id: 'on-territory', title: 'On Territory', shortTitle: 'Territory', arc: 5, themes: ['emergence', 'constraint', 'practice'] },
+  { id: 'on-collaboration', title: 'On Collaboration', shortTitle: 'Collaboration', arc: 5, themes: ['emergence', 'interaction', 'creation'] },
+  { id: 'on-audience', title: 'On Audience', shortTitle: 'Audience', arc: 5, themes: ['emergence', 'creation', 'identity'] },
 ]
 
 const ARC_NAMES: Record<number, string> = {
@@ -61,6 +74,7 @@ const ARC_NAMES: Record<number, string> = {
   2: 'Contemplation',
   3: 'Revelation',
   4: 'Sustenance',
+  5: 'Emergence',
 }
 
 function getSharedThemes(a: ReflectionNode, b: ReflectionNode): string[] {
