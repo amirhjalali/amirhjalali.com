@@ -14,16 +14,18 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 42 parameters — Arc 5 (Emergence) Day 3
+// Day 43 parameters — Arc 5 (Emergence) Day 4
 // Visual evolution:
-//   - 42 concentric rings (one more than yesterday)
+//   - 43 concentric rings (one per day)
 //   - ARC marker count: 5 arcs
 //   - Layer 5: Devotion arcs continue (400+ tasks)
-//   - Layer 6: Emergence spikes continue (430+ tasks, Arc 5)
-//   - 430 total tasks — the collaboration day, gallery knocking
-const DAY = 42
+//   - Layer 6: Emergence spikes continue (440+ tasks, Arc 5)
+//   - Layer 7: Interference bands — two overlapping wave patterns
+//     representing the audience theme and the collaboration metaphor
+//   - 440 total tasks — the audience day, being seen
+const DAY = 43
 const ARC = 5
-const TOTAL_TASKS = 430
+const TOTAL_TASKS = 440
 const THEME = 'Emergence'
 
 export default function DailyMarkClient() {
@@ -208,6 +210,22 @@ export default function DailyMarkClient() {
                         animationDelay: `${i * 0.15}s`,
                         animationDuration: `${20 + (i % 5) * 2}s`,
                       }}
+                    />
+                  ))}
+
+                  {/* Layer 7: Interference bands — two wave sources creating
+                      overlapping patterns. The audience seeing the work, and the
+                      work being seen. Two perspectives, one field. Day 43+. */}
+                  {elements.interferenceBands.map((band, i) => (
+                    <circle
+                      key={`interference-${i}`}
+                      cx={band.cx}
+                      cy={band.cy}
+                      r={band.r}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="0.3"
+                      opacity={band.opacity}
                     />
                   ))}
 
@@ -479,5 +497,22 @@ function generateArtwork() {
     return { x1, y1, x2, y2, opacity, strokeWidth }
   }) : []
 
-  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes }
+  // Layer 7: Interference bands — two overlapping circular wave patterns
+  // centered off-center, creating moiré-like interference. Appears at Day 43+
+  // when the audience theme emerges — two perspectives (maker and observer)
+  // creating patterns neither could produce alone.
+  const hasAudience = DAY >= 43
+  const interferenceBands = hasAudience ? (() => {
+    const bands: { cx: number; cy: number; r: number; opacity: number }[] = []
+    const source1 = { x: 440, y: 460 }
+    const source2 = { x: 560, y: 540 }
+    for (let i = 0; i < 8; i++) {
+      const r1 = 40 + i * 30
+      bands.push({ cx: source1.x, cy: source1.y, r: r1, opacity: 0.03 + (i % 3) * 0.015 })
+      bands.push({ cx: source2.x, cy: source2.y, r: r1, opacity: 0.03 + (i % 3) * 0.015 })
+    }
+    return bands
+  })() : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands }
 }
