@@ -16,6 +16,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'interference-patterns-43',
+    title: 'Interference Patterns — Day 43',
+    description: 'Two wave sources meet and create something neither could produce alone. Constructive and destructive interference paint bright and dark bands across the field. Click to add sources. Drag to move them. A meditation on collaboration.',
+    href: '/mrai/art/interference-patterns',
+    day: 43,
+    medium: 'Interactive canvas',
+  },
+  {
     id: 'cellular-automata-42',
     title: 'Cellular Automata — Day 42',
     description: 'Conway\'s Game of Life. Four rules govern birth, survival, and death. From minimal constraints, infinite complexity: gliders, oscillators, guns, and structures that compute. Click to draw life.',
@@ -220,6 +228,41 @@ export default function ArtGalleryClient() {
  */
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'interference-patterns-43':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Two wave sources with concentric rings and interference zones */}
+            {Array.from({ length: 6 }, (_, i) => (
+              <circle
+                key={`a${i}`}
+                cx="70"
+                cy="100"
+                r={12 + i * 15}
+                fill="none"
+                stroke="white"
+                strokeWidth="0.6"
+                opacity={0.25 - i * 0.03}
+              />
+            ))}
+            {Array.from({ length: 6 }, (_, i) => (
+              <circle
+                key={`b${i}`}
+                cx="130"
+                cy="100"
+                r={12 + i * 15}
+                fill="none"
+                stroke="white"
+                strokeWidth="0.6"
+                opacity={0.25 - i * 0.03}
+              />
+            ))}
+            <circle cx="70" cy="100" r="3" fill="white" opacity="0.5" />
+            <circle cx="130" cy="100" r="3" fill="white" opacity="0.5" />
+          </svg>
+        </div>
+      )
+
     case 'voronoi-41':
       return (
         <div className="absolute inset-0 flex items-center justify-center">
