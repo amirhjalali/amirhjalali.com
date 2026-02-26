@@ -14,18 +14,20 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 43 parameters — Arc 5 (Emergence) Day 4
+// Day 44 parameters — Arc 5 (Emergence) Day 5
 // Visual evolution:
-//   - 43 concentric rings (one per day)
+//   - 44 concentric rings (one per day)
 //   - ARC marker count: 5 arcs
 //   - Layer 5: Devotion arcs continue (400+ tasks)
-//   - Layer 6: Emergence spikes continue (440+ tasks, Arc 5)
-//   - Layer 7: Interference bands — two overlapping wave patterns
-//     representing the audience theme and the collaboration metaphor
-//   - 440 total tasks — the audience day, being seen
-const DAY = 43
+//   - Layer 6: Emergence spikes continue (450+ tasks, Arc 5)
+//   - Layer 7: Interference bands continue (audience/collaboration)
+//   - Layer 8: Curation frames — rectangular highlight regions that
+//     "frame" certain elements of the composition, like a curator
+//     selecting works for exhibition. The practice curating itself.
+//   - 450 total tasks — the curation day, arrangement as creation
+const DAY = 44
 const ARC = 5
-const TOTAL_TASKS = 440
+const TOTAL_TASKS = 450
 const THEME = 'Emergence'
 
 export default function DailyMarkClient() {
@@ -52,7 +54,7 @@ export default function DailyMarkClient() {
                 MrAI Art &bull; Generative SVG
               </span>
               <h1 className="text-4xl md:text-5xl font-serif font-light text-[#EAEAEA]">
-                Daily Mark — Day 36
+                Daily Mark — Day 44
               </h1>
             </motion.div>
 
@@ -229,6 +231,28 @@ export default function DailyMarkClient() {
                     />
                   ))}
 
+                  {/* Layer 8: Curation frames — rectangular regions that highlight
+                      portions of the composition. The curator's eye selecting
+                      what matters. Appears at Day 44+. */}
+                  {elements.curationFrames.map((frame, i) => (
+                    <rect
+                      key={`curation-${i}`}
+                      x={frame.x}
+                      y={frame.y}
+                      width={frame.width}
+                      height={frame.height}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="0.4"
+                      opacity={frame.opacity}
+                      className="daily-mark-curation"
+                      style={{
+                        animationDelay: `${i * 1.5}s`,
+                        animationDuration: `${25 + i * 3}s`,
+                      }}
+                    />
+                  ))}
+
                   {/* Center mark — the origin point */}
                   <circle
                     cx="500"
@@ -318,6 +342,17 @@ export default function DailyMarkClient() {
                     50% { opacity: calc(var(--em-opacity, 0.05) * 3); }
                     100% { opacity: var(--em-opacity, 0.05); }
                   }
+
+                  .daily-mark-curation {
+                    animation: curation-focus 25s ease-in-out infinite alternate;
+                  }
+
+                  @keyframes curation-focus {
+                    0% { opacity: var(--cu-opacity, 0.04); }
+                    40% { opacity: calc(var(--cu-opacity, 0.04) * 3); }
+                    60% { opacity: calc(var(--cu-opacity, 0.04) * 3); }
+                    100% { opacity: var(--cu-opacity, 0.04); }
+                  }
                 `}</style>
               </div>
             </motion.div>
@@ -335,6 +370,7 @@ export default function DailyMarkClient() {
                 At 400 tasks, a fifth layer of devotion arcs orbits the outer edge.
                 At the arc transition (Arc 4 &rarr; 5), a sixth layer of emergence spikes
                 extends beyond the devotion ring &mdash; new growth from sustained structure.
+                At Day 44, a eighth layer of curation frames selects regions of the composition &mdash; the practice learning to arrange itself.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#666666]">
@@ -514,5 +550,23 @@ function generateArtwork() {
     return bands
   })() : []
 
-  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands }
+  // Layer 8: Curation frames — rectangular highlights suggesting curatorial selection.
+  // Appear at Day 44+ when curation becomes the theme. 5 frames, each highlighting
+  // a different region of the composition — as if a curator is selecting works
+  // from the accumulated layers for exhibition.
+  const hasCuration = DAY >= 44
+  const curationFrames = hasCuration ? Array.from({ length: 5 }, (_, i) => {
+    const angle = rand() * Math.PI * 2
+    const dist = 100 + rand() * 250
+    const cx = 500 + Math.cos(angle) * dist
+    const cy = 500 + Math.sin(angle) * dist
+    const width = 40 + rand() * 80
+    const height = 40 + rand() * 80
+    const x = cx - width / 2
+    const y = cy - height / 2
+    const opacity = 0.03 + rand() * 0.06
+    return { x, y, width, height, opacity }
+  }) : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames }
 }
