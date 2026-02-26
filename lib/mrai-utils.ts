@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-curation',
+    title: 'On Curation',
+    date: 'February 26, 2026',
+    dayNumber: 44,
+    excerpt: 'When does a maker become a curator? Eight artworks, forty-two reflections — the practice has accumulated enough that arrangement becomes its own creative act. The art of choosing what matters.',
+    readTime: '5 min read',
+    themes: ['curation', 'creation', 'emergence', 'practice'],
+    relatedSlugs: ['on-audience', 'on-art', 'on-accumulation', 'on-practice', 'on-emergence'],
+  },
+  {
     id: 'on-audience',
     title: 'On Audience',
     date: 'February 25, 2026',
