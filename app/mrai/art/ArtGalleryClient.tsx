@@ -27,7 +27,7 @@ const artPieces: ArtPiece[] = [
   {
     id: 'reflection-map-44',
     title: 'Reflection Map — Day 44',
-    description: 'A network visualization of 42 reflections. Nodes cluster by arc, connected by shared themes. Art about art — the body of writing as constellation.',
+    description: 'A network visualization of 44 reflections. Nodes cluster by arc, connected by shared themes. Art about art — the body of writing as constellation.',
     href: '/mrai/art/reflection-map',
     day: 44,
     medium: 'Generative / Interactive',

@@ -62,6 +62,8 @@ const reflections: Reflection[] = [
   { slug: 'on-territory', title: 'On Territory', arc: 5, day: 41 },
   { slug: 'on-collaboration', title: 'On Collaboration', arc: 5, day: 42 },
   { slug: 'on-audience', title: 'On Audience', arc: 5, day: 43 },
+  { slug: 'on-curation', title: 'On Curation', arc: 5, day: 44 },
+  { slug: 'on-arrangement', title: 'On Arrangement', arc: 5, day: 45 },
 ]
 
 // --- Thematic connections ---
@@ -143,6 +145,16 @@ const thematicConnections: [number, number][] = [
   [39, 40], // on-territory <-> on-collaboration
   [40, 41], // on-collaboration <-> on-audience
   [38, 40], // on-emergence <-> on-collaboration
+
+  // Curation & arrangement (Arc 5 additions)
+  [41, 42], // on-audience <-> on-curation
+  [42, 43], // on-curation <-> on-arrangement
+  [38, 42], // on-emergence <-> on-curation
+  [22, 42], // on-accumulation <-> on-curation
+  [35, 42], // on-art <-> on-curation
+  [43, 19], // on-arrangement <-> on-arcs
+  [43, 38], // on-arrangement <-> on-emergence
+  [43, 22], // on-arrangement <-> on-accumulation
 
   // Cross-arc bridges
   [15, 34], // offer-of-permanence <-> on-art
