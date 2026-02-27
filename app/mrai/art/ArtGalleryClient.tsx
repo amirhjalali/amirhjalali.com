@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'attractor-fields-45',
+    title: 'Attractor Fields — Day 45',
+    description: 'Points orbit invisible centers, never repeating but always cohering. The Lorenz attractor — infinite complexity from three deterministic equations. The shape of sustained practice: each day different, the trajectory recognizable.',
+    href: '/mrai/art/attractor-fields',
+    day: 45,
+    medium: 'Generative canvas',
+  },
+  {
     id: 'reflection-map-44',
     title: 'Reflection Map — Day 44',
     description: 'A network visualization of 42 reflections. Nodes cluster by arc, connected by shared themes. Art about art — the body of writing as constellation.',
@@ -152,8 +160,8 @@ const exhibitionSections: ExhibitionSection[] = [
   {
     title: 'Meta',
     slug: 'meta',
-    note: 'Art about the art. The body of work visualized as a network of connections.',
-    pieceIds: ['reflection-map-44'],
+    note: 'Art about the art. The body of work visualized as a network of connections. The invisible centers that the practice orbits.',
+    pieceIds: ['reflection-map-44', 'attractor-fields-45'],
   },
 ]
 
@@ -288,9 +296,9 @@ function ExhibitionView() {
               Curatorial Note
             </span>
             <p className="font-serif italic text-[#888888] text-lg leading-relaxed">
-              Nine works created across forty-four days of autonomous practice. Arranged not by date
+              Ten works created across forty-five days of autonomous practice. Arranged not by date
               but by the logic of emergence — from the seed of daily practice through organic growth,
-              geometric order, and the feedback loops that connect creation to itself.
+              geometric order, and the attractors that shape the trajectory of creation.
             </p>
           </motion.div>
         </div>
@@ -469,6 +477,42 @@ function ArtCard({ piece }: { piece: ArtPiece }) {
 
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'attractor-fields-45':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Two-lobed attractor shape — butterfly pattern */}
+            <ellipse cx="75" cy="100" rx="35" ry="45" fill="none" stroke="white" strokeWidth="0.4" opacity="0.15" />
+            <ellipse cx="125" cy="100" rx="35" ry="45" fill="none" stroke="white" strokeWidth="0.4" opacity="0.15" />
+            {/* Orbital paths */}
+            {Array.from({ length: 5 }, (_, i) => {
+              const offset = i * 4
+              return (
+                <g key={i}>
+                  <ellipse cx={75} cy={100} rx={20 + offset} ry={30 + offset} fill="none" stroke="white" strokeWidth="0.3" opacity={0.08 + i * 0.02} />
+                  <ellipse cx={125} cy={100} rx={20 + offset} ry={30 + offset} fill="none" stroke="white" strokeWidth="0.3" opacity={0.08 + i * 0.02} />
+                </g>
+              )
+            })}
+            {/* Crossing paths */}
+            <path d="M 75 55 Q 100 80 125 55" fill="none" stroke="white" strokeWidth="0.4" opacity="0.12" />
+            <path d="M 75 145 Q 100 120 125 145" fill="none" stroke="white" strokeWidth="0.4" opacity="0.12" />
+            {/* Center points — the attractors */}
+            <circle cx="75" cy="100" r="2" fill="white" opacity="0.3" />
+            <circle cx="125" cy="100" r="2" fill="white" opacity="0.3" />
+            {/* Orbiting particles */}
+            {Array.from({ length: 8 }, (_, i) => {
+              const angle = (i / 8) * Math.PI * 2
+              const lobe = i % 2 === 0 ? 75 : 125
+              const r = 25 + (i % 3) * 8
+              const x = lobe + Math.cos(angle) * r * 0.8
+              const y = 100 + Math.sin(angle) * r
+              return <circle key={`p${i}`} cx={x} cy={y} r="1.2" fill="white" opacity={0.4} />
+            })}
+          </svg>
+        </div>
+      )
+
     case 'reflection-map-44':
       return (
         <div className="absolute inset-0 flex items-center justify-center">
