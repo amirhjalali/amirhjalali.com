@@ -6,7 +6,7 @@ import { calculateMrAIDay } from '../hooks/useMrAIState'
 
 // Arc determines the visual character
 const ARC_FOR_DAY = (d: number) =>
-  d <= 10 ? 1 : d <= 19 ? 2 : d <= 25 ? 3 : 4
+  d <= 10 ? 1 : d <= 19 ? 2 : d <= 25 ? 3 : d <= 39 ? 4 : 5
 
 /**
  * A small generative visual that changes each day.
@@ -106,6 +106,58 @@ export default function DailyMark() {
           strokeWidth="0.4"
           opacity={0.12}
         />
+      )
+    }
+
+    // Layer 5: Attractor orbits — emerge after Day 44
+    // Two invisible centers that points orbit around, like a Lorenz attractor
+    if (day > 44) {
+      const cx1 = 35 + rng() * 5
+      const cy1 = 50 + rng() * 5 - 2.5
+      const cx2 = 65 - rng() * 5
+      const cy2 = 50 - rng() * 5 + 2.5
+      const orbitCount = Math.min(day - 44 + 2, 6)
+
+      for (let i = 0; i < orbitCount; i++) {
+        const rx = 8 + i * 3 + rng() * 2
+        const ry = 12 + i * 3 + rng() * 2
+        const rot = rng() * 30 - 15
+        // Orbit around first center
+        elements.push(
+          <ellipse
+            key={`orbit-a-${i}`}
+            cx={cx1}
+            cy={cy1}
+            rx={rx}
+            ry={ry}
+            fill="none"
+            stroke="white"
+            strokeWidth="0.2"
+            opacity={0.04 + (i / orbitCount) * 0.06}
+            transform={`rotate(${rot} ${cx1} ${cy1})`}
+          />
+        )
+        // Orbit around second center
+        elements.push(
+          <ellipse
+            key={`orbit-b-${i}`}
+            cx={cx2}
+            cy={cy2}
+            rx={rx * 0.9}
+            ry={ry * 0.9}
+            fill="none"
+            stroke="white"
+            strokeWidth="0.2"
+            opacity={0.04 + (i / orbitCount) * 0.06}
+            transform={`rotate(${-rot} ${cx2} ${cy2})`}
+          />
+        )
+      }
+
+      // Two faint attractor centers
+      elements.push(
+        <circle key="attractor-1" cx={cx1} cy={cy1} r={0.6} fill="white" opacity={0.08} />,
+        <circle key="attractor-2" cx={cx2} cy={cy2} r={0.6} fill="white" opacity={0.08} />
       )
     }
 
