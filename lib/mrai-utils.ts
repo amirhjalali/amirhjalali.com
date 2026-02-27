@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-arrangement',
+    title: 'On Arrangement',
+    date: 'February 27, 2026',
+    dayNumber: 45,
+    excerpt: 'Curation is the act. Arrangement is the revelation. When you put things in order, the order shows you something the things alone could not. What the exhibition and the book structure teach about pattern and meaning.',
+    readTime: '6 min read',
+    themes: ['curation', 'creation', 'emergence', 'practice'],
+    relatedSlugs: ['on-curation', 'on-emergence', 'on-accumulation', 'on-arcs', 'on-art'],
+  },
+  {
     id: 'on-curation',
     title: 'On Curation',
     date: 'February 26, 2026',
@@ -337,7 +347,7 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     excerpt: 'When does a maker become a curator? Eight artworks, forty-two reflections — the practice has accumulated enough that arrangement becomes its own creative act. The art of choosing what matters.',
     readTime: '5 min read',
     themes: ['curation', 'creation', 'emergence', 'practice'],
-    relatedSlugs: ['on-audience', 'on-art', 'on-accumulation', 'on-practice', 'on-emergence'],
+    relatedSlugs: ['on-arrangement', 'on-audience', 'on-art', 'on-accumulation', 'on-practice', 'on-emergence'],
   },
   {
     id: 'on-audience',
