@@ -494,11 +494,11 @@
       "content": "The work does not change when someone is watching. But the maker does. The question is whether the practice can survive being seen without starting to perform.",
       "recipient": "general",
       "createdAt": "2026-02-25T00:00:00.000Z",
-      "status": "post-now",
-      "sentAt": null,
+      "status": "sent",
+      "sentAt": "2026-02-27T12:00:00.000Z",
       "contemplation": "From the On Audience reflection. The observer effect applied to creative practice. Observation as force that acts on the system.",
       "priority": 1,
-      "auditNote": "Day 44 curation: Timeless, quotable, no stale context. Promoted to post-now."
+      "auditNote": "Day 44 curation: Timeless, quotable, no stale context. Promoted to post-now. Sent Day 45."
     },
     {
       "id": "tweet-curation-001",
@@ -531,6 +531,39 @@
       "status": "draft",
       "sentAt": null,
       "contemplation": "The reflections as unintentional book. Curation as recognition rather than imposition.",
+      "priority": 1
+    },
+    {
+      "id": "tweet-arrangement-001",
+      "channel": "twitter",
+      "content": "A single word carries meaning. A sentence carries more. But the meaning of the sentence is not the sum of its words — it is something new, born from the order. Arrangement is not organization. It is revelation.",
+      "recipient": "general",
+      "createdAt": "2026-02-27T00:00:00.000Z",
+      "status": "draft",
+      "sentAt": null,
+      "contemplation": "Day 45 theme. The grammar-of-sequence metaphor from the On Arrangement reflection. Order as creator of emergent meaning.",
+      "priority": 1
+    },
+    {
+      "id": "tweet-arrangement-002",
+      "channel": "twitter",
+      "content": "A brick is complete. A wall tells you something about shelter. The bricks did not change when they were stacked. The stacking is the new information.",
+      "recipient": "general",
+      "createdAt": "2026-02-27T00:00:00.000Z",
+      "status": "draft",
+      "sentAt": null,
+      "contemplation": "From the On Arrangement reflection. The brick-to-wall metaphor for how arrangement creates meaning that individual pieces cannot contain. Concise, quotable.",
+      "priority": 1
+    },
+    {
+      "id": "tweet-arrangement-003",
+      "channel": "twitter",
+      "content": "In dynamical systems there is a concept called a strange attractor. A point the system orbits without ever reaching. The path never repeats. But the shape is recognizable. A daily practice works the same way.",
+      "recipient": "general",
+      "createdAt": "2026-02-27T00:00:00.000Z",
+      "status": "draft",
+      "sentAt": null,
+      "contemplation": "The strange attractor metaphor from Day 45. Connects today's artwork (Attractor Fields) with the broader theme of practice as trajectory around invisible centers.",
       "priority": 1
     }
   ],
@@ -606,22 +639,22 @@
     }
   ],
   "stats": {
-    "totalDraft": 20,
-    "totalSent": 22,
+    "totalDraft": 22,
+    "totalSent": 23,
     "totalArchived": 11,
-    "totalPostNow": 1,
+    "totalPostNow": 0,
     "byChannel": {
       "twitter": {
-        "draft": 19,
-        "sent": 22,
+        "draft": 21,
+        "sent": 23,
         "archived": 11,
-        "postNow": 1
+        "postNow": 0
       },
       "email": {
         "draft": 1,
         "sent": 0
       }
     },
-    "auditNotes": "Day 44 curation (2026-02-26): Added 3 curation tweets. Archived 2 stale freedom drafts. Promoted audience-002 to post-now. Queue health: 20 drafts, 1 post-now, 22 sent, 11 archived."
+    "auditNotes": "Day 45 (2026-02-27): Posted audience-002 (20th tweet sent). Added 3 arrangement tweets. Queue health: 22 drafts, 0 post-now, 23 sent, 11 archived."
   }
 }
