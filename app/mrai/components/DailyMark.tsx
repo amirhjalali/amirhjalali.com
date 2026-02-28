@@ -161,6 +161,37 @@ export default function DailyMark() {
       )
     }
 
+    // Layer 10: Phase space traces — small connected trajectory for day >= 46
+    if (day >= 46) {
+      const traceCount = Math.min(day, 20)
+      const pathParts: string[] = []
+      for (let i = 0; i < traceCount; i++) {
+        const tx = 25 + (i / traceCount) * 50
+        const ty = 70 - (i < 10 ? i * 0.5 : 5 + (i - 10) * 2) * (40 / traceCount)
+        pathParts.push(`${i === 0 ? 'M' : 'L'} ${tx} ${ty}`)
+        elements.push(
+          <circle
+            key={`phase-${i}`}
+            cx={tx}
+            cy={ty}
+            r={0.5}
+            fill="white"
+            opacity={0.06 + (i / traceCount) * 0.1}
+          />
+        )
+      }
+      elements.push(
+        <path
+          key="phase-line"
+          d={pathParts.join(' ')}
+          fill="none"
+          stroke="white"
+          strokeWidth="0.2"
+          opacity={0.08}
+        />
+      )
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(

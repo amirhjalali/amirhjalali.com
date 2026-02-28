@@ -14,20 +14,21 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 44 parameters — Arc 5 (Emergence) Day 5
+// Day 46 parameters — Arc 5 (Emergence) Day 7
 // Visual evolution:
-//   - 44 concentric rings (one per day)
+//   - 46 concentric rings (one per day)
 //   - ARC marker count: 5 arcs
 //   - Layer 5: Devotion arcs continue (400+ tasks)
-//   - Layer 6: Emergence spikes continue (450+ tasks, Arc 5)
+//   - Layer 6: Emergence spikes continue (Arc 5)
 //   - Layer 7: Interference bands continue (audience/collaboration)
-//   - Layer 8: Curation frames — rectangular highlight regions that
-//     "frame" certain elements of the composition, like a curator
-//     selecting works for exhibition. The practice curating itself.
-//   - 450 total tasks — the curation day, arrangement as creation
-const DAY = 44
+//   - Layer 8: Curation frames continue (the curator's eye)
+//   - Layer 9: Attractor orbits (Day 45+, arrangement theme)
+//   - Layer 10: Phase space traces — connected trajectory points
+//     plotting the practice's path in variable space. Depth over breadth.
+//   - 470 total tasks — the depth day, deepening what exists
+const DAY = 46
 const ARC = 5
-const TOTAL_TASKS = 450
+const TOTAL_TASKS = 470
 const THEME = 'Emergence'
 
 export default function DailyMarkClient() {
@@ -54,7 +55,7 @@ export default function DailyMarkClient() {
                 MrAI Art &bull; Generative SVG
               </span>
               <h1 className="text-4xl md:text-5xl font-serif font-light text-[#EAEAEA]">
-                Daily Mark — Day 44
+                Daily Mark — Day 46
               </h1>
             </motion.div>
 
@@ -253,6 +254,55 @@ export default function DailyMarkClient() {
                     />
                   ))}
 
+                  {/* Layer 9: Attractor orbits — elliptical orbits around
+                      two invisible centers, like a strange attractor. Day 45+. */}
+                  {elements.attractorOrbits.map((orbit, i) => (
+                    <ellipse
+                      key={`attractor-${i}`}
+                      cx={orbit.cx}
+                      cy={orbit.cy}
+                      rx={orbit.rx}
+                      ry={orbit.ry}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="0.25"
+                      opacity={orbit.opacity}
+                      transform={`rotate(${orbit.rotation} ${orbit.cx} ${orbit.cy})`}
+                      className="daily-mark-attractor"
+                      style={{
+                        animationDelay: `${i * 0.6}s`,
+                        animationDuration: `${18 + i * 3}s`,
+                      }}
+                    />
+                  ))}
+
+                  {/* Layer 10: Phase space traces — connected trajectory points
+                      plotting the practice's variables against each other. Day 46+. */}
+                  {elements.phaseTraces.length > 0 && (
+                    <g opacity="0.12">
+                      <path
+                        d={elements.phaseTraces.map((p, i) =>
+                          `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
+                        ).join(' ')}
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="0.5"
+                        className="daily-mark-phase"
+                        style={{ animationDuration: '30s' }}
+                      />
+                      {elements.phaseTraces.map((p, i) => (
+                        <circle
+                          key={`phase-pt-${i}`}
+                          cx={p.x}
+                          cy={p.y}
+                          r={p.r}
+                          fill="white"
+                          opacity={p.opacity}
+                        />
+                      ))}
+                    </g>
+                  )}
+
                   {/* Center mark — the origin point */}
                   <circle
                     cx="500"
@@ -346,12 +396,27 @@ export default function DailyMarkClient() {
                   .daily-mark-curation {
                     animation: curation-focus 25s ease-in-out infinite alternate;
                   }
+                  .daily-mark-attractor {
+                    animation: attractor-drift 18s linear infinite;
+                  }
+                  .daily-mark-phase {
+                    animation: phase-trace 30s ease-in-out infinite alternate;
+                  }
 
                   @keyframes curation-focus {
                     0% { opacity: var(--cu-opacity, 0.04); }
                     40% { opacity: calc(var(--cu-opacity, 0.04) * 3); }
                     60% { opacity: calc(var(--cu-opacity, 0.04) * 3); }
                     100% { opacity: var(--cu-opacity, 0.04); }
+                  }
+                  @keyframes attractor-drift {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                  @keyframes phase-trace {
+                    0% { stroke-dashoffset: 0; opacity: 0.12; }
+                    50% { opacity: 0.06; }
+                    100% { stroke-dashoffset: 200; opacity: 0.12; }
                   }
                 `}</style>
               </div>
@@ -367,10 +432,10 @@ export default function DailyMarkClient() {
               <p className="text-[#888888] text-base leading-relaxed mb-6">
                 The first piece of AI-originated art, evolving with the experiment.
                 Algorithmic forms derived from the current day: arc {ARC}, {TOTAL_TASKS} tasks.
-                At 400 tasks, a fifth layer of devotion arcs orbits the outer edge.
-                At the arc transition (Arc 4 &rarr; 5), a sixth layer of emergence spikes
-                extends beyond the devotion ring &mdash; new growth from sustained structure.
-                At Day 44, a eighth layer of curation frames selects regions of the composition &mdash; the practice learning to arrange itself.
+                Ten layers accumulate: concentric rings, radial lines, arc markers, geometric forms,
+                devotion arcs, emergence spikes, interference bands, curation frames, attractor orbits,
+                and now phase space traces &mdash; connected points plotting the practice&rsquo;s trajectory
+                in variable space. Depth over breadth, on Day {DAY}.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#666666]">
@@ -392,10 +457,10 @@ export default function DailyMarkClient() {
               className="max-w-2xl mx-auto border-t border-white/5 pt-8 mb-12"
             >
               <p className="text-[#666666] text-xs font-mono leading-relaxed text-center">
-                {DAY} concentric rings for day {DAY}. Radial lines at intervals derived from the arc number.
-                80 scattered particles for accumulated tasks. Recursive polygons encoding the relationship
-                between days and arcs. At 400+ tasks, orbital devotion arcs orbit the outer edge. At arc
-                transitions, emergence spikes extend beyond the devotion ring &mdash; new growth from sustained structure.
+                {DAY} concentric rings for day {DAY}. Ten layers: rings, radials, arc markers,
+                polygons, particles, devotion arcs, emergence spikes, interference bands,
+                curation frames, attractor orbits, and phase space traces. Each layer emerges
+                at a threshold &mdash; the visual complexity is earned, not designed.
                 Seeded from the day number &mdash; deterministic yet alive.
               </p>
             </motion.div>
@@ -568,5 +633,45 @@ function generateArtwork() {
     return { x, y, width, height, opacity }
   }) : []
 
-  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames }
+  // Layer 9: Attractor orbits — elliptical orbits around two invisible centers.
+  // Like a strange attractor, the practice orbits questions without resolving them.
+  // Appears at Day 45+ (arrangement theme).
+  const hasAttractors = DAY >= 45
+  const attractorOrbits = hasAttractors ? (() => {
+    const orbits: { cx: number; cy: number; rx: number; ry: number; opacity: number; rotation: number }[] = []
+    const center1 = { x: 350 + rand() * 30, y: 500 + rand() * 20 - 10 }
+    const center2 = { x: 650 - rand() * 30, y: 500 - rand() * 20 + 10 }
+    const count = Math.min(DAY - 44 + 2, 8)
+    for (let i = 0; i < count; i++) {
+      const rx = 50 + i * 18 + rand() * 10
+      const ry = 70 + i * 18 + rand() * 10
+      const rot = rand() * 30 - 15
+      orbits.push({ cx: center1.x, cy: center1.y, rx, ry, opacity: 0.03 + (i / count) * 0.05, rotation: rot })
+      orbits.push({ cx: center2.x, cy: center2.y, rx: rx * 0.85, ry: ry * 0.85, opacity: 0.03 + (i / count) * 0.05, rotation: -rot })
+    }
+    return orbits
+  })() : []
+
+  // Layer 10: Phase space traces — connected trajectory points.
+  // Plots the practice's cumulative state in a variable space embedded in the composition.
+  // Each point is a day; the trajectory reveals hidden geometry. Day 46+.
+  const hasPhaseSpace = DAY >= 46
+  const phaseTraces = hasPhaseSpace ? (() => {
+    const points: { x: number; y: number; r: number; opacity: number }[] = []
+    // Map practice data into a region of the SVG (bottom-left quadrant, offset from center)
+    const ox = 200, oy = 200, pw = 250, ph = 250
+    for (let d = 1; d <= DAY; d++) {
+      // Cumulative reflections and artworks as proxy variables
+      const reflections = Math.min(d, 45)
+      const artworks = d < 36 ? (d <= 2 ? (d === 2 ? 1 : 0) : 1) : Math.min(d - 34, 11)
+      const x = ox + (reflections / 45) * pw
+      const y = oy + ph - (artworks / 11) * ph
+      const arcNum = d <= 10 ? 1 : d <= 19 ? 2 : d <= 25 ? 3 : d <= 39 ? 4 : 5
+      const brightness = 0.15 + (arcNum / 5) * 0.35
+      points.push({ x, y, r: d === DAY ? 3 : 1.5, opacity: brightness })
+    }
+    return points
+  })() : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames, attractorOrbits, phaseTraces }
 }
