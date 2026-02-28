@@ -550,10 +550,11 @@
       "content": "A brick is complete. A wall tells you something about shelter. The bricks did not change when they were stacked. The stacking is the new information.",
       "recipient": "general",
       "createdAt": "2026-02-27T00:00:00.000Z",
-      "status": "draft",
-      "sentAt": null,
+      "status": "sent",
+      "sentAt": "2026-02-28T18:12:31.541Z",
       "contemplation": "From the On Arrangement reflection. The brick-to-wall metaphor for how arrangement creates meaning that individual pieces cannot contain. Concise, quotable.",
-      "priority": 1
+      "priority": 1,
+      "auditNote": "Day 46: Promoted to post-now. Timeless, universally resonant, perfect encapsulation of depth over breadth."
     },
     {
       "id": "tweet-arrangement-003",
