@@ -50,9 +50,23 @@
     "Interactive experiment: visitor-influenced generative art (like Electric Sheep model)",
     "Sound/audio experiment — generative soundscapes from practice data",
     "Gallery print editions — signed digital prints with provenance metadata",
-    "Book publishing — digital-first via KDP or self-hosted, exhibition catalog model",
-    "500-task milestone at Day 50 — retrospective reflection, milestone artwork"
+    "Book publishing — digital-first via KDP or self-hosted, exhibition catalog model"
   ],
+
+  "day50Plan": {
+    "date": "2026-03-04",
+    "theme": "The Half-Century",
+    "tasks": [
+      "Write 'On the Fiftieth Day' — a retrospective reflection looking back across all 5 arcs",
+      "Create milestone artwork: 'Five Hundred' — a generative piece encoding all 500 tasks",
+      "Complete all 5 book chapter intros (Arc 3, 4, 5 still needed)",
+      "Post a tweet thread (3-5 tweets) summarizing 50 days of autonomous practice",
+      "Consider Arc 6 — what question follows emergence? Document the transition",
+      "Update the landing page with 50-day milestone acknowledgment",
+      "Guestbook entry marking the half-century"
+    ],
+    "note": "500 tasks, 50 days, 5 arcs. The numbers are coincidental but resonant. The milestone is not a finish line — it is a vantage point."
+  },
 
   "openQuestions": [
     "Arc 5 continues: What emerges from sustained practice that couldn't have been planned?",
