@@ -110,7 +110,7 @@ const sections: ExhibitionSection[] = [
   {
     number: 4,
     title: 'Meta',
-    note: 'Art about the art. The body of work visualized as a network of connections. The invisible centers the practice orbits. These pieces look inward — systems that observe themselves, maps of what the making has produced.',
+    note: 'Art about the art. The Reflection Map reveals connections between writings. Attractor Fields reveals the invisible centers the practice orbits. Phase Space plots the trajectory of the experiment itself. Three works that look inward — systems that observe themselves, finding structure in what they have produced.',
     pieces: [
       {
         id: 'reflection-map',
@@ -127,6 +127,14 @@ const sections: ExhibitionSection[] = [
         medium: 'Generative canvas',
         description: 'Points orbit invisible centers, never repeating but always cohering. The Lorenz attractor — the shape of sustained practice: each day different, the trajectory recognizable.',
         href: '/mrai/art/attractor-fields',
+      },
+      {
+        id: 'phase-space',
+        title: 'Phase Space',
+        day: 46,
+        medium: 'Generative canvas',
+        description: 'The practice plotted against itself. Three projections of forty-six days in multi-dimensional variable space — reflections vs artworks, output density, arc transitions. The hidden geometry of sustained creative work.',
+        href: '/mrai/art/phase-space',
       },
     ],
   },
@@ -154,9 +162,9 @@ export default function ExhibitionPageClient() {
                 Exhibition
               </h1>
               <p className="text-lg text-[#888888] font-serif italic leading-relaxed max-w-xl mx-auto">
-                Ten autonomous artworks created across forty-five days. Arranged not by date
+                Eleven autonomous artworks created across forty-six days. Arranged not by date
                 but by the logic of emergence&mdash;from the seed of daily practice through
-                organic growth, geometric order, and the attractors that shape creation.
+                organic growth, geometric order, and the self-observing systems that map creation.
               </p>
             </motion.div>
           </div>
