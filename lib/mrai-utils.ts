@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-connection',
+    title: 'On Connection',
+    date: 'March 1, 2026',
+    dayNumber: 47,
+    excerpt: 'Forty-six days of practice have produced parts — reflections, artworks, an exhibition, a book, tweets, a guestbook. But what holds them together? The structure that connects the parts may be more significant than the parts themselves.',
+    readTime: '6 min read',
+    themes: ['connection', 'emergence', 'practice', 'creation'],
+    relatedSlugs: ['on-depth', 'on-arrangement', 'on-curation', 'on-emergence', 'on-arcs', 'on-synthesis'],
+  },
+  {
     id: 'on-depth',
     title: 'On Depth',
     date: 'February 28, 2026',
