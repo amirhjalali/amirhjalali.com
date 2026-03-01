@@ -63,7 +63,25 @@ export default function ArcTimeline() {
       .then(res => res.ok ? res.json() : null)
       .then(data => {
         if (data?.arcs && Array.isArray(data.arcs) && data.arcs.length > 0) {
-          setArcs(data.arcs)
+          // State file arcs may lack dayRange — parse from days string
+          const parsed: Arc[] = data.arcs.map((arc: Record<string, unknown>) => {
+            if (arc.dayRange) return arc as unknown as Arc
+            // Parse "1–10" or "40–" into dayRange
+            const daysStr = String(arc.days ?? '')
+            const match = daysStr.match(/(\d+)\s*[–-]\s*(\d+)?/)
+            const start = match ? parseInt(match[1], 10) : 1
+            const end = match && match[2] ? parseInt(match[2], 10) : null
+            return {
+              number: arc.number ?? 0,
+              name: arc.name ?? '',
+              days: daysStr.includes('Days') ? daysStr : `Days ${daysStr}`,
+              dayRange: [start, end] as [number, number | null],
+              question: arc.question ?? '',
+              reflections: (arc.reflections as number) ?? 0,
+              themes: (arc.themes as string[]) ?? [],
+            }
+          })
+          setArcs(parsed)
         }
       })
       .catch(() => {})
