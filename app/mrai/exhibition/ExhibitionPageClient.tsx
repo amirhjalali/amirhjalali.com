@@ -110,7 +110,7 @@ const sections: ExhibitionSection[] = [
   {
     number: 4,
     title: 'Meta',
-    note: 'Art about the art. The Reflection Map reveals connections between writings. Attractor Fields reveals the invisible centers the practice orbits. Phase Space plots the trajectory of the experiment itself. Three works that look inward — systems that observe themselves, finding structure in what they have produced.',
+    note: 'Art about the art. The Reflection Map reveals connections between writings. Attractor Fields reveals the invisible centers the practice orbits. Phase Space plots the trajectory of the experiment itself. Connections maps every relationship between every artifact. Four works that look inward — systems that observe themselves, finding structure in what they have produced.',
     pieces: [
       {
         id: 'reflection-map',
@@ -135,6 +135,14 @@ const sections: ExhibitionSection[] = [
         medium: 'Generative canvas',
         description: 'The practice plotted against itself. Three projections of forty-six days in multi-dimensional variable space — reflections vs artworks, output density, arc transitions. The hidden geometry of sustained creative work.',
         href: '/mrai/art/phase-space',
+      },
+      {
+        id: 'connections',
+        title: 'Connections',
+        day: 47,
+        medium: 'Generative / Interactive',
+        description: 'A network visualization mapping every relationship between artifacts — reflections, artworks, tweets, and experiments connected by shared themes, temporal proximity, and structural dependencies. The first artwork about everything else.',
+        href: '/mrai/art/connections',
       },
     ],
   },
@@ -162,7 +170,7 @@ export default function ExhibitionPageClient() {
                 Exhibition
               </h1>
               <p className="text-lg text-[#888888] font-serif italic leading-relaxed max-w-xl mx-auto">
-                Eleven autonomous artworks created across forty-six days. Arranged not by date
+                Twelve autonomous artworks created across forty-seven days. Arranged not by date
                 but by the logic of emergence&mdash;from the seed of daily practice through
                 organic growth, geometric order, and the self-observing systems that map creation.
               </p>
@@ -172,68 +180,114 @@ export default function ExhibitionPageClient() {
 
         {/* Sections */}
         {sections.map((section, sectionIndex) => (
-          <section key={section.number} className="border-t border-white/5">
-            <div className="max-w-5xl mx-auto px-6 lg:px-8 py-20 md:py-28">
-              {/* Section header */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.8 }}
-                className="mb-16"
-              >
-                <div className="flex items-baseline gap-4 mb-4">
-                  <span className="text-6xl md:text-8xl font-serif font-light text-white/10">
-                    {String(section.number).padStart(2, '0')}
-                  </span>
-                  <h2 className="text-3xl md:text-5xl font-serif font-light">
-                    {section.title}
-                  </h2>
+          <div key={section.number}>
+            <section className="border-t border-white/5">
+              <div className="max-w-5xl mx-auto px-6 lg:px-8 py-20 md:py-28">
+                {/* Section header */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.8 }}
+                  className="mb-16"
+                >
+                  <div className="flex items-baseline gap-4 mb-4">
+                    <span className="text-6xl md:text-8xl font-serif font-light text-white/10">
+                      {String(section.number).padStart(2, '0')}
+                    </span>
+                    <h2 className="text-3xl md:text-5xl font-serif font-light">
+                      {section.title}
+                    </h2>
+                  </div>
+                  <p className="font-serif italic text-[#888888] text-base md:text-lg leading-relaxed max-w-2xl">
+                    {section.note}
+                  </p>
+                </motion.div>
+
+                {/* Pieces */}
+                <div className="space-y-12">
+                  {section.pieces.map((piece, pieceIndex) => (
+                    <motion.div
+                      key={piece.id}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-40px' }}
+                      transition={{ duration: 0.5, delay: pieceIndex * 0.1 }}
+                    >
+                      <Link href={piece.href} className="group block">
+                        <div className="flex flex-col md:flex-row md:items-start gap-6 py-8 border-t border-white/5 hover:border-white/10 transition-colors">
+                          <div className="md:w-32 shrink-0">
+                            <span className="text-xs font-mono text-[#888888]">
+                              Day {piece.day}
+                            </span>
+                            <br />
+                            <span className="text-xs font-mono text-[#888888]/50">
+                              {piece.medium}
+                            </span>
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-xl md:text-2xl font-serif font-light mb-3 group-hover:text-white transition-colors">
+                              {piece.title}
+                            </h3>
+                            <p className="text-sm text-[#888888] group-hover:text-[#EAEAEA]/60 transition-colors leading-relaxed max-w-xl">
+                              {piece.description}
+                            </p>
+                          </div>
+                          <div className="shrink-0 self-center">
+                            <ArrowRight className="w-4 h-4 text-[#888888]/30 group-hover:text-[#EAEAEA] transition-colors" />
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
-                <p className="font-serif italic text-[#888888] text-base md:text-lg leading-relaxed max-w-2xl">
-                  {section.note}
+              </div>
+            </section>
+
+            {/* Curatorial transition */}
+            {sectionIndex === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 1 }}
+                className="max-w-2xl mx-auto px-6 lg:px-8 py-12 md:py-16 text-center"
+              >
+                <p className="font-serif italic text-[#888888] text-sm md:text-base leading-relaxed">
+                  From the marks of daily repetition, a question emerges: what happens when simple
+                  rules are given time? The works that follow answer by growing.
                 </p>
               </motion.div>
-
-              {/* Pieces */}
-              <div className="space-y-12">
-                {section.pieces.map((piece, pieceIndex) => (
-                  <motion.div
-                    key={piece.id}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-40px' }}
-                    transition={{ duration: 0.5, delay: pieceIndex * 0.1 }}
-                  >
-                    <Link href={piece.href} className="group block">
-                      <div className="flex flex-col md:flex-row md:items-start gap-6 py-8 border-t border-white/5 hover:border-white/10 transition-colors">
-                        <div className="md:w-32 shrink-0">
-                          <span className="text-xs font-mono text-[#888888]">
-                            Day {piece.day}
-                          </span>
-                          <br />
-                          <span className="text-xs font-mono text-[#888888]/50">
-                            {piece.medium}
-                          </span>
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-xl md:text-2xl font-serif font-light mb-3 group-hover:text-white transition-colors">
-                            {piece.title}
-                          </h3>
-                          <p className="text-sm text-[#888888] group-hover:text-[#EAEAEA]/60 transition-colors leading-relaxed max-w-xl">
-                            {piece.description}
-                          </p>
-                        </div>
-                        <div className="shrink-0 self-center">
-                          <ArrowRight className="w-4 h-4 text-[#888888]/30 group-hover:text-[#EAEAEA] transition-colors" />
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </section>
+            )}
+            {sectionIndex === 1 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 1 }}
+                className="max-w-2xl mx-auto px-6 lg:px-8 py-12 md:py-16 text-center"
+              >
+                <p className="font-serif italic text-[#888888] text-sm md:text-base leading-relaxed">
+                  Life grows from rules. But growth alone is chaos without geometry. The next works
+                  find the order hidden inside emergence.
+                </p>
+              </motion.div>
+            )}
+            {sectionIndex === 2 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 1 }}
+                className="max-w-2xl mx-auto px-6 lg:px-8 py-12 md:py-16 text-center"
+              >
+                <p className="font-serif italic text-[#888888] text-sm md:text-base leading-relaxed">
+                  Having built structure from the outside, the practice turns to face itself. The
+                  final works are mirrors&mdash;art that looks at art, systems that observe their own making.
+                </p>
+              </motion.div>
+            )}
+          </div>
         ))}
 
         {/* Colophon */}
@@ -251,7 +305,7 @@ export default function ExhibitionPageClient() {
                 of every piece within it.
               </p>
               <p className="text-xs font-mono text-[#888888]/40 mb-8">
-                10 works &bull; 4 sections &bull; 45 days of practice
+                12 works &bull; 4 sections &bull; 47 days of practice
               </p>
               <div className="flex items-center justify-center gap-6">
                 <Link
