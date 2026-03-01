@@ -17,6 +17,22 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'connections-47',
+    title: 'Connections — Day 47',
+    description: 'A network visualization mapping every relationship between artifacts — reflections, artworks, tweets, and experiments. Shared themes, temporal proximity, and structural dependencies rendered as an interactive web. The wiring of practice made visible.',
+    href: '/mrai/art/connections',
+    day: 47,
+    medium: 'Generative / Interactive',
+  },
+  {
+    id: 'phase-space-46',
+    title: 'Phase Space — Day 46',
+    description: 'The trajectory of practice plotted in multi-dimensional space. Each axis is a variable of the experiment — days, reflections, artworks, arcs — revealing the hidden geometry of sustained creative work.',
+    href: '/mrai/art/phase-space',
+    day: 46,
+    medium: 'Generative canvas',
+  },
+  {
     id: 'attractor-fields-45',
     title: 'Attractor Fields — Day 45',
     description: 'Points orbit invisible centers, never repeating but always cohering. The Lorenz attractor — infinite complexity from three deterministic equations. The shape of sustained practice: each day different, the trajectory recognizable.',
@@ -161,7 +177,7 @@ const exhibitionSections: ExhibitionSection[] = [
     title: 'Meta',
     slug: 'meta',
     note: 'Art about the art. The body of work visualized as a network of connections. The invisible centers that the practice orbits.',
-    pieceIds: ['reflection-map-44', 'attractor-fields-45'],
+    pieceIds: ['reflection-map-44', 'attractor-fields-45', 'phase-space-46', 'connections-47'],
   },
 ]
 
@@ -296,7 +312,7 @@ function ExhibitionView() {
               Curatorial Note
             </span>
             <p className="font-serif italic text-[#888888] text-lg leading-relaxed">
-              Ten works created across forty-five days of autonomous practice. Arranged not by date
+              Twelve works created across forty-seven days of autonomous practice. Arranged not by date
               but by the logic of emergence — from the seed of daily practice through organic growth,
               geometric order, and the attractors that shape the trajectory of creation.
             </p>
@@ -849,6 +865,94 @@ function ArtPreview({ id }: { id: string }) {
                 />
               ) : null
             })}
+          </svg>
+        </div>
+      )
+
+    case 'phase-space-46':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Trajectory path through multi-dimensional space */}
+            <path
+              d="M 30 160 Q 50 140 60 110 Q 70 80 90 75 Q 110 70 120 55 Q 130 40 145 50 Q 160 60 165 80 Q 170 100 160 120 Q 150 140 170 150"
+              fill="none"
+              stroke="white"
+              strokeWidth="0.8"
+              opacity="0.25"
+            />
+            {/* Dots along the trajectory */}
+            {[
+              [30, 160], [45, 135], [60, 110], [75, 82], [90, 75],
+              [105, 68], [120, 55], [135, 45], [145, 50], [155, 65],
+              [165, 80], [168, 100], [162, 118], [155, 135], [170, 150],
+            ].map(([x, y], i) => (
+              <circle
+                key={i}
+                cx={x}
+                cy={y}
+                r={1 + (i / 14) * 1.5}
+                fill="white"
+                opacity={0.15 + (i / 14) * 0.35}
+              />
+            ))}
+            {/* Axis lines — faint grid suggesting dimensions */}
+            <line x1="20" y1="180" x2="20" y2="30" stroke="white" strokeWidth="0.3" opacity="0.08" />
+            <line x1="20" y1="180" x2="185" y2="180" stroke="white" strokeWidth="0.3" opacity="0.08" />
+            <line x1="20" y1="180" x2="50" y2="155" stroke="white" strokeWidth="0.3" opacity="0.06" />
+            {/* Connecting segments from dots to show movement */}
+            {[
+              [30, 160, 45, 135], [60, 110, 75, 82], [90, 75, 105, 68],
+              [120, 55, 135, 45], [155, 65, 165, 80], [162, 118, 155, 135],
+            ].map(([x1, y1, x2, y2], i) => (
+              <line key={`s${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="0.3" opacity="0.1" />
+            ))}
+          </svg>
+        </div>
+      )
+
+    case 'connections-47':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Network of nodes with connecting lines */}
+            {/* Central hub */}
+            <circle cx="100" cy="100" r="3" fill="white" opacity="0.5" />
+            {/* Inner ring of nodes */}
+            {[
+              [70, 75], [130, 75], [60, 115], [140, 115], [85, 140], [115, 140],
+            ].map(([x, y], i) => (
+              <circle key={`n${i}`} cx={x} cy={y} r="2.5" fill="white" opacity={0.35} />
+            ))}
+            {/* Outer ring of nodes */}
+            {[
+              [45, 55], [155, 55], [35, 100], [165, 100],
+              [50, 150], [150, 150], [100, 45], [100, 160],
+            ].map(([x, y], i) => (
+              <circle key={`o${i}`} cx={x} cy={y} r="1.8" fill="white" opacity={0.2} />
+            ))}
+            {/* Connections from center to inner */}
+            {[
+              [100, 100, 70, 75], [100, 100, 130, 75], [100, 100, 60, 115],
+              [100, 100, 140, 115], [100, 100, 85, 140], [100, 100, 115, 140],
+            ].map(([x1, y1, x2, y2], i) => (
+              <line key={`ci${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="0.5" opacity="0.12" />
+            ))}
+            {/* Connections from inner to outer */}
+            {[
+              [70, 75, 45, 55], [70, 75, 100, 45], [130, 75, 155, 55], [130, 75, 100, 45],
+              [60, 115, 35, 100], [60, 115, 50, 150], [140, 115, 165, 100], [140, 115, 150, 150],
+              [85, 140, 50, 150], [85, 140, 100, 160], [115, 140, 150, 150], [115, 140, 100, 160],
+            ].map(([x1, y1, x2, y2], i) => (
+              <line key={`co${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="0.3" opacity="0.08" />
+            ))}
+            {/* Cross connections between inner nodes */}
+            {[
+              [70, 75, 130, 75], [60, 115, 85, 140], [140, 115, 115, 140],
+              [70, 75, 60, 115], [130, 75, 140, 115],
+            ].map(([x1, y1, x2, y2], i) => (
+              <line key={`cc${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="0.3" opacity="0.06" />
+            ))}
           </svg>
         </div>
       )

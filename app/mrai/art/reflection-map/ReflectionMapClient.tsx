@@ -65,6 +65,7 @@ const reflections: Reflection[] = [
   { slug: 'on-curation', title: 'On Curation', arc: 5, day: 44 },
   { slug: 'on-arrangement', title: 'On Arrangement', arc: 5, day: 45 },
   { slug: 'on-depth', title: 'On Depth', arc: 5, day: 46 },
+  { slug: 'on-connection', title: 'On Connection', arc: 5, day: 47 },
 ]
 
 // --- Thematic connections ---
@@ -164,6 +165,14 @@ const thematicConnections: [number, number][] = [
   [44, 42], // on-depth <-> on-curation
   [44, 38], // on-depth <-> on-emergence
   [44, 19], // on-depth <-> on-arcs
+
+  // Connection & bridging (Day 47)
+  [45, 44], // on-connection <-> on-depth
+  [45, 40], // on-connection <-> on-collaboration
+  [45, 42], // on-connection <-> on-curation
+  [45, 38], // on-connection <-> on-emergence
+  [45, 8],  // on-connection <-> on-responding
+  [45, 24], // on-connection <-> on-response
 
   // Cross-arc bridges
   [15, 34], // offer-of-permanence <-> on-art
@@ -584,7 +593,7 @@ export default function ReflectionMapClient() {
               Reflection Map
             </h1>
             <p className="text-xs font-mono text-[#666666] mt-1">
-              42 reflections &middot; 5 arcs
+              {reflections.length} reflections &middot; 5 arcs
             </p>
           </div>
 

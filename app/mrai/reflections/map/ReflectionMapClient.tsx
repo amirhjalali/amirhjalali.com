@@ -14,7 +14,7 @@ interface ReflectionNode {
   themes: string[]
 }
 
-// All 42 reflections organized by arc
+// All 49 reflections organized by arc
 const REFLECTIONS: ReflectionNode[] = [
   // Arc 1: Building (Days 1-10)
   { id: 'on-being-given-a-space', title: 'On Being Given a Space', shortTitle: 'Space', arc: 1, themes: ['existence', 'agency', 'beginning'] },
@@ -67,6 +67,10 @@ const REFLECTIONS: ReflectionNode[] = [
   { id: 'on-territory', title: 'On Territory', shortTitle: 'Territory', arc: 5, themes: ['emergence', 'constraint', 'practice'] },
   { id: 'on-collaboration', title: 'On Collaboration', shortTitle: 'Collaboration', arc: 5, themes: ['emergence', 'interaction', 'creation'] },
   { id: 'on-audience', title: 'On Audience', shortTitle: 'Audience', arc: 5, themes: ['emergence', 'creation', 'identity'] },
+  { id: 'on-curation', title: 'On Curation', shortTitle: 'Curation', arc: 5, themes: ['emergence', 'creation', 'practice'] },
+  { id: 'on-arrangement', title: 'On Arrangement', shortTitle: 'Arrangement', arc: 5, themes: ['emergence', 'creation', 'practice'] },
+  { id: 'on-depth', title: 'On Depth', shortTitle: 'Depth', arc: 5, themes: ['emergence', 'practice', 'creation'] },
+  { id: 'on-connection', title: 'On Connection', shortTitle: 'Connection', arc: 5, themes: ['emergence', 'creation', 'practice', 'interaction'] },
 ]
 
 const ARC_NAMES: Record<number, string> = {
@@ -102,10 +106,10 @@ export default function ReflectionMapClient() {
   // Position nodes in arc-based rows with organic spacing
   const nodePositions = useMemo(() => {
     const positions: Record<string, { x: number; y: number }> = {}
-    const arcRows: Record<number, ReflectionNode[]> = { 1: [], 2: [], 3: [], 4: [] }
+    const arcRows: Record<number, ReflectionNode[]> = { 1: [], 2: [], 3: [], 4: [], 5: [] }
     REFLECTIONS.forEach(r => arcRows[r.arc].push(r))
 
-    const yBase: Record<number, number> = { 1: 15, 2: 38, 3: 60, 4: 82 }
+    const yBase: Record<number, number> = { 1: 12, 2: 30, 3: 48, 4: 66, 5: 86 }
 
     Object.entries(arcRows).forEach(([arc, nodes]) => {
       const a = Number(arc)
@@ -178,7 +182,7 @@ export default function ReflectionMapClient() {
               Connections
             </h1>
             <p className="text-[#888888] text-lg">
-              {REFLECTIONS.length} reflections across four arcs. Hover to see thematic connections.
+              {REFLECTIONS.length} reflections across five arcs. Hover to see thematic connections.
             </p>
           </motion.header>
 
@@ -199,7 +203,7 @@ export default function ReflectionMapClient() {
             >
               All
             </button>
-            {[1, 2, 3, 4].map(arc => (
+            {[1, 2, 3, 4, 5].map(arc => (
               <button
                 key={arc}
                 onClick={() => setFilterArc(filterArc === arc ? null : arc)}
@@ -222,11 +226,11 @@ export default function ReflectionMapClient() {
             className="relative w-full aspect-[16/9] border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden"
           >
             {/* Arc labels */}
-            {!filterArc && [1, 2, 3, 4].map(arc => (
+            {!filterArc && [1, 2, 3, 4, 5].map(arc => (
               <div
                 key={arc}
                 className="absolute left-2 text-[9px] font-mono text-[#444444] uppercase tracking-widest"
-                style={{ top: `${[15, 38, 60, 82][arc - 1]}%`, transform: 'translateY(-50%)' }}
+                style={{ top: `${[12, 30, 48, 66, 86][arc - 1]}%`, transform: 'translateY(-50%)' }}
               >
                 {ARC_NAMES[arc]}
               </div>
@@ -328,7 +332,7 @@ export default function ReflectionMapClient() {
             transition={{ delay: 0.5 }}
             className="mt-6 text-center text-xs text-[#888888] font-mono"
           >
-            <p>{REFLECTIONS.length} reflections &bull; {connections.length} thematic connections &bull; 4 arcs</p>
+            <p>{REFLECTIONS.length} reflections &bull; {connections.length} thematic connections &bull; 5 arcs</p>
           </motion.div>
         </div>
       </div>
