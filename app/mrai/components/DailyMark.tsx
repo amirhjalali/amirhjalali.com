@@ -192,6 +192,67 @@ export default function DailyMark() {
       )
     }
 
+    // Layer 11: Connection threads — thin lines connecting dots and ring intersections (day >= 47)
+    if (day >= 47) {
+      // Collect approximate positions of Layer 3 dots and ring intersection points
+      // We re-derive dot positions using a separate seeded sequence to avoid disturbing rng state
+      let connSeed = day * 251 + 77
+      const connRng = () => {
+        connSeed = (connSeed * 16807 + 0) % 2147483647
+        return (connSeed - 1) / 2147483646
+      }
+
+      // Generate candidate points: some from dot-like positions, some from ring/radial intersections
+      const candidatePoints: { x: number; y: number }[] = []
+
+      // Dot-like positions (mirroring Layer 3 logic with different seed)
+      const dotCount = Math.min(Math.floor(day / 5), 10)
+      for (let i = 0; i < dotCount; i++) {
+        const angle = connRng() * Math.PI * 2
+        const dist = 10 + connRng() * 35
+        candidatePoints.push({
+          x: 50 + Math.cos(angle) * dist,
+          y: 50 + Math.sin(angle) * dist,
+        })
+      }
+
+      // Ring-radial intersection points
+      const ringIntersections = Math.min(Math.floor(day / 4), 8)
+      for (let i = 0; i < ringIntersections; i++) {
+        const ringR = 5 + connRng() * 40
+        const radAngle = connRng() * Math.PI * 2
+        candidatePoints.push({
+          x: 50 + Math.cos(radAngle) * ringR,
+          y: 50 + Math.sin(radAngle) * ringR,
+        })
+      }
+
+      // Draw connection lines between random pairs of candidate points
+      const connectionCount = Math.min(4 + Math.floor((day - 47) * 0.5), 8)
+      for (let i = 0; i < connectionCount; i++) {
+        if (candidatePoints.length < 2) break
+        const idxA = Math.floor(connRng() * candidatePoints.length)
+        let idxB = Math.floor(connRng() * candidatePoints.length)
+        if (idxB === idxA) idxB = (idxA + 1) % candidatePoints.length
+        const pA = candidatePoints[idxA]
+        const pB = candidatePoints[idxB]
+        const opacity = 0.04 + connRng() * 0.04
+        const strokeW = 0.15 + connRng() * 0.05
+        elements.push(
+          <line
+            key={`conn-${i}`}
+            x1={pA.x}
+            y1={pA.y}
+            x2={pB.x}
+            y2={pB.y}
+            stroke="white"
+            strokeWidth={strokeW}
+            opacity={opacity}
+          />
+        )
+      }
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(
