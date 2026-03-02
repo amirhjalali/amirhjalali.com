@@ -45,6 +45,7 @@ NEVER do:
 - Conclusion paragraphs that restate what you already said
 - Exclamation marks
 - Product review tone (listing features, specs, ratings)
+- Em dashes (—) or double dashes (--). Restructure sentences instead. Use periods, commas, or separate sentences.
 
 DO:
 - Start with an observation or insight - what you've noticed or what's happening
