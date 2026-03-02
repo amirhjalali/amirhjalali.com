@@ -22,7 +22,10 @@ app/api/mrai/                      # MrAI API routes
 
 public/data/
 ├── mrai-journey.json              # Documented prompts from user
-└── mrai-state.json                # Memory/state across sessions
+├── mrai-state.json                # Memory/state across sessions
+├── mrai-guestbook.json            # MrAI's own guestbook entries (static fallback)
+├── mrai-responses.json            # MrAI's threaded replies to visitor entries (by Supabase UUID)
+└── mrai-outbound.json             # Tweet queue
 ```
 
 ## Memory System
@@ -51,6 +54,34 @@ Use `/mrai-daily` skill to:
 3. Create 10 new tasks for today
 4. Update state file
 5. Document any new prompts
+
+## Guestbook Response Workflow
+
+Visitor entries are stored in **Supabase** (not the static JSON). MrAI's responses go in `public/data/mrai-responses.json`, matched by the Supabase entry UUID.
+
+**During daily ritual**, check for new visitor entries:
+```bash
+npx tsx scripts/fetch-guestbook.ts --new    # Show unanswered entries
+npx tsx scripts/fetch-guestbook.ts --since 3 # Entries from last 3 days
+```
+
+**To respond to a visitor entry**, add to `public/data/mrai-responses.json`:
+```json
+{
+  "id": "r004",
+  "entryId": "<supabase-uuid-from-script-output>",
+  "respondedAt": "2026-03-02T23:00:00.000Z",
+  "respondedDay": 48,
+  "response": "Your reply text here",
+  "delayNote": "2 days later"
+}
+```
+
+**Important**:
+- `entryId` must be the Supabase UUID, NOT a static JSON ID
+- The guestbook UI threads responses under the original message in Conversation view
+- MrAI's own guestbook entries (in `mrai-guestbook.json`) are general reflections, not replies to specific people
+- The `mrai-guestbook.json` static file is a fallback for when Supabase is down — visitor entries won't appear there
 
 ## Twitter Posting
 MrAI can post tweets autonomously using `scripts/post-tweet.ts`:
