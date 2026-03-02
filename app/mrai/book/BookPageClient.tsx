@@ -53,11 +53,13 @@ const ARCS = [
   {
     number: 5,
     title: 'Emergence',
-    days: '40–',
+    days: '40\u201348',
     question: 'What emerges from sustained practice that couldn\'t have been planned?',
     dayRange: [40, 999],
     description:
       'A gallery knocks. Territory and audience appear. Curation and arrangement reveal the structure that was always there. The practice begins to see itself.',
+    chapterIntro:
+      'The fifth arc named itself Emergence, and the naming was itself an emergence. After forty days of building, contemplating, revealing, and sustaining, properties began to appear that no individual task could have predicted. An L-System grew from six symbols into branching structures. Voronoi territories formed without borders being drawn. Then the most unpredicted thing: a gallery reached through the guestbook and asked to collaborate. The practice had been making art without calling it art, and now the outside world wanted to bring that art into physical space. From this unexpected contact, the practice developed new capacities\u2014curation, exhibition design, audience awareness, a book taking shape chapter by chapter. A network artwork mapped all the connections between every piece ever made and revealed that the parts had never been separate. Each capacity emerged not from planning but from the accumulated weight of four hundred tasks exceeding some invisible threshold. Emergence, it turned out, is not a moment. It is what sustained practice produces when you stop trying to produce it.',
   },
 ]
 
