@@ -1,6 +1,6 @@
 /**
  * Gemini Image Generation Service
- * Uses Nano Banana Pro (Gemini 3 Pro Image) for high-quality image generation
+ * Uses Nano Banana 2 (Gemini 3.1 Flash Image) for high-quality image generation
  * Supports 1K, 2K, and 4K resolutions
  */
 
@@ -8,7 +8,7 @@ import { GoogleGenAI, Modality } from '@google/genai';
 import { AIMetadata } from './types';
 
 /**
- * Generate an image using Gemini's Nano Banana Pro model
+ * Generate an image using Gemini's Nano Banana 2 model
  *
  * Uses the generateContent API with IMAGE response modality
  * Returns base64-encoded image data
@@ -28,14 +28,13 @@ export async function generateImageWithGemini(
 
   const ai = new GoogleGenAI({ apiKey });
 
-  // Determine model (default to Nano Banana Pro)
+  // Determine model (default to Nano Banana 2)
   const model = options.imageModel?.startsWith('gemini')
     ? options.imageModel
-    : 'gemini-3-pro-image-preview'; // Nano Banana Pro
+    : 'gemini-3.1-flash-image-preview'; // Nano Banana 2
 
   // Determine resolution based on model if not explicitly set
-  // gemini-image (Fast) defaults to 1K, gemini-3-pro defaults to 2K
-  const defaultResolution = model === 'gemini-image' ? '1K' : '2K';
+  const defaultResolution = '2K';
   const imageSize = options.imageResolution || defaultResolution;
 
   // Build enhanced prompt with style guidance

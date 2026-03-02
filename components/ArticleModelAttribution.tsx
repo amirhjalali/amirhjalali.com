@@ -38,6 +38,7 @@ const MODEL_DISPLAY_NAMES: Record<string, string> = {
   'gpt-image-1': 'GPT Image 1',
   'dall-e-3': 'DALL-E 3',
   // Google Image Models
+  'gemini-3.1-flash-image-preview': 'Nano Banana 2',
   'gemini-3-pro-image-preview': 'Nano Banana Pro',
   'imagen-4.0-generate-001': 'Imagen 4',
   'imagen-4': 'Imagen 4',

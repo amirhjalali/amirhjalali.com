@@ -109,6 +109,14 @@ export const EVAL_IMAGE_MODELS: Record<string, EvalModelConfig> = {
     supportsImages: true,
   },
   // Google Image Models
+  'gemini-3.1-flash-image': {
+    id: 'gemini-3.1-flash-image',
+    provider: 'google',
+    name: 'Nano Banana 2',
+    model: 'gemini-3.1-flash-image-preview',
+    description: 'Pro-quality image generation at Flash speed (default)',
+    supportsImages: true,
+  },
   'gemini-3-pro-image': {
     id: 'gemini-3-pro-image',
     provider: 'google',

@@ -25,7 +25,7 @@ export default function GenerationSettingsModal({
     const [settings, setSettings] = useState<AIMetadata>({
         topic: initialSettings.topic || '',
         textModel: initialSettings.textModel || 'claude-opus-4-6',
-        imageModel: initialSettings.imageModel || 'gemini-3-pro-image-preview',
+        imageModel: initialSettings.imageModel || 'gemini-3.1-flash-image-preview',
         imageResolution: initialSettings.imageResolution || '1K',
         imageStyle: initialSettings.imageStyle || 'abstract, contemporary, tech-focused, visually striking',
         imagePrompt: initialSettings.imagePrompt || '',
@@ -218,6 +218,7 @@ export default function GenerationSettingsModal({
                                         className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 appearance-none text-sm"
                                     >
                                         <optgroup label="Google">
+                                            <option value="gemini-3.1-flash-image-preview">Nano Banana 2</option>
                                             <option value="gemini-3-pro-image-preview">Nano Banana Pro</option>
                                             <option value="imagen-4.0-generate-001">Imagen 4</option>
                                         </optgroup>

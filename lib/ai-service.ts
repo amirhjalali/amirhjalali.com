@@ -157,7 +157,7 @@ export async function generateImage(title: string, options: AIMetadata & { excer
     const topic = options.topic || 'Technology';
     const style = options.imageStyle || 'editorial photography, cinematic lighting, dark monochromatic';
     const customPrompt = options.imagePrompt;
-    const model = options.imageModel || 'gemini-3-pro-image-preview';
+    const model = options.imageModel || 'gemini-3.1-flash-image-preview';
     const resolution = options.imageResolution || '1K';
 
     // Build content context from available article data
@@ -181,7 +181,7 @@ Visual constraints:
 
 Think: Wired magazine photography, Bloomberg editorial imagery, cinematic documentary stills.`;
 
-    // Route to Gemini for Gemini image models (Nano Banana Pro)
+    // Route to Gemini for Gemini image models (Nano Banana 2)
     if (model.startsWith('gemini')) {
         if (!isGeminiImageAvailable()) {
             console.warn('Gemini API key not configured. Falling back to OpenAI.');
