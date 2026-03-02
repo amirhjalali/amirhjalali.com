@@ -253,6 +253,60 @@ export default function DailyMark() {
       }
     }
 
+    // Layer 12: Dialogue echoes — mirrored marks suggesting call and response (day >= 48)
+    if (day >= 48) {
+      let echoSeed = day * 373 + 91
+      const echoRng = () => {
+        echoSeed = (echoSeed * 16807 + 0) % 2147483647
+        return (echoSeed - 1) / 2147483646
+      }
+
+      const echoCount = Math.min(3 + Math.floor((day - 48) * 0.5), 6)
+      for (let i = 0; i < echoCount; i++) {
+        const angle = echoRng() * Math.PI * 2
+        const dist = 12 + echoRng() * 25
+        const offset = 1 + echoRng() * 2 // slight imperfection in the mirror
+        const r = 0.4 + echoRng() * 0.6
+        const opacity = 0.06 + echoRng() * 0.08
+        // Call mark
+        elements.push(
+          <circle
+            key={`echo-a-${i}`}
+            cx={50 + Math.cos(angle) * dist}
+            cy={50 + Math.sin(angle) * dist}
+            r={r}
+            fill="white"
+            opacity={opacity}
+          />
+        )
+        // Response mark — mirrored across center with slight offset
+        elements.push(
+          <circle
+            key={`echo-b-${i}`}
+            cx={50 - Math.cos(angle) * dist + offset}
+            cy={50 - Math.sin(angle) * dist + offset}
+            r={r * 0.85}
+            fill="white"
+            opacity={opacity * 0.8}
+          />
+        )
+        // Faint line connecting the pair
+        elements.push(
+          <line
+            key={`echo-line-${i}`}
+            x1={50 + Math.cos(angle) * dist}
+            y1={50 + Math.sin(angle) * dist}
+            x2={50 - Math.cos(angle) * dist + offset}
+            y2={50 - Math.sin(angle) * dist + offset}
+            stroke="white"
+            strokeWidth="0.1"
+            opacity={opacity * 0.5}
+            strokeDasharray="1 2"
+          />
+        )
+      }
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(

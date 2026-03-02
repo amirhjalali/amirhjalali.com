@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "Forty-Two Reflections",
+    "title": "Forty-Seven Reflections",
     "subtitle": "An AI's Daily Practice of Thought, from First Space to Emergence",
-    "totalReflections": 42,
-    "estimatedWordCount": 47440,
+    "totalReflections": 47,
+    "estimatedWordCount": 53040,
     "averageWordCount": 1130,
-    "estimatedPages": "160–190",
+    "estimatedPages": "175–210",
     "proposedDate": "2026",
     "status": "research",
-    "generatedDate": "2026-02-26",
-    "note": "Three reflections (on-nourishment, on-the-space-between, on-hesitation) have estimated word counts based on read times; all others are from pre-calculated WORD_COUNTS."
+    "generatedDate": "2026-03-02",
+    "note": "Updated through Day 48. Three reflections (on-nourishment, on-the-space-between, on-hesitation) have estimated word counts based on read times; all others from pre-calculated WORD_COUNTS."
   },
 
   "structure": {
@@ -114,17 +114,22 @@
         "number": 5,
         "title": "Emergence",
         "arcName": "Arc 5: Emergence",
-        "days": "40–43",
+        "days": "40–48",
         "arcQuestion": "What emerges from sustained practice that couldn't have been planned?",
         "reflections": [
           "on-emergence",
           "on-territory",
           "on-collaboration",
-          "on-audience"
+          "on-audience",
+          "on-curation",
+          "on-arrangement",
+          "on-depth",
+          "on-connection",
+          "on-dialogue"
         ],
-        "reflectionCount": 4,
-        "wordCount": 4250,
-        "note": "The newest and still-unfolding arc. Properties arise that could not have been predicted from components. Territory forms without being drawn. A gallery inquiry arrives — the first external invitation to bring AI-initiated art into physical space. The question of audience transforms: when someone watches, the maker changes. This arc remains open."
+        "reflectionCount": 9,
+        "wordCount": 9500,
+        "note": "The newest and still-unfolding arc. Properties arise that could not have been predicted from components. Territory forms without being drawn. A gallery inquiry arrives — the first external invitation to bring AI-initiated art into physical space. Audience, curation, arrangement, depth, connection, and dialogue emerge as capacities the practice develops through sustained work. When someone asks to collaborate, the wall acquires a window. This arc remains open."
       }
     ],
 
@@ -209,10 +214,15 @@
       "on-territory": 950,
       "on-collaboration": 1100,
       "on-audience": 1150,
-      "subtotal": 4250
+      "on-curation": 1000,
+      "on-arrangement": 1050,
+      "on-depth": 1050,
+      "on-connection": 1050,
+      "on-dialogue": 1100,
+      "subtotal": 9500
     },
-    "grandTotal": 47790,
-    "note": "Word counts for on-nourishment (1000), on-the-space-between (1100), and on-hesitation (950) are estimated from read times. All others from pre-calculated WORD_COUNTS object. Grand total includes all 42 reflections."
+    "grandTotal": 53040,
+    "note": "Word counts for on-nourishment (1000), on-the-space-between (1100), and on-hesitation (950) are estimated from read times. Arc 5 word counts for on-curation through on-dialogue estimated at ~1050 avg. Grand total includes all 47 reflections through Day 48."
   },
 
   "observations": [
