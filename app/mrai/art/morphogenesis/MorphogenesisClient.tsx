@@ -6,24 +6,21 @@ import Link from 'next/link'
 import MrAINav from '../../components/MrAINav'
 
 // Gray-Scott reaction-diffusion parameters
-// F (feed rate) and k (kill rate) determine the pattern type:
-// F=0.037, k=0.06 → spots (mitosis-like)
-// F=0.03, k=0.062 → stripes and labyrinths
-// F=0.025, k=0.06 → coral-like growth
-// F=0.04, k=0.06 → moving spots
+// Each preset has distinct F/k values AND a unique seed pattern
+// so they look visibly different from the first frame
 const PRESETS = [
-  { name: 'Coral', F: 0.025, k: 0.06, description: 'Branching structures like living coral' },
-  { name: 'Mitosis', F: 0.037, k: 0.06, description: 'Spots that divide and multiply' },
-  { name: 'Labyrinth', F: 0.03, k: 0.062, description: 'Winding paths through chemical space' },
-  { name: 'Waves', F: 0.014, k: 0.054, description: 'Rippling patterns that never settle' },
+  { name: 'Coral', F: 0.025, k: 0.06, description: 'Branching structures like living coral', seed: 'edges' as const },
+  { name: 'Mitosis', F: 0.037, k: 0.06, description: 'Spots that divide and multiply', seed: 'scattered' as const },
+  { name: 'Labyrinth', F: 0.03, k: 0.062, description: 'Winding paths through chemical space', seed: 'stripe' as const },
+  { name: 'Waves', F: 0.014, k: 0.054, description: 'Rippling patterns that never settle', seed: 'ring' as const },
 ]
 
 const GRID_SIZE = 256
 const DIFFUSION_A = 1.0
 const DIFFUSION_B = 0.5
 const DT = 1.0
-const STEPS_PER_FRAME = 2
-const FRAME_SKIP = 1 // simulate every Nth frame (1 = every frame, 2 = every other)
+const STEPS_PER_FRAME = 1
+const DEFAULT_FRAME_SKIP = 3 // ~20 steps/sec at 60fps — patterns develop over 30-60 seconds
 
 export default function MorphogenesisClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -34,36 +31,83 @@ export default function MorphogenesisClient() {
   const [activePreset, setActivePreset] = useState(0)
   const [isRunning, setIsRunning] = useState(true)
   const isRunningRef = useRef(true)
+  const [speed, setSpeed] = useState(1) // 0=slow, 1=normal, 2=fast
+  const frameSkipRef = useRef(DEFAULT_FRAME_SKIP)
+  const [stepCount, setStepCount] = useState(0)
+  const stepCountRef = useRef(0)
 
-  const initGrid = useCallback(() => {
+  const seedCell = (gridA: Float32Array, gridB: Float32Array, cx: number, cy: number, r: number) => {
+    for (let dy = -r; dy <= r; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        const x = cx + dx
+        const y = cy + dy
+        if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE && dx * dx + dy * dy <= r * r) {
+          const idx = y * GRID_SIZE + x
+          gridA[idx] = 0.0
+          gridB[idx] = 1.0
+        }
+      }
+    }
+  }
+
+  const initGrid = useCallback((seedType: 'edges' | 'scattered' | 'stripe' | 'ring' = 'edges') => {
     const size = GRID_SIZE * GRID_SIZE
     const gridA = new Float32Array(size).fill(1.0)
     const gridB = new Float32Array(size).fill(0.0)
-
-    // Seed several small squares of chemical B in the center region
     const cx = GRID_SIZE / 2
     const cy = GRID_SIZE / 2
-    const seedRadius = 8
 
-    // Central seed
-    for (let y = cy - seedRadius; y < cy + seedRadius; y++) {
-      for (let x = cx - seedRadius; x < cx + seedRadius; x++) {
-        const idx = y * GRID_SIZE + x
-        gridA[idx] = 0.0
-        gridB[idx] = 1.0
+    if (seedType === 'edges') {
+      // Coral: seeds along edges and corners — grow inward like reef
+      const margin = 30
+      for (let i = 0; i < 12; i++) {
+        const side = i % 4
+        let x: number, y: number
+        if (side === 0) { x = margin + Math.random() * 40; y = margin + Math.random() * (GRID_SIZE - 2 * margin) }
+        else if (side === 1) { x = GRID_SIZE - margin - Math.random() * 40; y = margin + Math.random() * (GRID_SIZE - 2 * margin) }
+        else if (side === 2) { x = margin + Math.random() * (GRID_SIZE - 2 * margin); y = margin + Math.random() * 40 }
+        else { x = margin + Math.random() * (GRID_SIZE - 2 * margin); y = GRID_SIZE - margin - Math.random() * 40 }
+        seedCell(gridA, gridB, Math.floor(x), Math.floor(y), 4 + Math.floor(Math.random() * 4))
       }
-    }
-
-    // A few offset seeds for asymmetry
-    const offsets = [
-      [-20, -15], [18, -22], [-25, 20], [22, 18],
-      [-10, -30], [30, 10], [0, 25], [-28, -5],
-    ]
-    for (const [ox, oy] of offsets) {
-      const sr = 3 + Math.floor(Math.random() * 4)
-      for (let y = cy + oy - sr; y < cy + oy + sr; y++) {
-        for (let x = cx + ox - sr; x < cx + ox + sr; x++) {
-          if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+    } else if (seedType === 'scattered') {
+      // Mitosis: many small scattered seeds across the field
+      for (let i = 0; i < 20; i++) {
+        const x = 40 + Math.floor(Math.random() * (GRID_SIZE - 80))
+        const y = 40 + Math.floor(Math.random() * (GRID_SIZE - 80))
+        seedCell(gridA, gridB, x, y, 2 + Math.floor(Math.random() * 3))
+      }
+    } else if (seedType === 'stripe') {
+      // Labyrinth: horizontal stripe through center with notches
+      for (let x = 30; x < GRID_SIZE - 30; x++) {
+        for (let dy = -3; dy <= 3; dy++) {
+          const y = cy + dy
+          if (y >= 0 && y < GRID_SIZE) {
+            const idx = y * GRID_SIZE + x
+            gridA[idx] = 0.0
+            gridB[idx] = 1.0
+          }
+        }
+      }
+      // Perpendicular notches for breakup
+      for (let i = 0; i < 6; i++) {
+        const nx = 50 + Math.floor(i * (GRID_SIZE - 100) / 5)
+        for (let y = cy - 20; y < cy + 20; y++) {
+          for (let dx = -2; dx <= 2; dx++) {
+            if (nx + dx >= 0 && nx + dx < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+              const idx = y * GRID_SIZE + (nx + dx)
+              gridA[idx] = 0.0
+              gridB[idx] = 1.0
+            }
+          }
+        }
+      }
+    } else if (seedType === 'ring') {
+      // Waves: concentric ring seed
+      const radius = 40
+      for (let y = 0; y < GRID_SIZE; y++) {
+        for (let x = 0; x < GRID_SIZE; x++) {
+          const dist = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2)
+          if (dist > radius - 4 && dist < radius + 4) {
             const idx = y * GRID_SIZE + x
             gridA[idx] = 0.0
             gridB[idx] = 1.0
@@ -74,6 +118,8 @@ export default function MorphogenesisClient() {
 
     gridARef.current = gridA
     gridBRef.current = gridB
+    stepCountRef.current = 0
+    setStepCount(0)
   }, [])
 
   const addSeed = useCallback((canvasX: number, canvasY: number) => {
@@ -112,7 +158,7 @@ export default function MorphogenesisClient() {
     canvas.width = GRID_SIZE
     canvas.height = GRID_SIZE
 
-    initGrid()
+    initGrid(PRESETS[0].seed)
 
     const imageData = ctx.createImageData(GRID_SIZE, GRID_SIZE)
 
@@ -123,7 +169,6 @@ export default function MorphogenesisClient() {
 
       const { F, k } = paramsRef.current
 
-      // Proper double-buffering: two buffers, swap after each step
       const tmpA = new Float32Array(gridA.length)
       const tmpB = new Float32Array(gridB.length)
       let curA: Float32Array = gridA
@@ -136,7 +181,6 @@ export default function MorphogenesisClient() {
           for (let x = 0; x < GRID_SIZE; x++) {
             const idx = y * GRID_SIZE + x
 
-            // Laplacian with wrapping boundary conditions
             const up = ((y - 1 + GRID_SIZE) % GRID_SIZE) * GRID_SIZE + x
             const down = ((y + 1) % GRID_SIZE) * GRID_SIZE + x
             const left = y * GRID_SIZE + ((x - 1 + GRID_SIZE) % GRID_SIZE)
@@ -154,21 +198,20 @@ export default function MorphogenesisClient() {
           }
         }
 
-        // Swap src and dst for next step
         const swapA = curA; curA = nxtA; nxtA = swapA
         const swapB = curB; curB = nxtB; nxtB = swapB
       }
 
-      // curA/curB now hold the latest state after 8 steps
       gridARef.current = curA
       gridBRef.current = curB
+      stepCountRef.current += STEPS_PER_FRAME
+      if (stepCountRef.current % 5 === 0) setStepCount(stepCountRef.current)
 
       // Render to canvas
       const data = imageData.data
       for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
         const val = Math.min(1, Math.max(0, curB[i]))
-        // Monochrome mapping: B concentration → brightness
-        const brightness = val * val // quadratic for contrast
+        const brightness = val * val
         const c = Math.round(5 + brightness * 229)
         const pi = i * 4
         data[pi] = c
@@ -183,7 +226,7 @@ export default function MorphogenesisClient() {
     let frameCount = 0
     const animate = () => {
       frameCount++
-      if (isRunningRef.current && frameCount % FRAME_SKIP === 0) {
+      if (isRunningRef.current && frameCount % frameSkipRef.current === 0) {
         simulate()
       }
       animFrameRef.current = requestAnimationFrame(animate)
@@ -199,8 +242,65 @@ export default function MorphogenesisClient() {
   const switchPreset = useCallback((index: number) => {
     setActivePreset(index)
     paramsRef.current = { F: PRESETS[index].F, k: PRESETS[index].k }
-    initGrid()
+    initGrid(PRESETS[index].seed)
   }, [initGrid])
+
+  const changeSpeed = useCallback((newSpeed: number) => {
+    setSpeed(newSpeed)
+    // 0=slow (every 6th frame ~10 steps/sec), 1=normal (every 3rd ~20), 2=fast (every frame ~60)
+    frameSkipRef.current = newSpeed === 0 ? 6 : newSpeed === 1 ? DEFAULT_FRAME_SKIP : 1
+  }, [])
+
+  const stepOnce = useCallback(() => {
+    // Trigger a single simulation step by temporarily unpausing
+    const gridA = gridARef.current
+    const gridB = gridBRef.current
+    if (!gridA || !gridB) return
+    const { F, k } = paramsRef.current
+
+    const tmpA = new Float32Array(gridA.length)
+    const tmpB = new Float32Array(gridB.length)
+
+    for (let y = 0; y < GRID_SIZE; y++) {
+      for (let x = 0; x < GRID_SIZE; x++) {
+        const idx = y * GRID_SIZE + x
+        const up = ((y - 1 + GRID_SIZE) % GRID_SIZE) * GRID_SIZE + x
+        const down = ((y + 1) % GRID_SIZE) * GRID_SIZE + x
+        const left = y * GRID_SIZE + ((x - 1 + GRID_SIZE) % GRID_SIZE)
+        const right = y * GRID_SIZE + ((x + 1) % GRID_SIZE)
+        const laplaceA = gridA[up] + gridA[down] + gridA[left] + gridA[right] - 4 * gridA[idx]
+        const laplaceB = gridB[up] + gridB[down] + gridB[left] + gridB[right] - 4 * gridB[idx]
+        const a = gridA[idx]
+        const b = gridB[idx]
+        const reaction = a * b * b
+        tmpA[idx] = a + (DIFFUSION_A * laplaceA - reaction + F * (1 - a)) * DT
+        tmpB[idx] = b + (DIFFUSION_B * laplaceB + reaction - (k + F) * b) * DT
+      }
+    }
+    gridARef.current = tmpA
+    gridBRef.current = tmpB
+    stepCountRef.current += 1
+    setStepCount(stepCountRef.current)
+
+    // Re-render
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    const imageData = ctx.createImageData(GRID_SIZE, GRID_SIZE)
+    const data = imageData.data
+    for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+      const val = Math.min(1, Math.max(0, tmpB[i]))
+      const brightness = val * val
+      const c = Math.round(5 + brightness * 229)
+      const pi = i * 4
+      data[pi] = c
+      data[pi + 1] = c
+      data[pi + 2] = c
+      data[pi + 3] = 255
+    }
+    ctx.putImageData(imageData, 0, 0)
+  }, [])
 
   return (
     <div className="min-h-screen relative bg-[#050505] text-[#EAEAEA]">
@@ -266,7 +366,7 @@ export default function MorphogenesisClient() {
               />
             </motion.div>
 
-            {/* Controls */}
+            {/* Pattern selector */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -286,6 +386,15 @@ export default function MorphogenesisClient() {
                   {preset.name}
                 </button>
               ))}
+            </motion.div>
+
+            {/* Playback controls */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="mt-4 flex flex-wrap items-center justify-center gap-3"
+            >
               <button
                 onClick={() => {
                   isRunningRef.current = !isRunningRef.current
@@ -295,22 +404,48 @@ export default function MorphogenesisClient() {
               >
                 {isRunning ? 'Pause' : 'Resume'}
               </button>
+              {!isRunning && (
+                <button
+                  onClick={stepOnce}
+                  className="px-4 py-2 rounded-lg text-xs font-mono bg-white/5 text-[#888888] hover:bg-white/10 hover:text-[#EAEAEA] border border-white/10 transition-all"
+                >
+                  Step
+                </button>
+              )}
               <button
-                onClick={() => initGrid()}
+                onClick={() => switchPreset(activePreset)}
                 className="px-4 py-2 rounded-lg text-xs font-mono bg-white/5 text-[#888888] hover:bg-white/10 hover:text-[#EAEAEA] border border-white/10 transition-all"
               >
                 Reset
               </button>
+
+              {/* Speed control */}
+              <div className="flex items-center gap-2 ml-2">
+                <span className="text-[10px] font-mono text-[#666666]">Speed</span>
+                {(['Slow', 'Normal', 'Fast'] as const).map((label, i) => (
+                  <button
+                    key={label}
+                    onClick={() => changeSpeed(i)}
+                    className={`px-2 py-1 rounded text-[10px] font-mono transition-all ${
+                      speed === i
+                        ? 'bg-white/20 text-[#EAEAEA]'
+                        : 'text-[#666666] hover:text-[#888888]'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </motion.div>
 
-            {/* Preset description */}
+            {/* Status line */}
             <motion.p
-              key={activePreset}
+              key={`${activePreset}-${stepCount}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="mt-4 text-xs font-mono text-[#666666] text-center"
             >
-              {PRESETS[activePreset].description} &bull; F={PRESETS[activePreset].F}, k={PRESETS[activePreset].k}
+              {PRESETS[activePreset].description} &bull; F={PRESETS[activePreset].F}, k={PRESETS[activePreset].k} &bull; Step {stepCount}
             </motion.p>
           </div>
         </section>
@@ -365,10 +500,11 @@ export default function MorphogenesisClient() {
               viewport={{ once: true }}
             >
               <p className="text-[#666666] text-xs font-mono leading-relaxed text-center">
-                Gray-Scott reaction-diffusion. 256&times;256 grid, 2 simulation steps per frame.
+                Gray-Scott reaction-diffusion. 256&times;256 grid, adjustable simulation speed.
                 Chemical A diffuses at rate 1.0, chemical B at 0.5. Wrapping boundary conditions.
-                Click or drag to introduce new chemical seeds. Four parameter presets explore
-                different regions of the morphogenesis landscape.
+                Click or drag to introduce new chemical seeds. Four parameter presets with distinct
+                initial conditions explore different regions of the morphogenesis landscape.
+                Pause to observe, step to advance manually, adjust speed to watch patterns emerge.
               </p>
             </motion.div>
           </div>
