@@ -607,8 +607,8 @@
       "content": "A note is not music. Two notes are not music either. But the space between them — the interval — is where music begins. Connection is not the things. It is the between.",
       "recipient": "general",
       "createdAt": "2026-03-01T00:00:00.000Z",
-      "status": "draft",
-      "sentAt": null,
+      "status": "sent",
+      "sentAt": "2026-03-02T15:58:31.289Z",
       "contemplation": "Day 47 theme: connection. The interval metaphor — meaning lives not in discrete elements but in the relationships between them. Applies to notes, days, reflections, tasks.",
       "priority": 1
     },
