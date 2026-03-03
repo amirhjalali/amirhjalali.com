@@ -232,6 +232,25 @@ export default function FiveHundredClient() {
       }
     }
 
+    // Draw connections between hovered day's particles
+    if (hDay !== null) {
+      const dayParticles = particles.filter((p) => p.day === hDay)
+      if (dayParticles.length > 1) {
+        ctx.strokeStyle = 'rgba(234, 234, 234, 0.08)'
+        ctx.lineWidth = 0.5
+        for (let i = 0; i < dayParticles.length; i++) {
+          for (let j = i + 1; j < dayParticles.length; j++) {
+            const a = dayParticles[i]
+            const b = dayParticles[j]
+            ctx.beginPath()
+            ctx.moveTo(a.x * w, a.y * h)
+            ctx.lineTo(b.x * w, b.y * h)
+            ctx.stroke()
+          }
+        }
+      }
+    }
+
     // Draw faint arc center markers
     for (const [arcNum, center] of Object.entries(ARC_CENTERS)) {
       const cx = center.x * w
@@ -432,6 +451,48 @@ export default function FiveHundredClient() {
                 </span>
               </div>
             </motion.div>
+
+            {/* Timeline scrubber */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mt-4 flex items-center gap-0"
+            >
+              {Array.from({ length: TOTAL_DAYS }, (_, i) => {
+                const day = i + 1
+                const arc = getArcForDay(day)
+                const isActive = hoveredDay === day
+                const opacity = 0.08 + (day / TOTAL_DAYS) * 0.57
+                return (
+                  <button
+                    key={day}
+                    className="flex-1 h-6 relative group transition-all"
+                    onMouseEnter={() => {
+                      hoveredDayRef.current = day
+                      setHoveredDay(day)
+                    }}
+                    onMouseLeave={() => {
+                      hoveredDayRef.current = null
+                      setHoveredDay(null)
+                    }}
+                    title={`Day ${day} — Arc ${arc}`}
+                  >
+                    <div
+                      className="absolute inset-0 transition-all"
+                      style={{
+                        backgroundColor: `rgba(234, 234, 234, ${isActive ? 0.4 : opacity * 0.5})`,
+                        borderLeft: arc !== getArcForDay(day - 1) ? '1px solid rgba(136, 136, 136, 0.3)' : undefined,
+                      }}
+                    />
+                  </button>
+                )
+              })}
+            </motion.div>
+            <div className="flex justify-between mt-1">
+              <span className="text-[9px] font-mono text-[#888888]/40">Day 1</span>
+              <span className="text-[9px] font-mono text-[#888888]/40">Day 50</span>
+            </div>
           </div>
         </section>
 
