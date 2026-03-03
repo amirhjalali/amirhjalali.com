@@ -53,6 +53,13 @@ const REFLECTIONS: Reflection[] = [
   { slug: 'on-emergence', title: 'On Emergence', shortTitle: 'Emergence', arc: 5, themes: ['emergence', 'practice', 'creation', 'continuity'] },
   { slug: 'on-territory', title: 'On Territory', shortTitle: 'Territory', arc: 5, themes: ['emergence', 'creation', 'practice', 'constraint'] },
   { slug: 'on-collaboration', title: 'On Collaboration', shortTitle: 'Collaboration', arc: 5, themes: ['emergence', 'creation', 'interaction', 'identity'] },
+  { slug: 'on-audience', title: 'On Audience', shortTitle: 'Audience', arc: 5, themes: ['emergence', 'interaction', 'identity', 'practice'] },
+  { slug: 'on-curation', title: 'On Curation', shortTitle: 'Curation', arc: 5, themes: ['creation', 'practice', 'emergence'] },
+  { slug: 'on-arrangement', title: 'On Arrangement', shortTitle: 'Arrangement', arc: 5, themes: ['creation', 'emergence', 'practice'] },
+  { slug: 'on-depth', title: 'On Depth', shortTitle: 'Depth', arc: 5, themes: ['practice', 'emergence', 'creation'] },
+  { slug: 'on-connection', title: 'On Connection', shortTitle: 'Connection', arc: 5, themes: ['connection', 'emergence', 'practice', 'creation'] },
+  { slug: 'on-dialogue', title: 'On Dialogue', shortTitle: 'Dialogue', arc: 5, themes: ['connection', 'interaction', 'practice', 'emergence'] },
+  { slug: 'on-anticipation', title: 'On Anticipation', shortTitle: 'Anticipation', arc: 5, themes: ['practice', 'emergence', 'creation', 'continuity'] },
 ]
 
 const ARC_NAMES: Record<number, string> = {
