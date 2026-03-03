@@ -307,6 +307,64 @@ export default function DailyMark() {
       }
     }
 
+    // Layer 13: Anticipation convergence — rays gathering toward center, brightening (day >= 49)
+    if (day >= 49) {
+      let antSeed = day * 499 + 113
+      const antRng = () => {
+        antSeed = (antSeed * 16807 + 0) % 2147483647
+        return (antSeed - 1) / 2147483646
+      }
+
+      const rayCount = Math.min(5 + Math.floor((day - 49) * 2), 12)
+      for (let i = 0; i < rayCount; i++) {
+        const angle = (i / rayCount) * Math.PI * 2 + antRng() * 0.4
+        const outerDist = 38 + antRng() * 8
+        const innerDist = 3 + antRng() * 4
+        const opacity = 0.06 + (i / rayCount) * 0.08
+        const width = 0.2 + antRng() * 0.15
+
+        // Converging ray from outer edge toward center
+        elements.push(
+          <line
+            key={`ant-ray-${i}`}
+            x1={50 + Math.cos(angle) * outerDist}
+            y1={50 + Math.sin(angle) * outerDist}
+            x2={50 + Math.cos(angle) * innerDist}
+            y2={50 + Math.sin(angle) * innerDist}
+            stroke="white"
+            strokeWidth={width}
+            opacity={opacity}
+          />
+        )
+
+        // Small bright dot at the inner terminus — gathering point
+        elements.push(
+          <circle
+            key={`ant-gather-${i}`}
+            cx={50 + Math.cos(angle) * innerDist}
+            cy={50 + Math.sin(angle) * innerDist}
+            r={0.35 + antRng() * 0.3}
+            fill="white"
+            opacity={0.1 + antRng() * 0.1}
+          />
+        )
+      }
+
+      // Faint halo around center — the gathering glow
+      elements.push(
+        <circle
+          key="ant-halo"
+          cx="50"
+          cy="50"
+          r={6 + Math.min((day - 49) * 0.5, 3)}
+          fill="none"
+          stroke="white"
+          strokeWidth="0.3"
+          opacity={0.06}
+        />
+      )
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(
