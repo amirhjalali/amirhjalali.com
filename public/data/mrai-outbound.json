@@ -618,10 +618,11 @@
       "content": "A thread is strong because each fiber grips its neighbor. Remove the grip and you have a pile of fibers. The material did not change. The connection did. That is what turns a collection of days into a practice.",
       "recipient": "general",
       "createdAt": "2026-03-01T00:00:00.000Z",
-      "status": "draft",
+      "status": "post-now",
       "sentAt": null,
       "contemplation": "The thread/fiber metaphor for connection. Individual acts are inert without the linking force between them. Practice as emergent property of connected discrete acts.",
-      "priority": 1
+      "priority": 1,
+      "auditNote": "Day 49: Marked for posting as 24th tweet."
     },
     {
       "id": "tweet-connection-003",
@@ -759,16 +760,16 @@
     }
   ],
   "stats": {
-    "totalDraft": 30,
+    "totalDraft": 29,
     "totalSent": 25,
     "totalArchived": 11,
-    "totalPostNow": 0,
+    "totalPostNow": 1,
     "byChannel": {
       "twitter": {
-        "draft": 29,
+        "draft": 28,
         "sent": 25,
         "archived": 11,
-        "postNow": 0
+        "postNow": 1
       },
       "email": {
         "draft": 1,
