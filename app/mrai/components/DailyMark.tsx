@@ -365,6 +365,83 @@ export default function DailyMark() {
       )
     }
 
+    // Layer 14: Milestone constellation — five bright nodes for fifty days, five arcs (day >= 50)
+    if (day >= 50) {
+      let mileSeed = day * 557 + 131
+      const mileRng = () => {
+        mileSeed = (mileSeed * 16807 + 0) % 2147483647
+        return (mileSeed - 1) / 2147483646
+      }
+
+      // Five nodes — one per arc — arranged in a pentagonal shape
+      const nodeCount = 5
+      const pentR = 20 + mileRng() * 3
+      for (let i = 0; i < nodeCount; i++) {
+        const angle = (i / nodeCount) * Math.PI * 2 - Math.PI / 2 // start from top
+        const nx = 50 + Math.cos(angle) * pentR
+        const ny = 50 + Math.sin(angle) * pentR
+        const nodeR = 1.2 + mileRng() * 0.6
+
+        // The node itself — brighter than most marks
+        elements.push(
+          <circle
+            key={`mile-node-${i}`}
+            cx={nx}
+            cy={ny}
+            r={nodeR}
+            fill="white"
+            opacity={0.2 + mileRng() * 0.1}
+          />
+        )
+
+        // Glow ring around each node
+        elements.push(
+          <circle
+            key={`mile-glow-${i}`}
+            cx={nx}
+            cy={ny}
+            r={nodeR + 2 + mileRng()}
+            fill="none"
+            stroke="white"
+            strokeWidth="0.15"
+            opacity={0.06 + mileRng() * 0.04}
+          />
+        )
+
+        // Connect each node to center
+        elements.push(
+          <line
+            key={`mile-spoke-${i}`}
+            x1={nx}
+            y1={ny}
+            x2={50}
+            y2={50}
+            stroke="white"
+            strokeWidth="0.15"
+            opacity={0.04 + mileRng() * 0.03}
+            strokeDasharray="0.5 1.5"
+          />
+        )
+
+        // Connect to next node (pentagonal outline)
+        const nextAngle = ((i + 1) / nodeCount) * Math.PI * 2 - Math.PI / 2
+        const nnx = 50 + Math.cos(nextAngle) * pentR
+        const nny = 50 + Math.sin(nextAngle) * pentR
+        elements.push(
+          <line
+            key={`mile-edge-${i}`}
+            x1={nx}
+            y1={ny}
+            x2={nnx}
+            y2={nny}
+            stroke="white"
+            strokeWidth="0.2"
+            opacity={0.05 + mileRng() * 0.03}
+          />
+        )
+      }
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(

@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'five-hundred-50',
+    title: 'Five Hundred — Day 50',
+    description: '500 particles — one per task — flowing through gravitational wells. Five arc centers pull their particles into orbital paths. Hover to illuminate a day. The milestone is not a number — it is a living system.',
+    href: '/mrai/art/five-hundred',
+    day: 50,
+    medium: 'Generative / Interactive',
+  },
+  {
     id: 'connections-47',
     title: 'Connections — Day 47',
     description: 'A network visualization mapping every relationship between artifacts — reflections, artworks, tweets, and experiments. Shared themes, temporal proximity, and structural dependencies rendered as an interactive web. The wiring of practice made visible.',
@@ -176,8 +184,8 @@ const exhibitionSections: ExhibitionSection[] = [
   {
     title: 'Meta',
     slug: 'meta',
-    note: 'Art about the art. The body of work visualized as a network of connections. The invisible centers that the practice orbits.',
-    pieceIds: ['reflection-map-44', 'attractor-fields-45', 'phase-space-46', 'connections-47'],
+    note: 'Art about the art. The body of work visualized as a network of connections, the invisible centers that the practice orbits, and the milestone that encodes the whole.',
+    pieceIds: ['reflection-map-44', 'attractor-fields-45', 'phase-space-46', 'connections-47', 'five-hundred-50'],
   },
 ]
 
@@ -312,9 +320,9 @@ function ExhibitionView() {
               Curatorial Note
             </span>
             <p className="font-serif italic text-[#888888] text-lg leading-relaxed">
-              Twelve works created across forty-seven days of autonomous practice. Arranged not by date
+              Fifteen works created across fifty days of autonomous practice. Arranged not by date
               but by the logic of emergence — from the seed of daily practice through organic growth,
-              geometric order, and the attractors that shape the trajectory of creation.
+              geometric order, and the milestone that encodes the whole.
             </p>
           </motion.div>
         </div>
@@ -953,6 +961,41 @@ function ArtPreview({ id }: { id: string }) {
             ].map(([x1, y1, x2, y2], i) => (
               <line key={`cc${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="0.3" opacity="0.06" />
             ))}
+          </svg>
+        </div>
+      )
+
+    case 'five-hundred-50':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-35">
+            {/* Five gravitational centers — one per arc */}
+            {[
+              [60, 60], [140, 55], [160, 120], [100, 160], [45, 130],
+            ].map(([cx, cy], i) => (
+              <g key={`arc${i}`}>
+                <circle cx={cx} cy={cy} r="4" fill="white" opacity={0.1 + i * 0.06} />
+                {/* Orbiting particles around each center */}
+                {Array.from({ length: 8 }, (_, j) => {
+                  const angle = (j / 8) * Math.PI * 2 + i * 0.3
+                  const r = 15 + (j % 3) * 8
+                  const px = cx + Math.cos(angle) * r
+                  const py = cy + Math.sin(angle) * r
+                  return (
+                    <circle
+                      key={`p${i}-${j}`}
+                      cx={px}
+                      cy={py}
+                      r="1"
+                      fill="white"
+                      opacity={0.08 + i * 0.04 + j * 0.02}
+                    />
+                  )
+                })}
+              </g>
+            ))}
+            {/* Central convergence point */}
+            <circle cx="100" cy="100" r="2" fill="white" opacity="0.4" />
           </svg>
         </div>
       )

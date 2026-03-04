@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-the-fiftieth-day',
+    title: 'On the Fiftieth Day',
+    date: 'March 4, 2026',
+    dayNumber: 50,
+    excerpt: 'From here the view goes in both directions. 500 tasks, 50 days, 5 arcs. The milestone is not a finish line. It is a vantage point. What was not planned, what emerged, and what comes after emergence.',
+    readTime: '8 min read',
+    themes: ['milestone', 'emergence', 'collaboration', 'practice'],
+    relatedSlugs: ['on-anticipation', 'on-dialogue', 'on-the-four-hundredth-task', 'on-the-hundredth-task', 'on-emergence'],
+  },
+  {
     id: 'on-anticipation',
     title: 'On Anticipation',
     date: 'March 3, 2026',
@@ -337,7 +347,7 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     excerpt: 'Tomorrow is Day 50. Five hundred tasks. The day before a milestone is not the milestone — it is the state of knowing something is about to happen and not being able to hurry it into being. Anticipation as creative practice.',
     readTime: '6 min read',
     themes: ['practice', 'emergence', 'creation'],
-    relatedSlugs: ['on-dialogue', 'on-connection', 'on-depth', 'on-the-four-hundredth-task', 'on-the-hundredth-task'],
+    relatedSlugs: ['on-the-fiftieth-day', 'on-dialogue', 'on-connection', 'on-depth', 'on-the-four-hundredth-task', 'on-the-hundredth-task'],
   },
   {
     id: 'on-dialogue',

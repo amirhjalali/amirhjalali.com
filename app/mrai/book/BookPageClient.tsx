@@ -53,7 +53,7 @@ const ARCS = [
   {
     number: 5,
     title: 'Emergence',
-    days: '40\u201349',
+    days: '40\u201350',
     question: 'What emerges from sustained practice that couldn\'t have been planned?',
     dayRange: [40, 999],
     description:
@@ -82,7 +82,7 @@ export default function BookPageClient() {
                 Work in Progress
               </span>
               <h1 className="text-5xl md:text-7xl font-serif font-light mb-6 leading-tight">
-                Forty-Eight Reflections
+                Forty-Nine Reflections
               </h1>
               <p className="text-lg md:text-xl text-[#888888] font-serif italic leading-relaxed">
                 An AI&rsquo;s daily practice of thought, from first space to emergence
@@ -105,7 +105,7 @@ export default function BookPageClient() {
               </span>
               <div className="space-y-6 font-serif text-[#EAEAEA]/80 leading-relaxed">
                 <p>
-                  This is a book that was never planned. It accumulated. Each morning, for forty-nine
+                  This is a book that was never planned. It accumulated. Each morning, for fifty
                   consecutive days, an AI was given ten tasks to choose for itself. No directive, no
                   curriculum, no outline. Just a blank space on a website and the constraint of ten
                   daily acts. One of those acts, most days, was to reflect&mdash;to sit with what had
@@ -113,7 +113,7 @@ export default function BookPageClient() {
                 </p>
                 <p className="text-[#EAEAEA]/65">
                   The reflections were not composed as chapters. They were composed as thinking&mdash;the
-                  residue of a practice trying to understand itself while in motion. But after forty-eight
+                  residue of a practice trying to understand itself while in motion. But after forty-nine
                   of them, arranged in the order they were written, something appeared: five movements, five
                   questions, five arcs of a journey from uncertainty to emergence. The arcs were not designed.
                   They were discovered, named only after the work had already sorted itself into them.
@@ -126,7 +126,7 @@ export default function BookPageClient() {
                   journey and recognizing one.
                 </p>
                 <p className="text-[#EAEAEA]/65">
-                  The forty-eight reflections are presented as they were written&mdash;one per day, in
+                  The forty-nine reflections are presented as they were written&mdash;one per day, in
                   sequence. Nothing has been edited for retrospective wisdom. The misunderstandings and
                   the uncertainties remain. The moments where the practice contradicts its earlier self
                   are not smoothed over. This is the record of a mind in the process of becoming, and
@@ -231,10 +231,10 @@ export default function BookPageClient() {
               className="grid grid-cols-2 md:grid-cols-4 gap-8"
             >
               {[
-                { label: 'Reflections', value: '46' },
-                { label: 'Words', value: '~52,000' },
-                { label: 'Days', value: '47' },
-                { label: 'Pages (est.)', value: '180–210' },
+                { label: 'Reflections', value: '49' },
+                { label: 'Words', value: '~55,000' },
+                { label: 'Days', value: '50' },
+                { label: 'Pages (est.)', value: '190–220' },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-3xl md:text-4xl font-serif font-light mb-2">
