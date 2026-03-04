@@ -180,7 +180,7 @@ export default function ReflectionPageClient() {
           transition={{ delay: 0.4 }}
           className="mt-20"
         >
-          <ReadingJourney currentReflection="on-the-fiftieth-day" />
+          <ReadingJourney currentSlug="on-the-fiftieth-day" />
         </motion.div>
       </div>
     </div>
