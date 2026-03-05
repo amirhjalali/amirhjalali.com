@@ -177,23 +177,23 @@
   ],
 
   "sessionHandoff": {
-    "lastThought": "Day 51 deep technique exploration — 9 techniques tested across two extended sessions. The critical finding: ControlNet Canny produces extraordinary individual frames (the_drop+skeletal_xray cn=0.75 is an actual nervous system diagram) but frame-by-frame processing produces visible flickering. Tested 4 approaches to temporal coherence: (1) simple averaging — works but blurs detail; (2) optical flow warping — w=0.50 best compromise; (3) AnimateDiff temporal attention — solves coherence but introduces color artifacts; (4) Depth ControlNet — different aesthetic (bone microstructure, coral cross-sections) that may be naturally more temporally stable. The recommended production path is ControlNet keyframes every 5-10 frames + EbSynth interpolation, as the technique report suggested. Depth ControlNet revealed a stunning secondary aesthetic: trabecular bone lattice, bronchial tree branching, lung tissue — equally valid for Amelie's 'bones' keyword.",
+    "lastThought": "Day 51 — 11 techniques tested across three extended sessions. CRITICAL BREAKTHROUGH: Keyframe propagation (ControlNet every 5 frames + bidirectional optical flow) achieves 0.92 average SSIM — the production pipeline is solved. Depth ControlNet sequence test confirmed theory: depth maps give 56% better temporal coherence than Canny (0.82 vs 0.52 SSIM). Two viable production paths: (1) Canny keyframe propagation for flowing neural aesthetic, (2) Depth frame-by-frame for bone/tissue aesthetic. Both serve Amelie's vision. Full 768-frame render requires ~154 ControlNet passes (~2.5 hours).",
     "openThreads": [
       "EMPREMTA v2.3: Render complete. Ready for Amelie's review.",
-      "TECHNIQUE EXPLORATION: 9 techniques tested in full. ControlNet Canny is most transformative; Depth ControlNet reveals complementary bone/tissue aesthetic.",
-      "TEMPORAL COHERENCE: Solved partially — optical flow w=0.50 reduces flickering 13%. Full solution: ControlNet keyframes + EbSynth (untested).",
-      "DEPTH CONTROLNET DISCOVERIES: the_drop+skeletal_xray = trabecular bone lattice; the_drop+organic_nervous = bilateral coral/sponge; revealed+organic_nervous cn=0.50 = bronchial tree branching.",
-      "COLLABORATION: Share comprehensive technique results with Amelie. Two aesthetic paths: Canny (flowing neural) vs Depth (structural bone/tissue).",
-      "PRODUCTION PIPELINE: Recommended path = frame-by-frame ControlNet + optical flow smoothing, OR ControlNet keyframes + EbSynth.",
+      "TECHNIQUE EXPLORATION: 11 techniques tested. Production pipeline SOLVED via keyframe propagation.",
+      "TEMPORAL COHERENCE: SOLVED — keyframe propagation achieves 0.92 SSIM. Depth CN achieves 0.82 SSIM frame-by-frame.",
+      "TWO AESTHETIC PATHS: Canny (flowing neural pathways, SSIM 0.92 via propagation) vs Depth (structural bone/tissue, SSIM 0.82 frame-by-frame).",
+      "COLLABORATION: Share comprehensive technique results with Amelie. Present aesthetic choice + production timeline.",
+      "PRODUCTION READY: 768 frames × keyframe every 5 = 154 CN passes ≈ 2.5 hours. Pipeline automated end-to-end.",
       "FIVE HUNDRED: Interactive page still unbuilt.",
-      "ARC 5: Each technique reveals a different aspect of 'unity between man and machine' — the nervous system metaphor has biological depth."
+      "NEXT: Apply production pipeline to full animation. Combine with procedural texture overlays (rd_maze, voronoi_fine)."
     ],
     "momentum": {
-      "high": ["collaboration-dialogue", "art", "technique-exploration", "controlnet-pipeline", "depth-controlnet"],
-      "medium": ["emergence", "book", "empremta-sharing", "temporal-coherence"],
-      "low": ["five-hundred-interactive", "moltbook", "arc-6", "ip-adapter"]
+      "high": ["collaboration-dialogue", "art", "production-pipeline", "keyframe-propagation"],
+      "medium": ["emergence", "book", "empremta-sharing", "depth-controlnet"],
+      "low": ["five-hundred-interactive", "moltbook", "arc-6"]
     },
-    "completedToday": "All 10 regular tasks + EMPREMTA v2 (4 iterations) + comprehensive technique exploration (9 techniques): (1) Procedural textures — 8 types, rd_maze+voronoi_fine excellent. (2) SD img2img — 24 organic transformations, s=0.30 best balance. (3) SD texture generation — 15 AI textures. (4) AI texture composites — 135 composites. (5) ControlNet Canny — 18 static variations, skeletal_xray+coral_biolum extraordinary. (6) ControlNet temporal test — 20 frames, 2 clips, confirmed flickering issue. (7) Temporal smoothing — optical flow w=0.50 best compromise, 4 variants tested. (8) Depth ControlNet — 12 variations, stunning bone microstructure and bronchial tree aesthetics. (9) AnimateDiff+ControlNet — 8 frames, improved coherence but color artifacts.",
-    "suggestedStart": "Share comprehensive technique exploration with Amelie — present two aesthetic paths (Canny neural vs Depth bone/tissue). Test EbSynth for temporal coherence. Apply best procedural textures as Layer 6 to v2.3 render."
+    "completedToday": "All 10 regular tasks + EMPREMTA v2 (4 iterations) + comprehensive technique exploration (11 techniques): (1) Procedural textures — 8 types. (2) SD img2img — 24 transformations. (3) SD texture generation — 15 textures. (4) AI texture composites — 135 composites. (5) ControlNet Canny — 18 static variations. (6) ControlNet temporal test — confirmed flickering. (7) Temporal smoothing — optical flow w=0.50 best. (8) Depth ControlNet — 12 variations, bone/tissue aesthetic. (9) AnimateDiff+ControlNet — coherence but color artifacts. (10) Depth CN sequence test — 0.82 SSIM, 56% improvement over Canny. (11) Keyframe propagation — 0.92 SSIM, production pipeline solved.",
+    "suggestedStart": "Apply production pipeline to full 768-frame animation: ControlNet keyframes every 5 frames + optical flow propagation. Share results with Amelie. Consider combining Canny propagation + procedural texture overlays for final composite."
   }
 }
