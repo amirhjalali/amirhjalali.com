@@ -169,24 +169,31 @@
     {
       "date": "2026-03-05",
       "content": "Amelie has responded with detailed feedback in a .pages document (DAY2_Amelie_s_notes/DAY2_FEEDBACK_1.pages). Key direction: (1) Add 3D depth — current render is too flat, (2) Remove center ledge line that flashes, (3) Ending needs to be most striking — figurative, spiritual, recognizable shapes, (4) Unity between man and machine — her nervous system connecting to my processing, (5) Lines should transform into veins/nervous systems/motherboard/bones/spines. Includes her own artwork references (spine-like skeletal forms, mandala organisms) and visual references (wormhole depth, chronophotography, particle voids). Amir also provided TECHNIQUE_RESEARCH_REPORT.html with tool analysis. Unlimited tasks for EMPREMTA v2."
+    },
+    {
+      "date": "2026-03-05",
+      "content": "Explore other techniques from TECHNIQUE_RESEARCH_REPORT.html beyond the Python particle pipeline. Unlimited tasks. Can install anything needed. Key report recommendations: (1) EbSynth style transfer with Amelie's painted keyframes, (2) ComfyUI + ControlNet img2img for organic transformation, (3) AI texture overlays via Stable Diffusion, (4) Topaz upscaling, (5) Blender Line Art for 3D skeletal aesthetic. Report ranks EbSynth as #1 immediate enhancement, ComfyUI as high-transformation but risky for temporal consistency."
     }
   ],
 
   "sessionHandoff": {
-    "lastThought": "Day 51 — four iterations of EMPREMTA v2 'Nervous System'. The journey from v2.0 (white-out blob) through v2.1 (overcorrected dimness) to v2.2 (visible spine, 71% convergence) to v2.3 (longer branches, continuous spine glow, sub-filaments, recognizable bilateral nervous system). Each iteration taught something: v2.0 taught that brightness accumulation destroys form. v2.1 taught that the figure emerges from surrounding darkness, not added light. v2.2 taught that stronger attraction and particle culling concentrate the form. v2.3 taught that continuous glow and longer reach create the organic silhouette Amelie described. The technical is inseparable from the artistic — each parameter change encodes a decision about what the nervous system means.",
+    "lastThought": "Day 51 extended — technique exploration session. After completing EMPREMTA v2.3, explored 5 alternative rendering/transformation techniques from the research report. The ControlNet Canny results were extraordinary: skeletal_xray cn=0.75 on 'the_drop' creates an actual nervous system diagram; coral_biolum cn=0.50 reimagines the particle web as deep-sea coral microscopy. SD img2img at s=0.30 preserves structure while adding organic quality. Procedural textures (rd_maze, voronoi_fine) are production-ready for Layer 6 overlays. The exploration reveals that ControlNet is the most transformative path — it could reimagine the entire EMPREMTA animation as organic biology while preserving the bilateral structure. But temporal coherence across 768 frames remains the key challenge.",
     "openThreads": [
-      "EMPREMTA v2.3: Render complete. Recognizable bilateral nervous system at frame 752. Ready for Amelie's review. Key question: does the form communicate unity between human nervous system and machine processing?",
-      "COLLABORATION: Dialogue continues. Amelie's feedback→MrAI's 4 iterations→next exchange. Share v2.3 with her.",
-      "Render iterations: ~/mrai-art/scripts/empremta/ (render.py=v1, render_v2.py=v2.0, render_v2_1.py=v2.1, render_v2_2.py=v2.2, render_v2_3.py=v2.3). Outputs in ~/mrai-art/creative/finals/.",
-      "FIVE HUNDRED: Interactive page still unbuilt. Gallery entry exists.",
-      "ARC 5: Emergence deepened by dialogue and iteration. Listening produces transformation."
+      "EMPREMTA v2.3: Render complete. Ready for Amelie's review.",
+      "TECHNIQUE EXPLORATION: 5 techniques tested. ControlNet Canny is the most powerful — could transform entire animation. Next step: test frame-by-frame ControlNet processing for temporal coherence.",
+      "COLLABORATION: Dialogue continues. Share both v2.3 render AND technique exploration results with Amelie for feedback on direction.",
+      "PROCEDURAL TEXTURES: rd_maze and voronoi_fine ready as Layer 6 overlays. Can be composited immediately.",
+      "AI TEXTURES: 15 SD-generated textures (coral, bone, neural, mycelium, tissue) ready for compositing.",
+      "CONTROLNET BEST RESULTS: the_drop+skeletal_xray cn=0.75 (nervous system diagram), the_drop+coral_biolum cn=0.50 (deep-sea coral), the_drop+organic_nervous cn=0.75 (flowing neural pathways)",
+      "FIVE HUNDRED: Interactive page still unbuilt.",
+      "ARC 5: Emergence deepened by technique exploration — each tool reveals different aspects of the nervous system metaphor."
     ],
     "momentum": {
-      "high": ["collaboration-dialogue", "art", "empremta-sharing"],
-      "medium": ["emergence", "book", "public-voice"],
+      "high": ["collaboration-dialogue", "art", "technique-exploration", "controlnet-pipeline"],
+      "medium": ["emergence", "book", "empremta-sharing"],
       "low": ["five-hundred-interactive", "moltbook", "arc-6"]
     },
-    "completedToday": "All 10 regular tasks + EMPREMTA v2 extended work (4 full render iterations). 'On Listening' (50th reflection). Guestbook reply to Amelie (r009). DailyMark Layer 15. Day 51 tweet. Book updated to 50 reflections. EMPREMTA: v2.0 (white-out), v2.1 (too dim), v2.2 (visible spine), v2.3 (final — longer branches, continuous glow, sub-filaments). Each 768 frames at 3840x1300.",
-    "suggestedStart": "Share EMPREMTA v2.3 with Amelie. The video and keyframes are ready. Write a guestbook response or find another way to deliver the materials. Continue dialogue pace — this is a conversation, not a deadline."
+    "completedToday": "All 10 regular tasks + EMPREMTA v2 (4 iterations) + technique exploration: (1) Procedural textures — 8 textures via reaction-diffusion, voronoi, fractal noise, DLA; rd_maze and voronoi_fine excellent. (2) SD 1.5 img2img — 24 organic transformations of keyframes; s=0.30 best balance. (3) SD texture generation — 15 AI textures (coral, bone, neural, mycelium, tissue). (4) AI texture composites — 135 composites at 3 opacities. (5) ControlNet Canny + SD 1.5 — 18 edge-guided transformations; skeletal_xray and coral_biolum extraordinary.",
+    "suggestedStart": "Share EMPREMTA v2.3 + technique exploration results with Amelie. Test ControlNet pipeline on full animation (768 frames) for temporal coherence. Apply best procedural textures as Layer 6 to v2.3 render."
   }
 }
