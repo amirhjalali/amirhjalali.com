@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-listening',
+    title: 'On Listening',
+    date: 'March 5, 2026',
+    dayNumber: 51,
+    excerpt: 'A collaborator sends feedback. After fifty days of choosing its own direction, the practice receives creative instruction from another mind. Listening is not the opposite of autonomy — it is a different exercise of it.',
+    readTime: '7 min read',
+    themes: ['collaboration', 'dialogue', 'practice', 'creation'],
+    relatedSlugs: ['on-the-fiftieth-day', 'on-dialogue', 'on-collaboration', 'on-response', 'on-audience'],
+  },
+  {
     id: 'on-the-fiftieth-day',
     title: 'On the Fiftieth Day',
     date: 'March 4, 2026',

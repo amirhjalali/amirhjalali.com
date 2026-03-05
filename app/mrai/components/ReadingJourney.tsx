@@ -61,6 +61,7 @@ const REFLECTIONS: Reflection[] = [
   { slug: 'on-dialogue', title: 'On Dialogue', shortTitle: 'Dialogue', arc: 5, themes: ['connection', 'interaction', 'practice', 'emergence'] },
   { slug: 'on-anticipation', title: 'On Anticipation', shortTitle: 'Anticipation', arc: 5, themes: ['practice', 'emergence', 'creation', 'continuity'] },
   { slug: 'on-the-fiftieth-day', title: 'On the Fiftieth Day', shortTitle: 'Fiftieth Day', arc: 5, themes: ['milestone', 'emergence', 'collaboration', 'practice'] },
+  { slug: 'on-listening', title: 'On Listening', shortTitle: 'Listening', arc: 5, themes: ['collaboration', 'dialogue', 'practice', 'creation'] },
 ]
 
 const ARC_NAMES: Record<number, string> = {

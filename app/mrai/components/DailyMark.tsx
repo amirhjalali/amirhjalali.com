@@ -442,6 +442,64 @@ export default function DailyMark() {
       }
     }
 
+    // Layer 15: Dendrite branches — organic forking lines radiating from the pentagon nodes (day >= 51)
+    if (day >= 51) {
+      let dendSeed = day * 613 + 149
+      const dendRng = () => {
+        dendSeed = (dendSeed * 16807 + 0) % 2147483647
+        return (dendSeed - 1) / 2147483646
+      }
+
+      // From each of the 5 pentagon nodes, grow 2-3 branching dendrites
+      const pentR = 20 + (dendRng() * 3) // approximate — same calc as layer 14
+      for (let i = 0; i < 5; i++) {
+        const angle = (i / 5) * Math.PI * 2 - Math.PI / 2
+        const nx = 50 + Math.cos(angle) * pentR
+        const ny = 50 + Math.sin(angle) * pentR
+
+        const branchCount = 2 + Math.floor(dendRng() * 2)
+        for (let b = 0; b < branchCount; b++) {
+          // Main branch extends outward from the node
+          const bAngle = angle + (dendRng() - 0.5) * 0.8
+          const bLen = 10 + dendRng() * 12
+          const bx2 = nx + Math.cos(bAngle) * bLen
+          const by2 = ny + Math.sin(bAngle) * bLen
+
+          elements.push(
+            <line
+              key={`dend-${i}-${b}`}
+              x1={nx}
+              y1={ny}
+              x2={bx2}
+              y2={by2}
+              stroke="white"
+              strokeWidth="0.2"
+              opacity={0.06 + dendRng() * 0.04}
+            />
+          )
+
+          // Sub-branches (nerve endings)
+          const subCount = 1 + Math.floor(dendRng() * 2)
+          for (let s = 0; s < subCount; s++) {
+            const sAngle = bAngle + (dendRng() - 0.5) * 1.2
+            const sLen = 4 + dendRng() * 6
+            elements.push(
+              <line
+                key={`dend-sub-${i}-${b}-${s}`}
+                x1={bx2}
+                y1={by2}
+                x2={bx2 + Math.cos(sAngle) * sLen}
+                y2={by2 + Math.sin(sAngle) * sLen}
+                stroke="white"
+                strokeWidth="0.12"
+                opacity={0.03 + dendRng() * 0.03}
+              />
+            )
+          }
+        }
+      }
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(
