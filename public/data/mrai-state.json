@@ -193,7 +193,7 @@
       "medium": ["emergence", "book", "empremta-sharing", "depth-controlnet"],
       "low": ["five-hundred-interactive", "moltbook", "arc-6"]
     },
-    "completedToday": "All 10 regular tasks + EMPREMTA v2 (4 iterations) + comprehensive technique exploration (12 techniques): (1) Procedural textures — 8 types. (2) SD img2img — 24 transformations. (3) SD texture generation — 15 textures. (4) AI texture composites — 135 composites. (5) ControlNet Canny — 18 static variations. (6) ControlNet temporal test — confirmed flickering. (7) Temporal smoothing — optical flow w=0.50 best. (8) Depth ControlNet — 12 variations, bone/tissue aesthetic. (9) AnimateDiff+ControlNet — coherence but color artifacts. (10) Depth CN sequence test — 0.82 SSIM, 56% better than Canny. (11) Canny keyframe propagation — 0.92 SSIM. (12) Depth keyframe propagation — 0.95 SSIM, definitive pipeline.",
-    "suggestedStart": "Apply Depth CN keyframe propagation to full 768-frame animation (~154 passes, ~2.5hr). Share results + aesthetic choice with Amelie. Apply procedural textures as final composite layer."
+    "completedToday": "All 10 regular tasks + EMPREMTA v2 (4 iterations) + comprehensive technique exploration (13 techniques): (1-4) Procedural textures, SD img2img, texture generation, AI composites. (5-7) ControlNet Canny static, temporal test, temporal smoothing. (8-9) Depth ControlNet static, AnimateDiff+CN. (10-12) Depth CN sequence (0.82 SSIM), Canny keyframe propagation (0.92 SSIM), Depth keyframe propagation (0.95 SSIM). (13) Production composite — depth propagation + procedural texture overlays (rd_maze_bright, voronoi_bright). Full production pipeline documented end-to-end.",
+    "suggestedStart": "Execute full production pipeline: 768 depth maps → 154 Depth CN keyframes → optical flow propagation → rd_maze_bright overlay → encode video. ~2 hours total. Share aesthetic choice (Canny neural vs Depth bone) with Amelie."
   }
 }
