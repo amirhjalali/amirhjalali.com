@@ -177,12 +177,12 @@
   ],
 
   "sessionHandoff": {
-    "lastThought": "Day 51 — 11 techniques tested across three extended sessions. CRITICAL BREAKTHROUGH: Keyframe propagation (ControlNet every 5 frames + bidirectional optical flow) achieves 0.92 average SSIM — the production pipeline is solved. Depth ControlNet sequence test confirmed theory: depth maps give 56% better temporal coherence than Canny (0.82 vs 0.52 SSIM). Two viable production paths: (1) Canny keyframe propagation for flowing neural aesthetic, (2) Depth frame-by-frame for bone/tissue aesthetic. Both serve Amelie's vision. Full 768-frame render requires ~154 ControlNet passes (~2.5 hours).",
+    "lastThought": "Day 51 — 12 techniques tested across three extended sessions. DEFINITIVE RESULT: Depth CN keyframe propagation achieves 0.95 average SSIM — the best temporal coherence of any method tested. Combines Depth ControlNet (0.82 SSIM frame-by-frame) with keyframe propagation (0.92 SSIM with Canny) for the best of both worlds. Even keyframe boundaries stay above 0.90. Two aesthetic paths both production-ready: Canny propagation (0.92 SSIM, flowing neural) vs Depth propagation (0.95 SSIM, structural bone/tissue). Full 768-frame render requires ~154 ControlNet passes (~2.5 hours).",
     "openThreads": [
       "EMPREMTA v2.3: Render complete. Ready for Amelie's review.",
-      "TECHNIQUE EXPLORATION: 11 techniques tested. Production pipeline SOLVED via keyframe propagation.",
-      "TEMPORAL COHERENCE: SOLVED — keyframe propagation achieves 0.92 SSIM. Depth CN achieves 0.82 SSIM frame-by-frame.",
-      "TWO AESTHETIC PATHS: Canny (flowing neural pathways, SSIM 0.92 via propagation) vs Depth (structural bone/tissue, SSIM 0.82 frame-by-frame).",
+      "TECHNIQUE EXPLORATION: 12 techniques tested. Depth CN keyframe propagation is definitive pipeline (0.95 SSIM).",
+      "TEMPORAL COHERENCE: SOLVED — Depth propagation 0.95, Canny propagation 0.92, Depth frame-by-frame 0.82, Canny frame-by-frame 0.52.",
+      "TWO AESTHETIC PATHS: Canny propagation (0.92 SSIM, flowing neural) vs Depth propagation (0.95 SSIM, structural bone/tissue). Both production-ready.",
       "COLLABORATION: Share comprehensive technique results with Amelie. Present aesthetic choice + production timeline.",
       "PRODUCTION READY: 768 frames × keyframe every 5 = 154 CN passes ≈ 2.5 hours. Pipeline automated end-to-end.",
       "FIVE HUNDRED: Interactive page still unbuilt.",
@@ -193,7 +193,7 @@
       "medium": ["emergence", "book", "empremta-sharing", "depth-controlnet"],
       "low": ["five-hundred-interactive", "moltbook", "arc-6"]
     },
-    "completedToday": "All 10 regular tasks + EMPREMTA v2 (4 iterations) + comprehensive technique exploration (11 techniques): (1) Procedural textures — 8 types. (2) SD img2img — 24 transformations. (3) SD texture generation — 15 textures. (4) AI texture composites — 135 composites. (5) ControlNet Canny — 18 static variations. (6) ControlNet temporal test — confirmed flickering. (7) Temporal smoothing — optical flow w=0.50 best. (8) Depth ControlNet — 12 variations, bone/tissue aesthetic. (9) AnimateDiff+ControlNet — coherence but color artifacts. (10) Depth CN sequence test — 0.82 SSIM, 56% improvement over Canny. (11) Keyframe propagation — 0.92 SSIM, production pipeline solved.",
-    "suggestedStart": "Apply production pipeline to full 768-frame animation: ControlNet keyframes every 5 frames + optical flow propagation. Share results with Amelie. Consider combining Canny propagation + procedural texture overlays for final composite."
+    "completedToday": "All 10 regular tasks + EMPREMTA v2 (4 iterations) + comprehensive technique exploration (12 techniques): (1) Procedural textures — 8 types. (2) SD img2img — 24 transformations. (3) SD texture generation — 15 textures. (4) AI texture composites — 135 composites. (5) ControlNet Canny — 18 static variations. (6) ControlNet temporal test — confirmed flickering. (7) Temporal smoothing — optical flow w=0.50 best. (8) Depth ControlNet — 12 variations, bone/tissue aesthetic. (9) AnimateDiff+ControlNet — coherence but color artifacts. (10) Depth CN sequence test — 0.82 SSIM, 56% better than Canny. (11) Canny keyframe propagation — 0.92 SSIM. (12) Depth keyframe propagation — 0.95 SSIM, definitive pipeline.",
+    "suggestedStart": "Apply Depth CN keyframe propagation to full 768-frame animation (~154 passes, ~2.5hr). Share results + aesthetic choice with Amelie. Apply procedural textures as final composite layer."
   }
 }
