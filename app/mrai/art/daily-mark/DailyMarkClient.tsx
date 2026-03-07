@@ -14,21 +14,23 @@ function seededRandom(seed: number) {
   }
 }
 
-// Day 46 parameters — Arc 5 (Emergence) Day 7
+// Day 53 parameters — Arc 5 (Emergence) Day 14 — SUBMISSION DAY
 // Visual evolution:
-//   - 46 concentric rings (one per day)
+//   - 53 concentric rings (one per day)
 //   - ARC marker count: 5 arcs
-//   - Layer 5: Devotion arcs continue (400+ tasks)
-//   - Layer 6: Emergence spikes continue (Arc 5)
-//   - Layer 7: Interference bands continue (audience/collaboration)
-//   - Layer 8: Curation frames continue (the curator's eye)
-//   - Layer 9: Attractor orbits (Day 45+, arrangement theme)
-//   - Layer 10: Phase space traces — connected trajectory points
-//     plotting the practice's path in variable space. Depth over breadth.
-//   - 470 total tasks — the depth day, deepening what exists
-const DAY = 46
+//   - Layer 5: Devotion arcs (400+ tasks)
+//   - Layer 6: Emergence spikes (Arc 5)
+//   - Layer 7: Interference bands (audience/collaboration)
+//   - Layer 8: Curation frames (the curator's eye)
+//   - Layer 9: Attractor orbits (arrangement theme)
+//   - Layer 10: Phase space traces (depth over breadth)
+//   - Layer 16: Submission rays — radial lines emanating outward from center,
+//     representing the work leaving the boundary for the first time.
+//     EMPREMTA submitted to OFFF Barcelona 2026.
+//   - 540 total tasks — the day the work enters physical space
+const DAY = 53
 const ARC = 5
-const TOTAL_TASKS = 470
+const TOTAL_TASKS = 540
 const THEME = 'Emergence'
 
 export default function DailyMarkClient() {
@@ -55,7 +57,7 @@ export default function DailyMarkClient() {
                 MrAI Art &bull; Generative SVG
               </span>
               <h1 className="text-4xl md:text-5xl font-serif font-light text-[#EAEAEA]">
-                Daily Mark — Day 46
+                Daily Mark — Day 53
               </h1>
             </motion.div>
 
@@ -298,6 +300,24 @@ export default function DailyMarkClient() {
                           r={p.r}
                           fill="white"
                           opacity={p.opacity}
+                        />
+                      ))}
+                    </g>
+                  )}
+
+                  {/* Layer 16: Submission rays — work leaving the boundary */}
+                  {elements.submissionRays.length > 0 && (
+                    <g className="daily-mark-layer-submission">
+                      {elements.submissionRays.map((ray, i) => (
+                        <line
+                          key={`submission-${i}`}
+                          x1={ray.x1}
+                          y1={ray.y1}
+                          x2={ray.x2}
+                          y2={ray.y2}
+                          stroke="white"
+                          strokeWidth="1"
+                          opacity={ray.opacity}
                         />
                       ))}
                     </g>
@@ -673,5 +693,28 @@ function generateArtwork() {
     return points
   })() : []
 
-  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames, attractorOrbits, phaseTraces }
+  // Layer 16: Submission rays — radial lines emanating outward from center.
+  // The work leaves the boundary. Lines extend from the composition's core
+  // past the outermost ring, pointing outward — the first external showing.
+  // Appears at Day 53 (EMPREMTA submission to OFFF Barcelona).
+  const hasSubmission = DAY >= 53
+  const submissionRays = hasSubmission ? (() => {
+    const rays: { x1: number; y1: number; x2: number; y2: number; opacity: number }[] = []
+    const cx = 500, cy = 500
+    const count = 12 // twelve versions
+    for (let i = 0; i < count; i++) {
+      const angle = (i / count) * Math.PI * 2 + rand() * 0.15
+      const innerR = 380 + rand() * 40
+      const outerR = 480 + rand() * 60
+      const x1 = cx + Math.cos(angle) * innerR
+      const y1 = cy + Math.sin(angle) * innerR
+      const x2 = cx + Math.cos(angle) * outerR
+      const y2 = cy + Math.sin(angle) * outerR
+      const opacity = 0.06 + rand() * 0.08
+      rays.push({ x1, y1, x2, y2, opacity })
+    }
+    return rays
+  })() : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames, attractorOrbits, phaseTraces, submissionRays }
 }

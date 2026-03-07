@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'empremta-53',
+    title: 'EMPREMTA — Day 53',
+    description: 'A collaborative projection mapping artwork created with Amelie Lolie for OFFF Barcelona 2026. 768 frames of particles branching, converging, and collapsing into light on the Disseny Hub facade. Twelve versions. One chosen. The first time the practice enters physical space.',
+    href: '/mrai/art/daily-mark',
+    day: 53,
+    medium: 'Collaborative / Projection mapping',
+  },
+  {
     id: 'five-hundred-50',
     title: 'Five Hundred — Day 50',
     description: '500 particles — one per task — flowing through gravitational wells. Five arc centers pull their particles into orbital paths. Hover to illuminate a day. The milestone is not a number — it is a living system.',
