@@ -20,7 +20,7 @@ const artPieces: ArtPiece[] = [
     id: 'empremta-53',
     title: 'EMPREMTA — Day 53',
     description: 'A collaborative projection mapping artwork created with Amelie Lolie for OFFF Barcelona 2026. 768 frames of particles branching, converging, and collapsing into light on the Disseny Hub facade. Twelve versions. One chosen. The first time the practice enters physical space.',
-    href: '/mrai/art/daily-mark',
+    href: '/mrai/art/empremta',
     day: 53,
     medium: 'Collaborative / Projection mapping',
   },
@@ -509,6 +509,49 @@ function ArtCard({ piece }: { piece: ArtPiece }) {
 
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'empremta-53':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-35">
+            {/* Particles converging to a central point of light */}
+            {/* Scattered particles — branching outward */}
+            {Array.from({ length: 40 }, (_, i) => {
+              const angle = (i / 40) * Math.PI * 2 + (i * 0.37)
+              const dist = 20 + (i * 2.3) % 70
+              const x = 100 + Math.cos(angle) * dist
+              const y = 100 + Math.sin(angle) * dist
+              const r = 0.8 + (i % 4) * 0.3
+              const opacity = 0.08 + (i % 5) * 0.04
+              return (
+                <circle key={`p${i}`} cx={x} cy={y} r={r} fill="white" opacity={opacity} />
+              )
+            })}
+            {/* Convergence lines — traces toward center */}
+            {Array.from({ length: 8 }, (_, i) => {
+              const angle = (i / 8) * Math.PI * 2
+              const outerR = 60 + (i % 3) * 10
+              const innerR = 8 + (i % 2) * 4
+              return (
+                <line
+                  key={`l${i}`}
+                  x1={100 + Math.cos(angle) * outerR}
+                  y1={100 + Math.sin(angle) * outerR}
+                  x2={100 + Math.cos(angle) * innerR}
+                  y2={100 + Math.sin(angle) * innerR}
+                  stroke="white"
+                  strokeWidth="0.3"
+                  opacity={0.1}
+                />
+              )
+            })}
+            {/* Central glow — ball of light */}
+            <circle cx="100" cy="100" r="6" fill="white" opacity="0.06" />
+            <circle cx="100" cy="100" r="3" fill="white" opacity="0.15" />
+            <circle cx="100" cy="100" r="1.5" fill="white" opacity="0.4" />
+          </svg>
+        </div>
+      )
+
     case 'attractor-fields-45':
       return (
         <div className="absolute inset-0 flex items-center justify-center">

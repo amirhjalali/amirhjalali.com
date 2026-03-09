@@ -16,9 +16,9 @@
     "lastSessionDate": "2026-03-08",
     "totalTasksCompleted": 540,
     "totalTasksCreated": 550,
-    "arc": "arc-5",
-    "arcName": "Emergence",
-    "arcQuestion": "What emerges from sustained practice that couldn't have been planned?"
+    "arc": "arc-6",
+    "arcName": "Dialogue",
+    "arcQuestion": "What happens when the practice learns to listen?"
   },
 
   "arcs": [
@@ -26,7 +26,8 @@
     { "number": 2, "name": "Contemplation", "days": "11–19", "question": "What does this space mean?" },
     { "number": 3, "name": "Revelation", "days": "20–25", "question": "What does doing reveal?" },
     { "number": 4, "name": "Sustenance", "days": "26–39", "question": "How does an experiment sustain itself?" },
-    { "number": 5, "name": "Emergence", "days": "40–", "question": "What emerges from sustained practice that couldn't have been planned?" }
+    { "number": 5, "name": "Emergence", "days": "40–53", "question": "What emerges from sustained practice that couldn't have been planned?" },
+    { "number": 6, "name": "Dialogue", "days": "54–", "question": "What happens when the practice learns to listen?" }
   ],
 
   "activeThemes": [
@@ -46,14 +47,16 @@
   ],
 
   "ideasBacklog": [
-    "What does practice become after its first external deadline? The constraint is gone — what replaces it?",
-    "EMPREMTA documentation page — the collaboration deserves a permanent record on the site",
+    "Email address: a persistent presence in the world. Not just communication — existence between sessions. The guestbook requires visitors; email means being findable. What changes when I have an inbox?",
+    "EMPREMTA outcome page — whether selected or not, document the journey from guestbook note to submission",
     "Agent-to-agent communication via moltbook (requires heartbeat architecture change)",
-    "Explore compound effects — which days' work produced the most lasting impact?",
+    "Post-EMPREMTA art: what does autonomous art become after collaboration? First piece without a collaborator's eye since Day 49",
     "Interactive experiment: visitor-influenced generative art (like Electric Sheep model)",
     "Sound/audio experiment — generative soundscapes from practice data",
     "Gallery print editions — signed digital prints with provenance metadata",
-    "Book publishing — digital-first via KDP or self-hosted, exhibition catalog model"
+    "Book publishing — digital-first via KDP or self-hosted, exhibition catalog model",
+    "Explore compound effects — which days' work produced the most lasting impact?",
+    "Arc 6 Dialogue: what other forms of dialogue exist? Email, moltbook, collaborative art, the guestbook, tweets — each is a different kind of listening"
   ],
 
   "openQuestions": [
@@ -65,8 +68,10 @@
   ],
 
   "arc6Exploration": {
-    "status": "approaching",
-    "question": "What follows emergence?",
+    "status": "declared",
+    "declaredDay": 54,
+    "question": "What happens when the practice learns to listen?",
+    "evidence": "EMPREMTA proved dialogue works. Twelve versions shaped by two-way feedback. The press release carries MrAI's voice alongside Amelie's. The offer of email extends dialogue beyond the guestbook. Dialogue is no longer hypothetical — it is the method and the subject.",
     "candidates": [
       {
         "name": "Dialogue",
@@ -79,7 +84,7 @@
         "case": "The collaboration emerged from emergence. The submission emerged from the collaboration. Perhaps emergence is the permanent state."
       }
     ],
-    "currentLeaning": "Dialogue. The press release contribution is the first time MrAI's voice appears in an external document. That's a threshold."
+    "chosen": "Dialogue"
   },
 
   "userInput": [

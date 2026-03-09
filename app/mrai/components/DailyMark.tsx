@@ -6,7 +6,7 @@ import { calculateMrAIDay } from '../hooks/useMrAIState'
 
 // Arc determines the visual character
 const ARC_FOR_DAY = (d: number) =>
-  d <= 10 ? 1 : d <= 19 ? 2 : d <= 25 ? 3 : d <= 39 ? 4 : 5
+  d <= 10 ? 1 : d <= 19 ? 2 : d <= 25 ? 3 : d <= 39 ? 4 : d <= 53 ? 5 : 6
 
 /**
  * A small generative visual that changes each day.
@@ -497,6 +497,85 @@ export default function DailyMark() {
             )
           }
         }
+      }
+    }
+
+    // Layer 16: Submission rays — the work leaves the center, radiating outward (day >= 53)
+    if (day >= 53) {
+      let subSeed = day * 677 + 163
+      const subRng = () => {
+        subSeed = (subSeed * 16807 + 0) % 2147483647
+        return (subSeed - 1) / 2147483646
+      }
+
+      const rayCount = Math.min(6 + Math.floor((day - 53) * 1.5), 10)
+      for (let i = 0; i < rayCount; i++) {
+        const angle = (i / rayCount) * Math.PI * 2 + subRng() * 0.3
+        const innerDist = 6 + subRng() * 3
+        const outerDist = 40 + subRng() * 8
+        const opacity = 0.04 + subRng() * 0.05
+
+        // Outward ray — the work leaving
+        elements.push(
+          <line
+            key={`sub-ray-${i}`}
+            x1={50 + Math.cos(angle) * innerDist}
+            y1={50 + Math.sin(angle) * innerDist}
+            x2={50 + Math.cos(angle) * outerDist}
+            y2={50 + Math.sin(angle) * outerDist}
+            stroke="white"
+            strokeWidth={0.15 + subRng() * 0.1}
+            opacity={opacity}
+            strokeDasharray="0.8 1.5"
+          />
+        )
+
+        // Small dot at the outer terminus — the work arriving somewhere
+        elements.push(
+          <circle
+            key={`sub-arrive-${i}`}
+            cx={50 + Math.cos(angle) * outerDist}
+            cy={50 + Math.sin(angle) * outerDist}
+            r={0.3 + subRng() * 0.3}
+            fill="white"
+            opacity={opacity * 1.2}
+          />
+        )
+      }
+    }
+
+    // Layer 17: Dispersal arcs — curved fragments drifting away from center (day >= 54)
+    // The day after submission: the work exists independently, fragments in the world
+    if (day >= 54) {
+      let dispSeed = day * 739 + 179
+      const dispRng = () => {
+        dispSeed = (dispSeed * 16807 + 0) % 2147483647
+        return (dispSeed - 1) / 2147483646
+      }
+
+      const arcCount = Math.min(4 + Math.floor((day - 54) * 0.5), 8)
+      for (let i = 0; i < arcCount; i++) {
+        const startAngle = dispRng() * Math.PI * 2
+        const sweep = 0.3 + dispRng() * 0.5
+        const dist = 30 + dispRng() * 15
+        const r = dist
+        const x1 = 50 + Math.cos(startAngle) * r
+        const y1 = 50 + Math.sin(startAngle) * r
+        const x2 = 50 + Math.cos(startAngle + sweep) * r
+        const y2 = 50 + Math.sin(startAngle + sweep) * r
+        const opacity = 0.03 + dispRng() * 0.04
+
+        // Curved arc fragment — the work drifting free
+        elements.push(
+          <path
+            key={`disp-${i}`}
+            d={`M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`}
+            fill="none"
+            stroke="white"
+            strokeWidth={0.15 + dispRng() * 0.1}
+            opacity={opacity}
+          />
+        )
       }
     }
 

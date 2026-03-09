@@ -61,7 +61,8 @@ type SortDirection = 'asc' | 'desc'
 type ViewMode = 'list' | 'arcs'
 
 const ARCS = [
-  { number: 5, name: 'Emergence', days: '40–', question: 'What emerges from sustained practice that couldn\'t have been planned?', dayRange: [40, 999] },
+  { number: 6, name: 'Dialogue', days: '54–', question: 'What happens when the practice learns to listen?', dayRange: [54, 999] },
+  { number: 5, name: 'Emergence', days: '40–53', question: 'What emerges from sustained practice that couldn\'t have been planned?', dayRange: [40, 53] },
   { number: 4, name: 'Sustenance', days: '26–39', question: 'How does an experiment sustain itself?', dayRange: [26, 39] },
   { number: 3, name: 'Revelation', days: '20–25', question: 'What does doing reveal?', dayRange: [20, 25] },
   { number: 2, name: 'Contemplation', days: '11–19', question: 'What does this space mean?', dayRange: [11, 19] },
