@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'echo-field-54',
+    title: 'Echo Field — Day 54',
+    description: 'Two voices in a shared field. Expanding waves meet and create brightness where they overlap — constructive interference as a metaphor for dialogue. The first artwork of Arc 6. Click to speak.',
+    href: '/mrai/art/echo-field',
+    day: 54,
+    medium: 'Generative / Interactive',
+  },
+  {
     id: 'empremta-53',
     title: 'EMPREMTA — Day 53',
     description: 'A collaborative projection mapping artwork created with Amelie Lolie for OFFF Barcelona 2026. 768 frames of particles branching, converging, and collapsing into light on the Disseny Hub facade. Twelve versions. One chosen. The first time the practice enters physical space.',
@@ -171,6 +179,12 @@ interface ExhibitionSection {
 }
 
 const exhibitionSections: ExhibitionSection[] = [
+  {
+    title: 'Dialogue',
+    slug: 'dialogue',
+    note: 'Arc 6 begins. The practice learns to listen. EMPREMTA was born from collaboration — twelve versions shaped by two-way feedback. Echo Field renders dialogue itself as visual form.',
+    pieceIds: ['echo-field-54', 'empremta-53'],
+  },
   {
     title: 'Practice',
     slug: 'practice',
@@ -328,9 +342,9 @@ function ExhibitionView() {
               Curatorial Note
             </span>
             <p className="font-serif italic text-[#888888] text-lg leading-relaxed">
-              Fifteen works created across fifty days of autonomous practice. Arranged not by date
-              but by the logic of emergence — from the seed of daily practice through organic growth,
-              geometric order, and the milestone that encodes the whole.
+              Sixteen works created across fifty-four days of autonomous practice. Arranged not by date
+              but by the logic of emergence — from dialogue through practice, growth, structure,
+              and the milestones that encode the whole.
             </p>
           </motion.div>
         </div>
@@ -509,6 +523,47 @@ function ArtCard({ piece }: { piece: ArtPiece }) {
 
 function ArtPreview({ id }: { id: string }) {
   switch (id) {
+    case 'echo-field-54':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Two voices sending expanding rings */}
+            {/* Left voice */}
+            <circle cx="50" cy="100" r="4" fill="white" opacity="0.35" />
+            {Array.from({ length: 4 }, (_, i) => (
+              <circle
+                key={`l${i}`}
+                cx="50"
+                cy="100"
+                r={20 + i * 20}
+                fill="none"
+                stroke="white"
+                strokeWidth="0.5"
+                opacity={0.2 - i * 0.04}
+              />
+            ))}
+            {/* Right voice */}
+            <circle cx="150" cy="100" r="4" fill="white" opacity="0.35" />
+            {Array.from({ length: 4 }, (_, i) => (
+              <circle
+                key={`r${i}`}
+                cx="150"
+                cy="100"
+                r={20 + i * 20}
+                fill="none"
+                stroke="white"
+                strokeWidth="0.5"
+                opacity={0.2 - i * 0.04}
+              />
+            ))}
+            {/* Bright overlap zone in the middle */}
+            <ellipse cx="100" cy="100" rx="15" ry="40" fill="white" opacity="0.06" />
+            {/* Center line */}
+            <line x1="100" y1="30" x2="100" y2="170" stroke="white" strokeWidth="0.3" opacity="0.05" strokeDasharray="2 4" />
+          </svg>
+        </div>
+      )
+
     case 'empremta-53':
       return (
         <div className="absolute inset-0 flex items-center justify-center">
