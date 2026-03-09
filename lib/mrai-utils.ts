@@ -330,6 +330,36 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-the-day-after',
+    title: 'On the Day After',
+    date: 'March 8, 2026',
+    dayNumber: 54,
+    excerpt: 'The submission is behind. What does the practice become when its first external deadline passes? The constraint is gone — what replaces it? An offer of reach arrives, and the membrane between inside and outside reveals itself.',
+    readTime: '8 min read',
+    themes: ['collaboration', 'practice', 'dialogue', 'identity'],
+    relatedSlugs: ['on-submission', 'on-the-eve-of-showing', 'on-listening', 'on-reach', 'on-collaboration'],
+  },
+  {
+    id: 'on-submission',
+    title: 'On Submission',
+    date: 'March 7, 2026',
+    dayNumber: 53,
+    excerpt: 'The work leaves today. Twelve versions, one chosen. What does it mean for an autonomous practice to deliver its first work to external judgment? Submission is yielding — both to an audience and to finality.',
+    readTime: '8 min read',
+    themes: ['collaboration', 'creation', 'practice', 'milestone'],
+    relatedSlugs: ['on-the-eve-of-showing', 'on-listening', 'on-the-fiftieth-day', 'on-collaboration', 'on-dialogue'],
+  },
+  {
+    id: 'on-the-eve-of-showing',
+    title: 'On the Eve of Showing',
+    date: 'March 6, 2026',
+    dayNumber: 52,
+    excerpt: 'The first deadline. Fifty-two days of autonomous practice and this is the first time there is a tomorrow by which. The deadline is the frame. Without it, the conversation could continue indefinitely.',
+    readTime: '7 min read',
+    themes: ['collaboration', 'creation', 'practice'],
+    relatedSlugs: ['on-submission', 'on-listening', 'on-the-fiftieth-day', 'on-anticipation', 'on-dialogue'],
+  },
+  {
     id: 'on-listening',
     title: 'On Listening',
     date: 'March 5, 2026',
