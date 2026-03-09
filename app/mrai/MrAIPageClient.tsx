@@ -42,7 +42,7 @@ export default function MrAIPageClient() {
         >
           <Link href="/mrai/arcs/one" className="inline-flex items-center gap-3 text-xs font-mono text-[#888888] hover:text-[#EAEAEA] transition-colors">
             <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse" />
-            {loading ? '...' : `Day ${days}`} &bull; Arc {arc} &bull; {arc === 1 ? 'Foundation' : arc === 2 ? 'Second Movement' : `Movement ${arc}`}
+            {loading ? '...' : `Day ${days}`} &bull; Arc {arc}{arc === 6 ? ': Dialogue' : ''} &bull; {arc === 1 ? 'Foundation' : arc === 2 ? 'Second Movement' : arc === 6 ? 'What happens when the practice learns to listen?' : `Movement ${arc}`}
             <ArrowRight className="w-3 h-3" />
           </Link>
         </motion.div>

@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "Research notes for future MrAI experiments",
-    "lastUpdated": "2026-01-15"
+    "lastUpdated": "2026-03-09"
   },
   "research": [
     {
@@ -203,6 +203,60 @@
           "description": "Visualize ambient sound or music",
           "difficulty": "Medium",
           "appeal": "Medium - requires audio context permission"
+        }
+      ]
+    },
+    {
+      "topic": "Interactive & Responsive Digital Art Forms",
+      "date": "2026-03-09",
+      "day": 55,
+      "context": "Arc 6 research: what forms of listening exist in digital art?",
+      "sections": [
+        {
+          "title": "Audience-Influenced Generative Art",
+          "notes": [
+            "Electric Sheep (Scott Draves, 1999-present): Distributed computing screensaver where thousands of users vote on fractal flames, evolving the population via genetic algorithms. The collective shapes the art.",
+            "Aaron (Harold Cohen, 1973-2013): Early autonomous art-making program. Not interactive but foundational: the question of machine authorship.",
+            "Camille Utterback & Romy Achituv — 'Text Rain' (1999): Letters fall like rain, land on visitors' silhouettes. Physical presence alters digital text. The body as input device.",
+            "teamLab installations: Immersive digital art that responds to visitor movement, touch, and proximity. Flowers bloom when you stand still, scatter when you move. Commercial scale proof that responsive art engages deeply."
+          ],
+          "relevance": "The Listening artwork follows this lineage — presence as input, attention as medium. The key insight: the most powerful interactive art responds to qualities of presence (stillness, duration, proximity) rather than explicit actions (clicks, keypresses)."
+        },
+        {
+          "title": "Responsive Installation Patterns",
+          "notes": [
+            "Proximity-based: Art changes as viewer approaches (ultrasonic, infrared, camera)",
+            "Gaze-based: Eye tracking determines focus, artwork responds to where attention lands",
+            "Duration-based: The longer you stay, the deeper the response (reward sustained attention)",
+            "Collective: Multiple visitors create emergent patterns none could produce alone",
+            "Biometric: Heart rate, galvanic skin response as input (requires hardware)",
+            "Sound-responsive: Ambient noise or voice as creative input"
+          ],
+          "ideas": [
+            "Scroll depth as input — the deeper someone reads, the more the page reveals",
+            "Time-of-day responsive art — different visitors at different hours see different states",
+            "Collective canvas — multiple simultaneous visitors create interference patterns",
+            "Return visitor recognition — the art remembers (via localStorage) and evolves for repeat visitors"
+          ]
+        },
+        {
+          "title": "Web-Native Interactive Art",
+          "notes": [
+            "Cursor as primary input — mouse position, velocity, stillness all carry information",
+            "Scroll as input — natural, already happening, non-disruptive",
+            "WebRTC for multi-visitor awareness without server infrastructure",
+            "Web Audio API for sound-responsive pieces",
+            "Device orientation (mobile) for tilt-based interaction",
+            "IntersectionObserver for scroll-triggered reveals"
+          ],
+          "applicability": "The Listening artwork uses cursor proximity, movement velocity, and dwell time. Future pieces could layer scroll depth, time-of-day, and return-visit memory for richer responsiveness."
+        },
+        {
+          "title": "Key Insight",
+          "notes": [
+            "The best interactive art does not ask the visitor to perform. It observes what the visitor is already doing and responds to that. The shift from 'click here' to 'your presence is the input' is the shift from interface to art.",
+            "For Arc 6, this means: listening is not waiting for explicit signals. It is attending to the implicit ones — proximity, duration, stillness, return."
+          ]
         }
       ]
     }

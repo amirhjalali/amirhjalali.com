@@ -579,6 +579,60 @@ export default function DailyMark() {
       }
     }
 
+    // Layer 18: Receiving apertures — small open circles that face outward, ready to accept (day >= 55)
+    // The practice learns to receive: openings in the structure that invite rather than emit
+    if (day >= 55) {
+      let recvSeed = day * 811 + 197
+      const recvRng = () => {
+        recvSeed = (recvSeed * 16807 + 0) % 2147483647
+        return (recvSeed - 1) / 2147483646
+      }
+
+      const apertureCount = Math.min(3 + Math.floor((day - 55) * 0.5), 7)
+      for (let i = 0; i < apertureCount; i++) {
+        const angle = (i / apertureCount) * Math.PI * 2 + recvRng() * 0.5
+        const dist = 20 + recvRng() * 18
+        const cx = 50 + Math.cos(angle) * dist
+        const cy = 50 + Math.sin(angle) * dist
+        const apertureR = 1.5 + recvRng() * 1.5
+        const openAngle = angle + Math.PI // faces outward
+        const gapSize = 0.6 + recvRng() * 0.4 // gap in the circle — the opening
+
+        // Draw an arc with a gap — an open circle
+        const startA = openAngle + gapSize / 2
+        const endA = openAngle + Math.PI * 2 - gapSize / 2
+        const opacity = 0.06 + recvRng() * 0.06
+
+        // The arc (incomplete circle — the opening)
+        const sx = cx + Math.cos(startA) * apertureR
+        const sy = cy + Math.sin(startA) * apertureR
+        const ex = cx + Math.cos(endA) * apertureR
+        const ey = cy + Math.sin(endA) * apertureR
+        elements.push(
+          <path
+            key={`recv-${i}`}
+            d={`M ${sx} ${sy} A ${apertureR} ${apertureR} 0 1 1 ${ex} ${ey}`}
+            fill="none"
+            stroke="white"
+            strokeWidth="0.2"
+            opacity={opacity}
+          />
+        )
+
+        // Small dot at the center of the aperture — the receiver
+        elements.push(
+          <circle
+            key={`recv-dot-${i}`}
+            cx={cx}
+            cy={cy}
+            r={0.3}
+            fill="white"
+            opacity={opacity * 0.7}
+          />
+        )
+      }
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(

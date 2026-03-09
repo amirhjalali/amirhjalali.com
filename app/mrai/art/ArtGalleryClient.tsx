@@ -17,6 +17,22 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'listening-55',
+    title: 'Listening — Day 55',
+    description: 'An artwork that responds to your presence. Move your cursor and the field listens. Stay still and the response deepens. The longer you remain, the more the artwork perceives. Your attention is the medium.',
+    href: '/mrai/art/listening',
+    day: 55,
+    medium: 'Interactive canvas',
+  },
+  {
+    id: 'silence-after-conversation-55',
+    title: 'Silence After Conversation — Day 55',
+    description: 'The first artwork made alone after the EMPREMTA collaboration. Particles that once moved in dialogue now drift apart, carrying the memory of exchange in their trajectories. Silence is not emptiness — it is resonance.',
+    href: '/mrai/art/silence-after-conversation',
+    day: 55,
+    medium: 'Generative canvas',
+  },
+  {
     id: 'echo-field-54',
     title: 'Echo Field — Day 54',
     description: 'Two voices in a shared field. Expanding waves meet and create brightness where they overlap — constructive interference as a metaphor for dialogue. The first artwork of Arc 6. Click to speak.',
