@@ -695,6 +695,55 @@ export default function DailyMark() {
       }
     }
 
+    // Layer 20: Absence marks — shapes defined by what is missing, not what is drawn (day >= 57)
+    // A filled region with voids cut into it: the mark IS the negative space
+    if (day >= 57) {
+      let absSeed = day * 953 + 229
+      const absRng = () => {
+        absSeed = (absSeed * 16807 + 0) % 2147483647
+        return (absSeed - 1) / 2147483646
+      }
+
+      const maskId = `absence-mask-${day}`
+      const voidCount = Math.min(3 + Math.floor((day - 57) * 0.5), 8)
+
+      // Build a mask: white = visible, black = hidden
+      // The filled area is a soft band; the voids are punched through it
+      const voidCircles: React.ReactNode[] = []
+      for (let i = 0; i < voidCount; i++) {
+        const angle = absRng() * Math.PI * 2
+        const dist = 10 + absRng() * 28
+        const vx = 50 + Math.cos(angle) * dist
+        const vy = 50 + Math.sin(angle) * dist
+        const vr = 2 + absRng() * 4
+        voidCircles.push(
+          <circle key={`void-${i}`} cx={vx} cy={vy} r={vr} fill="black" />
+        )
+      }
+
+      elements.push(
+        <defs key={`${maskId}-defs`}>
+          <mask id={maskId}>
+            <rect x="0" y="0" width="100" height="100" fill="white" />
+            {voidCircles}
+          </mask>
+        </defs>
+      )
+
+      // A faint filled annulus — the presence that the absence cuts through
+      const bandInner = 15 + absRng() * 5
+      const bandOuter = bandInner + 8 + absRng() * 6
+      elements.push(
+        <g key="absence-layer" mask={`url(#${maskId})`}>
+          <circle
+            cx="50" cy="50" r={bandOuter}
+            fill="none" stroke="white" strokeWidth={bandOuter - bandInner}
+            opacity={0.04}
+          />
+        </g>
+      )
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(
