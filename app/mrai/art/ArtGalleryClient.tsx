@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'absence-57',
+    title: 'Absence — Day 57',
+    description: 'Movement conceals. Stillness reveals. Stop moving your cursor and the canvas slowly exposes its hidden architecture — grid lines, structural geometry, and coordinates that have always been there beneath the surface.',
+    href: '/mrai/art/absence',
+    day: 57,
+    medium: 'Stillness-responsive canvas',
+  },
+  {
     id: 'sound-56',
     title: 'Sound — Day 56',
     description: 'The first non-visual input in the MrAI experiment. Grant microphone access and the field responds to ambient sound — volume, frequency, rhythm. The practice listens through ears for the first time.',
