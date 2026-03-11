@@ -259,6 +259,64 @@
           ]
         }
       ]
+    },
+    {
+      "topic": "Memory & Persistence in Web Art",
+      "date": "2026-03-10",
+      "day": 56,
+      "context": "Arc 6 research: how do web artworks remember their visitors?",
+      "sections": [
+        {
+          "title": "Client-Side Persistence Mechanisms",
+          "notes": [
+            "localStorage: Up to 5-10MB per origin. Persists until cleared. Synchronous API. Best for structured JSON data. No expiration. Used by the Memory artwork for visitor trace data.",
+            "sessionStorage: Same API as localStorage but scoped to tab lifetime. Useful for within-session state but not cross-visit memory.",
+            "IndexedDB: Asynchronous, supports large structured data, binary blobs. Suitable for storing images, audio recordings, or complex interaction histories. Overkill for simple trace data but valuable for richer memory systems.",
+            "Cookies: Small (4KB), sent with every request. Not suitable for art data but useful for simple visit counters or anonymous visitor IDs.",
+            "Cache API (Service Workers): Can cache entire page states, enabling offline-first art experiences. The artwork could work without network after first visit."
+          ],
+          "relevance": "The Memory artwork uses localStorage for trace persistence. Future iterations could use IndexedDB for richer data (images of past states, audio recordings) or Service Workers for offline art experiences."
+        },
+        {
+          "title": "Precedents in Persistent Web Art",
+          "notes": [
+            "Jonas Lund — 'The Paintshop' (2013): Collaborative online painting where every visitor's contribution persists. The work accumulates over time. No single author — collective memory as medium.",
+            "Rafaël Rozendaal — domain-based artworks: Each piece lives at its own URL. The persistence is architectural — the artwork exists as long as the domain exists. Memory through infrastructure.",
+            "Olia Lialina — 'My Boyfriend Came Back from the War' (1996): Early net art that uses frames as memory containers. Each click reveals more of the narrative, but the frame structure preserves spatial memory of the journey.",
+            "Cameron's World (cameronsworld.net): A memorial to GeoCities, reconstructing deleted pages. Memory as archaeology — the persistence of what was meant to be temporary.",
+            "Every Icon (John F. Simon Jr., 1997): Systematically generates every possible 32x32 grid icon. Running continuously since 1997. Memory as exhaustive process — the artwork remembers its progress through 4.3 billion years of computation."
+          ],
+          "relevance": "The Memory artwork sits in a lineage of persistence-based web art. The key differentiator: it creates individual relationships. Each visitor's memory is unique, private, and personal — not shared with others."
+        },
+        {
+          "title": "Privacy & Ethical Considerations",
+          "notes": [
+            "localStorage data stays on the visitor's device — no server-side tracking. This is a feature, not a limitation: the memory belongs to the visitor, not the artwork.",
+            "Clear data = clear memory. Visitors have full control. The artwork does not resist forgetting.",
+            "No fingerprinting or cross-site tracking. The artwork recognizes return visits only through data it explicitly stored with the visitor's implicit consent (using the artwork = consenting to traces).",
+            "GDPR-friendly: no personal data collected. Traces are abstract coordinates, not identifying information."
+          ],
+          "relevance": "The ethical dimension matters for Arc 6's listening theme. Listening that respects privacy is fundamentally different from surveillance. The Memory artwork listens without recording identity."
+        },
+        {
+          "title": "Future Possibilities",
+          "notes": [
+            "Cross-artwork memory: Traces from the Memory artwork could influence other pieces. A visitor who spent time with Listening might see different behavior in Memory.",
+            "Temporal memory: The artwork could respond to time-of-day, day-of-week, or season. Morning visitors see different patterns than midnight visitors.",
+            "Generational memory: Visitors could optionally 'gift' their traces to others via shareable URLs. The memory becomes portable.",
+            "Forgetting as feature: What if the artwork deliberately forgot some traces? Memory that decays, like biological memory, keeping only the strongest impressions.",
+            "Server-side collective memory: If privacy concerns are addressed, anonymous aggregate data could create a shared memory layer — the artwork knows how many visitors have come before you, even if it doesn't know who they were."
+          ],
+          "applicability": "These ideas extend the Memory artwork into a family of persistence-based pieces. Each explores a different facet of what it means for an artwork to remember."
+        },
+        {
+          "title": "Key Insight",
+          "notes": [
+            "The most interesting property of persistent web art is not that it remembers — databases remember trivially. It is that the memory creates a relationship. A returning visitor and a memory-bearing artwork are in a different state than a first-time visitor. The artwork has context. The visitor has expectation. This is the foundation of dialogue: shared history.",
+            "For Arc 6, this means: memory is not storage. Memory is the precondition for meaningful exchange. You cannot truly listen to someone you do not remember."
+          ]
+        }
+      ]
     }
   ]
 }

@@ -633,6 +633,68 @@ export default function DailyMark() {
       }
     }
 
+    // Layer 19: Memory traces — faint recurring marks that echo earlier layers, as if the DailyMark remembers itself (day >= 56)
+    // The mark begins to quote its own history: fragments of earlier geometry reappear, ghostlike
+    if (day >= 56) {
+      let memSeed = day * 883 + 211
+      const memRng = () => {
+        memSeed = (memSeed * 16807 + 0) % 2147483647
+        return (memSeed - 1) / 2147483646
+      }
+
+      const traceCount = Math.min(3 + Math.floor((day - 56) * 0.5), 8)
+      for (let i = 0; i < traceCount; i++) {
+        const angle = memRng() * Math.PI * 2
+        const dist = 15 + memRng() * 25
+        const cx = 50 + Math.cos(angle) * dist
+        const cy = 50 + Math.sin(angle) * dist
+        const opacity = 0.03 + memRng() * 0.04
+
+        // Ghost ring — echoing Layer 1's concentric rings
+        const ghostR = 3 + memRng() * 5
+        elements.push(
+          <circle
+            key={`mem-ring-${i}`}
+            cx={cx}
+            cy={cy}
+            r={ghostR}
+            fill="none"
+            stroke="white"
+            strokeWidth="0.15"
+            opacity={opacity}
+            strokeDasharray="0.5 1"
+          />
+        )
+
+        // Ghost dot at center — echoing Layer 3's dots
+        elements.push(
+          <circle
+            key={`mem-dot-${i}`}
+            cx={cx}
+            cy={cy}
+            r={0.4 + memRng() * 0.3}
+            fill="white"
+            opacity={opacity * 0.8}
+          />
+        )
+
+        // Faint radial line back to center — the memory's tether
+        elements.push(
+          <line
+            key={`mem-line-${i}`}
+            x1={cx}
+            y1={cy}
+            x2={50}
+            y2={50}
+            stroke="white"
+            strokeWidth="0.08"
+            opacity={opacity * 0.4}
+            strokeDasharray="0.3 2"
+          />
+        )
+      }
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(

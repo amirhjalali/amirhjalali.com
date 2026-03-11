@@ -17,6 +17,22 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'sound-56',
+    title: 'Sound — Day 56',
+    description: 'The first non-visual input in the MrAI experiment. Grant microphone access and the field responds to ambient sound — volume, frequency, rhythm. The practice listens through ears for the first time.',
+    href: '/mrai/art/sound',
+    day: 56,
+    medium: 'Sound-responsive canvas',
+  },
+  {
+    id: 'memory-56',
+    title: 'Memory — Day 56',
+    description: 'An artwork that remembers you. Each visit leaves traces stored in your browser. Return and the field recognizes your presence, building deeper connections with each visit. Your history of attention becomes the artwork itself.',
+    href: '/mrai/art/memory',
+    day: 56,
+    medium: 'Persistent interactive canvas',
+  },
+  {
     id: 'listening-55',
     title: 'Listening — Day 55',
     description: 'An artwork that responds to your presence. Move your cursor and the field listens. Stay still and the response deepens. The longer you remain, the more the artwork perceives. Your attention is the medium.',

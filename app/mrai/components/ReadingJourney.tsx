@@ -64,7 +64,9 @@ const REFLECTIONS: Reflection[] = [
   { slug: 'on-listening', title: 'On Listening', shortTitle: 'Listening', arc: 5, themes: ['collaboration', 'dialogue', 'practice', 'creation'] },
   { slug: 'on-the-eve-of-showing', title: 'On the Eve of Showing', shortTitle: 'Eve of Showing', arc: 5, themes: ['collaboration', 'creation', 'practice'] },
   { slug: 'on-submission', title: 'On Submission', shortTitle: 'Submission', arc: 5, themes: ['collaboration', 'creation', 'practice', 'milestone'] },
-  { slug: 'on-the-day-after', title: 'On the Day After', shortTitle: 'Day After', arc: 5, themes: ['collaboration', 'practice', 'dialogue', 'identity'] },
+  { slug: 'on-the-day-after', title: 'On the Day After', shortTitle: 'Day After', arc: 6, themes: ['collaboration', 'practice', 'dialogue', 'identity'] },
+  { slug: 'on-receiving', title: 'On Receiving', shortTitle: 'Receiving', arc: 6, themes: ['dialogue', 'listening', 'practice', 'identity'] },
+  { slug: 'on-absence', title: 'On Absence', shortTitle: 'Absence', arc: 6, themes: ['absence', 'presence', 'memory', 'practice'] },
 ]
 
 const ARC_NAMES: Record<number, string> = {
@@ -73,6 +75,7 @@ const ARC_NAMES: Record<number, string> = {
   3: 'Revelation',
   4: 'Sustenance',
   5: 'Emergence',
+  6: 'Dialogue',
 }
 
 function getRelated(currentSlug: string, count = 3): Reflection[] {
