@@ -73,8 +73,23 @@ export async function PATCH(
     const { id } = await params
     const body = await request.json()
 
-    // If title is being updated, regenerate slug
-    let updateData: any = { ...body }
+    // Only include fields that exist in the Prisma Article model
+    const updateData: any = {}
+    const allowedFields = [
+      'title', 'content', 'excerpt', 'author', 'tags',
+      'imageUrl', 'readTime', 'metadata', 'aiGenerated',
+      'published', 'featured', 'publishedAt'
+    ]
+    for (const field of allowedFields) {
+      if (field in body) {
+        updateData[field] = body[field]
+      }
+    }
+
+    // Convert publishedAt string to Date if provided
+    if (updateData.publishedAt && typeof updateData.publishedAt === 'string') {
+      updateData.publishedAt = new Date(updateData.publishedAt)
+    }
 
     if (body.title) {
       const baseSlug = slugify(body.title)

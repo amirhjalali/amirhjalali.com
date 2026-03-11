@@ -49,9 +49,21 @@ export async function PATCH(
     const { id } = await params
     const body = await request.json()
 
+    // Only include fields that exist in the Prisma Draft model
+    const updateData: any = {}
+    const allowedFields = [
+      'title', 'content', 'excerpt', 'tags',
+      'imageUrl', 'aiGenerated', 'readTime', 'metadata'
+    ]
+    for (const field of allowedFields) {
+      if (field in body) {
+        updateData[field] = body[field]
+      }
+    }
+
     const draft = await prisma.draft.update({
       where: { id },
-      data: body,
+      data: updateData,
     })
 
     return NextResponse.json(draft)
