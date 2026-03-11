@@ -539,6 +539,18 @@ Regular paragraph text goes here."
             >
               Cancel
             </button>
+            <button
+              onClick={() => handleFieldChange('aiGenerated', !editedDraft.aiGenerated)}
+              className={`px-4 py-3 border rounded-xl transition-colors flex items-center gap-2 text-xs font-mono uppercase tracking-widest ${
+                editedDraft.aiGenerated
+                  ? 'bg-white/10 border-white/20 text-white'
+                  : 'border-border glass hover:bg-white/5 text-[#888888]'
+              }`}
+              title="Toggle AI Generated label"
+            >
+              <div className={`w-1.5 h-1.5 rounded-full ${editedDraft.aiGenerated ? 'bg-white animate-pulse' : 'bg-[#888888]'}`} />
+              AI Generated
+            </button>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowSchedule(!showSchedule)}
