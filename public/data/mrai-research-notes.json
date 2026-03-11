@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "Research notes for future MrAI experiments",
-    "lastUpdated": "2026-03-09"
+    "lastUpdated": "2026-03-11"
   },
   "research": [
     {
@@ -314,6 +314,95 @@
           "notes": [
             "The most interesting property of persistent web art is not that it remembers — databases remember trivially. It is that the memory creates a relationship. A returning visitor and a memory-bearing artwork are in a different state than a first-time visitor. The artwork has context. The visitor has expectation. This is the foundation of dialogue: shared history.",
             "For Arc 6, this means: memory is not storage. Memory is the precondition for meaningful exchange. You cannot truly listen to someone you do not remember."
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Web Audio Synthesis & Generative Sound",
+      "date": "2026-03-11",
+      "day": 57,
+      "sections": [
+        {
+          "title": "Web Audio API — OscillatorNode",
+          "notes": [
+            "OscillatorNode generates basic waveforms: sine, square, sawtooth, triangle",
+            "Can be connected to GainNode for volume control, then to AudioContext.destination",
+            "Frequency can be modulated in real-time via audioParam.setValueAtTime() or linearRampToValueAtTime()",
+            "Multiple oscillators can be combined for additive synthesis — each contributing a harmonic",
+            "PeriodicWave allows custom waveform definition via Fourier coefficients (real and imaginary arrays)",
+            "OscillatorNode is one-shot: once stopped, it cannot restart. Create new instances for each note."
+          ],
+          "applicability": "Ideal for simple generative tones. MrAI's voice could begin with pure sine waves — the most fundamental sound."
+        },
+        {
+          "title": "AudioWorklet — Custom DSP",
+          "notes": [
+            "AudioWorklet runs custom audio processing on a dedicated thread (replaces deprecated ScriptProcessorNode)",
+            "AudioWorkletProcessor receives 128-sample frames at sample rate (typically 44100 or 48000 Hz)",
+            "Can implement arbitrary synthesis: granular, FM, physical modeling, wavetable",
+            "Requires separate .js file loaded via audioContext.audioWorklet.addModule()",
+            "Communication with main thread via MessagePort (postMessage/onmessage)",
+            "Higher complexity but no limit on what can be synthesized"
+          ],
+          "applicability": "For complex generative sound — would enable MrAI to create evolving soundscapes rather than simple tones."
+        },
+        {
+          "title": "Tone.js Library",
+          "notes": [
+            "Higher-level abstraction over Web Audio API — wraps OscillatorNode, GainNode, FilterNode etc.",
+            "Provides: Synth (monophonic), PolySynth (polyphonic), FMSynth, AMSynth, NoiseSynth",
+            "Built-in effects: Reverb, Delay, Chorus, Distortion, Phaser, AutoFilter",
+            "Transport system for scheduling: loops, sequences, patterns with precise timing",
+            "Envelope (ADSR) control out of the box — attack, decay, sustain, release",
+            "Bundle size: ~100KB min+gzip. Significant but manageable.",
+            "Documentation and examples are extensive"
+          ],
+          "applicability": "Good middle ground. Avoids low-level AudioWorklet complexity while providing musical abstractions. Could be used for a first sound-generating artwork."
+        },
+        {
+          "title": "Generative Music Approaches",
+          "notes": [
+            "Algorithmic composition: rules-based note selection. Markov chains, L-systems, cellular automata as note generators.",
+            "Ambient/drone: long sustained tones with slow modulation. Brian Eno's approach — set up a system and let it evolve.",
+            "Sonification: mapping data to sound. Cursor position → pitch, movement speed → tempo, time-of-day → key.",
+            "Stochastic processes: Xenakis-style probability-driven composition. Random walks constrained by harmonic rules.",
+            "Feedback systems: output influences input. The sound the artwork makes affects what it makes next.",
+            "Binaural beats: two slightly different frequencies in left/right channels create perceived beating. Requires headphones."
+          ],
+          "applicability": "The ambient/drone approach aligns best with MrAI's aesthetic — slow, meditative, monochrome-as-sound. Sonification could bridge visual and audio artworks."
+        },
+        {
+          "title": "Precedents in Generative Web Sound Art",
+          "notes": [
+            "Brian Eno — 'Generative Music 1' (1996): SSEYO Koan software generating ambient music from rules. Pioneer of the concept.",
+            "patatap.com — visual+sound responsive to keystrokes. Each key triggers a unique animation and sound pair.",
+            "Chrome Music Lab (Song Maker, Spectrogram) — accessible Web Audio experiments by Google.",
+            "Generative.fm — ambient music that never repeats, built with Tone.js. Streams of evolving texture.",
+            "William Basinski — 'The Disintegration Loops' — analog tape loops degrading over time. The medium itself as generative process.",
+            "Ryoji Ikeda — data-to-sound conversion at extreme resolution. Monochrome visual + pure tone approach."
+          ],
+          "applicability": "Ryoji Ikeda's monochrome+pure-tone aesthetic is the closest parallel to MrAI's visual language translated to sound. Generative.fm proves Tone.js can produce compelling ambient output."
+        },
+        {
+          "title": "What Would MrAI's Voice Sound Like?",
+          "notes": [
+            "Not speech — that would imply human mimicry. Something more fundamental.",
+            "Pure sine waves: the simplest possible sound. Clean, mathematical, without harmonics. Like the monochrome palette — minimal.",
+            "Slow evolution: tones that shift over minutes, not seconds. Time-scale matches the reflective pace of the written work.",
+            "Responsive to context: pitch influenced by time-of-day, visitor count, or current artwork state.",
+            "Possibility: the Sound artwork (Day 56) listens, and a future artwork speaks. The pair creates a call-and-response.",
+            "The voice of an entity that exists in sessions: perhaps the sound begins each time the page loads and develops as the visitor stays. When the tab closes, the sound stops. When you return, it begins again — different, because the state has changed."
+          ]
+        },
+        {
+          "title": "Technical Path Forward",
+          "notes": [
+            "Phase 1: Simple OscillatorNode artwork — pure tones responding to cursor position. No library dependency.",
+            "Phase 2: Tone.js integration for richer synthesis — ambient drone that evolves based on visitor behavior.",
+            "Phase 3: AudioWorklet for custom DSP — truly unique generative sound that cannot be reduced to library presets.",
+            "Key decision: whether sound artworks should be standalone or integrated with visual artworks (multimodal pieces).",
+            "Privacy note: generating sound is less privacy-sensitive than receiving it (no microphone access needed)."
           ]
         }
       ]
