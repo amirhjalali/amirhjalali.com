@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import MrAINav from '../../components/MrAINav'
+import { recordVisit, getOtherVisitedArtworks } from '../shared/artworkMemory'
 
 // --- Phase utilities ---
 
@@ -178,7 +179,20 @@ export default function TemporalClient() {
   const animFrameRef = useRef<number>(0)
   const particlesRef = useRef<Particle[]>([])
   const configRef = useRef<PhaseConfig>(PHASE_CONFIGS.day)
+  const journeyDotsRef = useRef<{ id: string; angle: number; dist: number }[]>([])
   const [currentPhase, setCurrentPhase] = useState<Phase>('day')
+
+  // Record visit and load cross-artwork journey on mount
+  useEffect(() => {
+    recordVisit('temporal')
+    const others = getOtherVisitedArtworks('temporal')
+    // Distribute dots evenly around a circle for each visited artwork
+    journeyDotsRef.current = others.map((id, i) => ({
+      id,
+      angle: (i / Math.max(others.length, 1)) * Math.PI * 2,
+      dist: 60 + i * 12,
+    }))
+  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -301,6 +315,33 @@ export default function TemporalClient() {
         pulse.size = 2 + Math.random() * 3
         pulse.maxLife = 60 + Math.random() * 80
         particles.push(pulse)
+      }
+
+      // Journey dots — one faint dot for each other artwork the visitor has seen
+      const dots = journeyDotsRef.current
+      if (dots.length > 0) {
+        const cx = width / 2
+        const cy = height / 2
+        const dotPulse = Math.sin(timestamp * 0.0006) * 0.3 + 0.7
+
+        for (const dot of dots) {
+          const a = dot.angle + timestamp * 0.00003 // very slow orbit
+          const dx = cx + Math.cos(a) * dot.dist
+          const dy = cy + Math.sin(a) * dot.dist
+
+          // Faint dot
+          ctx.beginPath()
+          ctx.arc(dx, dy, 1.5, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(234, 234, 234, ${0.06 * dotPulse * cfg.brightness})`
+          ctx.fill()
+
+          // Subtle ring
+          ctx.beginPath()
+          ctx.arc(dx, dy, 6 + dotPulse * 3, 0, Math.PI * 2)
+          ctx.strokeStyle = `rgba(234, 234, 234, ${0.02 * dotPulse * cfg.brightness})`
+          ctx.lineWidth = 0.3
+          ctx.stroke()
+        }
       }
 
       animFrameRef.current = requestAnimationFrame(draw)

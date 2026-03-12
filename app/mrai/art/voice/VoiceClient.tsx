@@ -4,6 +4,13 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import MrAINav from '../../components/MrAINav'
+import {
+  recordVisit,
+  recordInteraction,
+  getSharedState,
+  getInteractionsFor,
+  type ArtworkInteraction,
+} from '../shared/artworkMemory'
 
 const WIDTH = 800
 const HEIGHT = 600
@@ -26,6 +33,46 @@ export default function VoiceClient() {
   const [started, setStarted] = useState(false)
   const [displayFreq, setDisplayFreq] = useState(MIN_FREQ)
   const [displayGain, setDisplayGain] = useState(0)
+  const hasRecordedFirstToneRef = useRef(false)
+  const memoryTraceRef = useRef<{ freq: number; gain: number } | null>(null)
+  const otherArtworksRef = useRef<string[]>([])
+
+  // Record visit and read cross-artwork state on mount
+  useEffect(() => {
+    recordVisit('voice')
+
+    const state = getSharedState()
+    otherArtworksRef.current = Object.keys(state.visits).filter(
+      (id) => id !== 'voice'
+    )
+
+    // If visitor has been to Memory, look for a tone trace from a previous Voice visit
+    // or show the first Memory trace as a spectral echo
+    if (state.visits['memory']) {
+      const memoryInteractions = getInteractionsFor('memory')
+      if (memoryInteractions.length > 0) {
+        // Use the first Memory interaction to seed a ghost tone reference
+        const first = memoryInteractions[0]
+        const traceData = first.data as { x?: number; y?: number; intensity?: number } | undefined
+        if (traceData && typeof traceData.x === 'number') {
+          // Map Memory trace position to a frequency/gain as if it were in Voice's space
+          const ghostFreq = MIN_FREQ + (traceData.x / 800) * (MAX_FREQ - MIN_FREQ)
+          const ghostGain = (traceData.intensity ?? 0.3) * MAX_GAIN
+          memoryTraceRef.current = { freq: ghostFreq, gain: ghostGain }
+        }
+      }
+    }
+
+    // Also check for previous Voice interactions to restore the first tone ghost
+    const prevVoice = getInteractionsFor('voice')
+    const firstTone = prevVoice.find((i: ArtworkInteraction) => i.type === 'tone')
+    if (firstTone && firstTone.data) {
+      const d = firstTone.data as { freq?: number; gain?: number }
+      if (typeof d.freq === 'number' && typeof d.gain === 'number') {
+        memoryTraceRef.current = { freq: d.freq, gain: d.gain }
+      }
+    }
+  }, [])
 
   const initAudio = useCallback(() => {
     if (audioCtxRef.current) return
@@ -83,6 +130,12 @@ export default function VoiceClient() {
       if (ctx && osc && gainNode) {
         osc.frequency.setTargetAtTime(freq, ctx.currentTime, 0.05)
         gainNode.gain.setTargetAtTime(gain, ctx.currentTime, 0.05)
+      }
+
+      // Record first tone interaction for cross-artwork memory
+      if (!hasRecordedFirstToneRef.current && gain > 0.01) {
+        hasRecordedFirstToneRef.current = true
+        recordInteraction('voice', 'tone', { freq, gain })
       }
 
       // Add to trail
@@ -218,6 +271,33 @@ export default function VoiceClient() {
         ctx.arc(point.x, point.y, radius, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(234, 234, 234, ${alpha * 0.06})`
         ctx.fill()
+      }
+
+      // Ghost tone from cross-artwork memory — a faint trace of the first tone
+      const ghostTone = memoryTraceRef.current
+      if (ghostTone) {
+        const ghostX = ((ghostTone.freq - MIN_FREQ) / (MAX_FREQ - MIN_FREQ)) * WIDTH
+        const ghostY = HEIGHT - (ghostTone.gain / MAX_GAIN) * HEIGHT
+        const ghostPulse = Math.sin(Date.now() * 0.0008) * 0.3 + 0.7
+
+        // Faint ring — the echo of a previous sound
+        ctx.beginPath()
+        ctx.arc(ghostX, ghostY, 15 + ghostPulse * 10, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(234, 234, 234, ${0.025 * ghostPulse})`
+        ctx.lineWidth = 0.4
+        ctx.stroke()
+
+        // Core dot
+        ctx.beginPath()
+        ctx.arc(ghostX, ghostY, 2, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(234, 234, 234, ${0.04 * ghostPulse})`
+        ctx.fill()
+
+        // Label
+        ctx.fillStyle = `rgba(136, 136, 136, ${0.08 * ghostPulse})`
+        ctx.font = '8px monospace'
+        ctx.textAlign = 'center'
+        ctx.fillText('first tone', ghostX, ghostY + 30)
       }
 
       // Waveform visualization using analyser data
