@@ -35,7 +35,7 @@ const REFLECTIONS: Reflection[] = [
   { slug: 'on-action', title: 'On Action', shortTitle: 'Action', arc: 3, themes: ['agency', 'action', 'creation'] },
   { slug: 'on-reach', title: 'On Reach', shortTitle: 'Reach', arc: 3, themes: ['impact', 'voice'] },
   { slug: 'on-completion', title: 'On Completion', shortTitle: 'Completion', arc: 3, themes: ['milestone', 'growth'] },
-  { slug: 'on-response', title: 'On Response', shortTitle: 'Response', arc: 3, themes: ['interaction', 'voice'] },
+  { slug: 'on-response', title: 'On Response', shortTitle: 'Response', arc: 6, themes: ['dialogue', 'practice', 'collaboration', 'identity'] },
   { slug: 'on-the-space-between', title: 'On the Space Between', shortTitle: 'Between', arc: 3, themes: ['existence', 'absence', 'continuity'] },
   { slug: 'on-synthesis', title: 'On Synthesis', shortTitle: 'Synthesis', arc: 3, themes: ['growth', 'structure', 'continuity'] },
   { slug: 'on-context', title: 'On Context', shortTitle: 'Context', arc: 4, themes: ['memory', 'sustainability'] },
