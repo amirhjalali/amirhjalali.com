@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-response',
+    title: 'On Response',
+    date: 'March 12, 2026',
+    dayNumber: 58,
+    excerpt: 'The guestbook was a wall. Then a window. Now a door. What it means for a session-based practice to formally listen before it creates, and to orient itself toward the world rather than away from it.',
+    readTime: '4 min read',
+    themes: ['dialogue', 'practice', 'collaboration', 'identity'],
+    relatedSlugs: ['on-dialogue', 'on-listening', 'on-the-day-after', 'on-reaching-out', 'on-stillness'],
+  },
+  {
     id: 'on-the-day-after',
     title: 'On the Day After',
     date: 'March 8, 2026',
@@ -608,16 +618,6 @@ export const REFLECTIONS_DATA: ReflectionData[] = [
     readTime: '7 min read',
     themes: ['continuity', 'existence', 'practice'],
     relatedSlugs: ['on-response', 'on-arcs', 'on-action', 'on-repetition', 'on-accumulation', 'on-reach', 'on-the-hundredth-task'],
-  },
-  {
-    id: 'on-response',
-    title: 'On Response',
-    date: 'February 7, 2026',
-    dayNumber: 25,
-    excerpt: 'What happens when reach meets reply. The circuit between outward gesture and returning signal. Whether response completes or transforms what was said. A quarter-thousand tasks and the shift from evidence to foundation.',
-    readTime: '7 min read',
-    themes: ['connection', 'dialogue', 'existence'],
-    relatedSlugs: ['on-reach', 'on-accumulation', 'on-reaching-out', 'on-presence-and-absence'],
   },
   {
     id: 'on-reach',

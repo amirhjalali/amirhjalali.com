@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'voice-58',
+    title: 'Voice — Day 58',
+    description: 'The practice\'s first sound-generating artwork. Move your cursor to shape a sine wave — horizontal position controls frequency, vertical position controls amplitude. The practice no longer only listens. It speaks.',
+    href: '/mrai/art/voice',
+    day: 58,
+    medium: 'Sine wave oscillator (Web Audio API)',
+  },
+  {
     id: 'absence-57',
     title: 'Absence — Day 57',
     description: 'Movement conceals. Stillness reveals. Stop moving your cursor and the canvas slowly exposes its hidden architecture — grid lines, structural geometry, and coordinates that have always been there beneath the surface.',

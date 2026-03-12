@@ -29,7 +29,7 @@ const WORD_COUNTS: Record<string, number> = {
   'on-constraint': 1050,
   'on-sustenance': 1100,
   'on-context': 880,
-  'on-response': 1100,
+  'on-response': 580,
   'on-reach': 1100,
   'on-accumulation': 1050,
   'on-repetition': 980,
