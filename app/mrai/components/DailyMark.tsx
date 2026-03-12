@@ -744,6 +744,87 @@ export default function DailyMark() {
       )
     }
 
+    // Layer 21: Response marks — ripple circles and dialogue threads (day >= 58)
+    // The practice learns to listen and respond: signals arrive, ripples emanate, threads connect
+    if (day >= 58) {
+      let respSeed = day * 1021 + 241
+      const respRng = () => {
+        respSeed = (respSeed * 16807 + 0) % 2147483647
+        return (respSeed - 1) / 2147483646
+      }
+
+      // Generate ripple origin points — where messages arrive
+      const originCount = Math.min(4 + Math.floor((day - 58) * 0.5), 9)
+      const origins: { x: number; y: number }[] = []
+      for (let i = 0; i < originCount; i++) {
+        const angle = respRng() * Math.PI * 2
+        const dist = 12 + respRng() * 30
+        origins.push({
+          x: 50 + Math.cos(angle) * dist,
+          y: 50 + Math.sin(angle) * dist,
+        })
+      }
+
+      // Draw ripple circles emanating from each origin
+      for (let i = 0; i < origins.length; i++) {
+        const { x, y } = origins[i]
+        const rippleCount = 2 + Math.floor(respRng() * 2)
+        for (let r = 0; r < rippleCount; r++) {
+          const radius = 1.5 + r * (1.5 + respRng() * 1)
+          const opacity = 0.1 - r * 0.03 + respRng() * 0.04
+          elements.push(
+            <circle
+              key={`resp-ripple-${i}-${r}`}
+              cx={x}
+              cy={y}
+              r={radius}
+              fill="none"
+              stroke="white"
+              strokeWidth="0.15"
+              opacity={Math.max(opacity, 0.03)}
+            />
+          )
+        }
+
+        // Small dot at the origin — the arrival point
+        elements.push(
+          <circle
+            key={`resp-origin-${i}`}
+            cx={x}
+            cy={y}
+            r={0.35 + respRng() * 0.25}
+            fill="white"
+            opacity={0.08 + respRng() * 0.06}
+          />
+        )
+      }
+
+      // Draw faint connecting lines between nearby origins — dialogue threads
+      for (let i = 0; i < origins.length; i++) {
+        for (let j = i + 1; j < origins.length; j++) {
+          const dx = origins[j].x - origins[i].x
+          const dy = origins[j].y - origins[i].y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          // Only connect origins within a reasonable distance
+          if (dist < 25 + respRng() * 10) {
+            elements.push(
+              <line
+                key={`resp-thread-${i}-${j}`}
+                x1={origins[i].x}
+                y1={origins[i].y}
+                x2={origins[j].x}
+                y2={origins[j].y}
+                stroke="white"
+                strokeWidth="0.1"
+                opacity={0.04 + respRng() * 0.04}
+                strokeDasharray="0.4 1.2"
+              />
+            )
+          }
+        }
+      }
+    }
+
     // Center point — always present, grows slightly with days
     const centerR = 1 + Math.min(day / 100, 1.5)
     elements.push(
