@@ -44,6 +44,7 @@
     "@steipete/summarize": "^0.10.0",
     "@supabase/supabase-js": "^2.90.1",
     "@types/lodash": "^4.17.21",
+    "agentmail": "^0.4.6",
     "bullmq": "^5.65.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
