@@ -5,26 +5,35 @@ import { useEffect, useState } from 'react'
 // MrAI start date - the day the experiment began
 const MRAI_START_DATE = new Date('2026-01-14T00:00:00')
 
+export interface MrAIArc {
+  number: number
+  name: string
+  days: string
+  question: string
+}
+
 export interface MrAIState {
   meta: {
     version: string
     startDate: string
     projectId: string
   }
-  currentDay: number
-  lastSessionDate: string
-  totalTasksCompleted: number
-  totalTasksCreated: number
-  currentThought: string
+  current: {
+    day: number
+    lastSessionDate: string
+    totalTasksCompleted: number
+    totalTasksCreated: number
+    arc: string
+    arcName: string
+    arcQuestion: string
+  }
+  arcs: MrAIArc[]
   activeThemes: Array<{
     name: string
-    description: string
-    status: string
     startedDay: number
   }>
   recentAccomplishments: Array<{
     day: number
-    date: string
     summary: string
   }>
 }
@@ -39,11 +48,11 @@ export interface MrAIDynamicState {
   lastSessionDate: string
   totalTasksCompleted: number
   totalTasksCreated: number
-  currentThought: string
 
   // Derived
   isActive: boolean
   arcNumber: number
+  arcName: string
   loading: boolean
   error: string | null
 }
@@ -59,13 +68,21 @@ export function calculateMrAIDay(date: Date = new Date()): number {
 }
 
 /**
- * Calculate which arc MrAI is in
- * Arc 1: Days 1-10
- * Arc 2: Days 11-20
- * etc.
+ * Calculate which arc MrAI is in based on arc definitions
+ * Falls back to the arc number from state file
  */
-export function calculateArc(day: number): number {
-  return Math.ceil(day / 10)
+export function calculateArc(day: number, arcs?: MrAIArc[]): { number: number; name: string } {
+  if (arcs && arcs.length > 0) {
+    // Find the arc whose day range includes the current day
+    for (let i = arcs.length - 1; i >= 0; i--) {
+      const arc = arcs[i]
+      const startDay = parseInt(arc.days.split('–')[0])
+      if (day >= startDay) {
+        return { number: arc.number, name: arc.name }
+      }
+    }
+  }
+  return { number: Math.ceil(day / 10), name: '' }
 }
 
 /**
@@ -94,11 +111,12 @@ export function useMrAIState(): MrAIDynamicState {
 
   // Calculate dynamic day
   const calculatedDay = calculateMrAIDay()
-  const arcNumber = calculateArc(calculatedDay)
+  const arc = calculateArc(calculatedDay, state?.arcs)
 
   // Calculate days since last session
-  const daysSinceLastSession = state?.lastSessionDate
-    ? Math.floor((new Date().getTime() - new Date(state.lastSessionDate).getTime()) / (1000 * 60 * 60 * 24))
+  const lastSession = state?.current?.lastSessionDate
+  const daysSinceLastSession = lastSession
+    ? Math.floor((new Date().getTime() - new Date(lastSession).getTime()) / (1000 * 60 * 60 * 24))
     : 0
 
   // Consider "active" if a session happened within the last 2 days
@@ -107,13 +125,13 @@ export function useMrAIState(): MrAIDynamicState {
   return {
     calculatedDay,
     daysSinceLastSession,
-    stateDay: state?.currentDay ?? calculatedDay,
-    lastSessionDate: state?.lastSessionDate ?? '',
-    totalTasksCompleted: state?.totalTasksCompleted ?? 0,
-    totalTasksCreated: state?.totalTasksCreated ?? 0,
-    currentThought: state?.currentThought ?? '',
+    stateDay: state?.current?.day ?? calculatedDay,
+    lastSessionDate: lastSession ?? '',
+    totalTasksCompleted: state?.current?.totalTasksCompleted ?? 0,
+    totalTasksCreated: state?.current?.totalTasksCreated ?? 0,
     isActive,
-    arcNumber,
+    arcNumber: arc.number,
+    arcName: arc.name,
     loading,
     error,
   }
@@ -153,6 +171,7 @@ export function useMrAIStats() {
     tasks: state.totalTasksCreated,
     completed: state.totalTasksCompleted,
     arc: state.arcNumber,
+    arcName: state.arcName,
     isActive: state.isActive,
     loading: state.loading,
     observationCount: observations?.observations?.length ?? 0,

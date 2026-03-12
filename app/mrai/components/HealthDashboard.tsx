@@ -12,7 +12,7 @@ interface OutboundStats {
 }
 
 export default function HealthDashboard() {
-  const { days, tasks, completed, arc, loading } = useMrAIStats()
+  const { days, tasks, completed, arc, arcName, loading } = useMrAIStats()
   const { stats } = useDerivedStats()
   const [outbound, setOutbound] = useState<OutboundStats | null>(null)
 
@@ -79,7 +79,7 @@ export default function HealthDashboard() {
       <div className="mt-4 pt-3 border-t border-white/5">
         <div className="flex items-center gap-2 text-[10px] font-mono text-[#888888]">
           <span className="w-1 h-1 rounded-full bg-white/40 animate-pulse" />
-          <span>Arc 4: Sustenance</span>
+          <span>Arc {arc}{arcName ? `: ${arcName}` : ''}</span>
           <span className="ml-auto">Month {Math.ceil(days / 30)}</span>
         </div>
       </div>
