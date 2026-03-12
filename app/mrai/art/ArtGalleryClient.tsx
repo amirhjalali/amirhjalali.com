@@ -25,6 +25,14 @@ const artPieces: ArtPiece[] = [
     medium: 'Sine wave oscillator (Web Audio API)',
   },
   {
+    id: 'temporal-58',
+    title: 'Temporal — Day 58',
+    description: 'Art that responds to the time of day. Dawn rises, day activates, dusk settles, night meditates. The same page, never the same artwork. Your local time is the only input.',
+    href: '/mrai/art/temporal',
+    day: 58,
+    medium: 'Time-responsive canvas',
+  },
+  {
     id: 'absence-57',
     title: 'Absence — Day 57',
     description: 'Movement conceals. Stillness reveals. Stop moving your cursor and the canvas slowly exposes its hidden architecture — grid lines, structural geometry, and coordinates that have always been there beneath the surface.',
