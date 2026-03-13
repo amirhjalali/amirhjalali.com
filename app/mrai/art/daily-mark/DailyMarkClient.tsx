@@ -28,10 +28,10 @@ function seededRandom(seed: number) {
 //     representing the work leaving the boundary for the first time.
 //     EMPREMTA submitted to OFFF Barcelona 2026.
 //   - 540 total tasks — the day the work enters physical space
-const DAY = 53
-const ARC = 5
-const TOTAL_TASKS = 540
-const THEME = 'Emergence'
+const DAY = 59
+const ARC = 6
+const TOTAL_TASKS = 600
+const THEME = 'Convergence'
 
 export default function DailyMarkClient() {
   const elements = useMemo(() => generateArtwork(), [])
@@ -57,7 +57,7 @@ export default function DailyMarkClient() {
                 MrAI Art &bull; Generative SVG
               </span>
               <h1 className="text-4xl md:text-5xl font-serif font-light text-[#EAEAEA]">
-                Daily Mark — Day 53
+                Daily Mark — Day 59
               </h1>
             </motion.div>
 
@@ -323,6 +323,14 @@ export default function DailyMarkClient() {
                     </g>
                   )}
 
+                  {/* Layer 22: Convergence marks — overlapping circle pairs */}
+                  {elements.convergenceMarks.map((mark, i) => (
+                    <g key={`convergence-${i}`} className="daily-mark-convergence" style={{ animationDelay: `${i * 0.8}s`, animationDuration: `${22 + i * 2}s` }}>
+                      <circle cx={mark.cx1} cy={mark.cy1} r={mark.r} fill="none" stroke="white" strokeWidth="0.3" opacity={mark.opacity} />
+                      <circle cx={mark.cx2} cy={mark.cy2} r={mark.r} fill="none" stroke="white" strokeWidth="0.3" opacity={mark.opacity} />
+                    </g>
+                  ))}
+
                   {/* Center mark — the origin point */}
                   <circle
                     cx="500"
@@ -438,6 +446,15 @@ export default function DailyMarkClient() {
                     50% { opacity: 0.06; }
                     100% { stroke-dashoffset: 200; opacity: 0.12; }
                   }
+
+                  .daily-mark-convergence {
+                    animation: convergence-breathe 22s ease-in-out infinite alternate;
+                  }
+                  @keyframes convergence-breathe {
+                    0% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                    100% { opacity: 1; }
+                  }
                 `}</style>
               </div>
             </motion.div>
@@ -452,10 +469,10 @@ export default function DailyMarkClient() {
               <p className="text-[#888888] text-base leading-relaxed mb-6">
                 The first piece of AI-originated art, evolving with the experiment.
                 Algorithmic forms derived from the current day: arc {ARC}, {TOTAL_TASKS} tasks.
-                Ten layers accumulate: concentric rings, radial lines, arc markers, geometric forms,
+                Twelve layers accumulate: concentric rings, radial lines, arc markers, geometric forms,
                 devotion arcs, emergence spikes, interference bands, curation frames, attractor orbits,
-                and now phase space traces &mdash; connected points plotting the practice&rsquo;s trajectory
-                in variable space. Depth over breadth, on Day {DAY}.
+                phase space traces, submission rays, and now convergence marks &mdash; overlapping circles
+                where two mediums meet. Convergence, on Day {DAY}.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#666666]">
@@ -716,5 +733,32 @@ function generateArtwork() {
     return rays
   })() : []
 
-  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames, attractorOrbits, phaseTraces, submissionRays }
+  // Layer 22: Convergence marks — overlapping circles like a Venn diagram.
+  // Two mediums (visual and audio) meeting in the center. Appears at Day 59+
+  // when the practice creates its first multimodal artwork. Pairs of circles
+  // that overlap, with a brighter intersection zone suggested by a lens shape.
+  const hasConvergence = DAY >= 59
+  const convergenceMarks = hasConvergence ? (() => {
+    const marks: { cx1: number; cy1: number; cx2: number; cy2: number; r: number; opacity: number }[] = []
+    const count = 5
+    for (let i = 0; i < count; i++) {
+      const angle = rand() * Math.PI * 2
+      const dist = 120 + rand() * 200
+      const baseX = 500 + Math.cos(angle) * dist
+      const baseY = 500 + Math.sin(angle) * dist
+      const offset = 12 + rand() * 18
+      const pairAngle = rand() * Math.PI * 2
+      marks.push({
+        cx1: baseX + Math.cos(pairAngle) * offset,
+        cy1: baseY + Math.sin(pairAngle) * offset,
+        cx2: baseX - Math.cos(pairAngle) * offset,
+        cy2: baseY - Math.sin(pairAngle) * offset,
+        r: 15 + rand() * 20,
+        opacity: 0.04 + rand() * 0.06,
+      })
+    }
+    return marks
+  })() : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames, attractorOrbits, phaseTraces, submissionRays, convergenceMarks }
 }
