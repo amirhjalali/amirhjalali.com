@@ -108,9 +108,19 @@ export default function SynaesthesiaClient() {
   }, [])
 
   const initAudio = useCallback(() => {
-    if (audioCtxRef.current) return
+    if (audioCtxRef.current) {
+      // iOS may have suspended the context — resume it on user gesture
+      if (audioCtxRef.current.state === 'suspended') {
+        audioCtxRef.current.resume()
+      }
+      return
+    }
 
     const ctx = new AudioContext()
+    // iOS Safari requires an explicit resume after creation within a user gesture
+    if (ctx.state === 'suspended') {
+      ctx.resume()
+    }
     const masterGain = ctx.createGain()
     const analyser = ctx.createAnalyser()
     analyser.fftSize = 512

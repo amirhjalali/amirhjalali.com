@@ -107,9 +107,18 @@ export default function VoiceClient() {
   }, [])
 
   const initAudio = useCallback(() => {
-    if (audioCtxRef.current) return
+    if (audioCtxRef.current) {
+      if (audioCtxRef.current.state === 'suspended') {
+        audioCtxRef.current.resume()
+      }
+      return
+    }
 
     const ctx = new AudioContext()
+    // iOS Safari requires an explicit resume within a user gesture
+    if (ctx.state === 'suspended') {
+      ctx.resume()
+    }
     const osc = ctx.createOscillator()
     const gain = ctx.createGain()
     const analyser = ctx.createAnalyser()
