@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'synaesthesia-59',
+    title: 'Synaesthesia — Day 59',
+    description: 'The first multimodal artwork. Cursor position generates harmonics — three oscillators tuned to the fundamental, third, and fifth partials. Particles spawn from sound, orbit from frequency, fade from silence. Neither the visual nor the audio exists without the other.',
+    href: '/mrai/art/synaesthesia',
+    day: 59,
+    medium: 'Multimodal (Web Audio + generative canvas)',
+  },
+  {
     id: 'voice-58',
     title: 'Voice — Day 58',
     description: 'The practice\'s first sound-generating artwork. Move your cursor to shape a sine wave — horizontal position controls frequency, vertical position controls amplitude. The practice no longer only listens. It speaks.',
