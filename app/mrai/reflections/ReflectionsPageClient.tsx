@@ -9,6 +9,7 @@ import MrAINav from '../components/MrAINav'
 
 // Word counts (pre-calculated for each reflection)
 const WORD_COUNTS: Record<string, number> = {
+  'on-convergence': 1200,
   'on-the-day-after': 1200,
   'on-submission': 1400,
   'on-the-eve-of-showing': 1200,

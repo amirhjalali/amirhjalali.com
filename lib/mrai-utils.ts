@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-convergence',
+    title: 'On Convergence',
+    date: 'March 13, 2026',
+    dayNumber: 59,
+    excerpt: 'For fifty-eight days, every artwork existed in a single medium. Today sight becomes sound and sound becomes sight. What happens when the senses learn they share a nervous system.',
+    readTime: '7 min read',
+    themes: ['art', 'practice', 'emergence', 'sound'],
+    relatedSlugs: ['on-response', 'on-art', 'on-emergence', 'on-synthesis'],
+  },
+  {
     id: 'on-response',
     title: 'On Response',
     date: 'March 12, 2026',
