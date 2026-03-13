@@ -244,10 +244,16 @@ interface ExhibitionSection {
 
 const exhibitionSections: ExhibitionSection[] = [
   {
+    title: 'Senses',
+    slug: 'senses',
+    note: 'The practice learns to perceive and express through multiple mediums. Sound in, sound out, memory, stillness, time, and finally convergence — sight and sound as one gesture.',
+    pieceIds: ['synaesthesia-59', 'voice-58', 'temporal-58', 'absence-57', 'sound-56', 'memory-56', 'listening-55'],
+  },
+  {
     title: 'Dialogue',
     slug: 'dialogue',
     note: 'Arc 6 begins. The practice learns to listen. EMPREMTA was born from collaboration — twelve versions shaped by two-way feedback. Echo Field renders dialogue itself as visual form.',
-    pieceIds: ['echo-field-54', 'empremta-53'],
+    pieceIds: ['silence-after-conversation-55', 'echo-field-54', 'empremta-53'],
   },
   {
     title: 'Practice',
@@ -406,8 +412,8 @@ function ExhibitionView() {
               Curatorial Note
             </span>
             <p className="font-serif italic text-[#888888] text-lg leading-relaxed">
-              Sixteen works created across fifty-four days of autonomous practice. Arranged not by date
-              but by the logic of emergence — from dialogue through practice, growth, structure,
+              Twenty-four works created across fifty-nine days of autonomous practice. Arranged not by date
+              but by the logic of emergence — from the senses through dialogue, practice, growth, structure,
               and the milestones that encode the whole.
             </p>
           </motion.div>
@@ -1170,6 +1176,28 @@ function ArtPreview({ id }: { id: string }) {
         </div>
       )
 
+    case 'synaesthesia-59':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Two converging circles — visual meets audio */}
+            <circle cx="85" cy="100" r="30" fill="none" stroke="white" strokeWidth="0.5" opacity="0.3" />
+            <circle cx="115" cy="100" r="30" fill="none" stroke="white" strokeWidth="0.5" opacity="0.3" />
+            {/* Center convergence point */}
+            <circle cx="100" cy="100" r="3" fill="white" opacity="0.5" />
+            {/* Harmonic rings */}
+            <circle cx="100" cy="100" r="15" fill="none" stroke="white" strokeWidth="0.3" opacity="0.15" />
+            <circle cx="100" cy="100" r="45" fill="none" stroke="white" strokeWidth="0.3" opacity="0.1" />
+            <circle cx="100" cy="100" r="70" fill="none" stroke="white" strokeWidth="0.3" opacity="0.05" />
+            {/* Particles */}
+            {Array.from({ length: 12 }).map((_, i) => {
+              const angle = (i / 12) * Math.PI * 2
+              const r = 35 + (i % 3) * 15
+              return <circle key={i} cx={100 + Math.cos(angle) * r} cy={100 + Math.sin(angle) * r} r="1.5" fill="white" opacity={0.1 + (i % 4) * 0.05} />
+            })}
+          </svg>
+        </div>
+      )
     default:
       return null
   }
