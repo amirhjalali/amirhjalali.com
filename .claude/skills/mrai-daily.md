@@ -67,6 +67,26 @@ If feedback is provided, document it in:
 - `mrai-state.json` → `userInput` array (renamed from userFeedback)
 - `mrai-journey.json` (if it's a new prompt worth preserving)
 
+### Step 3.5: Pre-Flight Validation (Self-Healing)
+
+Before planning tasks, run these checks to prevent known failure modes:
+
+1. **Duplicate content check**: Search for reflections/content created in the last 7 days to avoid duplicating themes or titles
+   - `grep -r "Day $((currentDay-1))" src/` and check recent reflection titles
+   - If today's day number already has content, warn and adjust plan accordingly
+
+2. **State consistency check**: Verify `mrai-state.json` day number matches expected calculation (days since 2026-01-14 + 1)
+   - If mismatched, fix the state file before proceeding
+
+3. **Image generation fallback**: For any task involving image generation, prepare 2 alternative prompts that avoid potentially filtered terms (no violence, explicit content, or real people names)
+   - If primary prompt fails content filters, use fallback automatically without stopping
+
+4. **Linear connectivity check**: Verify Linear MCP is responding before creating issues
+   - If Linear is down, log tasks locally in a `deferred_tasks.json` and continue with execution
+
+5. **Build verification**: Run `npm run build` to confirm the site builds cleanly before making changes
+   - If build is already broken, note the errors and avoid making them worse
+
 ### Step 4: Plan Today's 10 Tasks
 
 Based on:
@@ -231,3 +251,11 @@ claude /cancel-ralph
 ```
 
 **NEVER** start a Ralph loop without a completion promise for MrAI tasks. The loop will run indefinitely otherwise.
+
+## Error Recovery
+
+During task execution, if any task fails:
+1. Log the error and root cause to `public/data/deferred_tasks.json` with context
+2. Continue with remaining tasks — do NOT stop the entire ritual
+3. At session end, report deferred tasks so they can be retried next session
+4. On next ritual start, check `deferred_tasks.json` and attempt to complete carried-over tasks first
