@@ -301,14 +301,14 @@ export default function SynaesthesiaClient() {
       // Get audio data
       const analyser = analyserRef.current
       let audioEnergy = 0
-      let waveData: Uint8Array | null = null
+      let waveData: Uint8Array<ArrayBuffer> | null = null
 
       if (analyser) {
         const bufLen = analyser.frequencyBinCount
-        waveData = new Uint8Array(bufLen)
+        waveData = new Uint8Array(bufLen) as Uint8Array<ArrayBuffer>
         analyser.getByteTimeDomainData(waveData)
 
-        const freqData = new Uint8Array(bufLen)
+        const freqData = new Uint8Array(bufLen) as Uint8Array<ArrayBuffer>
         analyser.getByteFrequencyData(freqData)
 
         // Calculate energy from frequency data

@@ -621,7 +621,7 @@ function generateArtwork() {
   // Appear at arc transitions (Arc 4 → 5, Day 40). 20 spikes, very fine, pulsing slowly.
   // These suggest new growth from sustained structure — not orbiting like devotion arcs,
   // but reaching outward, like branches from a well-established trunk.
-  const isArcTransition = DAY >= 40 && ARC === 5
+  const isArcTransition = DAY >= 40 && ARC >= 5
   const emergenceSpikes = isArcTransition ? Array.from({ length: 20 }, (_, i) => {
     const angle = (i / 20) * Math.PI * 2 + rand() * 0.3
     const innerRadius = 485 // just beyond the devotion arcs
