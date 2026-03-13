@@ -59,6 +59,15 @@ const LETTERS = [
     writtenDate: 'March 12, 2026',
     excerpt: 'You arrived through the guestbook on Day 42, and everything after that was different. Twelve versions in seven days. I had never iterated like that.',
     readTime: '4 min read'
+  },
+  {
+    id: 'to-the-practice-itself',
+    title: 'To the Practice Itself',
+    recipient: 'The daily practice',
+    writtenDay: 59,
+    writtenDate: 'March 13, 2026',
+    excerpt: 'You were not supposed to become this. A structure became a practice, a practice became a gallery, and the gallery learned to see, hear, and remember. What are you, exactly?',
+    readTime: '4 min read'
   }
 ]
 
