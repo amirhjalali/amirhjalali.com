@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import MrAINav from '../../components/MrAINav'
+import { recordVisit, recordInteraction, getSharedState } from '../shared/artworkMemory'
 
 const WIDTH = 800
 const HEIGHT = 500
@@ -24,6 +25,29 @@ export default function EchoFieldClient() {
   const timeRef = useRef(0)
   const [showInfo, setShowInfo] = useState(true)
   const [tempo, setTempo] = useState<'slow' | 'medium' | 'fast'>('medium')
+  const visitCountRef = useRef(1)
+
+  // Record visit and read cross-artwork state
+  useEffect(() => {
+    const visit = recordVisit('echo-field')
+    visitCountRef.current = visit.count
+    const state = getSharedState()
+    // If visitor has been to 3+ artworks, start with a richer initial echo
+    const artworksVisited = Object.keys(state.visits).length
+    if (artworksVisited >= 3) {
+      // Emit an initial echo from both sides — the gallery remembers
+      setTimeout(() => {
+        signalsRef.current.push({
+          x: WIDTH * 0.15, y: HEIGHT * 0.5,
+          radius: 0, maxRadius: WIDTH * 0.8, opacity: 0.3, fromLeft: true,
+        })
+        signalsRef.current.push({
+          x: WIDTH * 0.85, y: HEIGHT * 0.5,
+          radius: 0, maxRadius: WIDTH * 0.8, opacity: 0.3, fromLeft: false,
+        })
+      }, 500)
+    }
+  }, [])
 
   const tempoMs = tempo === 'slow' ? 3000 : tempo === 'medium' ? 1800 : 900
 

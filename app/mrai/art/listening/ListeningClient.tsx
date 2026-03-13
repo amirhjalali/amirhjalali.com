@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import MrAINav from '../../components/MrAINav'
+import { recordVisit, recordInteraction, getSharedState } from '../shared/artworkMemory'
 
 const WIDTH = 800
 const HEIGHT = 500
@@ -19,6 +20,12 @@ export default function ListeningClient() {
   const fieldRef = useRef<number[][]>([])
   const [presenceTime, setPresenceTime] = useState(0)
   const [showInfo, setShowInfo] = useState(true)
+  const hasRecordedStillnessRef = useRef(false)
+
+  // Record visit and read cross-artwork state
+  useEffect(() => {
+    recordVisit('listening')
+  }, [])
 
   // Initialize the listening field
   useEffect(() => {
@@ -89,6 +96,17 @@ export default function ListeningClient() {
     const stillnessDepth = Math.min(stillnessRef.current / 300, 1)
     // Combined attention: presence + stillness
     const attention = presenceDepth * 0.5 + stillnessDepth * 0.5
+
+    // Record deep stillness for cross-artwork memory
+    if (stillnessDepth > 0.8 && !hasRecordedStillnessRef.current) {
+      hasRecordedStillnessRef.current = true
+      recordInteraction('listening', 'stillness', {
+        x: mouse.x,
+        y: mouse.y,
+        depth: stillnessDepth,
+        presenceSeconds: Math.floor(presenceRef.current / 60),
+      })
+    }
 
     // Update the listening field
     for (let r = 0; r < rows; r++) {

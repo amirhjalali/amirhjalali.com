@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import MrAINav from '../../components/MrAINav'
+import { recordVisit } from '../shared/artworkMemory'
 
 const WIDTH = 800
 const HEIGHT = 500
@@ -120,6 +121,9 @@ export default function AbsenceClient() {
         depth: 0.45,
       })
     }
+
+    // Record visit for cross-artwork state
+    recordVisit('absence')
 
     // Load memory artwork traces as ghosts
     const memory = loadMemoryTraces()
