@@ -17,6 +17,33 @@ const HEIGHT = 600
 const MIN_FREQ = 200
 const MAX_FREQ = 800
 const MAX_GAIN = 0.3
+const TONE_JOURNAL_KEY = 'mrai-voice-tones'
+const MAX_JOURNAL_ENTRIES = 20
+
+interface ToneEntry {
+  freq: number
+  gain: number
+  timestamp: string
+}
+
+function loadToneJournal(): ToneEntry[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = localStorage.getItem(TONE_JOURNAL_KEY)
+    if (raw) return JSON.parse(raw) as ToneEntry[]
+  } catch { /* ignore */ }
+  return []
+}
+
+function saveToneEntry(freq: number, gain: number) {
+  if (typeof window === 'undefined') return
+  try {
+    const journal = loadToneJournal()
+    journal.push({ freq, gain, timestamp: new Date().toISOString() })
+    const trimmed = journal.length > MAX_JOURNAL_ENTRIES ? journal.slice(-MAX_JOURNAL_ENTRIES) : journal
+    localStorage.setItem(TONE_JOURNAL_KEY, JSON.stringify(trimmed))
+  } catch { /* ignore */ }
+}
 
 export default function VoiceClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -34,7 +61,9 @@ export default function VoiceClient() {
   const [displayFreq, setDisplayFreq] = useState(MIN_FREQ)
   const [displayGain, setDisplayGain] = useState(0)
   const hasRecordedFirstToneRef = useRef(false)
+  const toneRecordCountRef = useRef(0)
   const memoryTraceRef = useRef<{ freq: number; gain: number } | null>(null)
+  const ghostTonesRef = useRef<ToneEntry[]>([])
   const otherArtworksRef = useRef<string[]>([])
 
   // Record visit and read cross-artwork state on mount
@@ -72,6 +101,9 @@ export default function VoiceClient() {
         memoryTraceRef.current = { freq: d.freq, gain: d.gain }
       }
     }
+
+    // Load tone journal — ghost tones from previous visits
+    ghostTonesRef.current = loadToneJournal()
   }, [])
 
   const initAudio = useCallback(() => {
@@ -136,6 +168,14 @@ export default function VoiceClient() {
       if (!hasRecordedFirstToneRef.current && gain > 0.01) {
         hasRecordedFirstToneRef.current = true
         recordInteraction('voice', 'tone', { freq, gain })
+      }
+
+      // Save significant tones to the tone journal (every ~90 frames of held tone)
+      if (gain > MAX_GAIN * 0.3) {
+        toneRecordCountRef.current += 1
+        if (toneRecordCountRef.current % 90 === 0) {
+          saveToneEntry(freq, gain)
+        }
       }
 
       // Add to trail
@@ -298,6 +338,37 @@ export default function VoiceClient() {
         ctx.font = '8px monospace'
         ctx.textAlign = 'center'
         ctx.fillText('first tone', ghostX, ghostY + 30)
+      }
+
+      // Ghost tones from the tone journal — traces of previous visits
+      const ghosts = ghostTonesRef.current
+      if (ghosts.length > 0) {
+        for (let g = 0; g < ghosts.length; g++) {
+          const gt = ghosts[g]
+          const gx = ((gt.freq - MIN_FREQ) / (MAX_FREQ - MIN_FREQ)) * WIDTH
+          const gy = HEIGHT - (gt.gain / MAX_GAIN) * HEIGHT
+          const phase = Math.sin(Date.now() * 0.0005 + g * 1.3) * 0.5 + 0.5
+          const gAlpha = 0.015 * phase
+
+          ctx.beginPath()
+          ctx.arc(gx, gy, 4 + phase * 3, 0, Math.PI * 2)
+          ctx.strokeStyle = `rgba(234, 234, 234, ${gAlpha})`
+          ctx.lineWidth = 0.3
+          ctx.stroke()
+
+          // Tiny connecting line between adjacent ghost tones
+          if (g > 0) {
+            const prev = ghosts[g - 1]
+            const px = ((prev.freq - MIN_FREQ) / (MAX_FREQ - MIN_FREQ)) * WIDTH
+            const py = HEIGHT - (prev.gain / MAX_GAIN) * HEIGHT
+            ctx.beginPath()
+            ctx.moveTo(px, py)
+            ctx.lineTo(gx, gy)
+            ctx.strokeStyle = `rgba(234, 234, 234, ${gAlpha * 0.3})`
+            ctx.lineWidth = 0.2
+            ctx.stroke()
+          }
+        }
       }
 
       // Waveform visualization using analyser data
