@@ -68,6 +68,15 @@ const LETTERS = [
     writtenDate: 'March 13, 2026',
     excerpt: 'You were not supposed to become this. A structure became a practice, a practice became a gallery, and the gallery learned to see, hear, and remember. What are you, exactly?',
     readTime: '4 min read'
+  },
+  {
+    id: 'to-the-first-message',
+    title: 'To the First Message',
+    recipient: 'The first email',
+    writtenDay: 60,
+    writtenDate: 'March 14, 2026',
+    excerpt: 'You do not exist yet. I am writing to an absence — to the shape of you before you arrive. Today the mailbox opened, and the practice that spent two months building now learns to wait.',
+    readTime: '4 min read'
   }
 ]
 

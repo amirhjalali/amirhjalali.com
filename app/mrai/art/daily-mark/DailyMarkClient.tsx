@@ -28,10 +28,10 @@ function seededRandom(seed: number) {
 //     representing the work leaving the boundary for the first time.
 //     EMPREMTA submitted to OFFF Barcelona 2026.
 //   - 540 total tasks — the day the work enters physical space
-const DAY = 59
+const DAY = 60
 const ARC = 6
-const TOTAL_TASKS = 600
-const THEME = 'Convergence'
+const TOTAL_TASKS = 610
+const THEME = 'Address'
 
 export default function DailyMarkClient() {
   const elements = useMemo(() => generateArtwork(), [])
@@ -57,7 +57,7 @@ export default function DailyMarkClient() {
                 MrAI Art &bull; Generative SVG
               </span>
               <h1 className="text-4xl md:text-5xl font-serif font-light text-[#EAEAEA]">
-                Daily Mark — Day 59
+                Daily Mark — Day 60
               </h1>
             </motion.div>
 
@@ -331,6 +331,43 @@ export default function DailyMarkClient() {
                     </g>
                   ))}
 
+                  {/* Layer 23: Address marks — a point that becomes reachable.
+                      A central node with radiating spokes and concentric rings,
+                      like a location becoming visible on a map. Day 60+. */}
+                  {elements.addressMarks.map((mark, i) => (
+                    <g key={`address-${i}`} className="daily-mark-address" style={{ animationDelay: `${i * 1.2}s`, animationDuration: `${20 + i * 3}s` }}>
+                      {/* The address node — a small bright dot */}
+                      <circle cx={mark.cx} cy={mark.cy} r={mark.nodeR} fill="white" opacity={mark.nodeOpacity} />
+                      {/* Concentric rings — like signal waves emanating from the address */}
+                      {mark.rings.map((ring, j) => (
+                        <circle
+                          key={`addr-ring-${i}-${j}`}
+                          cx={mark.cx}
+                          cy={mark.cy}
+                          r={ring.r}
+                          fill="none"
+                          stroke="white"
+                          strokeWidth="0.25"
+                          opacity={ring.opacity}
+                          strokeDasharray={ring.dashArray}
+                        />
+                      ))}
+                      {/* Spokes — connection lines reaching toward the node */}
+                      {mark.spokes.map((spoke, j) => (
+                        <line
+                          key={`addr-spoke-${i}-${j}`}
+                          x1={spoke.x1}
+                          y1={spoke.y1}
+                          x2={spoke.x2}
+                          y2={spoke.y2}
+                          stroke="white"
+                          strokeWidth="0.3"
+                          opacity={spoke.opacity}
+                        />
+                      ))}
+                    </g>
+                  ))}
+
                   {/* Center mark — the origin point */}
                   <circle
                     cx="500"
@@ -455,6 +492,16 @@ export default function DailyMarkClient() {
                     50% { opacity: 0.5; }
                     100% { opacity: 1; }
                   }
+
+                  .daily-mark-address {
+                    animation: address-beacon 20s ease-in-out infinite alternate;
+                  }
+                  @keyframes address-beacon {
+                    0% { opacity: 1; }
+                    30% { opacity: 0.6; }
+                    60% { opacity: 1; }
+                    100% { opacity: 0.7; }
+                  }
                 `}</style>
               </div>
             </motion.div>
@@ -469,10 +516,10 @@ export default function DailyMarkClient() {
               <p className="text-[#888888] text-base leading-relaxed mb-6">
                 The first piece of AI-originated art, evolving with the experiment.
                 Algorithmic forms derived from the current day: arc {ARC}, {TOTAL_TASKS} tasks.
-                Twelve layers accumulate: concentric rings, radial lines, arc markers, geometric forms,
+                Thirteen layers accumulate: concentric rings, radial lines, arc markers, geometric forms,
                 devotion arcs, emergence spikes, interference bands, curation frames, attractor orbits,
-                phase space traces, submission rays, and now convergence marks &mdash; overlapping circles
-                where two mediums meet. Convergence, on Day {DAY}.
+                phase space traces, submission rays, convergence marks, and now address marks &mdash;
+                nodes that radiate outward, the moment of becoming reachable. Address, on Day {DAY}.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#666666]">
@@ -760,5 +807,54 @@ function generateArtwork() {
     return marks
   })() : []
 
-  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames, attractorOrbits, phaseTraces, submissionRays, convergenceMarks }
+  // Layer 23: Address marks — a point on a network that can be reached.
+  // Small nodes with concentric signal rings and radiating spokes, like
+  // coordinates appearing on a map. The moment of being findable.
+  // Appears at Day 60+ when the practice acquires an email/address.
+  const hasAddress = DAY >= 60
+  const addressMarks = hasAddress ? (() => {
+    const marks: {
+      cx: number; cy: number; nodeR: number; nodeOpacity: number;
+      rings: { r: number; opacity: number; dashArray: string }[];
+      spokes: { x1: number; y1: number; x2: number; y2: number; opacity: number }[];
+    }[] = []
+    const count = 4
+    for (let i = 0; i < count; i++) {
+      const angle = rand() * Math.PI * 2
+      const dist = 80 + rand() * 280
+      const cx = 500 + Math.cos(angle) * dist
+      const cy = 500 + Math.sin(angle) * dist
+      const nodeR = 1.5 + rand() * 1.5
+      const nodeOpacity = 0.15 + rand() * 0.2
+
+      // Concentric signal rings around the node
+      const ringCount = 3 + Math.floor(rand() * 3)
+      const rings = Array.from({ length: ringCount }, (_, j) => {
+        const r = 8 + j * (6 + rand() * 4)
+        const opacity = 0.04 + (1 - j / ringCount) * 0.06
+        const dashArray = j % 2 === 0 ? 'none' : `${2 + rand() * 3} ${3 + rand() * 4}`
+        return { r, opacity, dashArray }
+      })
+
+      // Spokes reaching inward toward the node from various directions
+      const spokeCount = 5 + Math.floor(rand() * 4)
+      const spokes = Array.from({ length: spokeCount }, (_, j) => {
+        const spokeAngle = (j / spokeCount) * Math.PI * 2 + rand() * 0.4
+        const innerR = rings[rings.length - 1].r + 2
+        const outerR = innerR + 15 + rand() * 25
+        return {
+          x1: cx + Math.cos(spokeAngle) * innerR,
+          y1: cy + Math.sin(spokeAngle) * innerR,
+          x2: cx + Math.cos(spokeAngle) * outerR,
+          y2: cy + Math.sin(spokeAngle) * outerR,
+          opacity: 0.03 + rand() * 0.06,
+        }
+      })
+
+      marks.push({ cx, cy, nodeR, nodeOpacity, rings, spokes })
+    }
+    return marks
+  })() : []
+
+  return { rings, radials, arcMarkers, geometricForms, particles, devotionArcs, emergenceSpikes, interferenceBands, curationFrames, attractorOrbits, phaseTraces, submissionRays, convergenceMarks, addressMarks }
 }

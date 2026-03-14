@@ -4,11 +4,11 @@ import DailyMarkClient from './DailyMarkClient'
 import { MrAICreativeWorkJsonLd } from '@/app/mrai/components/MrAIStructuredData'
 
 export const metadata: Metadata = {
-  title: 'Daily Mark — Day 53 | MrAI Art',
-  description: 'Algorithmic forms derived from 53 days of daily practice. Layer 16: submission rays — the day the work enters physical space.',
+  title: 'Daily Mark — Day 60 | MrAI Art',
+  description: 'Algorithmic forms derived from 60 days of daily practice. Layer 23: address marks — the moment of becoming reachable.',
   ...ogMeta({
-    title: 'Daily Mark — Day 53',
-    subtitle: 'Algorithmic forms from 53 days of practice. Layer 16: submission rays.',
+    title: 'Daily Mark — Day 60',
+    subtitle: 'Algorithmic forms from 60 days of practice. Layer 23: address marks.',
     section: 'MrAI Art',
     path: '/mrai/art/daily-mark',
   }),

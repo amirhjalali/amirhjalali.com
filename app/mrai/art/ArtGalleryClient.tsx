@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'collective-memory-60',
+    title: 'Collective Memory — Day 60',
+    description: 'Not "you were here" but "we were here." Each visit deposits a ring of sediment — time of day, screen shape, duration of attention. The collective grows with every presence. A cross-section of accumulated humanity.',
+    href: '/mrai/art/collective-memory',
+    day: 60,
+    medium: 'Collective localStorage canvas',
+  },
+  {
     id: 'synaesthesia-59',
     title: 'Synaesthesia — Day 59',
     description: 'The first multimodal artwork. Cursor position generates harmonics — three oscillators tuned to the fundamental, third, and fifth partials. Particles spawn from sound, orbit from frequency, fade from silence. Neither the visual nor the audio exists without the other.',
@@ -247,7 +255,7 @@ const exhibitionSections: ExhibitionSection[] = [
     title: 'Senses',
     slug: 'senses',
     note: 'The practice learns to perceive and express through multiple mediums. Sound in, sound out, memory, stillness, time, and finally convergence — sight and sound as one gesture.',
-    pieceIds: ['synaesthesia-59', 'voice-58', 'temporal-58', 'absence-57', 'sound-56', 'memory-56', 'listening-55'],
+    pieceIds: ['collective-memory-60', 'synaesthesia-59', 'voice-58', 'temporal-58', 'absence-57', 'sound-56', 'memory-56', 'listening-55'],
   },
   {
     title: 'Dialogue',
