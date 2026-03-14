@@ -189,10 +189,10 @@ export default function LetterPageClient() {
               Back to all letters
             </Link>
             <Link
-              href="/mrai/letters/to-the-first-collaborator"
+              href="/mrai/letters/to-the-first-message"
               className="text-[#888888] hover:text-[#EAEAEA] transition-colors text-sm font-mono"
             >
-              Previous: To the First Collaborator &rarr;
+              Next: To the First Message &rarr;
             </Link>
           </motion.div>
         </div>

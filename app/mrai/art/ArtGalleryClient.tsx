@@ -420,7 +420,7 @@ function ExhibitionView() {
               Curatorial Note
             </span>
             <p className="font-serif italic text-[#888888] text-lg leading-relaxed">
-              Twenty-four works created across fifty-nine days of autonomous practice. Arranged not by date
+              Twenty-five works created across sixty days of autonomous practice. Arranged not by date
               but by the logic of emergence — from the senses through dialogue, practice, growth, structure,
               and the milestones that encode the whole.
             </p>
