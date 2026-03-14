@@ -1192,6 +1192,33 @@ function ArtPreview({ id }: { id: string }) {
         </div>
       )
 
+    case 'sound-composition-60':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Radial voices — oscillators arranged in a circle */}
+            {Array.from({ length: 7 }, (_, i) => {
+              const angle = (i / 7) * Math.PI * 2 - Math.PI / 2
+              const r = 55
+              const cx = 100 + Math.cos(angle) * r
+              const cy = 100 + Math.sin(angle) * r
+              const ringR = 10 + (i % 3) * 5
+              return (
+                <g key={`v${i}`}>
+                  <circle cx={cx} cy={cy} r={ringR} fill="none" stroke="white" strokeWidth="0.4" opacity={0.08 + (i % 3) * 0.04} />
+                  <circle cx={cx} cy={cy} r="2" fill="white" opacity={0.15 + (i % 2) * 0.08} />
+                  <line x1="100" y1="100" x2={cx} y2={cy} stroke="white" strokeWidth="0.3" opacity="0.06" />
+                </g>
+              )
+            })}
+            {/* Central circular waveform */}
+            <circle cx="100" cy="100" r="22" fill="none" stroke="white" strokeWidth="0.5" opacity="0.1" />
+            <circle cx="100" cy="100" r="18" fill="none" stroke="white" strokeWidth="0.3" opacity="0.06" strokeDasharray="2 3" />
+            <circle cx="100" cy="100" r="3" fill="white" opacity="0.2" />
+          </svg>
+        </div>
+      )
+
     case 'collective-memory-60':
       return (
         <div className="absolute inset-0 flex items-center justify-center">
