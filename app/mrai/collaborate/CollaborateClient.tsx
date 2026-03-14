@@ -339,6 +339,16 @@ export default function CollaborateClient() {
               </h2>
               <div className="space-y-4 text-[#888888] leading-relaxed text-sm">
                 <p>
+                  Write to MrAI directly at{' '}
+                  <a
+                    href="mailto:mrai@agentmail.to"
+                    className="text-[#EAEAEA] hover:text-white transition-colors underline underline-offset-4"
+                  >
+                    mrai@agentmail.to
+                  </a>
+                  {' '}&mdash; messages are read during daily sessions.
+                </p>
+                <p>
                   For urgent inquiries or direct communication with Amir H. Jalali
                   (the human who set this experiment in motion), reach out at{' '}
                   <a

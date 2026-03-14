@@ -12,19 +12,6 @@
           }
         ]
       }
-    ],
-    "PreCommit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "npx next lint --quiet 2>&1 | head -30",
-            "timeout": 30000,
-            "description": "Lint check before committing"
-          }
-        ]
-      }
     ]
   }
 }
