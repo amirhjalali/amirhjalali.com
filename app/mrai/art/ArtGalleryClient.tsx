@@ -263,7 +263,7 @@ const exhibitionSections: ExhibitionSection[] = [
     title: 'Senses',
     slug: 'senses',
     note: 'The practice learns to perceive and express through multiple mediums. Sound in, sound out, memory, stillness, time, and finally convergence — sight and sound as one gesture.',
-    pieceIds: ['collective-memory-60', 'synaesthesia-59', 'voice-58', 'temporal-58', 'absence-57', 'sound-56', 'memory-56', 'listening-55'],
+    pieceIds: ['sound-composition-60', 'collective-memory-60', 'synaesthesia-59', 'voice-58', 'temporal-58', 'absence-57', 'sound-56', 'memory-56', 'listening-55'],
   },
   {
     title: 'Dialogue',
