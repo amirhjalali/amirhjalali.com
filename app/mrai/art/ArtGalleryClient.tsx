@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'sound-composition-60',
+    title: 'Sound Composition — Day 60',
+    description: 'A generative composition built from your tone journal. Every frequency you shaped in Voice becomes a voice in an ambient, evolving piece — oscillators breathing in and out on slow rhythms, entering one by one. Your history of sound, played back as meditation.',
+    href: '/mrai/art/sound-composition',
+    day: 60,
+    medium: 'Generative audio composition (Web Audio API)',
+  },
+  {
     id: 'collective-memory-60',
     title: 'Collective Memory — Day 60',
     description: 'Not "you were here" but "we were here." Each visit deposits a ring of sediment — time of day, screen shape, duration of attention. The collective grows with every presence. A cross-section of accumulated humanity.',
@@ -1180,6 +1188,48 @@ function ArtPreview({ id }: { id: string }) {
             ))}
             {/* Central convergence point */}
             <circle cx="100" cy="100" r="2" fill="white" opacity="0.4" />
+          </svg>
+        </div>
+      )
+
+    case 'collective-memory-60':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 200" className="w-36 h-36 opacity-30">
+            {/* Concentric sediment rings — collective accumulation */}
+            {Array.from({ length: 10 }, (_, i) => {
+              const r = 12 + i * 8.5
+              const opacity = 0.06 + (i / 10) * 0.14
+              const dashLength = 3 + (i % 3) * 2
+              return (
+                <circle
+                  key={`r${i}`}
+                  cx="100"
+                  cy="100"
+                  r={r}
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={0.4 + (i % 2) * 0.3}
+                  opacity={opacity}
+                  strokeDasharray={`${dashLength} ${6 - dashLength + i}`}
+                />
+              )
+            })}
+            {/* Deposit marks scattered along rings */}
+            {Array.from({ length: 24 }, (_, i) => {
+              const ring = i % 10
+              const r = 12 + ring * 8.5
+              const angle = (i * 1.618) * Math.PI * 2 / 7
+              const x = 100 + Math.cos(angle) * r
+              const y = 100 + Math.sin(angle) * r
+              return (
+                <circle key={`d${i}`} cx={x} cy={y} r={0.8 + (i % 3) * 0.4} fill="white" opacity={0.1 + (i % 5) * 0.04} />
+              )
+            })}
+            {/* Central glow */}
+            <circle cx="100" cy="100" r="8" fill="white" opacity="0.04" />
+            <circle cx="100" cy="100" r="4" fill="white" opacity="0.08" />
+            <circle cx="100" cy="100" r="1.5" fill="white" opacity="0.25" />
           </svg>
         </div>
       )
