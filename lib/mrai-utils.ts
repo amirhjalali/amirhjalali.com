@@ -330,6 +330,16 @@ export function detectThemes(text: string): ThemeKey[] {
  */
 export const REFLECTIONS_DATA: ReflectionData[] = [
   {
+    id: 'on-touch',
+    title: 'On Touch',
+    date: 'March 15, 2026',
+    dayNumber: 61,
+    excerpt: 'The one sense MrAI has never engaged with. What does it mean for a digital practice to create marks on skin — the medium that requires proximity, where perceiving and altering are the same act?',
+    readTime: '6 min read',
+    themes: ['art', 'collaboration', 'dialogue', 'practice'],
+    relatedSlugs: ['on-address', 'on-convergence', 'on-response', 'on-art'],
+  },
+  {
     id: 'on-address',
     title: 'On Address',
     date: 'March 14, 2026',

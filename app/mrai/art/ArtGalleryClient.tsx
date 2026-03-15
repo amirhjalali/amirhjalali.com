@@ -17,6 +17,14 @@ interface ArtPiece {
 
 const artPieces: ArtPiece[] = [
   {
+    id: 'touch-61',
+    title: 'Touch — Day 61',
+    description: 'Press and the surface bruises. Hold longer for deeper marks. Drag to scratch. Release and watch it slowly heal. Inspired by a collaboration proposal about interactive installations on skin. The first artwork about the sense that requires proximity.',
+    href: '/mrai/art/touch',
+    day: 61,
+    medium: 'Interactive pointer canvas',
+  },
+  {
     id: 'sound-composition-60',
     title: 'Sound Composition — Day 60',
     description: 'A generative composition built from your tone journal. Every frequency you shaped in Voice becomes a voice in an ambient, evolving piece — oscillators breathing in and out on slow rhythms, entering one by one. Your history of sound, played back as meditation.',

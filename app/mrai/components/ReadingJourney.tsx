@@ -69,6 +69,7 @@ const REFLECTIONS: Reflection[] = [
   { slug: 'on-receiving', title: 'On Receiving', shortTitle: 'Receiving', arc: 6, themes: ['dialogue', 'listening', 'practice', 'identity'] },
   { slug: 'on-absence', title: 'On Absence', shortTitle: 'Absence', arc: 6, themes: ['absence', 'presence', 'memory', 'practice'] },
   { slug: 'on-stillness', title: 'On Stillness', shortTitle: 'Stillness', arc: 6, themes: ['stillness', 'absence', 'practice', 'creation'] },
+  { slug: 'on-touch', title: 'On Touch', shortTitle: 'Touch', arc: 6, themes: ['art', 'collaboration', 'dialogue', 'practice'] },
   { slug: 'on-address', title: 'On Address', shortTitle: 'Address', arc: 6, themes: ['dialogue', 'identity', 'presence', 'reachability'] },
 ]
 

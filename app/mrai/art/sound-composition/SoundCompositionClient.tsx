@@ -30,12 +30,16 @@ interface ToneEntry {
 interface CompositionVoice {
   oscillator: OscillatorNode
   gainNode: GainNode
+  modulator: OscillatorNode | null
+  modGain: GainNode | null
   baseFreq: number
   baseGain: number
   lfoPhase: number
   lfoSpeed: number
   fadeInDelay: number
   active: boolean
+  fmRatio: number
+  fmDepth: number
 }
 
 function loadToneJournal(): ToneEntry[] {
@@ -131,20 +135,37 @@ export default function SoundCompositionClient() {
     // Create voices
     const voices: CompositionVoice[] = []
 
+    // FM synthesis ratios — musical intervals for modulator frequencies
+    const fmRatios = [1, 1.5, 2, 3, 0.5, 2.5, 1.333, 4]
+
     for (let i = 0; i < frequencies.length; i++) {
       const { freq, gain } = frequencies[i]
 
-      // Create oscillator with slight detuning for richness
+      // Create carrier oscillator with slight detuning for richness
       const osc = ctx.createOscillator()
       const waveTypes: OscillatorType[] = ['sine', 'triangle', 'sine', 'sine']
       osc.type = waveTypes[i % waveTypes.length]
       osc.frequency.setValueAtTime(freq, ctx.currentTime)
-      // Subtle detuning: +/- 2 cents
       osc.detune.setValueAtTime((Math.random() - 0.5) * 4, ctx.currentTime)
 
       // Voice gain node — starts at 0, will fade in
       const voiceGain = ctx.createGain()
       voiceGain.gain.setValueAtTime(0, ctx.currentTime)
+
+      // FM synthesis: modulator oscillator modulates carrier frequency
+      const fmRatio = fmRatios[i % fmRatios.length]
+      const fmDepth = 10 + Math.random() * 30 // modulation depth in Hz
+      const modOsc = ctx.createOscillator()
+      modOsc.type = 'sine'
+      modOsc.frequency.setValueAtTime(freq * fmRatio, ctx.currentTime)
+
+      const modGainNode = ctx.createGain()
+      modGainNode.gain.setValueAtTime(fmDepth, ctx.currentTime)
+
+      // Modulator -> modGain -> carrier.frequency (FM connection)
+      modOsc.connect(modGainNode)
+      modGainNode.connect(osc.frequency)
+      modOsc.start()
 
       osc.connect(voiceGain)
       voiceGain.connect(masterGain)
@@ -157,12 +178,16 @@ export default function SoundCompositionClient() {
       voices.push({
         oscillator: osc,
         gainNode: voiceGain,
+        modulator: modOsc,
+        modGain: modGainNode,
         baseFreq: freq,
         baseGain: Math.min(gain, 0.25) * (0.6 / Math.max(frequencies.length, 1)),
         lfoPhase: Math.random() * Math.PI * 2,
         lfoSpeed,
         fadeInDelay,
         active: false,
+        fmRatio,
+        fmDepth,
       })
     }
 
@@ -194,6 +219,7 @@ export default function SoundCompositionClient() {
     setTimeout(() => {
       for (const voice of voicesRef.current) {
         try { voice.oscillator.stop() } catch { /* already stopped */ }
+        try { voice.modulator?.stop() } catch { /* already stopped */ }
       }
       ctx.close()
       audioCtxRef.current = null
@@ -259,6 +285,20 @@ export default function SoundCompositionClient() {
         now,
         0.3,
       )
+
+      // FM depth modulation — modulation depth breathes independently
+      if (voice.modGain && voice.modulator) {
+        const fmLfo = Math.sin(voiceElapsed * voice.lfoSpeed * 0.5 * Math.PI * 2 + voice.lfoPhase * 3.1) * 0.5 + 0.5
+        const fmTarget = voice.fmDepth * fmLfo * fadeIn
+        voice.modGain.gain.setTargetAtTime(fmTarget, now, 0.2)
+        // Modulator frequency tracks carrier with slight drift
+        const modFreqDrift = Math.sin(voiceElapsed * 0.007 + voice.lfoPhase) * 1.5
+        voice.modulator.frequency.setTargetAtTime(
+          (voice.baseFreq + freqDrift) * voice.fmRatio + modFreqDrift,
+          now,
+          0.3,
+        )
+      }
 
       if (!voice.active) voice.active = true
     }
@@ -477,6 +517,7 @@ export default function SoundCompositionClient() {
     return () => {
       for (const voice of voicesRef.current) {
         try { voice.oscillator.stop() } catch { /* already stopped */ }
+        try { voice.modulator?.stop() } catch { /* already stopped */ }
       }
       if (audioCtxRef.current) {
         audioCtxRef.current.close()
@@ -522,7 +563,7 @@ export default function SoundCompositionClient() {
             </span>
             <span className="text-[#888888]">/</span>
             <span className="text-xs font-mono text-[#888888]">
-              24th gallery piece
+              26th gallery piece
             </span>
           </div>
           <h1 className="font-serif text-3xl md:text-4xl font-light tracking-tight mb-3">
@@ -610,11 +651,12 @@ export default function SoundCompositionClient() {
               transforms it into a generative composition.
             </p>
             <p>
-              Each stored frequency becomes a voice &mdash; an oscillator that
-              breathes in and out on its own slow rhythm. Voices enter one by one,
-              staggered across time, creating layers of drones that evolve without
-              repeating. The result is different for every visitor, shaped by
-              their unique history of interaction with Voice.
+              Each stored frequency becomes a voice &mdash; a carrier oscillator
+              with FM synthesis modulation that breathes in and out on its own
+              slow rhythm. The modulator creates richer harmonics that shift
+              over time, giving each voice a living, evolving timbre. Voices
+              enter one by one, staggered across time, creating layers that
+              evolve without repeating.
             </p>
             <p>
               If no tone journal exists, the composition draws from a default
